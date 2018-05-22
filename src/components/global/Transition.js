@@ -66,10 +66,10 @@ class Transition extends Component {
 			this.props.onPressPushTo(
 				this.props.destinationPage,
 				{
+					cardHeight: this.state.sourceDimension.height,
 					move: this.props.data,
 					closeCard: this.closeCard,
 					statusBarHeight: this.props.statusBarHeight,
-					// card: this.props.MoveComponent,
 				},
 				{
 					customTransition: { animations: [], duration: 0 },
