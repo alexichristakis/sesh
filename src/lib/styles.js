@@ -1,23 +1,9 @@
-// // const lightGray = "#F9F9F9";
-// const lightGray = "#F6F6F6";
-// const lightGrayTrans = "rgba(216,216,216,0.7)";
-// const mediumGray = "#EFEFEF";
-// const gray = "#979797";
-// const darkText = "#515151";
-// const lightText = "#F4F4F4";
-// const grayText = "#D2D2D2";
-// const purple = "#896ABF";
-// const blue = "#1977E5";
-// const lightBlue = "#BAD7DE";
-// const grayBlue = "#8B9DC3";
-// const orange = "#F5A623";
-// const red = "#F53F23";
-// const green = "#7ED321";
-
 const primary = "#007AFF";
 const groups = "#FF9500";
 const currently = "#5AC8FA";
 const later = "#FF2C55";
+
+const red = "#ff3b30";
 
 const lightGray = "#F6F6F6";
 const mediumGray = "#EFEFEF";
@@ -64,10 +50,10 @@ const shadowBottom = {
 };
 
 const heavyShadow = {
-	shadowRadius: 10,
-	shadowOpacity: 0.4,
+	shadowRadius: 4,
+	shadowOpacity: 0.1,
 	shadowOffset: {
-		height: 4,
+		height: 2,
 		width: 0,
 	},
 	shadowColor: "#000000",
@@ -91,23 +77,7 @@ const colors = {
 	lightGray,
 	mediumGray,
 	gray,
-	// primary: primary,
-	// secondary: secondary,
-	// tertiary: tertiary,
-	// lightGray: lightGray,
-	// lightGrayTrans: lightGrayTrans,
-	// mediumGray: mediumGray,
-	// gray: gray,
-	// green: green,
-	// darkText: darkText,
-	// lightText: lightText,
-	// grayText: grayText,
-	// purple: purple,
-	// blue: blue,
-	// grayBlue: grayBlue,
-	// lightBlue: lightBlue,
-	// orange: orange,
-	// red: red,
+	red,
 };
 
 module.exports = {

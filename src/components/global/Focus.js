@@ -1,14 +1,35 @@
 import React, { Component } from "react";
-import { Animated, Easing, View, Text, Image, FlatList } from "react-native";
+import {
+	Animated,
+	Easing,
+	Dimensions,
+	ScrollView,
+	TouchableOpacity,
+	View,
+	Text,
+	Image,
+	FlatList,
+} from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, heavyShadow, shadow } from "../../lib/styles";
 
 import BackButton from "../global/BackButton";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+
+function Page(props: { children?: ReactElement<*> }) {
+	return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
+}
+
+function HalfPage(props: { children?: ReactElement<*> }) {
+	return <View style={{ flex: 1, width: SCREEN_WIDTH / 2 }}>{props.children}</View>;
+}
 
 class Focus extends Component {
 	constructor(props) {
@@ -39,6 +60,11 @@ class Focus extends Component {
 
 	render() {
 		const listTopPadding = this.props.cardHeight + this.props.statusBarHeight - 20;
+		const scrollHeight = {
+			paddingTop: this.props.statusBarHeight + 10,
+			paddingBottom: 10,
+			height: this.props.cardHeight + this.props.statusBarHeight + 20,
+		};
 
 		let animatedEntry = {
 			transform: [
@@ -52,16 +78,30 @@ class Focus extends Component {
 		};
 
 		return (
-			<View style={{ flex: 1, backgroundColor: Colors.lightGray }}>
+			<View style={styles.container}>
 				<AnimatedFlatList
 					style={[{ flex: 1, paddingTop: listTopPadding }, animatedEntry]}
 					data={this.props.data}
 					keyExtractor={this._keyExtractor}
 					renderItem={this.props.renderItem}
 				/>
-				<View style={[styles.moveContainer, { top: this.props.statusBarHeight + 10 }]}>
-					{this.props.children}
-				</View>
+				<ScrollView
+					style={[styles.swipeContainer, scrollHeight]}
+					horizontal
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}>
+					<Page>
+						<View style={[styles.moveContainer]}>{this.props.children}</View>
+					</Page>
+					<HalfPage>
+						<View style={styles.options}>
+							<TouchableOpacity style={styles.button}>
+								<Text style={styles.leave}>delete</Text>
+							</TouchableOpacity>
+						</View>
+					</HalfPage>
+				</ScrollView>
+
 				<BackButton onPressPop={this.props.onPressPop} />
 				<BlurView
 					blurType="xlight"
@@ -73,6 +113,17 @@ class Focus extends Component {
 }
 
 const styles = {
+	container: {
+		flex: 1,
+		backgroundColor: Colors.lightGray,
+	},
+	swipeContainer: {
+		position: "absolute",
+		height: 100,
+		top: 0,
+		right: 0,
+		left: 0,
+	},
 	moveContainer: {
 		backgroundColor: "white",
 		borderRadius: 15,
@@ -80,13 +131,23 @@ const styles = {
 		padding: 10,
 		left: 10,
 		right: 10,
-		...shadow,
+		...heavyShadow,
 	},
-	container: {
+	options: {
 		flex: 1,
+		paddingRight: 10,
+	},
+	button: {
+		flex: 1,
+		borderRadius: 15,
 		alignItems: "center",
 		justifyContent: "center",
-		justifyContent: "center",
+		backgroundColor: Colors.red,
+		...shadow,
+	},
+	leave: {
+		fontSize: 18,
+		color: Colors.lightGray,
 	},
 	statusBar: {
 		position: "absolute",
