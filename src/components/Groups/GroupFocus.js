@@ -73,7 +73,10 @@ class GroupFocus extends Component {
 		Navigation.showModal({
 			component: {
 				name: "sesh.AddToGroup",
-				passProps: this.props.data
+				passProps: {
+					...this.props.data,
+					statusBarHeight: this.props.statusBarHeight
+				}
 			}
 		});
 	};
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
 	headerTitle: {
 		color: Colors.groups,
 		fontSize: 18,
-		fontWeight: "900"
+		fontWeight: "bold"
 	},
 	footerContainer: {
 		flex: 1,
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
 	},
 	addMember: {
 		color: Colors.groups,
-		fontWeight: "900",
+		fontWeight: "bold",
 		marginRight: 5
 	}
 });

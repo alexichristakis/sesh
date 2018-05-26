@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
 		height: 1,
 		backgroundColor: Colors.lightGray
 	},
-
 	options: {
 		flex: 1,
 		paddingRight: 10

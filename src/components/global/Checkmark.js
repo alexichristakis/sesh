@@ -3,6 +3,8 @@ import { View } from "react-native";
 import LottieView from "lottie-react-native";
 import PropTypes from "prop-types";
 
+import { Colors } from "../../lib/styles";
+
 export default class Checkmark extends Component {
 	componentDidMount() {
 		this.animation.play();
@@ -18,26 +20,28 @@ export default class Checkmark extends Component {
 					{
 						position: "relative",
 						height: wrapperSize,
-						width: wrapperSize,
+						width: wrapperSize
 					},
-					this.props.style || {},
-				]}>
+					this.props.style || {}
+				]}
+			>
 				<View
 					style={{
 						position: "absolute",
 						left: wrapperSize * -1,
 						top: wrapperSize * -1,
 						height: animationSize,
-						width: animationSize,
-					}}>
+						width: animationSize
+					}}
+				>
 					<LottieView
 						ref={animation => {
 							this.animation = animation;
 						}}
-						source={require("../../assets/animations/checked_done_.json")}
+						source={require("../../assets/animations/checkmark.json")}
 						style={{
 							height: animationSize,
-							width: animationSize,
+							width: animationSize
 						}}
 						loop={false}
 						autoplay={true}
@@ -49,5 +53,5 @@ export default class Checkmark extends Component {
 }
 
 Checkmark.propTypes = {
-	size: PropTypes.number,
+	size: PropTypes.number
 };

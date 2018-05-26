@@ -12,8 +12,8 @@ class LaterFocus extends Component {
 		Navigation.pop(this.props.componentId, {
 			customTransition: {
 				animations: [],
-				duration: 0.5,
-			},
+				duration: 0.5
+			}
 		});
 		this.props.closeCard();
 	};
@@ -22,7 +22,7 @@ class LaterFocus extends Component {
 		return (
 			<View style={{ flex: 1, backgroundColor: Colors.lightGray }}>
 				<View style={[styles.moveContainer, { top: this.props.statusBarHeight + 10 }]}>
-					<LaterMove move={this.props.move} />
+					<LaterMove move={this.props.data} />
 				</View>
 				<BackButton onPressPop={this.onPressPop} />
 			</View>
@@ -36,16 +36,17 @@ const styles = {
 		borderRadius: 15,
 		position: "absolute",
 		padding: 10,
+		paddingRight: 12,
 		left: 10,
 		right: 10,
-		...shadow,
+		...shadow
 	},
 	container: {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		justifyContent: "center",
-	},
+		justifyContent: "center"
+	}
 };
 
 export default LaterFocus;

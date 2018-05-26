@@ -80,7 +80,7 @@ class CurrentlyFocus extends Component {
 				onPressPop={this.onPressPop}
 				renderItem={this._renderItem}
 			>
-				<CurrentMove move={this.props.move} />
+				<CurrentMove move={this.props.data} />
 			</Focus>
 		);
 	}
