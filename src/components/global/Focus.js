@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
 	Animated,
 	Easing,
+	StyleSheet,
 	Dimensions,
 	ScrollView,
 	TouchableOpacity,
@@ -42,7 +43,7 @@ class Focus extends Component {
 	componentWillMount() {
 		Animated.timing(this.entry, {
 			toValue: 1,
-			duration: 250,
+			duration: 200,
 			easing: Easing.poly(0.25),
 			useNativeDriver: true
 		}).start();
@@ -51,7 +52,7 @@ class Focus extends Component {
 	exit = () => {
 		Animated.timing(this.entry, {
 			toValue: 0,
-			duration: 500,
+			duration: 200,
 			easing: Easing.poly(0.25),
 			useNativeDriver: true
 		}).start();
@@ -66,26 +67,6 @@ class Focus extends Component {
 				<View style={styles.separatorBackground} />
 				<View style={styles.separator} />
 			</View>
-		);
-	};
-
-	renderHeader = () => {
-		return (
-			<View style={styles.headerContainer}>
-				<Text style={styles.headerTitle}>{this.props.headerTitle}</Text>
-			</View>
-		);
-	};
-
-	renderFooter = () => {
-		return (
-			<TouchableOpacity style={styles.footerContainer}>
-				<View style={styles.footerSeparator} />
-				<View style={styles.addMemberContainer}>
-					<Text style={styles.addMember}>{this.props.footerButton}</Text>
-					<Icon name={"plus"} size={14} color={Colors.groups} />
-				</View>
-			</TouchableOpacity>
 		);
 	};
 
@@ -118,8 +99,8 @@ class Focus extends Component {
 					data={this.props.data}
 					keyExtractor={this._keyExtractor}
 					renderItem={this.props.renderItem}
-					ListHeaderComponent={this.renderHeader}
-					ListFooterComponent={this.renderFooter}
+					ListHeaderComponent={this.props.renderHeader}
+					ListFooterComponent={this.props.renderFooter}
 					ItemSeparatorComponent={this.renderSeparator}
 				/>
 				<ScrollView
@@ -150,7 +131,7 @@ class Focus extends Component {
 	}
 }
 
-const styles = {
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Colors.lightGray
@@ -167,37 +148,10 @@ const styles = {
 		borderRadius: 15,
 		position: "absolute",
 		padding: 10,
+		paddingRight: 12,
 		left: 10,
 		right: 10,
 		...heavyShadow
-	},
-	headerContainer: {
-		flex: 1,
-		paddingBottom: 10,
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	headerTitle: {
-		color: Colors.groups,
-		fontSize: 18,
-		fontWeight: "900"
-	},
-	footerContainer: {
-		flex: 1,
-		paddingBottom: 10,
-		alignItems: "center",
-		justifyContent: "center",
-		borderBottomLeftRadius: 15,
-		borderBottomRightRadius: 15,
-		backgroundColor: "white"
-	},
-	footerSeparator: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
-		height: 1,
-		backgroundColor: Colors.lightGray
 	},
 	separatorContainer: { width: SCREEN_WIDTH, borderRadius: 1, height: 1 },
 	separatorBackground: {
@@ -216,18 +170,7 @@ const styles = {
 		height: 1,
 		backgroundColor: Colors.lightGray
 	},
-	addMemberContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-		paddingTop: 10
-		// padding: 5
-	},
-	addMember: {
-		color: Colors.groups,
-		fontWeight: "900",
-		marginRight: 5
-	},
+
 	options: {
 		flex: 1,
 		paddingRight: 10
@@ -250,6 +193,6 @@ const styles = {
 		left: 0,
 		right: 0
 	}
-};
+});
 
 export default Focus;

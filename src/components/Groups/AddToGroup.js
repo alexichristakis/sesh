@@ -3,9 +3,9 @@ import { View, Text, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 
-import BackButton from "./global/BackButton";
+import BackButton from "../global/BackButton";
 
-class CreateGroup extends Component {
+class AddToGroup extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1, padding: 50 }}>
@@ -16,4 +16,4 @@ class CreateGroup extends Component {
 	}
 }
 
-export default CreateGroup;
+export default AddToGroup;

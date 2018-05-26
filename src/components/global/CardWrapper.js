@@ -50,7 +50,7 @@ class CardWrapper extends Component {
 	onReturn = () => {
 		Animated.timing(this.entry, {
 			toValue: 1,
-			duration: 10,
+			duration: 100,
 			useNativeDriver: true
 		}).start();
 	};

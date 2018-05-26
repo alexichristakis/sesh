@@ -55,7 +55,6 @@ class Transition extends Component {
 	}
 
 	openCard = () => {
-		console.log(this.props.data);
 		this.props.clearScreen();
 		Animated.timing(this.openProgress, {
 			toValue: 1,
@@ -67,7 +66,7 @@ class Transition extends Component {
 				this.props.destinationPage,
 				{
 					cardHeight: this.state.sourceDimension.height,
-					move: this.props.data,
+					data: this.props.data,
 					closeCard: this.closeCard,
 					statusBarHeight: this.props.statusBarHeight
 				},
@@ -80,14 +79,15 @@ class Transition extends Component {
 
 	closeCard = () => {
 		this.props.returnScreen();
-
+		setTimeout(() => {
+			this.props.onReturn();
+		}, 190);
 		Animated.timing(this.openProgress, {
 			toValue: 0,
 			duration: 200,
 			easing: Easing.poly(0.25),
 			useNativeDriver: true
 		}).start(() => {
-			this.props.onReturn();
 			this.props.transitionFinished();
 			this.setState({ open: false });
 		});
@@ -97,13 +97,14 @@ class Transition extends Component {
 		const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
 
 		if (this.state.open) {
-			let backgroundStyle = {
+			let cardAnimatedStyle = {
 				position: "absolute",
 				backgroundColor: "white",
 				borderRadius: 15,
 				left: x,
 				right: x,
 				padding: 10,
+				paddingRight: 12,
 				transform: [
 					{
 						translateY: this.openProgress.interpolate({
@@ -117,8 +118,8 @@ class Transition extends Component {
 
 			let opacityStyle = {
 				opacity: this.openProgress.interpolate({
-					inputRange: [0, 1],
-					outputRange: [0, 1],
+					inputRange: [0, 0.7, 1],
+					outputRange: [0, 1, 1],
 					extrapolate: "clamp"
 				})
 			};
@@ -126,7 +127,7 @@ class Transition extends Component {
 			return (
 				<View style={styles.container}>
 					<Animated.View style={[styles.cover, opacityStyle]} />
-					<Animated.View style={backgroundStyle}>{this.props.MoveComponent}</Animated.View>
+					<Animated.View style={cardAnimatedStyle}>{this.props.MoveComponent}</Animated.View>
 				</View>
 			);
 		}
