@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { Colors } from "../lib/styles";
+import { Colors } from "../../lib/styles";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -22,7 +22,7 @@ class VerticalList extends Component {
 			toValue: 0,
 			duration: 500,
 			easing: Easing.ease,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
@@ -31,48 +31,37 @@ class VerticalList extends Component {
 			toValue: 1,
 			duration: 500,
 			easing: Easing.ease,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
 	shortenPadding = () => {
-		// Animated.timing(this.animatedPadding, {
-		// 	toValue: 35,
-		// 	duration: 500,
-		// 	// useNativeDriver: true,
-		// }).start();
 		Animated.timing(this.animatedTranslate, {
 			toValue: 0,
 			duration: 500,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
 	lengthenPadding = () => {
-		// Animated.timing(this.animatedPadding, {
-		// 	toValue: 105,
-		// 	duration: 500,
-		// 	// useNativeDriver: true,
-		// }).start();
 		Animated.timing(this.animatedTranslate, {
 			toValue: 1,
 			duration: 500,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
 	render() {
 		let animatedStyle = {
-			// paddingTop: this.animatedPadding,
 			transform: [
 				{
 					translateY: this.animatedTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [-80, 0],
-					}),
-				},
+						outputRange: [-80, 0]
+					})
+				}
 			],
-			opacity: this.animatedOpacity,
+			opacity: this.animatedOpacity
 		};
 
 		return (
@@ -103,11 +92,11 @@ const styles = StyleSheet.create({
 		paddingTop: 115,
 		// paddingBottom: 70,
 		// marginBottom: 35,
-		backgroundColor: Colors.lightGray,
+		backgroundColor: Colors.lightGray
 	},
 	content: {
-		paddingBottom: 110,
-	},
+		paddingBottom: 120
+	}
 });
 
 VerticalList.propTypes = {
@@ -115,7 +104,7 @@ VerticalList.propTypes = {
 	renderItem: PropTypes.func.isRequired,
 	onScroll: PropTypes.func,
 	onScrollBeginDrag: PropTypes.func,
-	onScrollEndDrag: PropTypes.func,
+	onScrollEndDrag: PropTypes.func
 };
 
 export default VerticalList;

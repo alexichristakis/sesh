@@ -7,7 +7,7 @@ import {
 	StyleSheet,
 	View,
 	Image,
-	Text,
+	Text
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -30,8 +30,8 @@ class Transition extends Component {
 				height: 0,
 				width: 0,
 				pageX: 0,
-				pageY: 0,
-			},
+				pageY: 0
+			}
 		};
 	}
 
@@ -47,8 +47,8 @@ class Transition extends Component {
 					x: from.x,
 					y: from.y,
 					pageX: from.pageX,
-					pageY: from.pageY,
-				},
+					pageY: from.pageY
+				}
 			});
 			this.openCard();
 		}
@@ -60,8 +60,8 @@ class Transition extends Component {
 		Animated.timing(this.openProgress, {
 			toValue: 1,
 			duration: 200,
-			easing: Easing.ease,
-			useNativeDriver: true,
+			easing: Easing.poly(0.25),
+			useNativeDriver: true
 		}).start(() => {
 			this.props.onPressPushTo(
 				this.props.destinationPage,
@@ -69,23 +69,25 @@ class Transition extends Component {
 					cardHeight: this.state.sourceDimension.height,
 					move: this.props.data,
 					closeCard: this.closeCard,
-					statusBarHeight: this.props.statusBarHeight,
+					statusBarHeight: this.props.statusBarHeight
 				},
 				{
-					customTransition: { animations: [], duration: 0 },
-				},
+					customTransition: { animations: [], duration: 0 }
+				}
 			);
 		});
 	};
 
 	closeCard = () => {
 		this.props.returnScreen();
+
 		Animated.timing(this.openProgress, {
 			toValue: 0,
 			duration: 200,
-			easing: Easing.ease,
-			useNativeDriver: true,
+			easing: Easing.poly(0.25),
+			useNativeDriver: true
 		}).start(() => {
+			this.props.onReturn();
 			this.props.transitionFinished();
 			this.setState({ open: false });
 		});
@@ -106,50 +108,53 @@ class Transition extends Component {
 					{
 						translateY: this.openProgress.interpolate({
 							inputRange: [0, 1],
-							outputRange: [pageY, this.props.statusBarHeight + 10],
-						}),
-					},
+							outputRange: [pageY, this.props.statusBarHeight + 10]
+						})
+					}
 				],
-				...shadow,
+				...shadow
+			};
+
+			let opacityStyle = {
+				opacity: this.openProgress.interpolate({
+					inputRange: [0, 1],
+					outputRange: [0, 1],
+					extrapolate: "clamp"
+				})
 			};
 
 			return (
-				<Animated.View
-					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						bottom: 0,
-						right: 0,
-						backgroundColor: "transparent",
-					}}>
-					<Animated.View
-						style={{
-							flex: 1,
-							backgroundColor: Colors.lightGray,
-							opacity: this.openProgress.interpolate({
-								inputRange: [0, 1],
-								outputRange: [0, 1],
-								extrapolate: "clamp",
-							}),
-						}}
-					/>
+				<View style={styles.container}>
+					<Animated.View style={[styles.cover, opacityStyle]} />
 					<Animated.View style={backgroundStyle}>{this.props.MoveComponent}</Animated.View>
-				</Animated.View>
+				</View>
 			);
 		}
 		return <View />;
 	}
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	container: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
+		backgroundColor: "transparent"
+	},
+	cover: {
+		flex: 1,
+		backgroundColor: Colors.lightGray
+	}
+});
 
 Transition.propTypes = {
 	// MoveComponent: PropTypes.ReactElement.isRequired,
 	transitionFinished: PropTypes.func,
 	clearScreen: PropTypes.func.isRequired,
 	returnScreen: PropTypes.func.isRequired,
-	onPressPushTo: PropTypes.func.isRequired,
+	onPressPushTo: PropTypes.func.isRequired
 };
 
 export default Transition;

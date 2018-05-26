@@ -7,7 +7,7 @@ import {
 	View,
 	Image,
 	Text,
-	TouchableOpacity,
+	TouchableOpacity
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -22,6 +22,7 @@ class CardWrapper extends Component {
 		super(props);
 
 		this.animated = new Animated.Value(1);
+		this.entry = new Animated.Value(1);
 		this.openProgress = new Animated.Value(0);
 		this.state = {
 			open: false,
@@ -30,31 +31,49 @@ class CardWrapper extends Component {
 			pageX: 0,
 			pageY: 0,
 			x: 0,
-			y: 0,
+			y: 0
 		};
 	}
 
+	// static contextTypes = {
+	// 	onCardRef: PropTypes.func
+	// };
+
+	onLeave = () => {
+		Animated.timing(this.entry, {
+			toValue: 0,
+			duration: 10,
+			useNativeDriver: true
+		}).start();
+	};
+
+	onReturn = () => {
+		Animated.timing(this.entry, {
+			toValue: 1,
+			duration: 10,
+			useNativeDriver: true
+		}).start();
+	};
+
 	handlePressIn = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
 		Animated.spring(this.animated, {
 			toValue: 0.95,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
 	handlePressOut = () => {
-		setTimeout(() => {
-			ReactNativeHapticFeedback.trigger("impactLight");
-		}, 10);
 		Animated.spring(this.animated, {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
 	handleOnPress = (move, MoveComponent) => {
+		ReactNativeHapticFeedback.trigger("impactLight");
+		this.onLeave();
 		this.view.getNode().measure((x, y, width, height, pageX, pageY) => {
 			this.setState({ pageX: pageX, pageY: pageY });
 			const dimensions = {
@@ -63,9 +82,9 @@ class CardWrapper extends Component {
 				x: this.state.x,
 				y: this.state.y,
 				pageX: this.state.pageX,
-				pageY: this.state.pageY,
+				pageY: this.state.pageY
 			};
-			this.props.transitionFrom(dimensions, move, MoveComponent);
+			this.props.transitionFrom(dimensions, this.onReturn, this.props.data, this.props.children);
 		});
 	};
 
@@ -74,32 +93,34 @@ class CardWrapper extends Component {
 			height: e.nativeEvent.layout.height,
 			width: e.nativeEvent.layout.width,
 			x: e.nativeEvent.layout.x,
-			y: e.nativeEvent.layout.y,
+			y: e.nativeEvent.layout.y
 		});
 	};
 
 	render() {
 		let containerAnimatedStyle = {
+			opacity: this.entry,
 			transform: [
 				{
-					scale: this.animated,
-				},
-			],
+					scale: this.animated
+				}
+			]
 		};
 
-		let Card = this.props.card;
 		return (
 			<Animated.View
-				ref={item => (this.view = item)}
+				ref={view => (this.view = view)}
 				onLayout={this.measureCard}
-				style={[styles.container, containerAnimatedStyle]}>
+				style={[styles.container, containerAnimatedStyle]}
+			>
 				<TouchableOpacity
 					activeOpacity={1}
 					style={{ flex: 1 }}
 					onPressIn={this.handlePressIn}
 					onPressOut={this.handlePressOut}
-					onPress={() => this.handleOnPress(this.props.data, Card)}>
-					{Card}
+					onPress={this.handleOnPress}
+				>
+					{this.props.children}
 				</TouchableOpacity>
 			</Animated.View>
 		);
@@ -114,8 +135,8 @@ const styles = StyleSheet.create({
 		padding: 10,
 		paddingRight: 12,
 		marginBottom: 10,
-		...shadow,
-	},
+		...shadow
+	}
 });
 //
 // CardWrapper.propTypes = {

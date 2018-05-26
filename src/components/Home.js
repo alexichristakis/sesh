@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import {
 	Animated,
 	View,
-	Text,
-	Button,
-	Image,
 	ScrollView,
-	TouchableOpacity,
 	StatusBar,
 	StyleSheet,
 	Dimensions,
-	Platform,
+	Platform
 } from "react-native";
 
 import { Navigation } from "react-native-navigation";
@@ -24,15 +20,16 @@ import Groups from "./Groups";
 import Currently from "./Currently";
 import Later from "./Later";
 
-import { Colors, iconShadow } from "../lib/styles";
+import { Colors } from "../lib/styles";
 
+/* import fetch functions */
 import {} from "../api";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 // some contexts
-// const DimensionsContext = React.creatContext({
+// const DimensionsContext = React.createContext({
 // 	width: SCREEN_WIDTH,
 // 	height: SCREEN_HEIGHT,
 // 	statusBarHeight: statusBarHeight(),
@@ -74,20 +71,20 @@ function indicatorAnimate() {
 	return {
 		backgroundColor: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-			outputRange: [Colors.groups, Colors.currently, Colors.later],
+			outputRange: [Colors.groups, Colors.currently, Colors.later]
 		}),
 		width: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-			outputRange: [60, 80, 50],
+			outputRange: [60, 80, 50]
 		}),
 		transform: [
 			{
 				translateX: xOffset.interpolate({
 					inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-					outputRange: [-SCREEN_WIDTH / 3, 0, SCREEN_WIDTH / 3],
-				}),
-			},
-		],
+					outputRange: [-SCREEN_WIDTH / 3, 0, SCREEN_WIDTH / 3]
+				})
+			}
+		]
 	};
 }
 
@@ -98,8 +95,8 @@ function textColorTransform(index: number) {
 				color: xOffset.interpolate({
 					inputRange: [-1 * SCREEN_WIDTH, 0, SCREEN_WIDTH],
 					outputRange: [Colors.gray, Colors.groups, Colors.gray],
-					extrapolate: "clamp",
-				}),
+					extrapolate: "clamp"
+				})
 			};
 			break;
 		case 1:
@@ -107,8 +104,8 @@ function textColorTransform(index: number) {
 				color: xOffset.interpolate({
 					inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
 					outputRange: [Colors.gray, Colors.currently, Colors.gray],
-					extrapolate: "clamp",
-				}),
+					extrapolate: "clamp"
+				})
 			};
 			break;
 		case 2:
@@ -116,8 +113,8 @@ function textColorTransform(index: number) {
 				color: xOffset.interpolate({
 					inputRange: [SCREEN_WIDTH, 2 * SCREEN_WIDTH, 3 * SCREEN_WIDTH],
 					outputRange: [Colors.gray, Colors.later, Colors.gray],
-					extrapolate: "clamp",
-				}),
+					extrapolate: "clamp"
+				})
 			};
 			break;
 	}
@@ -133,7 +130,7 @@ class Home extends Component {
 			vertScrolling: false,
 			scrollDir: {
 				up: false,
-				down: false,
+				down: false
 			},
 
 			user: this.props.user,
@@ -141,7 +138,7 @@ class Home extends Component {
 
 			friends: [],
 			groups: [],
-			moves: [],
+			moves: []
 		};
 	}
 
@@ -212,17 +209,17 @@ class Home extends Component {
 	clearScreen = () => {
 		this.topBar.handleFullCloseBar();
 		this.button.buttonExit();
-		this.groups.list.fadeOut();
-		this.currently.list.fadeOut();
-		this.later.list.fadeOut();
+		// this.groups.list.fadeOut();
+		// this.currently.list.fadeOut();
+		// this.later.list.fadeOut();
 	};
 
 	returnScreen = () => {
 		this.topBar.handleOpenBar();
 		this.button.buttonReturn();
-		this.groups.list.fadeIn();
-		this.currently.list.fadeIn();
-		this.later.list.fadeIn();
+		// this.groups.list.fadeIn();
+		// this.currently.list.fadeIn();
+		// this.later.list.fadeIn();
 	};
 
 	onPressPushTo = (componentName, props, options) => {
@@ -230,8 +227,8 @@ class Home extends Component {
 			component: {
 				name: componentName,
 				passProps: props,
-				options: options,
-			},
+				options: options
+			}
 		});
 	};
 
@@ -240,8 +237,8 @@ class Home extends Component {
 			component: {
 				name: componentName,
 				passProps: props,
-				optoins: options,
-			},
+				options: options
+			}
 		});
 	};
 
@@ -252,10 +249,10 @@ class Home extends Component {
 				passProps: props,
 				options: {
 					overlay: {
-						interceptTouchOutside: true,
-					},
-				},
-			},
+						interceptTouchOutside: true
+					}
+				}
+			}
 		});
 	};
 
@@ -276,7 +273,8 @@ class Home extends Component {
 						scrollEventThrottle={16}
 						onScroll={this._horizOnScroll}
 						onMomentumScrollEnd={this._onHorizScrollEnd}
-						style={styles.scroll}>
+						style={styles.scroll}
+					>
 						<Page>
 							<Groups
 								ref={item => (this.groups = item)}
@@ -345,40 +343,12 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-	},
-	statusBar: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
+		flex: 1
 	},
 	scroll: {
 		flex: 1,
-		flexDirection: "row",
-	},
-	icon: {
-		position: "absolute",
-		borderRadius: 15,
-		height: 30,
-		width: 30,
-		bottom: 20,
-		alignSelf: "center",
-		overflow: "visible",
-		marginBottom: 15,
-		// ...iconShadow,
-	},
-	iconBackground: {
-		position: "absolute",
-		opacity: 1,
-		height: 35,
-		width: 35,
-		bottom: 20,
-		alignSelf: "center",
-		overflow: "visible",
-		marginBottom: 15,
-		...iconShadow,
-	},
+		flexDirection: "row"
+	}
 });
 
 export default Home;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Animated, Easing, StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -11,7 +11,7 @@ class NewMoveButton extends Component {
 		super(props);
 
 		this.state = {
-			open: false,
+			open: false
 		};
 
 		this.rotation = new Animated.Value(0);
@@ -30,22 +30,22 @@ class NewMoveButton extends Component {
 		Animated.parallel([
 			Animated.timing(this.mainTranslate, {
 				toValue: 120,
-				duration: 200,
-				easing: Easing.ease,
+				duration: 150,
+				easing: Easing.ease
 				// useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.currentlyTranslate, {
 				toValue: 120,
-				duration: 200,
-				easing: Easing.ease,
+				duration: 150,
+				easing: Easing.ease
 				// useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.laterTranslate, {
 				toValue: 120,
-				duration: 200,
-				easing: Easing.ease,
+				duration: 150,
+				easing: Easing.ease
 				// useNativeDriver: true,
-			}).start(),
+			}).start()
 		]);
 	};
 
@@ -53,22 +53,22 @@ class NewMoveButton extends Component {
 		Animated.parallel([
 			Animated.timing(this.mainTranslate, {
 				toValue: 0,
-				duration: 250,
-				easing: Easing.ease,
+				duration: 150,
+				easing: Easing.ease
 				// useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.currentlyTranslate, {
 				toValue: 0,
-				duration: 250,
-				easing: Easing.ease,
+				duration: 150,
+				easing: Easing.ease
 				// useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.laterTranslate, {
 				toValue: 0,
-				duration: 250,
-				easing: Easing.ease,
+				duration: 150,
+				easing: Easing.ease
 				// useNativeDriver: true,
-			}).start(),
+			}).start()
 		]);
 	};
 
@@ -81,173 +81,155 @@ class NewMoveButton extends Component {
 	};
 
 	handlePressIn = animatedValue => {
-		ReactNativeHapticFeedback.trigger("impactLight");
 		Animated.spring(animatedValue, {
-			toValue: 0.9,
+			toValue: 0.9
 			// useNativeDriver: true,
 		}).start();
 	};
 
 	handlePressOut = animatedValue => {
-		setTimeout(() => {
-			ReactNativeHapticFeedback.trigger("impactLight");
-		}, 50);
-
 		Animated.spring(animatedValue, {
 			toValue: 1,
 			friction: 3,
-			tension: 40,
+			tension: 40
 			// useNativeDriver: true,
 		}).start();
 	};
 
 	handleOpenButton = () => {
 		this.setState({ open: true });
-		Animated.parallel(
-			[
-				Animated.spring(this.rotation, {
-					toValue: 1,
-					friction: 5,
-					// duration: 400,
-					// useNativeDriver: false,
-				}).start(),
+		ReactNativeHapticFeedback.trigger("impactLight");
+		Animated.parallel([
+			Animated.spring(this.rotation, {
+				toValue: 1,
+				friction: 5
+				// duration: 400,
+				// useNativeDriver: false,
+			}).start(),
 
-				Animated.timing(this.currentlyTranslate, {
-					toValue: -75,
-					duration: 150,
-					delay: 25,
-					easing: Easing.ease,
-					// useNativeDriver: false,
-				}).start(),
-				Animated.timing(this.laterTranslate, {
-					toValue: -140,
-					duration: 150,
-					easing: Easing.ease,
-					// useNativeDriver: false,
-				}).start(),
-
-				// Animated.spring(this.currentlyTranslate, {
-				// 	toValue: -70,
-				// 	friction: 10,
-				// 	// tension: 10,
-				// 	// duration: 5000,
-				// 	delay: 200,
-				// 	// useNativeDriver: true,
-				// }).start(),
-				// Animated.spring(this.laterTranslate, {
-				// 	toValue: -130,
-				// 	friction: 5,
-				// 	// tension: 10,
-				// 	// duration: 5000,
-				// 	// useNativeDriver: true,
-				// }).start(),
-			],
-			// { useNativeDriver: true },
-		);
-		// Animated.spring(this.currentlyTranslate, {
-		// 	toValue: -70,
-		// 	// friction: 3,
-		// 	// tension: 40,
-		// 	duration: 200,
-		// 	useNativeDriver: true,
-		// }).start();
+			Animated.timing(this.currentlyTranslate, {
+				toValue: -75,
+				duration: 150,
+				delay: 25,
+				easing: Easing.ease
+				// useNativeDriver: false,
+			}).start(),
+			Animated.timing(this.laterTranslate, {
+				toValue: -140,
+				duration: 150,
+				easing: Easing.ease
+				// useNativeDriver: false,
+			}).start()
+		]);
 	};
 
 	handleCloseButton = () => {
 		this.setState({ open: false });
+		ReactNativeHapticFeedback.trigger("impactLight");
 		Animated.parallel(
 			[
 				Animated.timing(this.rotation, {
 					toValue: 0,
-					duration: 400,
+					duration: 400
 					// useNativeDriver: false,
 				}).start(),
 				Animated.timing(this.currentlyTranslate, {
 					toValue: 0,
 					duration: 150,
-					easing: Easing.ease,
+					easing: Easing.ease
 					// useNativeDriver: false,
 				}).start(),
 				Animated.timing(this.laterTranslate, {
 					toValue: 0,
 					duration: 150,
-					easing: Easing.ease,
+					easing: Easing.ease
 					// useNativeDriver: false,
-				}).start(),
-			],
+				}).start()
+			]
 			// { useNativeDriver: true },
 		);
 	};
 
+	haptic = func => {
+		ReactNativeHapticFeedback.trigger("impactLight");
+		func;
+	};
+
 	render() {
+		/* navigation functions */
+		const presentModal = this.props.onPressPresentModalTo;
+
 		let mainAnimatedStyle = {
 			transform: [
 				{
-					translateY: this.mainTranslate,
+					translateY: this.mainTranslate
 				},
 				{
 					rotateZ: this.rotation.interpolate({
 						inputRange: [0, 1],
-						outputRange: ["0deg", "45deg"],
-					}),
+						outputRange: ["0deg", "45deg"]
+					})
 				},
 				{
-					scale: this.mainButtonScale,
-				},
-			],
+					scale: this.mainButtonScale
+				}
+			]
 		};
 
 		let currentlyAnimatedStyle = {
 			transform: [
 				{
-					translateY: this.currentlyTranslate,
+					translateY: this.currentlyTranslate
 				},
 				{
-					scale: this.currentlyScale,
-				},
-			],
+					scale: this.currentlyScale
+				}
+			]
 		};
 
 		let laterAnimatedStyle = {
 			transform: [
 				{
-					translateY: this.laterTranslate,
+					translateY: this.laterTranslate
 				},
 				{
-					scale: this.laterScale,
-				},
-			],
+					scale: this.laterScale
+				}
+			]
 		};
 
 		return (
 			<View style={styles.container}>
 				<Animated.View style={[styles.laterButton, laterAnimatedStyle]}>
-					<TouchableOpacity
+					<TouchableWithoutFeedback
 						onPressIn={() => this.handlePressIn(this.laterScale)}
 						onPressOut={() => this.handlePressOut(this.laterScale)}
-						onPress={() => this.props.onPressPresentModalTo("sesh.CreateLaterMove")}
-						style={styles.laterButton}>
+						onPress={() => this.haptic(presentModal("sesh.CreateLaterMove"))}
+						style={styles.laterButton}
+					>
 						<Icon name="clock" size={25} color={"white"} />
-					</TouchableOpacity>
+					</TouchableWithoutFeedback>
 				</Animated.View>
 				<Animated.View style={[styles.currentlyButton, currentlyAnimatedStyle]}>
-					<TouchableOpacity
+					<TouchableWithoutFeedback
 						onPressIn={() => this.handlePressIn(this.currentlyScale)}
 						onPressOut={() => this.handlePressOut(this.currentlyScale)}
-						onPress={() => this.props.onPressPresentModalTo("sesh.CreateCurrentMove")}
-						style={styles.currentlyButton}>
+						onPress={() => this.haptic(presentModal("sesh.CreateCurrentMove"))}
+						style={styles.currentlyButton}
+					>
 						<Icon name="send" size={25} color={"white"} />
-					</TouchableOpacity>
+					</TouchableWithoutFeedback>
 				</Animated.View>
 
 				<Animated.View style={[styles.mainButton, mainAnimatedStyle]}>
-					<TouchableOpacity
+					<TouchableWithoutFeedback
 						style={styles.mainButton}
 						onPressIn={() => this.handlePressIn(this.mainButtonScale)}
 						onPressOut={() => this.handlePressOut(this.mainButtonScale)}
-						onPress={this.handleOnPress}>
+						onPress={this.handleOnPress}
+					>
 						<Icon name="plus" size={50} color={"white"} />
-					</TouchableOpacity>
+					</TouchableWithoutFeedback>
 				</Animated.View>
 			</View>
 		);
@@ -261,7 +243,7 @@ const styles = StyleSheet.create({
 		right: 60,
 		position: "absolute",
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "center"
 		// ...shadow,
 	},
 	mainButton: {
@@ -274,7 +256,7 @@ const styles = StyleSheet.create({
 		height: 70,
 		borderRadius: 35,
 		backgroundColor: Colors.primary,
-		overflow: "hidden",
+		overflow: "hidden"
 		// borderRadius:
 	},
 	currentlyButton: {
@@ -287,7 +269,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderRadius: 25,
 		backgroundColor: Colors.currently,
-		overflow: "hidden",
+		overflow: "hidden"
 		// borderRadius:
 	},
 	laterButton: {
@@ -300,9 +282,9 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderRadius: 25,
 		backgroundColor: Colors.later,
-		overflow: "hidden",
+		overflow: "hidden"
 		// borderRadius:
-	},
+	}
 });
 
 export default NewMoveButton;

@@ -3,8 +3,8 @@ import { Animated, StyleSheet, View, FlatList, Text } from "react-native";
 
 import { Colors } from "../../lib/styles";
 
-import VerticalList from "../VerticalList";
 import LaterMove from "./LaterMove";
+import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
 import Transition from "../global/Transition";
 
@@ -16,7 +16,7 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "alexi2",
@@ -25,7 +25,7 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "alexi3",
@@ -34,7 +34,7 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "alexi4",
@@ -43,7 +43,7 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "alexi5",
@@ -52,7 +52,7 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "alexi6",
@@ -61,7 +61,7 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "alexi7",
@@ -70,8 +70,8 @@ const data = [
 		time: 1526598742850,
 		description: "suite dinner in pierson!",
 		location: "Pierson College – 0.24mi",
-		photo: "https://graph.facebook.com/1825693684117541/picture",
-	},
+		photo: "https://graph.facebook.com/1825693684117541/picture"
+	}
 ];
 
 class Later extends Component {
@@ -79,28 +79,25 @@ class Later extends Component {
 		super(props);
 
 		this.state = {
-			// transitioning: false,
 			source: {},
 			sharedData: {},
-			MoveComponent: null,
+			onReturn: null,
+			MoveComponent: null
 		};
 	}
 
-	transitionFrom = (source, sharedData, MoveComponent) => {
-		this.setState({ source, sharedData, MoveComponent: MoveComponent });
+	transitionFrom = (source, onReturn, sharedData, MoveComponent) => {
+		this.setState({ source, onReturn, sharedData, MoveComponent: MoveComponent });
 	};
 
 	transitionFinished = (source, sharedData) => {
-		this.setState({ source: {}, sharedData: {}, MoveComponent: null });
+		this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
 	};
 
-	_renderItem = ({ item }) => (
-		<CardWrapper
-			card={<LaterMove move={item} />}
-			data={item}
-			// photo={this.props.profilePic}
-			transitionFrom={this.transitionFrom}
-		/>
+	_renderItem = ({ item, index }) => (
+		<CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
+			<LaterMove move={item} />
+		</CardWrapper>
 	);
 
 	render() {
@@ -119,6 +116,7 @@ class Later extends Component {
 					destinationPage={"sesh.LaterFocus"}
 					MoveComponent={this.state.MoveComponent}
 					transitionFinished={this.transitionFinished}
+					onReturn={this.state.onReturn}
 					clearScreen={this.props.clearScreen}
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
