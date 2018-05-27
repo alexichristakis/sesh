@@ -79,11 +79,11 @@ class Groups extends Component {
 	);
 
 	changeGroupName = newName => {
-		console.log("update name 3");
-
 		const newData = { ...this.state.sharedData, name: newName };
-		console.log(newData);
 		this.setState({ MoveComponent: <Group data={newData} /> });
+		data.forEach(group => {
+			if (group.id === newData.id) group.name = newData.name;
+		});
 	};
 
 	render() {

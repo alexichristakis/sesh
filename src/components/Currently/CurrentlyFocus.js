@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+
 import { Colors, shadow } from "../../lib/styles";
 
 import Focus from "../global/Focus";
@@ -54,6 +56,7 @@ class CurrentlyFocus extends Component {
 	};
 
 	handleOnPress = () => {
+		ReactNativeHapticFeedback.trigger("impactLight");
 		this.setState({ joined: !this.state.joined });
 	};
 
@@ -90,7 +93,6 @@ class CurrentlyFocus extends Component {
 	};
 
 	render() {
-		console.log(this.props);
 		return (
 			<Focus
 				ref={item => (this.focus = item)}

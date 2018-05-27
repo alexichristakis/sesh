@@ -79,13 +79,15 @@ class Currently extends Component {
 		super(props);
 
 		this.state = {
-			joinedMoves: []
+			joinedMoves: [],
+			MoveComponent: null
 		};
 	}
 
 	transitionFrom = (source, onReturn, data, MoveComponent) => {
 		let joined = this.state.joinedMoves.includes(data.id);
-		this.transition.openCard(source, onReturn, data, MoveComponent, {
+		this.setState({ MoveComponent: MoveComponent });
+		this.transition.openCard(source, onReturn, data, {
 			joined: joined,
 			joinMove: this.joinMove,
 			leaveMove: this.leaveMove
@@ -142,6 +144,7 @@ class Currently extends Component {
 					clearScreen={this.props.clearScreen}
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
+					MoveComponent={this.state.MoveComponent}
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>

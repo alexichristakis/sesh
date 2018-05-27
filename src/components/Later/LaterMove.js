@@ -17,7 +17,7 @@ class LaterMove extends Component {
 						<View style={{ flex: 1 }}>
 							<Text style={styles.group}>{move.group}</Text>
 							<View style={{ flexDirection: "row" }}>
-								<Text style={{ fontSize: 18 }}>from </Text>
+								<Text style={{ fontSize: 14 }}>from </Text>
 								<Text style={styles.name}>{move.name}</Text>
 							</View>
 						</View>
@@ -38,54 +38,56 @@ class LaterMove extends Component {
 const styles = StyleSheet.create({
 	top: {
 		flex: 2,
-		flexDirection: "row",
+		flexDirection: "row"
 	},
 	image: {
 		alignSelf: "center",
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE / 2,
 		height: ICON_SIZE,
-		width: ICON_SIZE,
+		width: ICON_SIZE
 	},
 	header: {
 		flex: 1,
 		flexDirection: "row",
 		alignSelf: "center",
 		marginLeft: 10,
-		marginBottom: 3,
+		marginBottom: 3
 	},
 	name: {
-		fontSize: 18,
-		fontWeight: "bold",
+		fontSize: 14,
+		fontWeight: "bold"
 	},
 	group: {
 		fontSize: 24,
-		fontWeight: "900",
+		fontWeight: "900"
 		// color: Colors.currently,
 	},
 	time: {
+		flex: 1,
+		textAlign: "right",
 		paddingTop: 4,
-		fontSize: 18,
+		fontSize: 14,
 		// alignSelf: "center",
 		color: Colors.later,
-		fontWeight: "bold",
+		fontWeight: "900"
 	},
 	mid: {
 		flex: 2,
-		marginVertical: 10,
+		marginVertical: 10
 	},
 	description: {
-		fontSize: 14,
+		fontSize: 14
 	},
 	bottom: {
 		flex: 1,
-		alignSelf: "flex-end",
+		alignSelf: "flex-end"
 	},
 	location: {
 		fontSize: 14,
 		// fontWeight: "200",
-		color: Colors.later,
-	},
+		color: Colors.later
+	}
 });
 
 export default LaterMove;

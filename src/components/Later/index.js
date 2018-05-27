@@ -79,19 +79,23 @@ class Later extends Component {
 		super(props);
 
 		this.state = {
-			source: {},
-			sharedData: {},
-			onReturn: null,
+			joinedMoves: [],
 			MoveComponent: null
 		};
 	}
 
-	transitionFrom = (source, onReturn, sharedData, MoveComponent) => {
-		this.setState({ source, onReturn, sharedData, MoveComponent: MoveComponent });
+	transitionFrom = (source, onReturn, data, MoveComponent) => {
+		let joined = this.state.joinedMoves.includes(data.id);
+		this.setState({ MoveComponent: MoveComponent });
+		this.transition.openCard(source, onReturn, data, {
+			joined: joined,
+			joinMove: this.joinMove,
+			leaveMove: this.leaveMove
+		});
 	};
 
 	transitionFinished = (source, sharedData) => {
-		this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
+		// this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
 	};
 
 	_renderItem = ({ item, index }) => (
@@ -100,7 +104,28 @@ class Later extends Component {
 		</CardWrapper>
 	);
 
+	joinMove = move => {
+		if (!this.state.joinedMoves.includes(move)) {
+			this.setState({ joinedMoves: [...this.state.joinedMoves, move] });
+			// make api call
+		}
+	};
+
+	leaveMove = move => {
+		if (this.state.joinedMoves.includes(move)) {
+			let index = this.state.joinedMoves.indexOf(move);
+			this.setState({
+				joinedMoves: [
+					...this.state.joinedMoves.slice(0, index),
+					...this.state.joinedMoves.slice(index + 1)
+				]
+			});
+			// make api call
+		}
+	};
+
 	render() {
+		const { openProgress } = this.state;
 		return (
 			<View style={{ flex: 1 }}>
 				<VerticalList
@@ -113,15 +138,13 @@ class Later extends Component {
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 				<Transition
+					ref={item => (this.transition = item)}
 					destinationPage={"sesh.LaterFocus"}
-					MoveComponent={this.state.MoveComponent}
 					transitionFinished={this.transitionFinished}
-					onReturn={this.state.onReturn}
 					clearScreen={this.props.clearScreen}
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
-					from={this.state.source}
-					data={this.state.sharedData}
+					MoveComponent={this.state.MoveComponent}
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>
