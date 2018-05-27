@@ -100,7 +100,7 @@ class AddToGroup extends Component {
 			<View style={{ flex: 1, backgroundColor: Colors.lightGray }}>
 				<FlatList
 					keyboardShouldPersistTaps="handled"
-					style={{ flex: 1, paddingTop: 40, marginHorizontal: 20 }}
+					style={{ flex: 1, paddingTop: 40, marginLeft: 20 }}
 					data={this.state.results}
 					keyExtractor={this._keyExtractor}
 					ItemSeparatorComponent={this.renderSeparator}
@@ -108,15 +108,9 @@ class AddToGroup extends Component {
 				/>
 				<VibrancyView style={{ position: "absolute", top: 0, left: 0, right: 0 }} blurType="xlight">
 					<TextInput
-						// style={{ position: "absolute", top: this.props.statusBarHeight, left: 10, right: 10 }}
-						style={{
-							flex: 1,
-							paddingTop: this.props.statusBarHeight,
-							paddingBottom: 10,
-							paddingHorizontal: 20,
-							fontSize: 18
-						}}
+						style={[styles.input, { paddingTop: this.props.statusBarHeight }]}
 						autoFocus
+						autoCapitalize={"words"}
 						placeholder={"name"}
 						placeholderTextColor={Colors.gray}
 						onChangeText={searched => this.search(searched)}
@@ -143,6 +137,12 @@ const styles = StyleSheet.create({
 		right: 0,
 		height: 1,
 		backgroundColor: Colors.mediumGray
+	},
+	input: {
+		flex: 1,
+		paddingBottom: 10,
+		paddingHorizontal: 20,
+		fontSize: 18
 	}
 });
 

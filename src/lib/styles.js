@@ -9,14 +9,16 @@ const lightGray = "#F6F6F6";
 const mediumGray = "#EFEFEF";
 const gray = "#979797";
 
+const card = {};
+
 const shadow = {
 	shadowRadius: 0.75,
 	shadowOpacity: 0.1,
 	shadowOffset: {
 		height: 0,
-		width: 0,
+		width: 0
 	},
-	shadowColor: "#000000",
+	shadowColor: "#000000"
 };
 
 const iconShadow = {
@@ -24,9 +26,9 @@ const iconShadow = {
 	shadowOpacity: 0.5,
 	shadowOffset: {
 		height: 0,
-		width: 0,
+		width: 0
 	},
-	shadowColor: "#000000",
+	shadowColor: "#000000"
 };
 
 const lightShadow = {
@@ -34,9 +36,9 @@ const lightShadow = {
 	shadowOpacity: 0.15,
 	shadowOffset: {
 		height: -1,
-		width: 0,
+		width: 0
 	},
-	shadowColor: "#000000",
+	shadowColor: "#000000"
 };
 
 const shadowBottom = {
@@ -44,9 +46,9 @@ const shadowBottom = {
 	shadowOpacity: 0.1,
 	shadowOffset: {
 		height: 4,
-		width: 0,
+		width: 0
 	},
-	shadowColor: "#000000",
+	shadowColor: "#000000"
 };
 
 const heavyShadow = {
@@ -54,9 +56,9 @@ const heavyShadow = {
 	shadowOpacity: 0.1,
 	shadowOffset: {
 		height: 2,
-		width: 0,
+		width: 0
 	},
-	shadowColor: "#000000",
+	shadowColor: "#000000"
 };
 
 const buttonShadow = {
@@ -64,9 +66,9 @@ const buttonShadow = {
 	shadowOpacity: 0.15,
 	shadowOffset: {
 		height: -1,
-		width: 0,
+		width: 0
 	},
-	shadowColor: "#000000",
+	shadowColor: "#000000"
 };
 
 const colors = {
@@ -77,7 +79,7 @@ const colors = {
 	lightGray,
 	mediumGray,
 	gray,
-	red,
+	red
 };
 
 module.exports = {
@@ -87,5 +89,5 @@ module.exports = {
 	shadowBottom,
 	lightShadow,
 	heavyShadow,
-	buttonShadow,
+	buttonShadow
 };

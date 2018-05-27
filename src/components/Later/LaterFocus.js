@@ -4,49 +4,43 @@ import { View, Text, Image } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { Colors, shadow } from "../../lib/styles";
 
-import BackButton from "../global/BackButton";
+import Focus from "../global/Focus";
+import User from "../global/User";
 import LaterMove from "./LaterMove";
+
+const data = [];
 
 class LaterFocus extends Component {
 	onPressPop = () => {
-		Navigation.pop(this.props.componentId, {
-			customTransition: {
-				animations: [],
-				duration: 0.5
-			}
-		});
-		this.props.closeCard();
+		this.focus.exit();
+		setTimeout(() => {
+			Navigation.pop(this.props.componentId, {
+				customTransition: {
+					animations: [],
+					duration: 0
+				}
+			});
+			this.props.closeCard();
+		}, 20);
 	};
+
+	_renderItem = ({ item }) => <User data={item} />;
 
 	render() {
 		return (
-			<View style={{ flex: 1, backgroundColor: Colors.lightGray }}>
-				<View style={[styles.moveContainer, { top: this.props.statusBarHeight + 10 }]}>
-					<LaterMove move={this.props.data} />
-				</View>
-				<BackButton onPressPop={this.onPressPop} />
-			</View>
+			<Focus
+				ref={item => (this.focus = item)}
+				data={data}
+				cardHeight={this.props.cardHeight}
+				statusBarHeight={this.props.statusBarHeight}
+				closeCard={this.props.closeCard}
+				onPressPop={this.onPressPop}
+				renderItem={this._renderItem}
+			>
+				<LaterMove move={this.props.data} />
+			</Focus>
 		);
 	}
 }
-
-const styles = {
-	moveContainer: {
-		backgroundColor: "white",
-		borderRadius: 15,
-		position: "absolute",
-		padding: 10,
-		paddingRight: 12,
-		left: 10,
-		right: 10,
-		...shadow
-	},
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		justifyContent: "center"
-	}
-};
 
 export default LaterFocus;

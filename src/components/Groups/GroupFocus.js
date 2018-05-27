@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
 
 import { Colors, shadow } from "../../lib/styles";
@@ -70,6 +71,7 @@ class GroupFocus extends Component {
 	};
 
 	onPressPresentModalTo = () => {
+		ReactNativeHapticFeedback.trigger("impactLight");
 		Navigation.showModal({
 			component: {
 				name: "sesh.AddToGroup",
@@ -142,7 +144,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		borderBottomLeftRadius: 15,
 		borderBottomRightRadius: 15,
-		backgroundColor: "white"
+		backgroundColor: "white",
+		...shadow
 	},
 	footerSeparator: {
 		position: "absolute",

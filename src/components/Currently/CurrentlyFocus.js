@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import { Colors, shadow } from "../../lib/styles";
@@ -8,53 +8,23 @@ import Focus from "../global/Focus";
 import User from "../global/User";
 import CurrentMove from "./CurrentMove";
 
-const data = [
-	{
-		id: "1",
-		name: "Alexi Christakis",
-		size: 9,
-		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	},
-	{
-		id: "2",
-		name: "William Oles",
-		size: 105,
-		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	},
-	{
-		id: "3",
-		name: "Michelle Li",
-		size: 6,
-		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	},
-	{
-		id: "4",
-		name: "Janvi Trivedi",
-		size: 63,
-		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	},
-	{
-		id: "5",
-		name: "Max Golden",
-		size: 105,
-		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	},
-	{
-		id: "6",
-		name: "Laszlo Gendler",
-		size: 9,
-		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	}
-];
+const data = [];
 
 class CurrentlyFocus extends Component {
+	constructor(props) {
+		super(props);
+
+		this.animated = new Animated.Value(1);
+
+		this.state = {
+			joined: this.props.joined
+		};
+	}
+
 	onPressPop = () => {
+		if (this.state.joined) this.props.joinMove(this.props.data.id);
+		else this.props.leaveMove(this.props.data.id);
+
 		this.focus.exit();
 		setTimeout(() => {
 			Navigation.pop(this.props.componentId, {
@@ -67,13 +37,66 @@ class CurrentlyFocus extends Component {
 		}, 20);
 	};
 
+	handlePressIn = () => {
+		Animated.spring(this.animated, {
+			toValue: 0.9,
+			useNativeDriver: true
+		}).start();
+	};
+
+	handlePressOut = () => {
+		Animated.spring(this.animated, {
+			toValue: 1,
+			friction: 3,
+			tension: 40,
+			useNativeDriver: true
+		}).start();
+	};
+
+	handleOnPress = () => {
+		this.setState({ joined: !this.state.joined });
+	};
+
 	_renderItem = ({ item }) => <User data={item} />;
 
+	_renderHeader = () => {
+		let animatedStyle = {
+			transform: [
+				{
+					scale: this.animated
+				}
+			]
+		};
+		return (
+			<Animated.View style={animatedStyle}>
+				<TouchableOpacity
+					activeOpacity={1}
+					style={[
+						styles.joinButton,
+						{ backgroundColor: !this.state.joined ? "white" : Colors.currently }
+					]}
+					onPressIn={this.handlePressIn}
+					onPressOut={this.handlePressOut}
+					onPress={this.handleOnPress}
+				>
+					<Text
+						style={[styles.joinText, { color: this.state.joined ? "white" : Colors.currently }]}
+					>
+						{!this.state.joined ? "Join" : "Leave"}
+					</Text>
+				</TouchableOpacity>
+			</Animated.View>
+		);
+	};
+
 	render() {
+		console.log(this.props);
 		return (
 			<Focus
 				ref={item => (this.focus = item)}
 				data={data}
+				renderHeader={this._renderHeader}
+				optionButton={"ended"}
 				cardHeight={this.props.cardHeight}
 				statusBarHeight={this.props.statusBarHeight}
 				closeCard={this.props.closeCard}
@@ -85,5 +108,21 @@ class CurrentlyFocus extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	joinButton: {
+		margin: 10,
+		padding: 15,
+		borderRadius: 15,
+		alignItems: "center",
+		justifyContent: "center",
+		// backgroundColor: "white",
+		...shadow
+	},
+	joinText: {
+		// color: Colors.currently,
+		fontSize: 18
+	}
+});
 
 export default CurrentlyFocus;

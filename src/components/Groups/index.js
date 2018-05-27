@@ -57,20 +57,15 @@ class Groups extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			source: {},
-			sharedData: {},
-			onReturn: null,
-			MoveComponent: null
-		};
+		this.state = {};
 	}
 
-	transitionFrom = (source, onReturn, sharedData, MoveComponent) => {
-		this.setState({ source, onReturn, sharedData, MoveComponent: MoveComponent });
+	transitionFrom = (source, onReturn, data, MoveComponent) => {
+		this.transition.openCard(source, onReturn, data, MoveComponent, {});
 	};
 
 	transitionFinished = (source, sharedData) => {
-		this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
+		// this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
 	};
 
 	_renderItem = ({ item, index }) => (
@@ -92,10 +87,9 @@ class Groups extends Component {
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 				<Transition
+					ref={item => (this.transition = item)}
 					destinationPage={"sesh.GroupFocus"}
-					MoveComponent={this.state.MoveComponent}
 					transitionFinished={this.transitionFinished}
-					onReturn={this.state.onReturn}
 					clearScreen={this.props.clearScreen}
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}

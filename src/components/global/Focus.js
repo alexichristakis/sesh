@@ -88,8 +88,8 @@ class Focus extends Component {
 						outputRange: [250, 0]
 					})
 				}
-			],
-			...shadow
+			]
+			// ...shadow
 		};
 
 		return (

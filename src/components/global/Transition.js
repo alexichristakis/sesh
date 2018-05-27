@@ -26,6 +26,8 @@ class Transition extends Component {
 
 		this.state = {
 			open: false,
+			MoveComponent: null,
+			onReturn: null,
 			sourceDimension: {
 				height: 0,
 				width: 0,
@@ -35,27 +37,40 @@ class Transition extends Component {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const { from, data, MoveComponent } = nextProps;
+	// componentWillReceiveProps(nextProps) {
+	// 	const { from, data, MoveComponent } = nextProps;
+	//
+	// 	if (MoveComponent) {
+	// 		this.setState({
+	// 			open: true,
+	// 			sourceDimension: {
+	// 				height: from.height,
+	// 				width: from.width,
+	// 				x: from.x,
+	// 				y: from.y,
+	// 				pageX: from.pageX,
+	// 				pageY: from.pageY
+	// 			}
+	// 		});
+	// 		this.openCard();
+	// 	}
+	// }
 
-		if (MoveComponent) {
-			this.setState({ open: true });
-			this.setState({
-				sourceDimension: {
-					height: from.height,
-					width: from.width,
-					x: from.x,
-					y: from.y,
-					pageX: from.pageX,
-					pageY: from.pageY
-				}
-			});
-			this.openCard();
-		}
-	}
-
-	openCard = () => {
+	openCard = (source, onReturn, data, MoveComponent, props) => {
 		this.props.clearScreen();
+		this.setState({
+			open: true,
+			MoveComponent: MoveComponent,
+			onReturn: onReturn,
+			sourceDimension: {
+				height: source.height,
+				width: source.width,
+				x: source.x,
+				y: source.y,
+				pageX: source.pageX,
+				pageY: source.pageY
+			}
+		});
 		Animated.timing(this.openProgress, {
 			toValue: 1,
 			duration: 200,
@@ -65,8 +80,9 @@ class Transition extends Component {
 			this.props.onPressPushTo(
 				this.props.destinationPage,
 				{
+					...props,
 					cardHeight: this.state.sourceDimension.height,
-					data: this.props.data,
+					data: data,
 					closeCard: this.closeCard,
 					statusBarHeight: this.props.statusBarHeight
 				},
@@ -80,7 +96,8 @@ class Transition extends Component {
 	closeCard = () => {
 		this.props.returnScreen();
 		setTimeout(() => {
-			this.props.onReturn();
+			// this.props.onReturn();
+			this.state.onReturn();
 		}, 190);
 		Animated.timing(this.openProgress, {
 			toValue: 0,
@@ -88,7 +105,7 @@ class Transition extends Component {
 			easing: Easing.poly(0.25),
 			useNativeDriver: true
 		}).start(() => {
-			this.props.transitionFinished();
+			// this.props.transitionFinished();
 			this.setState({ open: false });
 		});
 	};
@@ -101,8 +118,10 @@ class Transition extends Component {
 				position: "absolute",
 				backgroundColor: "white",
 				borderRadius: 15,
-				left: x,
-				right: x,
+				left: 10,
+				right: 10,
+				// left: x,
+				// right: x,
 				padding: 10,
 				paddingRight: 12,
 				transform: [
@@ -127,7 +146,7 @@ class Transition extends Component {
 			return (
 				<View style={styles.container}>
 					<Animated.View style={[styles.cover, opacityStyle]} />
-					<Animated.View style={cardAnimatedStyle}>{this.props.MoveComponent}</Animated.View>
+					<Animated.View style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
 				</View>
 			);
 		}

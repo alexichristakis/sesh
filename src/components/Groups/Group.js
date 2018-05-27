@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: "row",
-		alignItems: "center",
+		alignItems: "center"
 	},
 	pictures: {
 		flexDirection: "row",
-		flex: 1.5,
+		flex: 1.5
 	},
 	image1: {
 		position: "absolute",
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE2 / 2,
 		height: ICON_SIZE2,
-		width: ICON_SIZE2,
+		width: ICON_SIZE2
 	},
 	image2: {
 		position: "absolute",
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE2 / 2,
 		height: ICON_SIZE2,
-		width: ICON_SIZE2,
+		width: ICON_SIZE2
 	},
 	image3: {
 		position: "absolute",
@@ -61,27 +61,27 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE1 / 2,
 		height: ICON_SIZE1,
-		width: ICON_SIZE1,
+		width: ICON_SIZE1
 	},
 	mid: {
 		flex: 5,
-		marginLeft: 4,
+		marginLeft: 4
 	},
 	name: {
 		fontSize: 24,
-		fontWeight: "900",
+		fontWeight: "900"
 		// color: Colors.currently,
 	},
 	size: {
 		fontSize: 12,
 		fontWeight: "300",
-		color: Colors.gray,
+		color: Colors.gray
 	},
 	time: {
 		fontSize: 12,
 		fontWeight: "300",
-		color: Colors.gray,
-	},
+		color: Colors.groups
+	}
 });
 
 export default Group;
