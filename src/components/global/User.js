@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "white",
 		justifyContent: "center",
-		padding: 5,
-		...shadow
+		padding: 5
+		// ...shadow
 	},
 	image: {
 		// position: "absolute",

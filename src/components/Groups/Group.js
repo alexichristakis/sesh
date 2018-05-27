@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, TextInput, Image } from "react-native";
+
+import Icon from "react-native-vector-icons/Feather";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
@@ -8,8 +10,33 @@ const ICON_SIZE1 = 35;
 const ICON_SIZE2 = 30;
 
 class Group extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			editing: false,
+			groupName: this.props.data.name,
+			newName: ""
+		};
+	}
+
+	onFocus = () => {
+		this.setState({ editing: true });
+	};
+
+	onEndEditing = () => {
+		this.setState({ editing: false });
+		const currentName = this.state.groupName;
+		const newName = this.state.newName;
+		if (newName.length != 0 && !newName.equals(currentName)) {
+			this.setState({ groupName: newName, newName: "" });
+		}
+		this.input.clear();
+	};
+
 	render() {
 		const group = this.props.data;
+
 		return (
 			<View style={styles.container}>
 				<View style={styles.pictures}>
@@ -18,9 +45,27 @@ class Group extends Component {
 					<Image style={styles.image3} source={{ uri: group.photo }} />
 				</View>
 				<View style={styles.mid}>
-					<Text style={styles.name}>{group.name}</Text>
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						{!this.props.editName && <Text style={styles.name}>{group.name}</Text>}
+						{this.props.editName && (
+							<TextInput
+								ref={item => (this.input = item)}
+								style={styles.name}
+								onFocus={this.onFocus}
+								onEndEditing={this.onEndEditing}
+								onChangeText={text => this.setState({ newName: text })}
+								placeholder={this.state.groupName}
+								placeholderTextColor={this.state.editing ? Colors.mediumGray : "black"}
+							/>
+						)}
+						{this.props.editName && (
+							<Icon style={{ paddingLeft: 10 }} name={"edit"} size={18} color={Colors.groups} />
+						)}
+					</View>
+
 					<Text style={styles.size}>{group.size} members</Text>
 				</View>
+
 				<Text style={styles.time}>{TimeAgo(group.time)}</Text>
 			</View>
 		);
