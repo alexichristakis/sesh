@@ -20,6 +20,10 @@ class Group extends Component {
 		};
 	}
 
+	onChangeText = text => {
+		this.setState({ newName: text });
+	};
+
 	onFocus = () => {
 		this.setState({ editing: true });
 	};
@@ -28,10 +32,10 @@ class Group extends Component {
 		this.setState({ editing: false });
 		const currentName = this.state.groupName;
 		const newName = this.state.newName;
-		if (newName.length != 0 && !newName.equals(currentName)) {
+		if (newName.length > 0 && newName !== currentName) {
 			this.setState({ groupName: newName, newName: "" });
+			this.props.updateName(this.props.data.id, newName);
 		}
-		this.input.clear();
 	};
 
 	render() {
@@ -53,7 +57,7 @@ class Group extends Component {
 								style={styles.name}
 								onFocus={this.onFocus}
 								onEndEditing={this.onEndEditing}
-								onChangeText={text => this.setState({ newName: text })}
+								onChangeText={text => this.onChangeText(text)}
 								placeholder={this.state.groupName}
 								placeholderTextColor={this.state.editing ? Colors.mediumGray : "black"}
 							/>

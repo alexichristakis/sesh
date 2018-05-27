@@ -57,11 +57,15 @@ class Groups extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			sharedData: {},
+			MoveComponent: null
+		};
 	}
 
 	transitionFrom = (source, onReturn, data, MoveComponent) => {
-		this.transition.openCard(source, onReturn, data, MoveComponent, {});
+		this.setState({ MoveComponent: MoveComponent, sharedData: data });
+		this.transition.openCard(source, onReturn, data, { changeName: this.changeGroupName });
 	};
 
 	transitionFinished = (source, sharedData) => {
@@ -73,6 +77,14 @@ class Groups extends Component {
 			<Group data={item} />
 		</CardWrapper>
 	);
+
+	changeGroupName = newName => {
+		console.log("update name 3");
+
+		const newData = { ...this.state.sharedData, name: newName };
+		console.log(newData);
+		this.setState({ MoveComponent: <Group data={newData} /> });
+	};
 
 	render() {
 		return (
@@ -93,8 +105,7 @@ class Groups extends Component {
 					clearScreen={this.props.clearScreen}
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
-					from={this.state.source}
-					data={this.state.sharedData}
+					MoveComponent={this.state.MoveComponent}
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>

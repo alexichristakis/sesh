@@ -57,8 +57,19 @@ const data = [
 ];
 
 class GroupFocus extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			changedName: false,
+			newName: ""
+		};
+	}
+
 	onPressPop = () => {
 		this.focus.exit();
+		if (this.state.changedName) this.props.changeName(this.state.newName);
+
 		setTimeout(() => {
 			Navigation.pop(this.props.componentId, {
 				customTransition: {
@@ -66,6 +77,7 @@ class GroupFocus extends Component {
 					duration: 0.1
 				}
 			});
+
 			this.props.closeCard();
 		}, 20);
 	};
@@ -105,6 +117,11 @@ class GroupFocus extends Component {
 		);
 	};
 
+	updateGroupName = (id, newName) => {
+		this.setState({ changedName: true, newName: newName });
+		// api call to update the group name
+	};
+
 	render() {
 		return (
 			<Focus
@@ -119,7 +136,7 @@ class GroupFocus extends Component {
 				onPressPop={this.onPressPop}
 				renderItem={this._renderItem}
 			>
-				<Group editName data={this.props.data} />
+				<Group editName updateName={this.updateGroupName} data={this.props.data} />
 			</Focus>
 		);
 	}

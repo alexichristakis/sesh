@@ -142,8 +142,6 @@ class Currently extends Component {
 					clearScreen={this.props.clearScreen}
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
-					from={this.state.source}
-					data={this.state.sharedData}
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>

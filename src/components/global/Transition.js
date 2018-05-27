@@ -26,7 +26,7 @@ class Transition extends Component {
 
 		this.state = {
 			open: false,
-			MoveComponent: null,
+			MoveComponent: this.props.MoveComponent,
 			onReturn: null,
 			sourceDimension: {
 				height: 0,
@@ -37,30 +37,15 @@ class Transition extends Component {
 		};
 	}
 
-	// componentWillReceiveProps(nextProps) {
-	// 	const { from, data, MoveComponent } = nextProps;
-	//
-	// 	if (MoveComponent) {
-	// 		this.setState({
-	// 			open: true,
-	// 			sourceDimension: {
-	// 				height: from.height,
-	// 				width: from.width,
-	// 				x: from.x,
-	// 				y: from.y,
-	// 				pageX: from.pageX,
-	// 				pageY: from.pageY
-	// 			}
-	// 		});
-	// 		this.openCard();
-	// 	}
-	// }
+	componentWillReceiveProps(nextProps) {
+		const { MoveComponent } = nextProps;
+		this.setState({ MoveComponent: MoveComponent });
+	}
 
-	openCard = (source, onReturn, data, MoveComponent, props) => {
+	openCard = (source, onReturn, data, props) => {
 		this.props.clearScreen();
 		this.setState({
 			open: true,
-			MoveComponent: MoveComponent,
 			onReturn: onReturn,
 			sourceDimension: {
 				height: source.height,
@@ -96,7 +81,6 @@ class Transition extends Component {
 	closeCard = () => {
 		this.props.returnScreen();
 		setTimeout(() => {
-			// this.props.onReturn();
 			this.state.onReturn();
 		}, 190);
 		Animated.timing(this.openProgress, {
