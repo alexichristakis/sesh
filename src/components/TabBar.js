@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 
 import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
-
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 const BAR_HEIGHT = 80;
 const ICON_DIMENSION = 60;
@@ -134,7 +133,6 @@ class TabBar extends Component {
 	};
 
 	render() {
-		const SCREEN_WIDTH = this.props.SCREEN_WIDTH;
 		const textColorTransform = this.props.textColorTransform;
 		const indicatorAnimate = this.props.indicatorAnimate;
 
@@ -188,15 +186,12 @@ class TabBar extends Component {
 		};
 
 		return (
-			<View style={[styles.container, { paddingTop: this.props.statusBarHeight + 10 }]}>
+			<View style={styles.container}>
 				<Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
-					<BlurView
-						blurType="xlight"
-						style={[styles.statusBar, { height: this.props.statusBarHeight + BAR_HEIGHT + 30 }]}
-					/>
+					<BlurView blurType="xlight" style={styles.statusBar} />
 				</Animated.View>
 
-				<View style={{ flexDirection: "row", top: -50 }}>
+				<View style={{ paddingHorizontal: 5, flexDirection: "row", top: -50 }}>
 					<Animated.View style={[styles.profileButton, profileButtonAnimatedStyle]}>
 						<TouchableOpacity
 							activeOpacity={0.9}
@@ -204,14 +199,14 @@ class TabBar extends Component {
 							onPressOut={() => this.handlePressOut(this.profileScale)}
 							onPress={() => this.haptic(presentOverlay("sesh.Profile"))}
 						>
-							<Animated.Image
+							<Image
 								style={styles.image}
 								resizeMode="cover"
 								source={{ uri: this.props.profilePic }}
 							/>
 						</TouchableOpacity>
 					</Animated.View>
-					<Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Sesh</Animated.Text>
+					<Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Alexi</Animated.Text>
 
 					<View style={{ flex: 5 }} />
 					<Animated.View
@@ -240,9 +235,7 @@ class TabBar extends Component {
 					</Animated.View>
 				</View>
 
-				<Animated.View
-					style={[styles.animated, tabContainerAnimatedStyle, { top: this.props.statusBarHeight }]}
-				>
+				<Animated.View style={[styles.animated, tabContainerAnimatedStyle]}>
 					<View style={styles.textContainer}>
 						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToStart())}>
 							<Animated.Text style={[styles.text, textColorTransform(0)]}>Groups</Animated.Text>
@@ -268,7 +261,8 @@ const styles = StyleSheet.create({
 		top: 0,
 		left: 0,
 		right: 0,
-		paddingHorizontal: 10
+		paddingHorizontal: 10,
+		paddingTop: SB_HEIGHT + 10
 		// borderBottomWidth: StyleSheet.hairlineWidth,
 		// borderColor: "black",
 	},
@@ -276,12 +270,14 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 		left: 0,
-		right: 0
+		right: 0,
+		height: SB_HEIGHT + BAR_HEIGHT
 	},
 	animated: {
 		position: "absolute",
 		left: 0,
-		right: 0
+		right: 0,
+		top: SB_HEIGHT
 	},
 	title: {
 		marginLeft: 50,

@@ -13,70 +13,78 @@ import Waves from "../global/Waves";
 
 type Props = {};
 export default class App extends Component<Props> {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      loading: false
-    };
-  }
+		this.state = {
+			loading: false
+		};
+	}
 
-  cancelLogin = () => {
-    this.setState({ loading: false });
-  };
+	cancelLogin = () => {
+		this.setState({ loading: false });
+	};
 
-  onPressFacebook = () => {
-    this.setState({ loading: true });
-    FacebookLogin(this.cancelLogin).then(user => {
-      if (user) {
-        console.log(user);
-        Navigation.showModal({
-          component: {
-            name: "sesh.Home"
-          }
-        });
-      }
-    });
-  };
+	onPressFacebook = () => {
+		this.setState({ loading: true });
+		FacebookLogin(this.cancelLogin).then(user => {
+			if (user) {
+				console.log(user);
+				// Navigation.showModal({
+				//   component: {
+				//     name: "sesh.Home"
+				//   }
+				// });
+				Navigation.push(this.props.componentId, {
+					component: {
+						name: "sesh.Home",
+						passProps: {
+							user: user._user
+						}
+					}
+				});
+			}
+		});
+	};
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle="dark-content" />
-        {/* <Waves /> */}
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ fontSize: 24, color: Colors.gray }}>welcome to</Text>
-          <Text style={{ fontSize: 50, fontWeight: "900" }}>Sesh</Text>
-        </View>
+	render() {
+		return (
+			<View style={styles.container}>
+				<StatusBar barStyle="dark-content" />
+				{/* <Waves /> */}
+				<View style={{ flex: 1, alignItems: "center" }}>
+					<Text style={{ fontSize: 24, color: Colors.gray }}>welcome to</Text>
+					<Text style={{ fontSize: 50, fontWeight: "900" }}>Sesh</Text>
+				</View>
 
-        <Button
-          style={{ backgroundColor: Colors.primary }}
-          // title="Facebook"
-          title={<Icon name="facebook" size={28} color={"white"} />}
-          onPress={this.onPressFacebook}
-          loading={this.state.loading}
-        />
-      </View>
-    );
-  }
+				<Button
+					style={{ backgroundColor: Colors.primary }}
+					// title="Facebook"
+					title={<Icon name="facebook" size={28} color={"white"} />}
+					onPress={this.onPressFacebook}
+					loading={this.state.loading}
+				/>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
-  }
+	container: {
+		flex: 1,
+		padding: 50,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#F5FCFF"
+	},
+	welcome: {
+		fontSize: 20,
+		textAlign: "center",
+		margin: 10
+	},
+	instructions: {
+		textAlign: "center",
+		color: "#333333",
+		marginBottom: 5
+	}
 });

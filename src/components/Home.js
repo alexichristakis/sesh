@@ -11,7 +11,6 @@ import {
 
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
-import { Provider, subscribe } from "react-contextual";
 import RNFS from "react-native-fs";
 
 import NewMoveButton from "./NewMoveButton";
@@ -20,36 +19,11 @@ import Groups from "./Groups";
 import Currently from "./Currently";
 import Later from "./Later";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors } from "../lib/styles";
 
 /* import fetch functions */
 import {} from "../api";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
-
-// some contexts
-// const DimensionsContext = React.createContext({
-// 	width: SCREEN_WIDTH,
-// 	height: SCREEN_HEIGHT,
-// 	statusBarHeight: statusBarHeight(),
-// });
-// class DimensionsProvider extends Component {
-// 	state = {
-// 		dimensions: {
-// 			width: SCREEN_WIDTH,
-// 			height: SCREEN_HEIGHT,
-// 			statusBarHeight: statusBarHeight(),
-// 		},
-// 	};
-// 	render() {
-// 		return (
-// 			<DimensionsContext.Provider value={this.state.dimensions}>
-// 				{this.props.children}
-// 			</DimensionsContext.Provider>
-// 		);
-// 	}
-// }
 
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(0);
@@ -57,11 +31,6 @@ const yOffset = new Animated.Value(0);
 const groupsOffset = new Animated.Value(0);
 const currentlyOffset = new Animated.Value(0);
 const laterOffset = new Animated.Value(0);
-
-function statusBarHeight() {
-	if (Platform.OS === "ios" && SCREEN_HEIGHT === 812) return 40;
-	else return 20;
-}
 
 function Page(props: { children?: ReactElement<*> }) {
 	return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
@@ -285,7 +254,6 @@ class Home extends Component {
 								_onScrollBegin={this._onScollBegin}
 								_onScrollEnd={this._onScrollEnd}
 								_vertOnScroll={this._vertOnScroll}
-								statusBarHeight={statusBarHeight()}
 							/>
 						</Page>
 						<Page>
@@ -298,7 +266,6 @@ class Home extends Component {
 								_onScrollBegin={this._onScollBegin}
 								_onScrollEnd={this._onScrollEnd}
 								_vertOnScroll={this._vertOnScroll}
-								statusBarHeight={statusBarHeight()}
 							/>
 						</Page>
 						<Page>
@@ -311,7 +278,6 @@ class Home extends Component {
 								_onScrollBegin={this._onScollBegin}
 								_onScrollEnd={this._onScrollEnd}
 								_vertOnScroll={this._vertOnScroll}
-								statusBarHeight={statusBarHeight()}
 							/>
 						</Page>
 					</Animated.ScrollView>
@@ -327,7 +293,6 @@ class Home extends Component {
 						onPressPresentOverlayTo={this.onPressPresentOverlayTo}
 						profilePic={this.state.photo}
 						scrollDir={this.state.scrollDir}
-						statusBarHeight={statusBarHeight()}
 						scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
 						scrollToMid={() => this.scrollView.scrollTo({ x: SCREEN_WIDTH, y: 0, animated: true })}
 						scrollToEnd={() => this.scrollView.scrollToEnd()}

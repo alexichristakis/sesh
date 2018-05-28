@@ -63,10 +63,9 @@ class Group extends Component {
 							/>
 						)}
 						{this.props.editName && (
-							<Icon style={{ paddingLeft: 10 }} name={"edit"} size={18} color={Colors.groups} />
+							<Icon style={{ paddingLeft: 5 }} name={"edit-2"} size={12} color={Colors.groups} />
 						)}
 					</View>
-
 					<Text style={styles.size}>{group.size} members</Text>
 				</View>
 
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
 	},
 	mid: {
 		flex: 5,
-		marginLeft: 4
+		marginLeft: 10
 	},
 	name: {
 		fontSize: 24,
@@ -122,13 +121,13 @@ const styles = StyleSheet.create({
 		// color: Colors.currently,
 	},
 	size: {
-		fontSize: 12,
+		fontSize: 14,
 		fontWeight: "300",
 		color: Colors.gray
 	},
 	time: {
-		fontSize: 12,
-		fontWeight: "300",
+		fontSize: 14,
+		fontWeight: "900",
 		color: Colors.groups
 	}
 });

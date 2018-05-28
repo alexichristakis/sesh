@@ -3,7 +3,6 @@ import {
 	Animated,
 	Easing,
 	StyleSheet,
-	Dimensions,
 	ScrollView,
 	TouchableOpacity,
 	View,
@@ -16,14 +15,12 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, heavyShadow, shadow } from "../../lib/styles";
 
 import BackButton from "../global/BackButton";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 function Page(props: { children?: ReactElement<*> }) {
 	return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
@@ -71,11 +68,12 @@ class Focus extends Component {
 	};
 
 	render() {
-		const listTopPadding = this.props.cardHeight + this.props.statusBarHeight - 20;
+		const { cardHeight } = this.props;
+		const listTopPadding = cardHeight + SB_HEIGHT - (SB_HEIGHT === 40 ? 20 : 0);
 		const scrollHeight = {
-			paddingTop: this.props.statusBarHeight + 10,
+			paddingTop: SB_HEIGHT + 10,
 			paddingBottom: 10,
-			height: this.props.cardHeight + this.props.statusBarHeight + 20
+			height: cardHeight + SB_HEIGHT + 20
 		};
 
 		let listStyle = {
@@ -122,10 +120,7 @@ class Focus extends Component {
 				</ScrollView>
 
 				<BackButton onPressPop={this.props.onPressPop} />
-				<BlurView
-					blurType="xlight"
-					style={[styles.statusBar, { height: this.props.statusBarHeight }]}
-				/>
+				<BlurView blurType="xlight" style={styles.statusBar} />
 			</View>
 		);
 	}
@@ -190,7 +185,8 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 		left: 0,
-		right: 0
+		right: 0,
+		height: SB_HEIGHT
 	}
 });
 

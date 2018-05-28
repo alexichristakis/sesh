@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-	StyleSheet,
-	Keyboard,
-	Dimensions,
-	View,
-	Text,
-	FlatList,
-	TextInput,
-	Image
-} from "react-native";
+import { StyleSheet, Keyboard, View, Text, FlatList, TextInput, Image } from "react-native";
 
 import { BlurView, VibrancyView } from "react-native-blur";
 import { Navigation } from "react-native-navigation";
@@ -17,9 +8,8 @@ import BackButton from "../global/BackButton";
 import SearchResult from "../global/SearchResult";
 
 import query from "../../lib/query";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const friends = [
 	{
@@ -108,7 +98,7 @@ class AddToGroup extends Component {
 				/>
 				<VibrancyView style={{ position: "absolute", top: 0, left: 0, right: 0 }} blurType="xlight">
 					<TextInput
-						style={[styles.input, { paddingTop: this.props.statusBarHeight }]}
+						style={styles.input}
 						autoFocus
 						autoCapitalize={"words"}
 						placeholder={"name"}
@@ -141,8 +131,10 @@ const styles = StyleSheet.create({
 	input: {
 		flex: 1,
 		paddingBottom: 10,
+		paddingTop: SB_HEIGHT,
 		paddingHorizontal: 20,
-		fontSize: 18
+		fontSize: 28,
+		fontWeight: "900"
 	}
 });
 

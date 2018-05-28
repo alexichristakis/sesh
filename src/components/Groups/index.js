@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Animated, StyleSheet, View, FlatList, Text } from "react-native";
 
+import { Subscribe } from "react-contextual";
+
 import { Colors } from "../../lib/styles";
 
 import Group from "./Group";
@@ -53,6 +55,7 @@ const data = [
 	}
 ];
 
+// @subscribe()
 class Groups extends Component {
 	constructor(props) {
 		super(props);
@@ -96,7 +99,6 @@ class Groups extends Component {
 					onScroll={this.props._vertOnScroll}
 					onScrollBeginDrag={this.props._onScrollBegin}
 					onScrollEndDrag={this.props._onScrollEnd}
-					statusBarHeight={this.props.statusBarHeight}
 				/>
 				<Transition
 					ref={item => (this.transition = item)}
@@ -106,7 +108,6 @@ class Groups extends Component {
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
 					MoveComponent={this.state.MoveComponent}
-					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>
 		);

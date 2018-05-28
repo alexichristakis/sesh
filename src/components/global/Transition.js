@@ -1,22 +1,11 @@
 import React, { Component } from "react";
-import {
-	Animated,
-	Easing,
-	LayoutAnimation,
-	Dimensions,
-	StyleSheet,
-	View,
-	Image,
-	Text
-} from "react-native";
+import { Animated, Easing, LayoutAnimation, StyleSheet, View, Image, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 class Transition extends Component {
 	constructor(props) {
@@ -68,8 +57,7 @@ class Transition extends Component {
 					...props,
 					cardHeight: this.state.sourceDimension.height,
 					data: data,
-					closeCard: this.closeCard,
-					statusBarHeight: this.props.statusBarHeight
+					closeCard: this.closeCard
 				},
 				{
 					customTransition: { animations: [], duration: 0 }
@@ -112,7 +100,7 @@ class Transition extends Component {
 					{
 						translateY: this.openProgress.interpolate({
 							inputRange: [0, 1],
-							outputRange: [pageY, this.props.statusBarHeight + 10]
+							outputRange: [pageY, SB_HEIGHT + 10]
 						})
 					}
 				],

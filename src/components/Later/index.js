@@ -135,7 +135,6 @@ class Later extends Component {
 					onScroll={this.props._vertOnScroll}
 					onScrollBeginDrag={this.props._onScrollBegin}
 					onScrollEndDrag={this.props._onScrollEnd}
-					statusBarHeight={this.props.statusBarHeight}
 				/>
 				<Transition
 					ref={item => (this.transition = item)}
@@ -145,7 +144,6 @@ class Later extends Component {
 					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
 					MoveComponent={this.state.MoveComponent}
-					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>
 		);
