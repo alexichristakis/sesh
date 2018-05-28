@@ -1,6 +1,15 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+	Animated,
+	ActivityIndicator,
+	StyleSheet,
+	View,
+	Text,
+	Image,
+	TouchableOpacity
+} from "react-native";
 
+import RNFS from "react-native-fs";
 import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -16,7 +25,9 @@ class TabBar extends Component {
 		super(props);
 
 		this.state = {
-			open: true
+			open: true,
+			loading: true,
+			photo: ""
 		};
 
 		this.animated = new Animated.Value(1);
@@ -33,6 +44,19 @@ class TabBar extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (this.state.open && nextProps.scrollDir.down) this.handleCloseBar();
 		else if (!this.state.open && nextProps.scrollDir.up) this.handleOpenBar();
+	}
+
+	componentDidMount() {
+		// fetch that data
+		// const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
+		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		//
+		// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+		RNFS.readFile(path, "base64").then(res => {
+			console.log("finished");
+			this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		});
+		// console.log(res);
 	}
 
 	handleFullCloseBar = () => {
@@ -133,6 +157,7 @@ class TabBar extends Component {
 	};
 
 	render() {
+		console.log("tab bar rendered!");
 		const textColorTransform = this.props.textColorTransform;
 		const indicatorAnimate = this.props.indicatorAnimate;
 
@@ -202,11 +227,12 @@ class TabBar extends Component {
 							<Image
 								style={styles.image}
 								resizeMode="cover"
-								source={{ uri: this.props.profilePic }}
+								// source={{ uri: this.props.profilePic }}
+								source={{ uri: this.state.photo }}
 							/>
 						</TouchableOpacity>
 					</Animated.View>
-					<Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Alexi</Animated.Text>
+					<Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Sesh</Animated.Text>
 
 					<View style={{ flex: 5 }} />
 					<Animated.View
@@ -256,17 +282,18 @@ class TabBar extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		// backgroundColor: "red",
 		position: "absolute",
 		top: 0,
 		left: 0,
 		right: 0,
 		paddingHorizontal: 10
-		// paddingTop: SB_HEIGHT + 10
-		// borderBottomWidth: StyleSheet.hairlineWidth,
-		// borderColor: "black",
 	},
-	topBar: { paddingHorizontal: 5, paddingTop: SB_HEIGHT + 10, flexDirection: "row", top: -50 },
+	topBar: {
+		paddingHorizontal: 5,
+		paddingTop: SB_HEIGHT + 10,
+		flexDirection: "row",
+		top: -50
+	},
 	statusBar: {
 		position: "absolute",
 		top: -SB_HEIGHT,

@@ -1,12 +1,28 @@
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import firebase from "react-native-firebase";
+import RNFS from "react-native-fs";
 let firestore = firebase.firestore();
 let storage = firebase.storage();
+
+//////////////* SETUP *//////////////
+export const SetupRNFS = () => {
+	let path = RNFS.DocumentDirectoryPath;
+	RNFS.mkdir(path + "/photos");
+	RNFS.mkdir(path + "/groups");
+	RNFS.mkdir(path + "/moves");
+};
 
 //////////////* STORAGE *//////////////
 
 //////////////* FIRESTORE *//////////////
-/* GET */
+///* GET *///
+// store in the cloud?
+export const GetMoves = fromGroups => {
+	// go through each group, download active moves
+};
+
+// store locally?
+export const GetGroups = () => {};
 
 export const GetUser = () => {
 	return new Promise(async resolve => {
@@ -21,7 +37,27 @@ export const GetUser = () => {
 	});
 };
 
-/* SET */
+///* SET *///
+/* MOVES */
+export const SendMove = move => {};
+
+export const JoinMove = move => {};
+
+export const EndMove = move => {};
+
+/* FRIENDS */
+export const SendFriendRequest = toUser => {};
+
+export const AcceptFriend = user => {};
+
+export const DeleteFriend = user => {};
+
+/* GROUPS */
+export const CreateGroup = (group, users) => {};
+
+export const RenameGroup = (group, newName) => {};
+
+export const LeaveGroup = group => {};
 
 //////////////* AUTH *//////////////
 export const UserAuthenticated = () => {
@@ -90,7 +126,7 @@ const NewUser = user => {
 				display_name,
 				id,
 				uid,
-				profile_pic,
+				profile_pic
 			})
 			.then(resolve(true));
 	});

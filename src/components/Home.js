@@ -111,16 +111,18 @@ class Home extends Component {
 		};
 	}
 
-	async componentDidMount() {
-		// fetch that data
-		const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
-		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-		//
-		await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
-		const res = await RNFS.readFile(path, "base64");
-		this.setState({ photo: "data:image/png;base64," + res, loading: false });
-		// console.log(res);
-	}
+	// componentDidMount() {
+	// 	// fetch that data
+	// 	// const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
+	// 	const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+	// 	//
+	// 	// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+	// 	RNFS.readFile(path, "base64").then(res => {
+	// 		console.log("finished");
+	// 		this.setState({ photo: "data:image/png;base64," + res, loading: false });
+	// 	});
+	// 	// console.log(res);
+	// }
 
 	_horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
 		// useNativeDriver: true,
@@ -226,83 +228,83 @@ class Home extends Component {
 	};
 
 	render() {
-		if (this.state.loading) {
-			return <View />;
-		} else {
-			return (
-				<View style={styles.container}>
-					<StatusBar barStyle="dark-content" />
-					<Animated.ScrollView
-						horizontal
-						pagingEnabled
-						bounces={false}
-						ref={this.scrollViewRef}
-						showsHorizontalScrollIndicator={false}
-						showsVerticalScrollIndicator={false}
-						scrollEventThrottle={16}
-						onScroll={this._horizOnScroll}
-						onMomentumScrollEnd={this._onHorizScrollEnd}
-						style={styles.scroll}
-					>
-						<Page>
-							<Groups
-								ref={item => (this.groups = item)}
-								profilePic={this.state.photo}
-								clearScreen={this.clearScreen}
-								returnScreen={this.returnScreen}
-								onPressPushTo={this.onPressPushTo}
-								_onScrollBegin={this._onScollBegin}
-								_onScrollEnd={this._onScrollEnd}
-								_vertOnScroll={this._vertOnScroll}
-							/>
-						</Page>
-						<Page>
-							<Currently
-								ref={item => (this.currently = item)}
-								profilePic={this.state.photo}
-								clearScreen={this.clearScreen}
-								returnScreen={this.returnScreen}
-								onPressPushTo={this.onPressPushTo}
-								_onScrollBegin={this._onScollBegin}
-								_onScrollEnd={this._onScrollEnd}
-								_vertOnScroll={this._vertOnScroll}
-							/>
-						</Page>
-						<Page>
-							<Later
-								ref={item => (this.later = item)}
-								profilePic={this.state.photo}
-								clearScreen={this.clearScreen}
-								returnScreen={this.returnScreen}
-								onPressPushTo={this.onPressPushTo}
-								_onScrollBegin={this._onScollBegin}
-								_onScrollEnd={this._onScrollEnd}
-								_vertOnScroll={this._vertOnScroll}
-							/>
-						</Page>
-					</Animated.ScrollView>
+		// if (this.state.loading) {
+		// 	return <View />;
+		// } else {
+		return (
+			<View style={styles.container}>
+				<StatusBar barStyle="dark-content" />
+				<Animated.ScrollView
+					horizontal
+					pagingEnabled
+					bounces={false}
+					ref={this.scrollViewRef}
+					showsHorizontalScrollIndicator={false}
+					showsVerticalScrollIndicator={false}
+					scrollEventThrottle={16}
+					onScroll={this._horizOnScroll}
+					onMomentumScrollEnd={this._onHorizScrollEnd}
+					style={styles.scroll}
+				>
+					<Page>
+						<Groups
+							ref={item => (this.groups = item)}
+							profilePic={this.state.photo}
+							clearScreen={this.clearScreen}
+							returnScreen={this.returnScreen}
+							onPressPushTo={this.onPressPushTo}
+							_onScrollBegin={this._onScollBegin}
+							_onScrollEnd={this._onScrollEnd}
+							_vertOnScroll={this._vertOnScroll}
+						/>
+					</Page>
+					<Page>
+						<Currently
+							ref={item => (this.currently = item)}
+							profilePic={this.state.photo}
+							clearScreen={this.clearScreen}
+							returnScreen={this.returnScreen}
+							onPressPushTo={this.onPressPushTo}
+							_onScrollBegin={this._onScollBegin}
+							_onScrollEnd={this._onScrollEnd}
+							_vertOnScroll={this._vertOnScroll}
+						/>
+					</Page>
+					<Page>
+						<Later
+							ref={item => (this.later = item)}
+							profilePic={this.state.photo}
+							clearScreen={this.clearScreen}
+							returnScreen={this.returnScreen}
+							onPressPushTo={this.onPressPushTo}
+							_onScrollBegin={this._onScollBegin}
+							_onScrollEnd={this._onScrollEnd}
+							_vertOnScroll={this._vertOnScroll}
+						/>
+					</Page>
+				</Animated.ScrollView>
 
-					<NewMoveButton
-						ref={item => (this.button = item)}
-						onPressPresentModalTo={this.onPressPresentModalTo}
-					/>
+				<NewMoveButton
+					ref={item => (this.button = item)}
+					onPressPresentModalTo={this.onPressPresentModalTo}
+				/>
 
-					<TabBar
-						ref={item => (this.topBar = item)}
-						onPressPresentModalTo={this.onPressPresentModalTo}
-						onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-						profilePic={this.state.photo}
-						scrollDir={this.state.scrollDir}
-						scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
-						scrollToMid={() => this.scrollView.scrollTo({ x: SCREEN_WIDTH, y: 0, animated: true })}
-						scrollToEnd={() => this.scrollView.scrollToEnd()}
-						xOffset={xOffset}
-						textColorTransform={textColorTransform}
-						indicatorAnimate={indicatorAnimate}
-					/>
-				</View>
-			);
-		}
+				<TabBar
+					ref={item => (this.topBar = item)}
+					onPressPresentModalTo={this.onPressPresentModalTo}
+					onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+					profilePic={this.state.photo}
+					scrollDir={this.state.scrollDir}
+					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
+					scrollToMid={() => this.scrollView.scrollTo({ x: SCREEN_WIDTH, y: 0, animated: true })}
+					scrollToEnd={() => this.scrollView.scrollToEnd()}
+					xOffset={xOffset}
+					textColorTransform={textColorTransform}
+					indicatorAnimate={indicatorAnimate}
+				/>
+			</View>
+		);
+		// }
 	}
 }
 
