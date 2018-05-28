@@ -191,7 +191,7 @@ class TabBar extends Component {
 					<BlurView blurType="xlight" style={styles.statusBar} />
 				</Animated.View>
 
-				<View style={{ paddingHorizontal: 5, flexDirection: "row", top: -50 }}>
+				<View style={styles.topBar}>
 					<Animated.View style={[styles.profileButton, profileButtonAnimatedStyle]}>
 						<TouchableOpacity
 							activeOpacity={0.9}
@@ -261,17 +261,18 @@ const styles = StyleSheet.create({
 		top: 0,
 		left: 0,
 		right: 0,
-		paddingHorizontal: 10,
-		paddingTop: SB_HEIGHT + 10
+		paddingHorizontal: 10
+		// paddingTop: SB_HEIGHT + 10
 		// borderBottomWidth: StyleSheet.hairlineWidth,
 		// borderColor: "black",
 	},
+	topBar: { paddingHorizontal: 5, paddingTop: SB_HEIGHT + 10, flexDirection: "row", top: -50 },
 	statusBar: {
 		position: "absolute",
-		top: 0,
+		top: -SB_HEIGHT,
 		left: 0,
 		right: 0,
-		height: SB_HEIGHT + BAR_HEIGHT
+		height: SB_HEIGHT + BAR_HEIGHT + 30
 	},
 	animated: {
 		position: "absolute",
