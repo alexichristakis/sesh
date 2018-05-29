@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, TextInput, Image } from "react-native";
 
+import { BlurView, VibrancyView } from "react-native-blur";
+import RNFS from "react-native-fs";
 import Icon from "react-native-vector-icons/Feather";
 
 import { TimeAgo } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, shadow, cardShadow } from "../../lib/styles";
 
 const ICON_SIZE1 = 35;
 const ICON_SIZE2 = 30;
@@ -14,10 +16,19 @@ class Group extends Component {
 		super(props);
 
 		this.state = {
+			photo: "",
 			editing: false,
+			loading: true,
 			groupName: this.props.data.name,
 			newName: ""
 		};
+	}
+
+	componentDidMount() {
+		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		RNFS.readFile(path, "base64").then(res => {
+			this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		});
 	}
 
 	onChangeText = text => {
@@ -42,11 +53,16 @@ class Group extends Component {
 		const group = this.props.data;
 
 		return (
-			<View style={styles.container}>
+			// <View style={styles.border}>
+			// <VibrancyView blurType={"light"} style={styles.container}>
+			// <View style={styles.container}>
+			<BlurView blurType={"xlight"} style={styles.container}>
+				{/* {this.p/rops.blur && <BlurView blurType={"xlight"} style={styles.blur} />} */}
+				{/* {!this.props.blur && <View style={styles.blank} />} */}
 				<View style={styles.pictures}>
-					<Image style={styles.image1} source={{ uri: group.photo }} />
-					<Image style={styles.image2} source={{ uri: group.photo }} />
-					<Image style={styles.image3} source={{ uri: group.photo }} />
+					<Image style={styles.image1} source={{ uri: this.state.photo }} />
+					<Image style={styles.image2} source={{ uri: this.state.photo }} />
+					<Image style={styles.image3} source={{ uri: this.state.photo }} />
 				</View>
 				<View style={styles.mid}>
 					<View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -70,16 +86,47 @@ class Group extends Component {
 				</View>
 
 				<Text style={styles.time}>{TimeAgo(group.time)}</Text>
-			</View>
+			</BlurView>
+			// </View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
+	border: {
+		// padding: 20,
+		borderWidth: 20,
+		borderColor: Colors.lightGray
+	},
 	container: {
 		flex: 1,
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		// backgroundColor: "red",
+		backgroundColor: "transparent",
+		// marginHorizontal: 10,
+		// borderWidth: 20,
+		// borderColor: Colors.primary,
+		overflow: "hidden",
+		borderRadius: 15,
+		padding: 10,
+		paddingRight: 12
+		// ...shadow
+	},
+	blur: {
+		position: "absolute",
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0
+	},
+	blank: {
+		position: "absolute",
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+		backgroundColor: "white"
 	},
 	pictures: {
 		flexDirection: "row",
@@ -118,7 +165,7 @@ const styles = StyleSheet.create({
 	name: {
 		fontSize: 24,
 		fontWeight: "900"
-		// color: Colors.currently,
+		// color: "white"
 	},
 	size: {
 		fontSize: 14,

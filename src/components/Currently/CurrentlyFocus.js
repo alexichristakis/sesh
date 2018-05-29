@@ -19,6 +19,7 @@ class CurrentlyFocus extends Component {
 		this.animated = new Animated.Value(1);
 
 		this.state = {
+			pressed: false,
 			joined: this.props.joined
 		};
 	}
@@ -40,6 +41,7 @@ class CurrentlyFocus extends Component {
 	};
 
 	handlePressIn = () => {
+		this.setState({ pressed: true });
 		Animated.spring(this.animated, {
 			toValue: 0.9,
 			useNativeDriver: true
@@ -47,6 +49,7 @@ class CurrentlyFocus extends Component {
 	};
 
 	handlePressOut = () => {
+		this.setState({ pressed: false });
 		Animated.spring(this.animated, {
 			toValue: 1,
 			friction: 3,
@@ -76,14 +79,29 @@ class CurrentlyFocus extends Component {
 					activeOpacity={1}
 					style={[
 						styles.joinButton,
-						{ backgroundColor: !this.state.joined ? "white" : Colors.currently }
+						{
+							backgroundColor:
+								(this.state.joined && !this.state.pressed) ||
+								(this.state.pressed && !this.state.joined)
+									? Colors.currently
+									: "white"
+						}
 					]}
 					onPressIn={this.handlePressIn}
 					onPressOut={this.handlePressOut}
 					onPress={this.handleOnPress}
 				>
 					<Text
-						style={[styles.joinText, { color: this.state.joined ? "white" : Colors.currently }]}
+						style={[
+							styles.joinText,
+							{
+								color:
+									(this.state.joined && !this.state.pressed) ||
+									(this.state.pressed && !this.state.joined)
+										? "white"
+										: Colors.currently
+							}
+						]}
 					>
 						{!this.state.joined ? "Join" : "Leave"}
 					</Text>
@@ -105,7 +123,7 @@ class CurrentlyFocus extends Component {
 				onPressPop={this.onPressPop}
 				renderItem={this._renderItem}
 			>
-				<CurrentMove move={this.props.data} />
+				<CurrentMove index={this.props.index} length={this.props.length} move={this.props.data} />
 			</Focus>
 		);
 	}

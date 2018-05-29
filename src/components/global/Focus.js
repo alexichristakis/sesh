@@ -139,14 +139,17 @@ const styles = StyleSheet.create({
 		left: 0
 	},
 	moveContainer: {
-		backgroundColor: "white",
-		borderRadius: 15,
+		// backgroundColor: "white",
+		// borderRadius: 15,
 		position: "absolute",
-		padding: 10,
-		paddingRight: 12,
+		// padding: 10,
+		// paddingRight: 12,
 		left: 10,
 		right: 10,
-		...heavyShadow
+		// left: 0,
+		// right: 0,
+		...shadow
+		// ...heavyShadow
 	},
 	separatorContainer: { width: SCREEN_WIDTH, borderRadius: 1, height: 1 },
 	separatorBackground: {

@@ -12,10 +12,11 @@ import {
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
+import { BlurView } from "react-native-blur";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { TimeAgo } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, shadow, cardShadow } from "../../lib/styles";
 
 class CardWrapper extends Component {
 	constructor(props) {
@@ -84,7 +85,14 @@ class CardWrapper extends Component {
 				pageX: this.state.pageX,
 				pageY: this.state.pageY
 			};
-			this.props.transitionFrom(dimensions, this.onReturn, this.props.data, this.props.children);
+			this.props.transitionFrom(
+				dimensions,
+				this.onReturn,
+				this.props.data,
+				this.props.index,
+				this.props.length,
+				this.props.children
+			);
 		});
 	};
 
@@ -112,7 +120,9 @@ class CardWrapper extends Component {
 				ref={view => (this.view = view)}
 				onLayout={this.measureCard}
 				style={[styles.container, containerAnimatedStyle]}
+				// style={containerAnimatedStyle}
 			>
+				{/* <BlurView style={styles.container} blurType={"dark"}> */}
 				<TouchableOpacity
 					activeOpacity={1}
 					style={{ flex: 1 }}
@@ -122,6 +132,7 @@ class CardWrapper extends Component {
 				>
 					{this.props.children}
 				</TouchableOpacity>
+				{/* </BlurView> */}
 			</Animated.View>
 		);
 	}
@@ -129,13 +140,15 @@ class CardWrapper extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: "white",
-		borderRadius: 15,
+		// backgroundColor: "white",
+		// borderRadius: 15,
 		marginHorizontal: 10,
-		padding: 10,
-		paddingRight: 12,
+		// padding: 10,
+		// paddingRight: 12,
 		marginBottom: 10,
+		// overflow: "hidden"
 		...shadow
+		// ...cardShadow
 	}
 });
 //

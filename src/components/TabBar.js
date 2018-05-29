@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
 	Animated,
+	Easing,
 	ActivityIndicator,
 	StyleSheet,
 	View,
@@ -42,6 +43,7 @@ class TabBar extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		// console.log("new props");
 		if (this.state.open && nextProps.scrollDir.down) this.handleCloseBar();
 		else if (!this.state.open && nextProps.scrollDir.up) this.handleOpenBar();
 	}
@@ -53,7 +55,7 @@ class TabBar extends Component {
 		//
 		// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
 		RNFS.readFile(path, "base64").then(res => {
-			console.log("finished");
+			// console.log("finished");
 			this.setState({ photo: "data:image/png;base64," + res, loading: false });
 		});
 		// console.log(res);
@@ -87,49 +89,63 @@ class TabBar extends Component {
 	};
 
 	handleCloseBar = () => {
+		// console.log("close");
 		this.setState({ open: false });
 		Animated.parallel([
 			Animated.timing(this.animated, {
 				toValue: 0,
-				duration: 500,
+				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
+				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
+				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
+				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start()
 		]);
 	};
 
 	handleOpenBar = () => {
+		// console.log("open");
+
 		this.setState({ open: true });
 		Animated.parallel([
 			Animated.timing(this.animated, {
 				toValue: 1,
 				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 1,
 				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 1,
 				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 1,
 				duration: 250,
+				easing: Easing.ease,
 				useNativeDriver: true
 			}).start()
 		]);
@@ -157,7 +173,7 @@ class TabBar extends Component {
 	};
 
 	render() {
-		console.log("tab bar rendered!");
+		// console.log("tab bar rendered!");
 		const textColorTransform = this.props.textColorTransform;
 		const indicatorAnimate = this.props.indicatorAnimate;
 
@@ -232,7 +248,7 @@ class TabBar extends Component {
 							/>
 						</TouchableOpacity>
 					</Animated.View>
-					<Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Sesh</Animated.Text>
+					{/* <Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Sesh</Animated.Text> */}
 
 					<View style={{ flex: 5 }} />
 					<Animated.View
@@ -289,7 +305,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10
 	},
 	topBar: {
-		paddingHorizontal: 5,
+		marginHorizontal: 5,
 		paddingTop: SB_HEIGHT + 10,
 		flexDirection: "row",
 		top: -50
@@ -338,32 +354,32 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		// backgroundColor: Colors.primary,
-		backgroundColor: "white",
+		// backgroundColor: "white",
 		// borderWidth: StyleSheet.hairlineWidth,
 		// borderColor: Colors.gray,
-		borderWidth: 2,
-		borderColor: "white",
-		borderRadius: 25,
+		// borderWidth: 2,
+		// borderColor: "white",
+		// borderRadius: 25,
 		height: 50,
-		width: 50,
-		...shadow
+		width: 50
+		// ...shadow
 	},
 	addGroupButton: {
 		// flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "white",
+		// backgroundColor: "white",
 
 		// backgroundColor: Colors.groups,
 		// borderWidth: StyleSheet.hairlineWidth,
 		// borderColor: Colors.gray,
-		borderWidth: 2,
-		borderColor: "white",
-		borderRadius: 25,
+		// borderWidth: 2,
+		// borderColor: "white",
+		// borderRadius: 25,
 		height: 50,
-		width: 50,
-		...shadow
+		width: 50
+		// ...shadow
 	},
 	image: {
 		// flex: 1,

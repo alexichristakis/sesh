@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, Animated, View, Text, Image } from "react-native";
+
+import { BlurView } from "react-native-blur";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
@@ -9,33 +11,63 @@ const ICON_SIZE = 50;
 class CurrentMove extends Component {
 	render() {
 		const move = this.props.move;
+
+		const backgroundColor = this.props.index.interpolate({
+			inputRange: [0, this.props.length / 4, this.props.length],
+			outputRange: ["white", "white", Colors.currently]
+		});
+
 		return (
-			<View style={{ flex: 1 }}>
-				<View style={styles.top}>
-					<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
-					<View style={styles.header}>
-						<View style={{ flex: 2 }}>
-							<Text style={styles.group}>{move.group}</Text>
-							<View style={{ flexDirection: "row" }}>
-								<Text style={{ fontSize: 14 }}>from </Text>
-								<Text style={styles.name}>{move.name}</Text>
+			<Animated.View
+				style={{ flex: 1, borderRadius: 15, overflow: "hidden", backgroundColor: backgroundColor }}
+			>
+				<BlurView
+					blurType={"xlight"}
+					style={[
+						styles.container
+						// {
+						// 	backgroundColor: backgroundColor
+						// 	// backgroundColor: "rgba(246,246,246,1)"
+						// }
+					]}
+				>
+					<View style={styles.top}>
+						<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
+						<View style={styles.header}>
+							<View style={{ flex: 2 }}>
+								<Text style={styles.group}>{move.group}</Text>
+								<View style={{ flexDirection: "row" }}>
+									<Text style={{ fontSize: 14 }}>from </Text>
+									<Text style={styles.name}>{move.name}</Text>
+								</View>
 							</View>
+							<Text style={styles.time}>{TimeAgo(move.time)}</Text>
 						</View>
-						<Text style={styles.time}>{TimeAgo(move.time)}</Text>
 					</View>
-				</View>
-				<View style={styles.mid}>
-					<Text style={styles.description}>{move.description}</Text>
-				</View>
-				<View style={styles.bottom}>
-					<Text style={styles.location}>{move.location}</Text>
-				</View>
-			</View>
+					<View style={styles.mid}>
+						<Text style={styles.description}>{move.description}</Text>
+					</View>
+					<View style={styles.bottom}>
+						<Text style={styles.location}>{move.location}</Text>
+					</View>{" "}
+				</BlurView>
+			</Animated.View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		// flexDirection: "row",
+		// alignItems: "center",
+		// marginHorizontal: 10,
+		// borderWidth: 20,
+		// borderColor: Colors.primary,
+		// borderRadius: 15,
+		padding: 10,
+		paddingRight: 12
+	},
 	top: {
 		flex: 2,
 		flexDirection: "row"

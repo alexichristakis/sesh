@@ -88,14 +88,14 @@ class Transition extends Component {
 		if (this.state.open) {
 			let cardAnimatedStyle = {
 				position: "absolute",
-				backgroundColor: "white",
-				borderRadius: 15,
+				// backgroundColor: "white",
+				// borderRadius: 15,
 				left: 10,
 				right: 10,
 				// left: x,
 				// right: x,
-				padding: 10,
-				paddingRight: 12,
+				// padding: 10,
+				// paddingRight: 12,
 				transform: [
 					{
 						translateY: this.openProgress.interpolate({

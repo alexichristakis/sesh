@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Animated, StyleSheet, View, FlatList, Text } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
+
 import { Colors } from "../../lib/styles";
 
 import LaterMove from "./LaterMove";
@@ -84,10 +86,11 @@ class Later extends Component {
 		};
 	}
 
-	transitionFrom = (source, onReturn, data, MoveComponent) => {
+	transitionFrom = (source, onReturn, data, index, MoveComponent) => {
 		let joined = this.state.joinedMoves.includes(data.id);
 		this.setState({ MoveComponent: MoveComponent });
 		this.transition.openCard(source, onReturn, data, {
+			idex: index,
 			joined: joined,
 			joinMove: this.joinMove,
 			leaveMove: this.leaveMove
@@ -99,8 +102,8 @@ class Later extends Component {
 	};
 
 	_renderItem = ({ item, index }) => (
-		<CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
-			<LaterMove move={item} />
+		<CardWrapper data={item} transitionFrom={this.transitionFrom}>
+			<LaterMove index={index} move={item} />
 		</CardWrapper>
 	);
 
@@ -125,9 +128,14 @@ class Later extends Component {
 	};
 
 	render() {
-		const { openProgress } = this.state;
 		return (
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 1, backgroundColor: "transparent" }}>
+				{/* <LinearGradient
+		 start={{ x: 0.0, y: 0.25 }}
+			 end={{ x: 0.5, y: 1.0 }}
+			 	locations={[0.6, 0.8, 1]}
+			 	colors={[Colors.lightGray, Colors.lightGray, Colors.later]}
+			style={{ flex: 1}}> */}
 				<VerticalList
 					ref={item => (this.list = item)}
 					data={data}
@@ -145,6 +153,7 @@ class Later extends Component {
 					onPressPushTo={this.props.onPressPushTo}
 					MoveComponent={this.state.MoveComponent}
 				/>
+				{/* </LinearGradient> */}
 			</View>
 		);
 	}

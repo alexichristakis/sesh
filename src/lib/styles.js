@@ -1,5 +1,6 @@
 const primary = "#007AFF";
 const groups = "#FF9500";
+const groupsTrans = "rgba(255, 149, 0, 0.5)";
 const currently = "#5AC8FA";
 const later = "#FF2C55";
 
@@ -71,9 +72,20 @@ const buttonShadow = {
 	shadowColor: "#000000"
 };
 
+const cardShadow = {
+	shadowRadius: 30,
+	shadowOpacity: 0.13,
+	shadowOffset: {
+		height: 0,
+		width: 0
+	},
+	shadowColor: "#000000"
+};
+
 const colors = {
 	primary,
 	groups,
+	groupsTrans,
 	currently,
 	later,
 	lightGray,
@@ -85,6 +97,7 @@ const colors = {
 module.exports = {
 	Colors: colors,
 	shadow: shadow,
+	cardShadow,
 	iconShadow,
 	shadowBottom,
 	lightShadow,

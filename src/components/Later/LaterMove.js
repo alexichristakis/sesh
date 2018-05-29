@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 
+import { BlurView } from "react-native-blur";
+
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
 
@@ -10,11 +12,12 @@ class LaterMove extends Component {
 	render() {
 		const move = this.props.move;
 		return (
-			<View style={{ flex: 1 }}>
+			// <View style={{ flex: 1 }}>
+			<BlurView blurType={"xlight"} style={styles.container}>
 				<View style={styles.top}>
 					<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
 					<View style={styles.header}>
-						<View style={{ flex: 1 }}>
+						<View style={{ flex: 2 }}>
 							<Text style={styles.group}>{move.group}</Text>
 							<View style={{ flexDirection: "row" }}>
 								<Text style={{ fontSize: 14 }}>from </Text>
@@ -29,13 +32,26 @@ class LaterMove extends Component {
 				</View>
 				<View style={styles.bottom}>
 					<Text style={styles.location}>{move.location}</Text>
-				</View>
-			</View>
+				</View>{" "}
+			</BlurView>
+
+			// </View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		// flexDirection: "row",
+		// alignItems: "center",
+		// marginHorizontal: 10,
+		// borderWidth: 20,
+		// borderColor: Colors.primary,
+		borderRadius: 15,
+		padding: 10,
+		paddingRight: 12
+	},
 	top: {
 		flex: 2,
 		flexDirection: "row"

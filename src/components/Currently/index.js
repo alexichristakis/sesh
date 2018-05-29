@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
+
 import { Colors } from "../../lib/styles";
 
 import CurrentMove from "./CurrentMove";
@@ -84,10 +86,12 @@ class Currently extends Component {
 		};
 	}
 
-	transitionFrom = (source, onReturn, data, MoveComponent) => {
+	transitionFrom = (source, onReturn, data, index, length, MoveComponent) => {
 		let joined = this.state.joinedMoves.includes(data.id);
 		this.setState({ MoveComponent: MoveComponent });
 		this.transition.openCard(source, onReturn, data, {
+			index: index,
+			length: length,
 			joined: joined,
 			joinMove: this.joinMove,
 			leaveMove: this.leaveMove
@@ -99,8 +103,13 @@ class Currently extends Component {
 	};
 
 	_renderItem = ({ item, index }) => (
-		<CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
-			<CurrentMove move={item} />
+		<CardWrapper
+			index={new Animated.Value(index)}
+			length={data.length}
+			data={item}
+			transitionFrom={this.transitionFrom}
+		>
+			<CurrentMove index={new Animated.Value(index)} length={data.length} move={item} />
 		</CardWrapper>
 	);
 
@@ -127,7 +136,14 @@ class Currently extends Component {
 	render() {
 		const { openProgress } = this.state;
 		return (
-			<View style={{ flex: 1 }}>
+			// <LinearGradient
+			// 	// start={{ x: 0.0, y: 0.25 }}
+			// 	// end={{ x: 0.5, y: 1.0 }}
+			// 	locations={[0.6, 0.8, 1]}
+			// 	colors={[Colors.lightGray, Colors.lightGray, Colors.currently]}
+			// 	style={{ flex: 1 }}
+			// >
+			<View style={{ flex: 1, backgroundColor: "transparent" }}>
 				<VerticalList
 					ref={item => (this.list = item)}
 					data={data}
@@ -148,6 +164,7 @@ class Currently extends Component {
 					statusBarHeight={this.props.statusBarHeight}
 				/>
 			</View>
+			// </LinearGradient>
 		);
 	}
 }
