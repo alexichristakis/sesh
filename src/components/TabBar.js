@@ -180,7 +180,7 @@ class TabBar extends Component {
 		/* navigation functions */
 		const presentModal = this.props.onPressPresentModalTo;
 		const presentOverlay = this.props.onPressPresentOverlayTo;
-		const { scrollToStart, scrollToMid, scrollToEnd } = this.props;
+		const { scrollToStart, scrollToEnd } = this.props;
 
 		const buttonTranslate = {
 			translateY: this.animated.interpolate({
@@ -280,13 +280,10 @@ class TabBar extends Component {
 				<Animated.View style={[styles.animated, tabContainerAnimatedStyle]}>
 					<View style={styles.textContainer}>
 						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToStart())}>
-							<Animated.Text style={[styles.text, textColorTransform(0)]}>Groups</Animated.Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToMid())}>
-							<Animated.Text style={[styles.text, textColorTransform(1)]}>Currently</Animated.Text>
+							<Animated.Text style={[styles.text, textColorTransform(0)]}>Currently</Animated.Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToEnd())}>
-							<Animated.Text style={[styles.text, textColorTransform(2)]}>Later</Animated.Text>
+							<Animated.Text style={[styles.text, textColorTransform(1)]}>Later</Animated.Text>
 						</TouchableOpacity>
 					</View>
 					<Animated.View style={[styles.indicator, indicatorAnimate()]} />

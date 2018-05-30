@@ -40,18 +40,18 @@ function Page(props: { children?: ReactElement<*> }) {
 function indicatorAnimate() {
 	return {
 		backgroundColor: xOffset.interpolate({
-			inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-			outputRange: [Colors.groups, Colors.currently, Colors.later]
+			inputRange: [0, SCREEN_WIDTH],
+			outputRange: [Colors.currently, Colors.later]
 		}),
 		width: xOffset.interpolate({
-			inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-			outputRange: [60, 80, 50]
+			inputRange: [0, SCREEN_WIDTH],
+			outputRange: [80, 50]
 		}),
 		transform: [
 			{
 				translateX: xOffset.interpolate({
-					inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-					outputRange: [-SCREEN_WIDTH / 3, 0, SCREEN_WIDTH / 3]
+					inputRange: [0, SCREEN_WIDTH],
+					outputRange: [-SCREEN_WIDTH / 4, SCREEN_WIDTH / 4]
 				})
 			}
 		]
@@ -63,8 +63,8 @@ function textColorTransform(index: number) {
 		case 0:
 			return {
 				color: xOffset.interpolate({
-					inputRange: [-1 * SCREEN_WIDTH, 0, SCREEN_WIDTH],
-					outputRange: [Colors.gray, Colors.groups, Colors.gray],
+					inputRange: [0, SCREEN_WIDTH],
+					outputRange: [Colors.currently, Colors.gray],
 					extrapolate: "clamp"
 				})
 			};
@@ -72,17 +72,8 @@ function textColorTransform(index: number) {
 		case 1:
 			return {
 				color: xOffset.interpolate({
-					inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-					outputRange: [Colors.gray, Colors.currently, Colors.gray],
-					extrapolate: "clamp"
-				})
-			};
-			break;
-		case 2:
-			return {
-				color: xOffset.interpolate({
-					inputRange: [SCREEN_WIDTH, 2 * SCREEN_WIDTH, 3 * SCREEN_WIDTH],
-					outputRange: [Colors.gray, Colors.later, Colors.gray],
+					inputRange: [0, SCREEN_WIDTH],
+					outputRange: [Colors.gray, Colors.later],
 					extrapolate: "clamp"
 				})
 			};
@@ -155,13 +146,11 @@ class Home extends Component {
 	};
 
 	shortenVertPadding = () => {
-		this.groups.list.shortenPadding();
 		this.currently.list.shortenPadding();
 		this.later.list.shortenPadding();
 	};
 
 	lengthenVertPadding = () => {
-		this.groups.list.lengthenPadding();
 		this.currently.list.lengthenPadding();
 		this.later.list.lengthenPadding();
 	};
@@ -253,18 +242,6 @@ class Home extends Component {
 					style={styles.scroll}
 				>
 					<Page>
-						<Groups
-							ref={item => (this.groups = item)}
-							profilePic={this.state.photo}
-							clearScreen={this.clearScreen}
-							returnScreen={this.returnScreen}
-							onPressPushTo={this.onPressPushTo}
-							_onScrollBegin={this._onScollBegin}
-							_onScrollEnd={this._onScrollEnd}
-							_vertOnScroll={this._vertOnScroll}
-						/>
-					</Page>
-					<Page>
 						<Currently
 							ref={item => (this.currently = item)}
 							profilePic={this.state.photo}
@@ -302,7 +279,6 @@ class Home extends Component {
 					profilePic={this.state.photo}
 					scrollDir={this.state.scrollDir}
 					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
-					scrollToMid={() => this.scrollView.scrollTo({ x: SCREEN_WIDTH, y: 0, animated: true })}
 					scrollToEnd={() => this.scrollView.scrollToEnd()}
 					xOffset={xOffset}
 					textColorTransform={textColorTransform}
