@@ -16,11 +16,12 @@ target 'sesh' do
     'RCTAnimation',
     'RCTBlob',
     'RCTVibration',
+    'RCTImage'
     # Add any other subspecs you want to use in your project
   ]
 
   # FIREBASE
-  pod 'Firebase/Core', '~> 4.13.0'
+  pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
@@ -36,24 +37,12 @@ target 'sesh' do
   pod 'lottie-ios', :path => '../node_modules/lottie-ios'
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-  #
-  # target 'sesh-tvOSTests' do
-  #   inherit! :search_paths
-  #   # Pods for testing
-  #   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-  #
-  #   pod 'react-native-blur', :path => '../node_modules/react-native-blur'
-  #
-  # end
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
+  #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'RNReactNativeHapticFeedback', :path => '../node_modules/react-native-haptic-feedback'
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
-  # target 'seshTests' do
-  #   inherit! :search_paths
-  #   # Pods for testing
-  # end
-
-end
+  end

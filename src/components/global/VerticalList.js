@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 import PropTypes from "prop-types";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -38,7 +39,7 @@ class VerticalList extends Component {
 	shortenPadding = () => {
 		Animated.timing(this.animatedTranslate, {
 			toValue: 0,
-			duration: 500,
+			duration: 250,
 			useNativeDriver: true
 		}).start();
 	};
@@ -46,9 +47,19 @@ class VerticalList extends Component {
 	lengthenPadding = () => {
 		Animated.timing(this.animatedTranslate, {
 			toValue: 1,
-			duration: 500,
+			duration: 250,
 			useNativeDriver: true
 		}).start();
+	};
+
+	renderSeparator = () => {
+		const separatorHeight = 1;
+		return (
+			<View style={styles.separatorContainer}>
+				<View style={styles.separatorBackground} />
+				<View style={styles.separator} />
+			</View>
+		);
 	};
 
 	render() {
@@ -70,6 +81,7 @@ class VerticalList extends Component {
 				contentContainerStyle={styles.content}
 				data={this.props.data}
 				renderItem={this.props.renderItem}
+				// ItemSeparatorComponent={this.renderSeparator}
 				scrollEventThrottle={50}
 				onScroll={this.props.onScroll}
 				onScrollBeginDrag={this.props.onScrollBeginDrag}
@@ -92,10 +104,29 @@ const styles = StyleSheet.create({
 		paddingTop: 115,
 		// paddingBottom: 70,
 		// marginBottom: 35,
-		backgroundColor: Colors.lightGray
+		// backgroundColor: Colors.lightGray
+		backgroundColor: "transparent"
+		// backgroundColor: "#979797"
 	},
 	content: {
 		paddingBottom: 120
+	},
+	separatorContainer: { width: SCREEN_WIDTH, marginVertical: 5, borderRadius: 1, height: 2 },
+	separatorBackground: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		height: 2
+		// backgroundColor: "white"
+	},
+	separator: {
+		position: "absolute",
+		top: 0,
+		left: 80,
+		right: 80,
+		height: 2,
+		backgroundColor: Colors.mediumGray
 	}
 });
 

@@ -5,63 +5,61 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - BoringSSL (10.0.2):
-    - BoringSSL/Implementation (= 10.0.2)
-    - BoringSSL/Interface (= 10.0.2)
-  - BoringSSL/Implementation (10.0.2):
-    - BoringSSL/Interface (= 10.0.2)
-  - BoringSSL/Interface (10.0.2)
+  - BoringSSL (10.0.3):
+    - BoringSSL/Implementation (= 10.0.3)
+    - BoringSSL/Interface (= 10.0.3)
+  - BoringSSL/Implementation (10.0.3):
+    - BoringSSL/Interface (= 10.0.3)
+  - BoringSSL/Interface (10.0.3)
   - FBSDKCoreKit (4.33.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.33.0):
     - FBSDKCoreKit
   - FBSDKShareKit (4.33.0):
     - FBSDKCoreKit (~> 4.33.0)
-  - Firebase/Auth (4.13.0):
-    - Firebase/Core
-    - FirebaseAuth (= 4.6.1)
-  - Firebase/Core (4.13.0):
-    - FirebaseAnalytics (= 4.2.0)
-    - FirebaseCore (= 4.0.20)
-  - Firebase/Firestore (4.13.0):
-    - Firebase/Core
-    - FirebaseFirestore (= 0.11.0)
-  - Firebase/Storage (4.13.0):
-    - Firebase/Core
-    - FirebaseStorage (= 2.2.0)
-  - FirebaseAnalytics (4.2.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
+  - Firebase/Auth (5.1.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (= 5.0.0)
+  - Firebase/Core (5.1.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.0.1)
+  - Firebase/CoreOnly (5.1.0):
+    - FirebaseCore (= 5.0.2)
+  - Firebase/Firestore (5.1.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (= 0.12.2)
+  - Firebase/Storage (5.1.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (= 3.0.0)
+  - FirebaseAnalytics (5.0.1):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.6.1):
-    - FirebaseAnalytics (~> 4.2)
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+  - FirebaseAuth (5.0.0):
+    - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.20):
+  - FirebaseCore (5.0.2):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseFirestore (0.11.0):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
+  - FirebaseFirestore (0.12.2):
+    - FirebaseCore (~> 5.0)
+    - FirebaseFirestore/abseil-cpp (= 0.12.2)
     - gRPC-ProtoRPC (~> 1.0)
     - leveldb-library (~> 1.18)
-    - Protobuf (~> 3.5)
-  - FirebaseInstanceID (2.0.10):
-    - FirebaseCore (~> 4.0)
-  - FirebaseStorage (2.2.0):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
+    - Protobuf (~> 3.1)
+  - FirebaseFirestore/abseil-cpp (0.12.2):
+    - FirebaseCore (~> 5.0)
+    - gRPC-ProtoRPC (~> 1.0)
+    - leveldb-library (~> 1.18)
+    - Protobuf (~> 3.1)
+  - FirebaseInstanceID (3.0.0):
+    - FirebaseCore (~> 5.0)
+  - FirebaseStorage (3.0.0):
+    - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.4):
-    - GoogleToolboxForMac/Defines (= 2.1.4)
   - GoogleToolboxForMac/Defines (2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
-    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
   - gRPC (1.12.0):
     - gRPC-RxLibrary (= 1.12.0)
     - gRPC/Main (= 1.12.0)
@@ -95,6 +93,8 @@ PODS:
   - Protobuf (3.5.0)
   - React (0.55.3):
     - React/Core (= 0.55.3)
+  - react-native-maps (0.21.0):
+    - React
   - React/Core (0.55.3):
     - yoga (= 0.55.3.React)
   - React/DevSupport (0.55.3):
@@ -107,6 +107,9 @@ PODS:
     - React/Core
   - React/RCTBlob (0.55.3):
     - React/Core
+  - React/RCTImage (0.55.3):
+    - React/Core
+    - React/RCTNetwork
   - React/RCTNetwork (0.55.3):
     - React/Core
   - React/RCTVibration (0.55.3):
@@ -115,9 +118,9 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNReactNativeHapticFeedback (1.0.1):
+  - RNFS (2.9.12):
     - React
-  - RNVectorIcons (4.6.0):
+  - RNReactNativeHapticFeedback (1.0.1):
     - React
   - yoga (0.55.3.React)
 
@@ -126,20 +129,22 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKShareKit
   - Firebase/Auth
-  - Firebase/Core (~> 4.13.0)
+  - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - React/Core (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
   - React/RCTBlob (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -173,26 +178,28 @@ EXTERNAL SOURCES:
     :path: "../node_modules/lottie-react-native"
   React:
     :path: "../node_modules/react-native"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  BoringSSL: 60dd24df4af296bf41d78e5841dbb95d75f88c0d
+  BoringSSL: c46efb47593135382bc0934196f16d2f726f5f36
   FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
   FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
-  FBSDKShareKit: b7b5002833a4104fbecad75e8e4e082e91c7a08a
-  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
-  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
-  FirebaseAuth: bf22cacf22c60ab454bf2636f556d8892b10b53f
-  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
-  FirebaseFirestore: e92a096ce80c7b4b905d4e9d41dbd944adc9d2a5
-  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
-  FirebaseStorage: 0c223481c8f89ed300cf1239ddd2d9833622c65f
+  FBSDKShareKit: 1869cb24db2cea90666a50cb9d568deb38e2d16e
+  Firebase: e08fb0795f35707aeb1d8a715c731c45bdf6fd56
+  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
+  FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
+  FirebaseCore: b81044df1044c0857a0737c6324678b72d4f7f00
+  FirebaseFirestore: 93b8bf70484c92c271ae93940fe1e2ca9e35f92b
+  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
+  FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   gRPC: 9362451032695e2dfb7bafcd3740e3a27939e4ff
   gRPC-Core: 9696b220565b283e021cf2722d473a4a74b7622a
@@ -205,10 +212,11 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   React: aa2040dbb6f317b95314968021bd2888816e03d5
+  react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
+  RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNReactNativeHapticFeedback: 81a9bb493a719cf71b7d4d1cebbd91a124ce5cf5
-  RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: edbc5122efc5d32b32f585f2dfdd36355782665f
+PODFILE CHECKSUM: ed2c760eeed465d4f101a9cc0ea9dabf9245ac27
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

@@ -12,10 +12,11 @@ import {
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
+import { BlurView } from "react-native-blur";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { TimeAgo } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, shadow, cardShadow } from "../../lib/styles";
 
 class CardWrapper extends Component {
 	constructor(props) {
@@ -112,6 +113,7 @@ class CardWrapper extends Component {
 				ref={view => (this.view = view)}
 				onLayout={this.measureCard}
 				style={[styles.container, containerAnimatedStyle]}
+				// style={containerAnimatedStyle}
 			>
 				<TouchableOpacity
 					activeOpacity={1}
@@ -129,13 +131,15 @@ class CardWrapper extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: "white",
-		borderRadius: 15,
+		// backgroundColor: "white",
+		// borderRadius: 15,
 		marginHorizontal: 10,
-		padding: 10,
-		paddingRight: 12,
+		// padding: 10,
+		// paddingRight: 12,
 		marginBottom: 10,
+		// overflow: "hidden"
 		...shadow
+		// ...cardShadow
 	}
 });
 //

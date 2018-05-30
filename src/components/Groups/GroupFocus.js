@@ -136,7 +136,7 @@ class GroupFocus extends Component {
 				onPressPop={this.onPressPop}
 				renderItem={this._renderItem}
 			>
-				<Group editName updateName={this.updateGroupName} data={this.props.data} />
+				<Group editName blur updateName={this.updateGroupName} data={this.props.data} />
 			</Focus>
 		);
 	}

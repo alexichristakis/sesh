@@ -9,6 +9,7 @@ import {
 	Platform
 } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import RNFS from "react-native-fs";
@@ -233,6 +234,11 @@ class Home extends Component {
 		// } else {
 		return (
 			<View style={styles.container}>
+				{/* <LinearGradient
+				style={styles.container}
+				locations={[0.5, 1]}
+				colors={["white", Colors.groups]}
+			> */}
 				<StatusBar barStyle="dark-content" />
 				<Animated.ScrollView
 					horizontal
@@ -302,6 +308,7 @@ class Home extends Component {
 					textColorTransform={textColorTransform}
 					indicatorAnimate={indicatorAnimate}
 				/>
+				{/* </LinearGradient> */}
 			</View>
 		);
 		// }
@@ -310,7 +317,8 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		backgroundColor: Colors.lightGray
 	},
 	scroll: {
 		flex: 1,

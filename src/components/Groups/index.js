@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Animated, StyleSheet, View, FlatList, Text } from "react-native";
 
-import { Subscribe } from "react-contextual";
+import LinearGradient from "react-native-linear-gradient";
 
 import { Colors } from "../../lib/styles";
 
@@ -52,6 +52,34 @@ const data = [
 		size: 9,
 		time: 1526598742850,
 		photo: "https://graph.facebook.com/1825693684117541/picture"
+	},
+	{
+		id: "7",
+		name: "9pack",
+		size: 9,
+		time: 1526598742850,
+		photo: "https://graph.facebook.com/1825693684117541/picture"
+	},
+	{
+		id: "8",
+		name: "9pack",
+		size: 9,
+		time: 1526598742850,
+		photo: "https://graph.facebook.com/1825693684117541/picture"
+	},
+	{
+		id: "9",
+		name: "9pack",
+		size: 9,
+		time: 1526598742850,
+		photo: "https://graph.facebook.com/1825693684117541/picture"
+	},
+	{
+		id: "10",
+		name: "9pack",
+		size: 9,
+		time: 1526598742850,
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	}
 ];
 
@@ -76,8 +104,8 @@ class Groups extends Component {
 	};
 
 	_renderItem = ({ item, index }) => (
-		<CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
-			<Group data={item} />
+		<CardWrapper data={item} transitionFrom={this.transitionFrom}>
+			<Group index={index} data={item} />
 		</CardWrapper>
 	);
 
@@ -91,7 +119,15 @@ class Groups extends Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			// <View style={{ flex: 1 }}>
+			// <LinearGradient
+			// 	// start={{ x: 0.0, y: 0.25 }}
+			// 	// end={{ x: 0.5, y: 1.0 }}
+			// 	locations={[0.8, 1]}
+			// 	colors={[Colors.lightGray, Colors.groups]}
+			// 	style={{ flex: 1 }}
+			// >
+			<View style={{ flex: 1, backgroundColor: "transparent" }}>
 				<VerticalList
 					ref={item => (this.list = item)}
 					data={data}
@@ -110,6 +146,8 @@ class Groups extends Component {
 					MoveComponent={this.state.MoveComponent}
 				/>
 			</View>
+			// </LinearGradient>
+			// </View>
 		);
 	}
 }

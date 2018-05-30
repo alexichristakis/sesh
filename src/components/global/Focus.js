@@ -11,6 +11,8 @@ import {
 	FlatList
 } from "react-native";
 
+import MapCard from "../global/MapCard";
+import MapView from "react-native-maps";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
@@ -37,10 +39,10 @@ class Focus extends Component {
 		this.entry = new Animated.Value(0);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		Animated.timing(this.entry, {
 			toValue: 1,
-			duration: 200,
+			duration: 100,
 			easing: Easing.poly(0.25),
 			useNativeDriver: true
 		}).start();
@@ -49,7 +51,7 @@ class Focus extends Component {
 	exit = () => {
 		Animated.timing(this.entry, {
 			toValue: 0,
-			duration: 200,
+			duration: 100,
 			easing: Easing.poly(0.25),
 			useNativeDriver: true
 		}).start();
@@ -77,6 +79,10 @@ class Focus extends Component {
 		};
 
 		let listStyle = {
+			// position: "absolute",
+			// top: 0,
+			// bottom: 0,
+			// // left: 1
 			marginHorizontal: 20,
 			paddingTop: listTopPadding,
 			transform: [
@@ -90,6 +96,13 @@ class Focus extends Component {
 			// ...shadow
 		};
 
+		const region = {
+			latitude: 37.78825,
+			longitude: -122.4324,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421
+		};
+
 		return (
 			<View style={styles.container}>
 				<AnimatedFlatList
@@ -101,6 +114,7 @@ class Focus extends Component {
 					ListFooterComponent={this.props.renderFooter}
 					ItemSeparatorComponent={this.renderSeparator}
 				/>
+
 				<ScrollView
 					style={[styles.swipeContainer, scrollHeight]}
 					horizontal
@@ -130,6 +144,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Colors.lightGray
+
 		// ...shadow
 	},
 	swipeContainer: {
@@ -139,14 +154,17 @@ const styles = StyleSheet.create({
 		left: 0
 	},
 	moveContainer: {
-		backgroundColor: "white",
-		borderRadius: 15,
+		// backgroundColor: "white",
+		// borderRadius: 15,
 		position: "absolute",
-		padding: 10,
-		paddingRight: 12,
+		// padding: 10,
+		// paddingRight: 12,
 		left: 10,
 		right: 10,
-		...heavyShadow
+		// left: 0,
+		// right: 0,
+		...shadow
+		// ...heavyShadow
 	},
 	separatorContainer: { width: SCREEN_WIDTH, borderRadius: 1, height: 1 },
 	separatorBackground: {
