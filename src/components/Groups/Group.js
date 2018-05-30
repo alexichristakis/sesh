@@ -59,11 +59,11 @@ class Group extends Component {
 			<BlurView blurType={"xlight"} style={styles.container}>
 				{/* {this.p/rops.blur && <BlurView blurType={"xlight"} style={styles.blur} />} */}
 				{/* {!this.props.blur && <View style={styles.blank} />} */}
-				<View style={styles.pictures}>
+				{/* <View style={styles.pictures}>
 					<Image style={styles.image1} source={{ uri: this.state.photo }} />
 					<Image style={styles.image2} source={{ uri: this.state.photo }} />
 					<Image style={styles.image3} source={{ uri: this.state.photo }} />
-				</View>
+				</View> */}
 				<View style={styles.mid}>
 					<View style={{ flexDirection: "row", alignItems: "center" }}>
 						{!this.props.editName && <Text style={styles.name}>{group.name}</Text>}

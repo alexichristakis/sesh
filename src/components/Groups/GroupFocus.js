@@ -71,12 +71,13 @@ class GroupFocus extends Component {
 		if (this.state.changedName) this.props.changeName(this.state.newName);
 
 		setTimeout(() => {
-			Navigation.pop(this.props.componentId, {
-				customTransition: {
-					animations: [],
-					duration: 0.1
-				}
-			});
+			// Navigation.pop(this.props.componentId, {
+			// 	customTransition: {
+			// 		animations: [],
+			// 		duration: 0.1
+			// 	}
+			// });
+			Navigation.dismissOverlay(this.props.componentId);
 
 			this.props.closeCard();
 		}, 20);
@@ -125,6 +126,7 @@ class GroupFocus extends Component {
 	render() {
 		return (
 			<Focus
+				groups
 				ref={item => (this.focus = item)}
 				data={data}
 				renderHeader={this._renderHeader}

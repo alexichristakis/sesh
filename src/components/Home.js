@@ -274,6 +274,7 @@ class Home extends Component {
 
 				<TabBar
 					ref={item => (this.topBar = item)}
+					onPressPushTo={this.onPressPushTo}
 					onPressPresentModalTo={this.onPressPresentModalTo}
 					onPressPresentOverlayTo={this.onPressPresentOverlayTo}
 					profilePic={this.state.photo}

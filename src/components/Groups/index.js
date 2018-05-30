@@ -129,6 +129,7 @@ class Groups extends Component {
 			// >
 			<View style={{ flex: 1, backgroundColor: "transparent" }}>
 				<VerticalList
+					groups
 					ref={item => (this.list = item)}
 					data={data}
 					renderItem={this._renderItem}
@@ -137,11 +138,10 @@ class Groups extends Component {
 					onScrollEndDrag={this.props._onScrollEnd}
 				/>
 				<Transition
+					groups
 					ref={item => (this.transition = item)}
 					destinationPage={"sesh.GroupFocus"}
 					transitionFinished={this.transitionFinished}
-					clearScreen={this.props.clearScreen}
-					returnScreen={this.props.returnScreen}
 					onPressPushTo={this.props.onPressPushTo}
 					MoveComponent={this.state.MoveComponent}
 				/>

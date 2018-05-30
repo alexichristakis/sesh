@@ -32,7 +32,7 @@ class Transition extends Component {
 	}
 
 	openCard = (source, onReturn, data, props) => {
-		this.props.clearScreen();
+		if (!this.props.groups) this.props.clearScreen();
 		this.setState({
 			open: true,
 			onReturn: onReturn,
@@ -67,7 +67,7 @@ class Transition extends Component {
 	};
 
 	closeCard = () => {
-		this.props.returnScreen();
+		if (!this.props.groups) this.props.returnScreen();
 		setTimeout(() => {
 			this.state.onReturn();
 		}, 190);
@@ -84,7 +84,6 @@ class Transition extends Component {
 
 	render() {
 		const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
-		console.log(this.state.MoveComponent);
 
 		if (this.state.open) {
 			let cardAnimatedStyle = {
@@ -118,7 +117,7 @@ class Transition extends Component {
 
 			return (
 				<View style={styles.container}>
-					<Animated.View style={[styles.cover, opacityStyle]} />
+					{!this.props.groups && <Animated.View style={[styles.cover, opacityStyle]} />}
 					<Animated.View style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
 				</View>
 			);
@@ -145,8 +144,8 @@ const styles = StyleSheet.create({
 Transition.propTypes = {
 	// MoveComponent: PropTypes.ReactElement.isRequired,
 	transitionFinished: PropTypes.func,
-	clearScreen: PropTypes.func.isRequired,
-	returnScreen: PropTypes.func.isRequired,
+	// clearScreen: PropTypes.func.isRequired,
+	// returnScreen: PropTypes.func.isRequired,
 	onPressPushTo: PropTypes.func.isRequired
 };
 

@@ -19,7 +19,7 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
 
 const BAR_HEIGHT = 80;
-const ICON_DIMENSION = 60;
+const ICON_DIMENSION = 80;
 
 class TabBar extends Component {
 	constructor(props) {
@@ -28,7 +28,7 @@ class TabBar extends Component {
 		this.state = {
 			open: true,
 			loading: true,
-			photo: ""
+			photo: RNFS.DocumentDirectoryPath + "/profile_pic.png"
 		};
 
 		this.animated = new Animated.Value(1);
@@ -51,13 +51,13 @@ class TabBar extends Component {
 	componentDidMount() {
 		// fetch that data
 		// const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
-		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-		//
-		// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
-		RNFS.readFile(path, "base64").then(res => {
-			// console.log("finished");
-			this.setState({ photo: "data:image/png;base64," + res, loading: false });
-		});
+		// const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		// //
+		// // await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+		// RNFS.readFile(path, "base64").then(res => {
+		// 	// console.log("finished");
+		// 	this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		// });
 		// console.log(res);
 	}
 
@@ -89,7 +89,6 @@ class TabBar extends Component {
 	};
 
 	handleCloseBar = () => {
-		// console.log("close");
 		this.setState({ open: false });
 		Animated.parallel([
 			Animated.timing(this.animated, {
@@ -120,8 +119,6 @@ class TabBar extends Component {
 	};
 
 	handleOpenBar = () => {
-		// console.log("open");
-
 		this.setState({ open: true });
 		Animated.parallel([
 			Animated.timing(this.animated, {
@@ -173,13 +170,13 @@ class TabBar extends Component {
 	};
 
 	render() {
-		// console.log("tab bar rendered!");
 		const textColorTransform = this.props.textColorTransform;
 		const indicatorAnimate = this.props.indicatorAnimate;
 
 		/* navigation functions */
 		const presentModal = this.props.onPressPresentModalTo;
 		const presentOverlay = this.props.onPressPresentOverlayTo;
+		const pushTo = this.props.onPressPushTo;
 		const { scrollToStart, scrollToEnd } = this.props;
 
 		const buttonTranslate = {
@@ -233,27 +230,7 @@ class TabBar extends Component {
 				</Animated.View>
 
 				<View style={styles.topBar}>
-					<Animated.View style={[styles.profileButton, profileButtonAnimatedStyle]}>
-						<TouchableOpacity
-							activeOpacity={0.9}
-							onPressIn={() => this.handlePressIn(this.profileScale)}
-							onPressOut={() => this.handlePressOut(this.profileScale)}
-							onPress={() => this.haptic(presentOverlay("sesh.Profile"))}
-						>
-							<Image
-								style={styles.image}
-								resizeMode="cover"
-								// source={{ uri: this.props.profilePic }}
-								source={{ uri: this.state.photo }}
-							/>
-						</TouchableOpacity>
-					</Animated.View>
-					{/* <Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Sesh</Animated.Text> */}
-
-					<View style={{ flex: 5 }} />
-					<Animated.View
-						style={[styles.addFriendButton, addFriendAnimatedStyle, { marginRight: 10 }]}
-					>
+					<Animated.View style={[styles.addFriendButton, addFriendAnimatedStyle]}>
 						<TouchableOpacity
 							style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
 							activeOpacity={1}
@@ -264,6 +241,23 @@ class TabBar extends Component {
 							<Icon name="user-plus" size={25} color={Colors.primary} />
 						</TouchableOpacity>
 					</Animated.View>
+					<Animated.View style={[styles.profileButton, profileButtonAnimatedStyle]}>
+						<TouchableOpacity
+							activeOpacity={0.9}
+							onPressIn={() => this.handlePressIn(this.profileScale)}
+							onPressOut={() => this.handlePressOut(this.profileScale)}
+							onPress={() =>
+								this.haptic(presentOverlay("sesh.Profile", { onPressPushTo: presentOverlay }))
+							}
+						>
+							<Image
+								style={styles.image}
+								resizeMode="cover"
+								// source={{ uri: this.props.profilePic }}
+								source={{ uri: this.state.photo }}
+							/>
+						</TouchableOpacity>
+					</Animated.View>
 					<Animated.View style={[styles.addGroupButton, createGroupAnimatedStyle]}>
 						<TouchableOpacity
 							style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -272,7 +266,7 @@ class TabBar extends Component {
 							onPressOut={() => this.handlePressOut(this.createGroupScale)}
 							onPress={() => this.haptic(presentModal("sesh.CreateGroup"))}
 						>
-							<Icon name="users" size={25} color={Colors.groups} />
+							<Icon style={{ paddingLeft: 5 }} name="users" size={25} color={Colors.primary} />
 						</TouchableOpacity>
 					</Animated.View>
 				</View>
@@ -282,6 +276,7 @@ class TabBar extends Component {
 						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToStart())}>
 							<Animated.Text style={[styles.text, textColorTransform(0)]}>Currently</Animated.Text>
 						</TouchableOpacity>
+						{/* <View style={{ flex: 1 }} /> */}
 						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToEnd())}>
 							<Animated.Text style={[styles.text, textColorTransform(1)]}>Later</Animated.Text>
 						</TouchableOpacity>
@@ -341,12 +336,12 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	profileButton: {
-		flex: 1
+		flex: 0.1,
+		alignItems: "center"
 		// flexDirection: "row",
-		// backgroundColor: "red",
 	},
 	addFriendButton: {
-		// flex: 1,
+		flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
@@ -362,7 +357,7 @@ const styles = StyleSheet.create({
 		// ...shadow
 	},
 	addGroupButton: {
-		// flex: 1,
+		flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
@@ -379,7 +374,7 @@ const styles = StyleSheet.create({
 		// ...shadow
 	},
 	image: {
-		// flex: 1,
+		flex: 1,
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_DIMENSION / 2,
 		height: ICON_DIMENSION,

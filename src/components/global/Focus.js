@@ -83,7 +83,7 @@ class Focus extends Component {
 			// top: 0,
 			// bottom: 0,
 			// // left: 1
-			marginHorizontal: 20,
+			paddingHorizontal: 20,
 			paddingTop: listTopPadding,
 			transform: [
 				{
@@ -104,7 +104,12 @@ class Focus extends Component {
 		};
 
 		return (
-			<View style={styles.container}>
+			<View
+				style={[
+					styles.container,
+					{ backgroundColor: !this.props.groups ? Colors.lightGray : "transparent" }
+				]}
+			>
 				<AnimatedFlatList
 					style={listStyle}
 					data={this.props.data}
@@ -142,8 +147,7 @@ class Focus extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: Colors.lightGray
+		flex: 1
 
 		// ...shadow
 	},

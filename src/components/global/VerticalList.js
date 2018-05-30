@@ -77,7 +77,7 @@ class VerticalList extends Component {
 
 		return (
 			<AnimatedFlatList
-				style={[styles.container, animatedStyle]}
+				style={[styles.container, !this.props.groups ? animatedStyle : {}]}
 				contentContainerStyle={styles.content}
 				data={this.props.data}
 				renderItem={this.props.renderItem}
