@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
+import MapView, { Marker } from "react-native-maps";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { Colors, shadow } from "../../lib/styles";
 
 import Focus from "../global/Focus";
+import MapCard from "../global/MapCard";
 import User from "../global/User";
 import CurrentMove from "./CurrentMove";
 
@@ -67,46 +69,63 @@ class CurrentlyFocus extends Component {
 
 	_renderHeader = () => {
 		let animatedStyle = {
+			// flex: 1,
 			transform: [
 				{
 					scale: this.animated
 				}
 			]
 		};
+
+		const region = {
+			latitude: 37.78825,
+			longitude: -122.4324,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421
+		};
 		return (
-			<Animated.View style={animatedStyle}>
-				<TouchableOpacity
-					activeOpacity={1}
-					style={[
-						styles.joinButton,
-						{
-							backgroundColor:
-								(this.state.joined && !this.state.pressed) ||
-								(this.state.pressed && !this.state.joined)
-									? Colors.currently
-									: "white"
-						}
-					]}
-					onPressIn={this.handlePressIn}
-					onPressOut={this.handlePressOut}
-					onPress={this.handleOnPress}
-				>
-					<Text
+			<View style={{ flex: 1, paddingTop: 50 }}>
+				<MapCard
+					// style={{ flex: 1 }}
+					location={{
+						latitude: 37.78825,
+						longitude: -122.4324
+					}}
+				/>
+				<Animated.View style={animatedStyle}>
+					<TouchableOpacity
+						activeOpacity={1}
 						style={[
-							styles.joinText,
+							styles.joinButton,
 							{
-								color:
+								backgroundColor:
 									(this.state.joined && !this.state.pressed) ||
 									(this.state.pressed && !this.state.joined)
-										? "white"
-										: Colors.currently
+										? Colors.currently
+										: "white"
 							}
 						]}
+						onPressIn={this.handlePressIn}
+						onPressOut={this.handlePressOut}
+						onPress={this.handleOnPress}
 					>
-						{!this.state.joined ? "Join" : "Leave"}
-					</Text>
-				</TouchableOpacity>
-			</Animated.View>
+						<Text
+							style={[
+								styles.joinText,
+								{
+									color:
+										(this.state.joined && !this.state.pressed) ||
+										(this.state.pressed && !this.state.joined)
+											? "white"
+											: Colors.currently
+								}
+							]}
+						>
+							{!this.state.joined ? "Join" : "Leave"}
+						</Text>
+					</TouchableOpacity>
+				</Animated.View>
+			</View>
 		);
 	};
 
@@ -131,7 +150,7 @@ class CurrentlyFocus extends Component {
 
 const styles = StyleSheet.create({
 	joinButton: {
-		margin: 10,
+		marginVertical: 20,
 		padding: 15,
 		borderRadius: 15,
 		alignItems: "center",

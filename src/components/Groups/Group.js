@@ -16,7 +16,7 @@ class Group extends Component {
 		super(props);
 
 		this.state = {
-			photo: "",
+			photo: RNFS.DocumentDirectoryPath + "/profile_pic.png",
 			editing: false,
 			loading: true,
 			groupName: this.props.data.name,
@@ -25,10 +25,10 @@ class Group extends Component {
 	}
 
 	componentDidMount() {
-		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-		RNFS.readFile(path, "base64").then(res => {
-			this.setState({ photo: "data:image/png;base64," + res, loading: false });
-		});
+		// const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		// RNFS.readFile(path, "base64").then(res => {
+		// 	this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		// });
 	}
 
 	onChangeText = text => {

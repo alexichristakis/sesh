@@ -85,14 +85,7 @@ class CardWrapper extends Component {
 				pageX: this.state.pageX,
 				pageY: this.state.pageY
 			};
-			this.props.transitionFrom(
-				dimensions,
-				this.onReturn,
-				this.props.data,
-				this.props.index,
-				this.props.length,
-				this.props.children
-			);
+			this.props.transitionFrom(dimensions, this.onReturn, this.props.data, this.props.children);
 		});
 	};
 
@@ -122,7 +115,6 @@ class CardWrapper extends Component {
 				style={[styles.container, containerAnimatedStyle]}
 				// style={containerAnimatedStyle}
 			>
-				{/* <BlurView style={styles.container} blurType={"dark"}> */}
 				<TouchableOpacity
 					activeOpacity={1}
 					style={{ flex: 1 }}
@@ -132,7 +124,6 @@ class CardWrapper extends Component {
 				>
 					{this.props.children}
 				</TouchableOpacity>
-				{/* </BlurView> */}
 			</Animated.View>
 		);
 	}

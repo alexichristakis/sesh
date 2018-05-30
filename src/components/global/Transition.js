@@ -84,6 +84,7 @@ class Transition extends Component {
 
 	render() {
 		const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
+		console.log(this.state.MoveComponent);
 
 		if (this.state.open) {
 			let cardAnimatedStyle = {
@@ -110,7 +111,7 @@ class Transition extends Component {
 			let opacityStyle = {
 				opacity: this.openProgress.interpolate({
 					inputRange: [0, 0.7, 1],
-					outputRange: [0, 1, 1],
+					outputRange: [0, 0, 1],
 					extrapolate: "clamp"
 				})
 			};

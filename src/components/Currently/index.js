@@ -86,12 +86,10 @@ class Currently extends Component {
 		};
 	}
 
-	transitionFrom = (source, onReturn, data, index, length, MoveComponent) => {
+	transitionFrom = (source, onReturn, data, MoveComponent) => {
 		let joined = this.state.joinedMoves.includes(data.id);
 		this.setState({ MoveComponent: MoveComponent });
 		this.transition.openCard(source, onReturn, data, {
-			index: index,
-			length: length,
 			joined: joined,
 			joinMove: this.joinMove,
 			leaveMove: this.leaveMove
@@ -103,13 +101,8 @@ class Currently extends Component {
 	};
 
 	_renderItem = ({ item, index }) => (
-		<CardWrapper
-			index={new Animated.Value(index)}
-			length={data.length}
-			data={item}
-			transitionFrom={this.transitionFrom}
-		>
-			<CurrentMove index={new Animated.Value(index)} length={data.length} move={item} />
+		<CardWrapper data={item} transitionFrom={this.transitionFrom}>
+			<CurrentMove move={item} />
 		</CardWrapper>
 	);
 
