@@ -16,57 +16,47 @@ YellowBox.ignoreWarnings([
 	"Class RCTCxxModule"
 ]);
 
-export default class App extends Component {
-	render() {
-		return (
-			<View>
-				<Text>HI!!!!</Text>
-			</View>
-		);
+registerScreens();
+Navigation.events().registerAppLaunchedListener(async () => {
+	/* get user object if authenticated */
+	Navigation.setDefaultOptions({
+		// customTransition: { duration: 0.1 },
+		popGesture: false,
+		// modalPresentationStyle: "popover",
+		topBar: {
+			visible: false
+		}
+	});
+	let user = await UserAuthenticated();
+	console.log(user);
+	if (user) {
+		Navigation.setRoot({
+			root: {
+				stack: {
+					children: [
+						{
+							component: {
+								name: "sesh.Home",
+								passProps: {
+									user: user._user
+								}
+							}
+						}
+					]
+				}
+			}
+		});
+	} else {
+		Navigation.setRoot({
+			stack: {
+				children: [
+					{
+						component: {
+							name: "sesh.Register"
+						}
+					}
+				]
+			}
+		});
 	}
-}
-
-// registerScreens();
-// Navigation.events().registerAppLaunchedListener(async () => {
-// 	/* get user object if authenticated */
-// 	Navigation.setDefaultOptions({
-// 		// customTransition: { duration: 0.1 },
-// 		popGesture: false,
-// 		// modalPresentationStyle: "popover",
-// 		topBar: {
-// 			visible: false
-// 		}
-// 	});
-// 	let user = await UserAuthenticated();
-// 	console.log(user);
-// 	if (user) {
-// 		Navigation.setRoot({
-// 			root: {
-// 				stack: {
-// 					children: [
-// 						{
-// 							component: {
-// 								name: "sesh.Home",
-// 								passProps: {
-// 									user: user._user
-// 								}
-// 							}
-// 						}
-// 					]
-// 				}
-// 			}
-// 		});
-// 	} else {
-// 		Navigation.setRoot({
-// 			stack: {
-// 				children: [
-// 					{
-// 						component: {
-// 							name: "sesh.Register"
-// 						}
-// 					}
-// 				]
-// 			}
-// 		});
-// 	}
-// });
+});
