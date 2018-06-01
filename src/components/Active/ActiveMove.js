@@ -14,10 +14,9 @@ class ActiveMove extends Component {
 		const move = this.props.move;
 		return (
 			<View style={styles.container}>
-				{/* <View style={styles.background} /> */}
 				<LinearGradient
 					style={styles.background}
-					locations={[0.9, 1]}
+					locations={[0.95, 1]}
 					colors={["white", Colors.active]}
 				/>
 				<BlurView blurType={"light"} style={styles.blur}>
@@ -27,7 +26,7 @@ class ActiveMove extends Component {
 							<View style={{ flex: 2 }}>
 								<Text style={styles.group}>{move.group}</Text>
 								<View style={{ flexDirection: "row" }}>
-									<Text style={{ fontSize: 14 }}>from </Text>
+									<Text style={{ fontSize: 14, color: Colors.gray }}>from </Text>
 									<Text style={styles.name}>{move.name}</Text>
 								</View>
 							</View>
@@ -96,10 +95,11 @@ const styles = StyleSheet.create({
 	name: {
 		fontSize: 14,
 		fontWeight: "bold",
+		color: Colors.gray,
 	},
 	group: {
 		fontSize: 24,
-		fontWeight: "900",
+		fontWeight: "800",
 		// color: Colors.active,
 	},
 	time: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		// alignSelf: "center",
 		color: Colors.active,
-		fontWeight: "900",
+		fontWeight: "800",
 	},
 	mid: {
 		flex: 2,

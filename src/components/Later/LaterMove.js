@@ -14,10 +14,9 @@ class LaterMove extends Component {
 		const move = this.props.move;
 		return (
 			<View style={styles.container}>
-				{/* <View style={styles.background} /> */}
 				<LinearGradient
 					style={styles.background}
-					locations={[0.9, 1]}
+					locations={[0.95, 1]}
 					colors={["white", Colors.later]}
 				/>
 				<BlurView blurType={"light"} style={styles.blur}>
@@ -27,7 +26,7 @@ class LaterMove extends Component {
 							<View style={{ flex: 2 }}>
 								<Text style={styles.group}>{move.group}</Text>
 								<View style={{ flexDirection: "row" }}>
-									<Text style={{ fontSize: 14 }}>from </Text>
+									<Text style={{ fontSize: 14, color: Colors.gray }}>from </Text>
 									<Text style={styles.name}>{move.name}</Text>
 								</View>
 							</View>
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		borderRadius: 15,
-		overflow: "hidden"
+		overflow: "hidden",
 	},
 	background: {
 		position: "absolute",
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 		backgroundColor: Colors.later,
-		opacity: 0.2
+		opacity: 0.2,
 	},
 	blur: {
 		flex: 1,
@@ -71,35 +70,36 @@ const styles = StyleSheet.create({
 		// backgroundColor: Colors.primary,
 
 		padding: 10,
-		paddingRight: 12
+		paddingRight: 12,
 
 		// ...shadow
 	},
 	top: {
 		flex: 2,
-		flexDirection: "row"
+		flexDirection: "row",
 	},
 	image: {
 		alignSelf: "center",
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE / 2,
 		height: ICON_SIZE,
-		width: ICON_SIZE
+		width: ICON_SIZE,
 	},
 	header: {
 		flex: 1,
 		flexDirection: "row",
 		alignSelf: "center",
 		marginLeft: 10,
-		marginBottom: 3
+		marginBottom: 3,
 	},
 	name: {
 		fontSize: 14,
-		fontWeight: "bold"
+		fontWeight: "bold",
+		color: Colors.gray,
 	},
 	group: {
 		fontSize: 24,
-		fontWeight: "900"
+		fontWeight: "800",
 		// color: Colors.later,
 	},
 	time: {
@@ -109,24 +109,24 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		// alignSelf: "center",
 		color: Colors.later,
-		fontWeight: "900"
+		fontWeight: "800",
 	},
 	mid: {
 		flex: 2,
-		marginVertical: 10
+		marginVertical: 10,
 	},
 	description: {
-		fontSize: 14
+		fontSize: 14,
 	},
 	bottom: {
 		flex: 1,
-		alignSelf: "flex-end"
+		alignSelf: "flex-end",
 	},
 	location: {
 		fontSize: 14,
 		// fontWeight: "200",
-		color: Colors.later
-	}
+		color: Colors.later,
+	},
 });
 
 export default LaterMove;

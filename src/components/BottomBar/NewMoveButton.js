@@ -21,7 +21,7 @@ class NewMoveButton extends Component {
 		this.yTranslate = new Animated.Value(0);
 
 		this.mainButtonScale = new Animated.Value(1);
-		this.currentlyScale = new Animated.Value(1);
+		this.activeScale = new Animated.Value(1);
 		this.laterScale = new Animated.Value(1);
 	}
 
@@ -126,7 +126,7 @@ class NewMoveButton extends Component {
 			],
 		};
 
-		let currentlyAnimatedStyle = {
+		let activeAnimatedStyle = {
 			// opacity: this.animatedOpacity,
 			transform: [
 				{
@@ -142,7 +142,7 @@ class NewMoveButton extends Component {
 					}),
 				},
 				{
-					scale: this.currentlyScale,
+					scale: this.activeScale,
 				},
 			],
 		};
@@ -179,12 +179,12 @@ class NewMoveButton extends Component {
 						<Icon name="clock" size={25} color={"white"} />
 					</TouchableWithoutFeedback>
 				</Animated.View>
-				<Animated.View style={[styles.currentlyButton, currentlyAnimatedStyle]}>
+				<Animated.View style={[styles.activeButton, activeAnimatedStyle]}>
 					<TouchableWithoutFeedback
-						onPressIn={() => this.handlePressIn(this.currentlyScale)}
-						onPressOut={() => this.handlePressOut(this.currentlyScale)}
+						onPressIn={() => this.handlePressIn(this.activeScale)}
+						onPressOut={() => this.handlePressOut(this.activeScale)}
 						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}
-						style={styles.currentlyButton}>
+						style={styles.activeButton}>
 						{/* <Icon name="send" size={25} color={"white"} /> */}
 						<Icon name="plus" size={30} color={"white"} />
 					</TouchableWithoutFeedback>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		// borderRadius:
 	},
-	currentlyButton: {
+	activeButton: {
 		position: "absolute",
 		alignItems: "center",
 		justifyContent: "center",
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: Colors.currently,
+		backgroundColor: Colors.active,
 		// backgroundColor: "transparent",
 		overflow: "hidden",
 		// borderRadius:
