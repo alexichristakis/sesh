@@ -6,7 +6,7 @@ import {
 	StatusBar,
 	StyleSheet,
 	Dimensions,
-	Platform
+	Platform,
 } from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
@@ -15,9 +15,8 @@ import { BlurView } from "react-native-blur";
 import RNFS from "react-native-fs";
 
 import Background from "./global/Background";
-import NewMoveButton from "./NewMoveButton";
 import TopBar from "./TopBar";
-import NavBar from "./NavBar";
+import BottomBar from "./BottomBar";
 import Groups from "./Groups";
 import Currently from "./Currently";
 import Later from "./Later";
@@ -43,20 +42,20 @@ function indicatorAnimate() {
 	return {
 		backgroundColor: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH],
-			outputRange: [Colors.currently, Colors.later]
+			outputRange: [Colors.currently, Colors.later],
 		}),
 		width: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH],
-			outputRange: [40, 50]
+			outputRange: [40, 50],
 		}),
 		transform: [
 			{
 				translateX: xOffset.interpolate({
 					inputRange: [0, SCREEN_WIDTH],
-					outputRange: [-SCREEN_WIDTH / 4, SCREEN_WIDTH / 4]
-				})
-			}
-		]
+					outputRange: [-SCREEN_WIDTH / 4, SCREEN_WIDTH / 4],
+				}),
+			},
+		],
 	};
 }
 
@@ -67,8 +66,8 @@ function textColorTransform(index: number) {
 				color: xOffset.interpolate({
 					inputRange: [0, SCREEN_WIDTH],
 					outputRange: [Colors.currently, Colors.gray],
-					extrapolate: "clamp"
-				})
+					extrapolate: "clamp",
+				}),
 			};
 			break;
 		case 1:
@@ -76,8 +75,8 @@ function textColorTransform(index: number) {
 				color: xOffset.interpolate({
 					inputRange: [0, SCREEN_WIDTH],
 					outputRange: [Colors.gray, Colors.later],
-					extrapolate: "clamp"
-				})
+					extrapolate: "clamp",
+				}),
 			};
 			break;
 	}
@@ -93,7 +92,7 @@ class Home extends Component {
 			vertScrolling: false,
 			scrollDir: {
 				up: false,
-				down: false
+				down: false,
 			},
 
 			user: this.props.user,
@@ -101,7 +100,7 @@ class Home extends Component {
 
 			friends: [],
 			groups: [],
-			moves: []
+			moves: [],
 		};
 	}
 
@@ -171,8 +170,8 @@ class Home extends Component {
 
 	clearScreen = () => {
 		this.topBar.handleFullCloseBar();
-		this.navBar.handleHideBar();
-		this.button.buttonExit();
+		this.bottomBar.handleHideBar();
+		// this.button.buttonExit();
 		// this.groups.list.fadeOut();
 		// this.currently.list.fadeOut();
 		// this.later.list.fadeOut();
@@ -180,8 +179,8 @@ class Home extends Component {
 
 	returnScreen = () => {
 		this.topBar.handleOpenBar();
-		this.navBar.handleShowBar();
-		this.button.buttonReturn();
+		this.bottomBar.handleShowBar();
+		// this.button.buttonReturn();
 		// this.groups.list.fadeIn();
 		// this.currently.list.fadeIn();
 		// this.later.list.fadeIn();
@@ -192,8 +191,8 @@ class Home extends Component {
 			component: {
 				name: componentName,
 				passProps: props,
-				options: options
-			}
+				options: options,
+			},
 		});
 	};
 
@@ -202,8 +201,8 @@ class Home extends Component {
 			component: {
 				name: componentName,
 				passProps: props,
-				options: options
-			}
+				options: options,
+			},
 		});
 	};
 
@@ -214,10 +213,10 @@ class Home extends Component {
 				passProps: props,
 				options: {
 					overlay: {
-						interceptTouchOutside: true
-					}
-				}
-			}
+						interceptTouchOutside: true,
+					},
+				},
+			},
 		});
 	};
 
@@ -229,17 +228,17 @@ class Home extends Component {
 						component: {
 							name: componentName,
 							passProps: props,
-							options: options
-						}
-					}
-				]
-			}
+							options: options,
+						},
+					},
+				],
+			},
 		});
 	};
 
 	render() {
 		const groupsProps = {
-			onPressPushTo: this.onPressPushTo
+			onPressPushTo: this.onPressPushTo,
 		};
 
 		return (
@@ -255,8 +254,7 @@ class Home extends Component {
 					scrollEventThrottle={16}
 					onScroll={this._horizOnScroll}
 					onMomentumScrollEnd={this._onHorizScrollEnd}
-					style={styles.scroll}
-				>
+					style={styles.scroll}>
 					<Page>
 						<Currently
 							ref={item => (this.currently = item)}
@@ -294,7 +292,15 @@ class Home extends Component {
 					scrollDir={this.state.scrollDir}
 				/>
 
-				<NavBar
+				<BottomBar
+					ref={item => (this.bottomBar = item)}
+					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
+					scrollToEnd={() => this.scrollView.scrollToEnd()}
+					textColorTransform={textColorTransform}
+					indicatorAnimate={indicatorAnimate}
+					onPressPresentModalTo={this.onPressPresentModalTo}
+				/>
+				{/* <NavBar
 					ref={item => (this.navBar = item)}
 					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
 					scrollToEnd={() => this.scrollView.scrollToEnd()}
@@ -304,7 +310,7 @@ class Home extends Component {
 				<NewMoveButton
 					ref={item => (this.button = item)}
 					onPressPresentModalTo={this.onPressPresentModalTo}
-				/>
+				/> */}
 			</Background>
 		);
 	}
@@ -313,12 +319,12 @@ class Home extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: Colors.lightGray
+		backgroundColor: Colors.lightGray,
 	},
 	scroll: {
 		flex: 1,
-		flexDirection: "row"
-	}
+		flexDirection: "row",
+	},
 });
 
 export default Home;

@@ -120,7 +120,7 @@ PODS:
     - React/RCTBlob
   - RNFS (2.9.12):
     - React
-  - RNReactNativeHapticFeedback (1.1.5):
+  - RNReactNativeHapticFeedback (1.0.1):
     - React
   - yoga (0.55.3.React)
 
@@ -214,9 +214,9 @@ SPEC CHECKSUMS:
   React: aa2040dbb6f317b95314968021bd2888816e03d5
   react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
-  RNReactNativeHapticFeedback: 8add57eb7deed1f7f4a6e752227b87addf3bb505
+  RNReactNativeHapticFeedback: 81a9bb493a719cf71b7d4d1cebbd91a124ce5cf5
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
 PODFILE CHECKSUM: ed2c760eeed465d4f101a9cc0ea9dabf9245ac27
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.2
