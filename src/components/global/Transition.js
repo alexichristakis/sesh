@@ -23,8 +23,8 @@ class Transition extends Component {
 				height: 0,
 				width: 0,
 				pageX: 0,
-				pageY: 0,
-			},
+				pageY: 0
+			}
 		};
 	}
 
@@ -44,14 +44,14 @@ class Transition extends Component {
 				x: source.x,
 				y: source.y,
 				pageX: source.pageX,
-				pageY: source.pageY,
-			},
+				pageY: source.pageY
+			}
 		});
 		Animated.timing(this.openProgress, {
 			toValue: 1,
 			duration: 200,
 			easing: Easing.poly(0.25),
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start(() => {
 			this.props.onPressPushTo(
 				this.props.destinationPage,
@@ -59,11 +59,11 @@ class Transition extends Component {
 					...props,
 					cardHeight: this.state.sourceDimension.height,
 					data: data,
-					closeCard: this.closeCard,
+					closeCard: this.closeCard
 				},
 				{
-					customTransition: { animations: [], duration: 0 },
-				},
+					customTransition: { animations: [], duration: 0 }
+				}
 			);
 		});
 	};
@@ -72,12 +72,12 @@ class Transition extends Component {
 		if (!this.props.groups) this.props.returnScreen();
 		setTimeout(() => {
 			this.state.onReturn();
-		}, 180);
+		}, 195);
 		Animated.timing(this.openProgress, {
 			toValue: 0,
 			duration: 200,
 			easing: Easing.poly(0.25),
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start(() => {
 			// this.props.transitionFinished();
 			this.setState({ open: false });
@@ -102,19 +102,19 @@ class Transition extends Component {
 					{
 						translateY: this.openProgress.interpolate({
 							inputRange: [0, 1],
-							outputRange: [pageY, SB_HEIGHT + 10],
-						}),
-					},
+							outputRange: [pageY, SB_HEIGHT + 10]
+						})
+					}
 				],
-				...shadow,
+				...shadow
 			};
 
 			let opacityStyle = {
 				opacity: this.openProgress.interpolate({
 					inputRange: [0, 0.7, 1],
 					outputRange: [0, 0, 1],
-					extrapolate: "clamp",
-				}),
+					extrapolate: "clamp"
+				})
 			};
 
 			return (
@@ -137,12 +137,12 @@ const styles = StyleSheet.create({
 		left: 0,
 		bottom: 0,
 		right: 0,
-		backgroundColor: "transparent",
+		backgroundColor: "transparent"
 	},
 	cover: {
 		flex: 1,
-		backgroundColor: Colors.lightGray,
-	},
+		backgroundColor: Colors.lightGray
+	}
 });
 
 Transition.propTypes = {
@@ -150,7 +150,7 @@ Transition.propTypes = {
 	transitionFinished: PropTypes.func,
 	// clearScreen: PropTypes.func.isRequired,
 	// returnScreen: PropTypes.func.isRequired,
-	onPressPushTo: PropTypes.func.isRequired,
+	onPressPushTo: PropTypes.func.isRequired
 };
 
 export default Transition;

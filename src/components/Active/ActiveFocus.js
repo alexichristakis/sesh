@@ -25,7 +25,7 @@ class ActiveFocus extends Component {
 			pressed: false,
 			joined: this.props.joined,
 			loading: true,
-			position: null,
+			position: null
 		};
 	}
 
@@ -35,7 +35,7 @@ class ActiveFocus extends Component {
 				this.setState({ position: position.coords, loading: false });
 			},
 			error => this.setState({ error: error.message }),
-			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
 	}
 
@@ -48,18 +48,18 @@ class ActiveFocus extends Component {
 			Navigation.pop(this.props.componentId, {
 				customTransition: {
 					animations: [],
-					duration: 0,
-				},
+					duration: 0
+				}
 			});
 			this.props.closeCard();
-		}, 20);
+		}, 100);
 	};
 
 	handlePressIn = () => {
 		this.setState({ pressed: true });
 		Animated.spring(this.animated, {
 			toValue: 0.9,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
@@ -69,7 +69,7 @@ class ActiveFocus extends Component {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start();
 	};
 
@@ -84,9 +84,9 @@ class ActiveFocus extends Component {
 		let animatedStyle = {
 			transform: [
 				{
-					scale: this.animated,
-				},
-			],
+					scale: this.animated
+				}
+			]
 		};
 
 		let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
@@ -105,12 +105,13 @@ class ActiveFocus extends Component {
 									(this.state.joined && !this.state.pressed) ||
 									(this.state.pressed && !this.state.joined)
 										? Colors.active
-										: "white",
-							},
+										: "white"
+							}
 						]}
 						onPressIn={this.handlePressIn}
 						onPressOut={this.handlePressOut}
-						onPress={this.handleOnPress}>
+						onPress={this.handleOnPress}
+					>
 						<Text
 							style={[
 								styles.joinText,
@@ -119,9 +120,10 @@ class ActiveFocus extends Component {
 										(this.state.joined && !this.state.pressed) ||
 										(this.state.pressed && !this.state.joined)
 											? "white"
-											: Colors.active,
-								},
-							]}>
+											: Colors.active
+								}
+							]}
+						>
 							{!this.state.joined ? "Join" : "Leave"}
 						</Text>
 					</TouchableOpacity>
@@ -141,7 +143,8 @@ class ActiveFocus extends Component {
 				statusBarHeight={this.props.statusBarHeight}
 				closeCard={this.props.closeCard}
 				onPressPop={this.onPressPop}
-				renderItem={this._renderItem}>
+				renderItem={this._renderItem}
+			>
 				<ActiveMove index={this.props.index} length={this.props.length} move={this.props.data} />
 			</Focus>
 		);
@@ -156,12 +159,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		// backgroundColor: "white",
-		...shadow,
+		...shadow
 	},
 	joinText: {
 		// color: Colors.active,
-		fontSize: 18,
-	},
+		fontSize: 18
+	}
 });
 
 export default ActiveFocus;

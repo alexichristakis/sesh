@@ -68,21 +68,25 @@ class TopBar extends Component {
 			Animated.timing(this.animated, {
 				toValue: -1,
 				duration: duration,
+				easing: Easing.out(Easing.poly(0.25)),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
 				duration: duration,
+				easing: Easing.out(Easing.poly(0.25)),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
 				duration: duration,
+				easing: Easing.out(Easing.poly(0.25)),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
 				duration: duration,
+				easing: Easing.out(Easing.poly(0.25)),
 				useNativeDriver: true
 			}).start()
 		]);
@@ -94,25 +98,25 @@ class TopBar extends Component {
 			Animated.timing(this.animated, {
 				toValue: 0,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start()
 		]);
@@ -124,25 +128,25 @@ class TopBar extends Component {
 			Animated.timing(this.animated, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
+				easing: Easing.in(Easing.ease),
 				useNativeDriver: true
 			}).start()
 		]);

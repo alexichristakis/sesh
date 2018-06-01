@@ -12,8 +12,8 @@ class BottomBar extends Component {
 		Animated.timing(yTranslate, {
 			toValue: 1,
 			duration: 150,
-			easing: Easing.ease,
-			useNativeDriver: true,
+			easing: Easing.out(Easing.poly(0.25)),
+			useNativeDriver: true
 		}).start();
 	};
 
@@ -21,8 +21,8 @@ class BottomBar extends Component {
 		Animated.timing(yTranslate, {
 			toValue: 0,
 			duration: 150,
-			easing: Easing.ease,
-			useNativeDriver: true,
+			easing: Easing.in(Easing.poly(0.25)),
+			useNativeDriver: true
 		}).start();
 	};
 
@@ -32,10 +32,10 @@ class BottomBar extends Component {
 				{
 					translateY: yTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, 80],
-					}),
-				},
-			],
+						outputRange: [0, 80]
+					})
+				}
+			]
 		};
 
 		return (
