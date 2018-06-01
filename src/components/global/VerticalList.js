@@ -64,11 +64,12 @@ class VerticalList extends Component {
 
 	render() {
 		let animatedStyle = {
+			paddingTop: 80,
 			transform: [
 				{
 					translateY: this.animatedTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [-80, 0]
+						outputRange: [-70, 0]
 					})
 				}
 			],
@@ -77,7 +78,7 @@ class VerticalList extends Component {
 
 		return (
 			<AnimatedFlatList
-				style={[styles.container, !this.props.groups ? animatedStyle : {}]}
+				style={[styles.container, !this.props.groups ? animatedStyle : { paddingTop: 50 }]}
 				contentContainerStyle={styles.content}
 				data={this.props.data}
 				renderItem={this.props.renderItem}
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: -80,
-		paddingTop: 115,
+
 		// paddingBottom: 70,
 		// marginBottom: 35,
 		// backgroundColor: Colors.lightGray

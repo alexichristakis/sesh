@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
 import { BlurView } from "react-native-blur";
 
 import { TimeAgo } from "../../lib/functions";
@@ -11,38 +12,36 @@ const ICON_SIZE = 50;
 class CurrentMove extends Component {
 	render() {
 		const move = this.props.move;
-
 		return (
-			<BlurView
-				blurType={"xlight"}
-				style={[
-					styles.container
-					// {
-					// 	backgroundColor: backgroundColor
-					// 	// backgroundColor: "rgba(246,246,246,1)"
-					// }
-				]}
-			>
-				<View style={styles.top}>
-					<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
-					<View style={styles.header}>
-						<View style={{ flex: 2 }}>
-							<Text style={styles.group}>{move.group}</Text>
-							<View style={{ flexDirection: "row" }}>
-								<Text style={{ fontSize: 14 }}>from </Text>
-								<Text style={styles.name}>{move.name}</Text>
+			<View style={styles.container}>
+				{/* <View style={styles.background} /> */}
+				<LinearGradient
+					style={styles.background}
+					locations={[0.9, 1]}
+					colors={["white", Colors.currently]}
+				/>
+				<BlurView blurType={"light"} style={styles.blur}>
+					<View style={styles.top}>
+						<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
+						<View style={styles.header}>
+							<View style={{ flex: 2 }}>
+								<Text style={styles.group}>{move.group}</Text>
+								<View style={{ flexDirection: "row" }}>
+									<Text style={{ fontSize: 14 }}>from </Text>
+									<Text style={styles.name}>{move.name}</Text>
+								</View>
 							</View>
+							<Text style={styles.time}>{TimeAgo(move.time)}</Text>
 						</View>
-						<Text style={styles.time}>{TimeAgo(move.time)}</Text>
 					</View>
-				</View>
-				<View style={styles.mid}>
-					<Text style={styles.description}>{move.description}</Text>
-				</View>
-				<View style={styles.bottom}>
-					<Text style={styles.location}>{move.location}</Text>
-				</View>
-			</BlurView>
+					<View style={styles.mid}>
+						<Text style={styles.description}>{move.description}</Text>
+					</View>
+					<View style={styles.bottom}>
+						<Text style={styles.location}>{move.location}</Text>
+					</View>
+				</BlurView>
+			</View>
 		);
 	}
 }
@@ -50,14 +49,31 @@ class CurrentMove extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		borderRadius: 15,
+		overflow: "hidden"
+	},
+	background: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		backgroundColor: Colors.currently,
+		opacity: 0.2
+	},
+	blur: {
+		flex: 1,
 		// flexDirection: "row",
 		// alignItems: "center",
 		// marginHorizontal: 10,
-		// borderWidth: 20,
-		// borderColor: Colors.primary,
-		borderRadius: 15,
+		// borderWidth: 0.1,
+		// borderColor: Colors.Gray,
+		// backgroundColor: Colors.primary,
+
 		padding: 10,
 		paddingRight: 12
+
+		// ...shadow
 	},
 	top: {
 		flex: 2,

@@ -3,8 +3,9 @@ import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react
 
 import { Navigation } from "react-native-navigation";
 import MapView, { Marker } from "react-native-maps";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 import Focus from "../global/Focus";
@@ -22,8 +23,20 @@ class CurrentlyFocus extends Component {
 
 		this.state = {
 			pressed: false,
-			joined: this.props.joined
+			joined: this.props.joined,
+			loading: true,
+			position: null
 		};
+	}
+
+	async componentDidMount() {
+		navigator.geolocation.getCurrentPosition(
+			position => {
+				this.setState({ position: position.coords, loading: false });
+			},
+			error => this.setState({ error: error.message }),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
 	}
 
 	onPressPop = () => {
@@ -61,7 +74,7 @@ class CurrentlyFocus extends Component {
 	};
 
 	handleOnPress = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
+		// ReactNativeHapticFeedback.trigger("impactLight");
 		this.setState({ joined: !this.state.joined });
 	};
 
@@ -69,7 +82,6 @@ class CurrentlyFocus extends Component {
 
 	_renderHeader = () => {
 		let animatedStyle = {
-			// flex: 1,
 			transform: [
 				{
 					scale: this.animated
@@ -77,21 +89,12 @@ class CurrentlyFocus extends Component {
 			]
 		};
 
-		const region = {
-			latitude: 37.78825,
-			longitude: -122.4324,
-			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421
-		};
+		let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
+
 		return (
-			<View style={{ flex: 1, paddingTop: 50 }}>
-				<MapCard
-					// style={{ flex: 1 }}
-					location={{
-						latitude: 37.78825,
-						longitude: -122.4324
-					}}
-				/>
+			<View style={{ flex: 1, paddingTop: headerTopPadding }}>
+				{!this.state.loading && <MapCard location={this.state.position} />}
+				{this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
 				<Animated.View style={animatedStyle}>
 					<TouchableOpacity
 						activeOpacity={1}

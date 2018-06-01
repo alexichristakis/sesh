@@ -53,17 +53,13 @@ class Group extends Component {
 		const group = this.props.data;
 
 		return (
-			// <View style={styles.border}>
-			// <VibrancyView blurType={"light"} style={styles.container}>
-			// <View style={styles.container}>
-			<BlurView blurType={"xlight"} style={styles.container}>
-				{/* {this.p/rops.blur && <BlurView blurType={"xlight"} style={styles.blur} />} */}
-				{/* {!this.props.blur && <View style={styles.blank} />} */}
-				{/* <View style={styles.pictures}>
+			// <BlurView blurType={"xlight"} style={styles.container}>
+			<View style={styles.container}>
+				<View style={styles.pictures}>
 					<Image style={styles.image1} source={{ uri: this.state.photo }} />
 					<Image style={styles.image2} source={{ uri: this.state.photo }} />
 					<Image style={styles.image3} source={{ uri: this.state.photo }} />
-				</View> */}
+				</View>
 				<View style={styles.mid}>
 					<View style={{ flexDirection: "row", alignItems: "center" }}>
 						{!this.props.editName && <Text style={styles.name}>{group.name}</Text>}
@@ -86,8 +82,8 @@ class Group extends Component {
 				</View>
 
 				<Text style={styles.time}>{TimeAgo(group.time)}</Text>
-			</BlurView>
-			// </View>
+				</View>
+			// </BlurView>
 		);
 	}
 }
@@ -103,7 +99,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		// backgroundColor: "red",
-		backgroundColor: "transparent",
+		// backgroundColor: "transparent",
+		// backgroundColor: "white",
 		// marginHorizontal: 10,
 		// borderWidth: 20,
 		// borderColor: Colors.primary,

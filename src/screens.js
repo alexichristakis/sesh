@@ -10,6 +10,7 @@ import SignIn from "./components/Authentication/SignIn";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import AddFriend from "./components/AddFriend";
+import Groups from "./components/Groups";
 import CreateGroup from "./components/Groups/CreateGroup";
 import AddToGroup from "./components/Groups/AddToGroup";
 import CreateCurrentMove from "./components/CreateMoves/CreateCurrentMove";
@@ -43,8 +44,11 @@ function registerScreens() {
 	Navigation.registerComponent("sesh.Home", () => Home);
 	Navigation.registerComponent("sesh.Profile", () => Profile);
 	Navigation.registerComponent("sesh.AddFriend", () => AddFriend);
+
+	Navigation.registerComponent("sesh.Groups", () => Groups);
 	Navigation.registerComponent("sesh.CreateGroup", () => CreateGroup);
 	Navigation.registerComponent("sesh.AddToGroup", () => AddToGroup);
+
 	Navigation.registerComponent("sesh.CreateCurrentMove", () => CreateCurrentMove);
 	Navigation.registerComponent("sesh.CreateLaterMove", () => CreateLaterMove);
 

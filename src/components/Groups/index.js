@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import { Animated, StyleSheet, View, FlatList, Text } from "react-native";
 
+import { Navigation } from "react-native-navigation";
+import { BlurView } from "react-native-blur";
 import LinearGradient from "react-native-linear-gradient";
 
+import { SB_HEIGHT } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
 
 import Group from "./Group";
+import Background from "../global/Background";
+import BackButton from "../global/BackButton";
 import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
 import Transition from "../global/Transition";
@@ -83,7 +88,6 @@ const data = [
 	}
 ];
 
-// @subscribe()
 class Groups extends Component {
 	constructor(props) {
 		super(props);
@@ -117,17 +121,19 @@ class Groups extends Component {
 		});
 	};
 
+	onPressPushTo = (componentName, props, options) => {
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: componentName,
+				passProps: props,
+				options: options
+			}
+		});
+	};
+
 	render() {
 		return (
-			// <View style={{ flex: 1 }}>
-			// <LinearGradient
-			// 	// start={{ x: 0.0, y: 0.25 }}
-			// 	// end={{ x: 0.5, y: 1.0 }}
-			// 	locations={[0.8, 1]}
-			// 	colors={[Colors.lightGray, Colors.groups]}
-			// 	style={{ flex: 1 }}
-			// >
-			<View style={{ flex: 1, backgroundColor: "transparent" }}>
+			<Background>
 				<VerticalList
 					groups
 					ref={item => (this.list = item)}
@@ -142,12 +148,15 @@ class Groups extends Component {
 					ref={item => (this.transition = item)}
 					destinationPage={"sesh.GroupFocus"}
 					transitionFinished={this.transitionFinished}
-					onPressPushTo={this.props.onPressPushTo}
+					onPressPushTo={this.onPressPushTo}
 					MoveComponent={this.state.MoveComponent}
 				/>
-			</View>
-			// </LinearGradient>
-			// </View>
+				<BlurView
+					blurType={"xlight"}
+					style={{ position: "absolute", top: 0, right: 0, left: 0, height: SB_HEIGHT }}
+				/>
+				<BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
+			</Background>
 		);
 	}
 }

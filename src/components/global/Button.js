@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, TouchableWithoutFeedback, Animated } from "react-native";
 
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import PropTypes from "prop-types";
 import LoadingCircle from "./LoadingCircle";
@@ -14,7 +14,7 @@ class Button extends Component {
 
 		this.state = {
 			loading: this.props.loading || false,
-			checkmark: false,
+			checkmark: false
 		};
 	}
 
@@ -27,24 +27,24 @@ class Button extends Component {
 	}
 
 	handlePressIn = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
+		// ReactNativeHapticFeedback.trigger("impactLight");
 		Animated.spring(this.animatedValue, {
-			toValue: 0.9,
+			toValue: 0.9
 		}).start();
 	};
 
 	handlePressOut = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
+		// ReactNativeHapticFeedback.trigger("impactLight");
 		Animated.spring(this.animatedValue, {
 			toValue: 1,
 			friction: 3,
-			tension: 40,
+			tension: 40
 		}).start();
 	};
 
 	render() {
 		let animatedStyle = {
-			transform: [{ scale: this.animatedValue }],
+			transform: [{ scale: this.animatedValue }]
 		};
 		if (this.props.animate == false) {
 			animatedStyle = {};
@@ -81,7 +81,7 @@ class Button extends Component {
 						this.setState(prevState => {
 							return {
 								...prevState,
-								checkmark: true,
+								checkmark: true
 							};
 						});
 						if (checkmarkPersist) {
@@ -91,7 +91,7 @@ class Button extends Component {
 									this.setState(prevState => {
 										return {
 											...prevState,
-											checkmark: false,
+											checkmark: false
 										};
 									});
 								}, 500);
@@ -102,7 +102,7 @@ class Button extends Component {
 								this.setState(prevState => {
 									return {
 										...prevState,
-										checkmark: false,
+										checkmark: false
 									};
 								});
 							}, 500);
@@ -110,7 +110,8 @@ class Button extends Component {
 					} else {
 						this.props.onPress();
 					}
-				}}>
+				}}
+			>
 				<Animated.View
 					style={{
 						...animatedStyle,
@@ -122,8 +123,9 @@ class Button extends Component {
 						alignItems: "center",
 						borderRadius: 10,
 						// backgroundColor: this.props.style.color || Colors.blue,
-						...buttonShadow,
-					}}>
+						...buttonShadow
+					}}
+				>
 					{!this.state.loading && this.state.checkmark && <Checkmark size={24} />}
 
 					{this.state.loading && !this.state.checkmark && <LoadingCircle size={24} />}
@@ -135,8 +137,9 @@ class Button extends Component {
 									fontSize: small ? 18 : 22,
 									fontWeight: "600",
 									textAlign: "center",
-									color: Colors.lightGray,
-								}}>
+									color: Colors.lightGray
+								}}
+							>
 								{this.props.title}
 							</Text>
 						)}
@@ -157,7 +160,7 @@ Button.propTypes = {
 	primary: PropTypes.bool,
 	small: PropTypes.bool,
 	animate: PropTypes.bool,
-	checkmark: PropTypes.bool,
+	checkmark: PropTypes.bool
 };
 
 export default Button;

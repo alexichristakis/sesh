@@ -14,8 +14,10 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import RNFS from "react-native-fs";
 
+import Background from "./global/Background";
 import NewMoveButton from "./NewMoveButton";
-import TabBar from "./TabBar";
+import TopBar from "./TopBar";
+import NavBar from "./NavBar";
 import Groups from "./Groups";
 import Currently from "./Currently";
 import Later from "./Later";
@@ -45,7 +47,7 @@ function indicatorAnimate() {
 		}),
 		width: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH],
-			outputRange: [80, 50]
+			outputRange: [40, 50]
 		}),
 		transform: [
 			{
@@ -169,6 +171,7 @@ class Home extends Component {
 
 	clearScreen = () => {
 		this.topBar.handleFullCloseBar();
+		this.navBar.handleHideBar();
 		this.button.buttonExit();
 		// this.groups.list.fadeOut();
 		// this.currently.list.fadeOut();
@@ -177,6 +180,7 @@ class Home extends Component {
 
 	returnScreen = () => {
 		this.topBar.handleOpenBar();
+		this.navBar.handleShowBar();
 		this.button.buttonReturn();
 		// this.groups.list.fadeIn();
 		// this.currently.list.fadeIn();
@@ -217,17 +221,29 @@ class Home extends Component {
 		});
 	};
 
+	onPressPresentModalToStack = (componentName, props, options) => {
+		Navigation.showModal({
+			stack: {
+				children: [
+					{
+						component: {
+							name: componentName,
+							passProps: props,
+							options: options
+						}
+					}
+				]
+			}
+		});
+	};
+
 	render() {
-		// if (this.state.loading) {
-		// 	return <View />;
-		// } else {
+		const groupsProps = {
+			onPressPushTo: this.onPressPushTo
+		};
+
 		return (
-			<View style={styles.container}>
-				{/* <LinearGradient
-				style={styles.container}
-				locations={[0.5, 1]}
-				colors={["white", Colors.groups]}
-			> */}
+			<Background>
 				<StatusBar barStyle="dark-content" />
 				<Animated.ScrollView
 					horizontal
@@ -267,28 +283,30 @@ class Home extends Component {
 					</Page>
 				</Animated.ScrollView>
 
+				<TopBar
+					ref={item => (this.topBar = item)}
+					onPressPushTo={this.onPressPushTo}
+					onPressPresentModalTo={this.onPressPresentModalTo}
+					onPressPresentModalToStack={this.onPressPresentModalToStack}
+					onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+					groupsProps={groupsProps}
+					profilePic={this.state.photo}
+					scrollDir={this.state.scrollDir}
+				/>
+
+				<NavBar
+					ref={item => (this.navBar = item)}
+					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
+					scrollToEnd={() => this.scrollView.scrollToEnd()}
+					textColorTransform={textColorTransform}
+					indicatorAnimate={indicatorAnimate}
+				/>
 				<NewMoveButton
 					ref={item => (this.button = item)}
 					onPressPresentModalTo={this.onPressPresentModalTo}
 				/>
-
-				<TabBar
-					ref={item => (this.topBar = item)}
-					onPressPushTo={this.onPressPushTo}
-					onPressPresentModalTo={this.onPressPresentModalTo}
-					onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-					profilePic={this.state.photo}
-					scrollDir={this.state.scrollDir}
-					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
-					scrollToEnd={() => this.scrollView.scrollToEnd()}
-					xOffset={xOffset}
-					textColorTransform={textColorTransform}
-					indicatorAnimate={indicatorAnimate}
-				/>
-				{/* </LinearGradient> */}
-			</View>
+			</Background>
 		);
-		// }
 	}
 }
 

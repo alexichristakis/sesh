@@ -19,7 +19,7 @@ class Profile extends Component {
 	componentDidMount() {
 		Animated.timing(this.entry, {
 			toValue: 1,
-			duration: 300,
+			duration: 100,
 			easing: Easing.ease,
 			useNativeDriver: true
 		}).start();
@@ -44,9 +44,7 @@ class Profile extends Component {
 						Alexi Christakis
 					</Text>
 				</VibrancyView>
-				<Groups onPressPushTo={this.props.onPressPushTo} />
 
-				<BlurView blurType="dark" blurAmount={10} style={styles.blur} />
 				<BackButton onPressPop={this.dismiss} />
 			</Animated.View>
 		);
@@ -56,10 +54,12 @@ class Profile extends Component {
 const styles = StyleSheet.create({
 	vibrancy: {
 		position: "absolute",
-		top: SB_HEIGHT,
+		// top: SB_HEIGHT,
+		top: 0,
 		bottom: 0,
 		left: 0,
-		right: 0
+		right: 0,
+		paddingTop: SB_HEIGHT
 	},
 	blur: {
 		position: "absolute",

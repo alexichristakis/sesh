@@ -11,6 +11,7 @@ import {
 	FlatList
 } from "react-native";
 
+import Background from "../global/Background";
 import MapCard from "../global/MapCard";
 import MapView from "react-native-maps";
 import { Navigation } from "react-native-navigation";
@@ -71,7 +72,9 @@ class Focus extends Component {
 
 	render() {
 		const { cardHeight } = this.props;
-		const listTopPadding = cardHeight + SB_HEIGHT - (SB_HEIGHT === 40 ? 20 : 0);
+		// const listTopPadding = cardHeight + SB_HEIGHT - (SB_HEIGHT === 40 ? 20 : 0);
+		const listTopPadding = cardHeight + SB_HEIGHT - 20;
+
 		const scrollHeight = {
 			paddingTop: SB_HEIGHT + 10,
 			paddingBottom: 10,
@@ -104,12 +107,7 @@ class Focus extends Component {
 		};
 
 		return (
-			<View
-				style={[
-					styles.container,
-					{ backgroundColor: !this.props.groups ? Colors.lightGray : "transparent" }
-				]}
-			>
+			<Background>
 				<AnimatedFlatList
 					style={listStyle}
 					data={this.props.data}
@@ -140,7 +138,7 @@ class Focus extends Component {
 
 				<BackButton onPressPop={this.props.onPressPop} />
 				<BlurView blurType="xlight" style={styles.statusBar} />
-			</View>
+			</Background>
 		);
 	}
 }

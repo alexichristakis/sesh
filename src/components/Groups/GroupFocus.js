@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
 
 import { Colors, shadow } from "../../lib/styles";
@@ -71,20 +71,18 @@ class GroupFocus extends Component {
 		if (this.state.changedName) this.props.changeName(this.state.newName);
 
 		setTimeout(() => {
-			// Navigation.pop(this.props.componentId, {
-			// 	customTransition: {
-			// 		animations: [],
-			// 		duration: 0.1
-			// 	}
-			// });
-			Navigation.dismissOverlay(this.props.componentId);
-
+			Navigation.pop(this.props.componentId, {
+				customTransition: {
+					animations: [],
+					duration: 0.1
+				}
+			});
 			this.props.closeCard();
 		}, 20);
 	};
 
 	onPressPresentModalTo = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
+		// ReactNativeHapticFeedback.trigger("impactLight");
 		Navigation.showModal({
 			component: {
 				name: "sesh.AddToGroup",

@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
 
+import Background from "./Background";
+
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
@@ -117,7 +119,9 @@ class Transition extends Component {
 
 			return (
 				<View style={styles.container}>
-					{!this.props.groups && <Animated.View style={[styles.cover, opacityStyle]} />}
+					<Animated.View style={[styles.cover, opacityStyle]}>
+						<Background />
+					</Animated.View>
 					<Animated.View style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
 				</View>
 			);

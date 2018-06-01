@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow, cardShadow } from "../../lib/styles";
@@ -73,7 +73,7 @@ class CardWrapper extends Component {
 	};
 
 	handleOnPress = (move, MoveComponent) => {
-		ReactNativeHapticFeedback.trigger("impactLight");
+		// ReactNativeHapticFeedback.trigger("impactLight");
 		this.onLeave();
 		this.view.getNode().measure((x, y, width, height, pageX, pageY) => {
 			this.setState({ pageX: pageX, pageY: pageY });
@@ -113,7 +113,6 @@ class CardWrapper extends Component {
 				ref={view => (this.view = view)}
 				onLayout={this.measureCard}
 				style={[styles.container, containerAnimatedStyle]}
-				// style={containerAnimatedStyle}
 			>
 				<TouchableOpacity
 					activeOpacity={1}
@@ -136,9 +135,9 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		// padding: 10,
 		// paddingRight: 12,
-		marginBottom: 10,
+		marginBottom: 10
 		// overflow: "hidden"
-		...shadow
+		// ...shadow
 		// ...cardShadow
 	}
 });

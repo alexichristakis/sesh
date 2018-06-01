@@ -12,7 +12,7 @@ import {
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
@@ -69,7 +69,7 @@ class User extends Component {
 					// onPressIn={this.handlePressIn}
 					// onPressOut={this.handlePressOut}
 					onPress={() => {
-						ReactNativeHapticFeedback.trigger("impactLight");
+						// ReactNativeHapticFeedback.trigger("impactLight");
 						console.log(this.props.index);
 					}}
 				>
