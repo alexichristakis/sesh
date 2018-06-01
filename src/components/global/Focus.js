@@ -44,7 +44,8 @@ class Focus extends Component {
 		Animated.timing(this.entry, {
 			toValue: 1,
 			duration: 200,
-			easing: Easing.poly(0.25),
+			// easing: Easing.poly(0.25),
+			easing: Easing.in(),
 			useNativeDriver: true,
 		}).start();
 	}
@@ -53,7 +54,8 @@ class Focus extends Component {
 		Animated.timing(this.entry, {
 			toValue: 0,
 			duration: 200,
-			easing: Easing.poly(0.25),
+			// easing: Easing.poly(2),
+			easing: Easing.out(),
 			useNativeDriver: true,
 		}).start();
 	};
