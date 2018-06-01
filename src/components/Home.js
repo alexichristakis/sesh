@@ -18,7 +18,7 @@ import Background from "./global/Background";
 import TopBar from "./TopBar";
 import BottomBar from "./BottomBar";
 import Groups from "./Groups";
-import Currently from "./Currently";
+import Active from "./Active";
 import Later from "./Later";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
@@ -31,7 +31,7 @@ const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(0);
 
 const groupsOffset = new Animated.Value(0);
-const currentlyOffset = new Animated.Value(0);
+const activeOffset = new Animated.Value(0);
 const laterOffset = new Animated.Value(0);
 
 function Page(props: { children?: ReactElement<*> }) {
@@ -42,7 +42,7 @@ function indicatorAnimate() {
 	return {
 		backgroundColor: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH],
-			outputRange: [Colors.currently, Colors.later],
+			outputRange: [Colors.active, Colors.later],
 		}),
 		width: xOffset.interpolate({
 			inputRange: [0, SCREEN_WIDTH],
@@ -65,7 +65,7 @@ function textColorTransform(index: number) {
 			return {
 				color: xOffset.interpolate({
 					inputRange: [0, SCREEN_WIDTH],
-					outputRange: [Colors.currently, Colors.gray],
+					outputRange: [Colors.active, Colors.gray],
 					extrapolate: "clamp",
 				}),
 			};
@@ -123,7 +123,7 @@ class Home extends Component {
 
 	_onHorizScrollEnd = () => {
 		if (xOffset._value == 0) yOffset = groupsOffset;
-		else if (xOffset._value == SCREEN_WIDTH) yOffset = currentlyOffset;
+		else if (xOffset._value == SCREEN_WIDTH) yOffset = activeOffset;
 		else yOffset = laterOffset;
 	};
 
@@ -142,17 +142,17 @@ class Home extends Component {
 		}
 		yOffset = currentOffset;
 		if (xOffset._value == 0) groupsOffset = yOffset;
-		else if (xOffset._value == SCREEN_WIDTH) currentlyOffset = yOffset;
+		else if (xOffset._value == SCREEN_WIDTH) activeOffset = yOffset;
 		else laterOffset = yOffset;
 	};
 
 	shortenVertPadding = () => {
-		this.currently.list.shortenPadding();
+		this.active.list.shortenPadding();
 		this.later.list.shortenPadding();
 	};
 
 	lengthenVertPadding = () => {
-		this.currently.list.lengthenPadding();
+		this.active.list.lengthenPadding();
 		this.later.list.lengthenPadding();
 	};
 
@@ -173,7 +173,7 @@ class Home extends Component {
 		this.bottomBar.handleHideBar();
 		// this.button.buttonExit();
 		// this.groups.list.fadeOut();
-		// this.currently.list.fadeOut();
+		// this.active.list.fadeOut();
 		// this.later.list.fadeOut();
 	};
 
@@ -182,7 +182,7 @@ class Home extends Component {
 		this.bottomBar.handleShowBar();
 		// this.button.buttonReturn();
 		// this.groups.list.fadeIn();
-		// this.currently.list.fadeIn();
+		// this.active.list.fadeIn();
 		// this.later.list.fadeIn();
 	};
 
@@ -256,8 +256,8 @@ class Home extends Component {
 					onMomentumScrollEnd={this._onHorizScrollEnd}
 					style={styles.scroll}>
 					<Page>
-						<Currently
-							ref={item => (this.currently = item)}
+						<Active
+							ref={item => (this.active = item)}
 							profilePic={this.state.photo}
 							clearScreen={this.clearScreen}
 							returnScreen={this.returnScreen}

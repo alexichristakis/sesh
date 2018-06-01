@@ -20,11 +20,11 @@ class NewMoveButton extends Component {
 		this.rotation = new Animated.Value(0);
 
 		this.mainButtonScale = new Animated.Value(1);
-		this.currentlyScale = new Animated.Value(1);
+		this.activeScale = new Animated.Value(1);
 		this.laterScale = new Animated.Value(1);
 
 		this.mainTranslate = new Animated.Value(0);
-		this.currentlyTranslate = new Animated.Value(0);
+		this.activeTranslate = new Animated.Value(0);
 		this.laterTranslate = new Animated.Value(0);
 	}
 
@@ -38,7 +38,7 @@ class NewMoveButton extends Component {
 				easing: Easing.ease
 				// useNativeDriver: true,
 			}).start(),
-			Animated.timing(this.currentlyTranslate, {
+			Animated.timing(this.activeTranslate, {
 				toValue: 120,
 				duration: 150,
 				easing: Easing.ease
@@ -61,7 +61,7 @@ class NewMoveButton extends Component {
 				easing: Easing.ease
 				// useNativeDriver: true,
 			}).start(),
-			Animated.timing(this.currentlyTranslate, {
+			Animated.timing(this.activeTranslate, {
 				toValue: 0,
 				duration: 150,
 				easing: Easing.ease
@@ -116,7 +116,7 @@ class NewMoveButton extends Component {
 				duration: 150,
 				easing: Easing.ease
 			}).start(),
-			Animated.timing(this.currentlyTranslate, {
+			Animated.timing(this.activeTranslate, {
 				toValue: -75,
 				duration: 150,
 				delay: 25,
@@ -148,7 +148,7 @@ class NewMoveButton extends Component {
 					duration: 150,
 					easing: Easing.ease
 				}).start(),
-				Animated.timing(this.currentlyTranslate, {
+				Animated.timing(this.activeTranslate, {
 					toValue: 0,
 					duration: 150,
 					easing: Easing.ease
@@ -191,17 +191,17 @@ class NewMoveButton extends Component {
 			]
 		};
 
-		let currentlyAnimatedStyle = {
+		let activeAnimatedStyle = {
 			opacity: this.animatedOpacity,
 			transform: [
 				{
-					translateY: this.currentlyTranslate
+					translateY: this.activeTranslate
 				},
 				{
-					translateX: this.currentlyTranslate
+					translateX: this.activeTranslate
 				},
 				{
-					scale: this.currentlyScale
+					scale: this.activeScale
 				}
 			]
 		};
@@ -213,7 +213,7 @@ class NewMoveButton extends Component {
 					translateY: this.laterTranslate
 				},
 				{
-					translateX: this.currentlyTranslate
+					translateX: this.activeTranslate
 				},
 				{
 					scale: this.laterScale
@@ -233,12 +233,12 @@ class NewMoveButton extends Component {
 						<Icon name="clock" size={25} color={"white"} />
 					</TouchableWithoutFeedback>
 				</Animated.View>
-				<Animated.View style={[styles.currentlyButton, currentlyAnimatedStyle]}>
+				<Animated.View style={[styles.activeButton, activeAnimatedStyle]}>
 					<TouchableWithoutFeedback
-						onPressIn={() => this.handlePressIn(this.currentlyScale)}
-						onPressOut={() => this.handlePressOut(this.currentlyScale)}
-						onPress={() => this.haptic(presentModal("sesh.CreateCurrentMove"))}
-						style={styles.currentlyButton}
+						onPressIn={() => this.handlePressIn(this.activeScale)}
+						onPressOut={() => this.handlePressOut(this.activeScale)}
+						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}
+						style={styles.activeButton}
 					>
 						{/* <Icon name="send" size={25} color={"white"} /> */}
 						<Icon name="plus" size={25} color={"white"} />
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
 		overflow: "hidden"
 		// borderRadius:
 	},
-	currentlyButton: {
+	activeButton: {
 		position: "absolute",
 		alignItems: "center",
 		justifyContent: "center",
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: Colors.currently,
+		backgroundColor: Colors.active,
 		// backgroundColor: "transparent",
 		overflow: "hidden"
 		// borderRadius:

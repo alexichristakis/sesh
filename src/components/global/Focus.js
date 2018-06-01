@@ -8,7 +8,7 @@ import {
 	View,
 	Text,
 	Image,
-	FlatList
+	FlatList,
 } from "react-native";
 
 import Background from "../global/Background";
@@ -43,18 +43,18 @@ class Focus extends Component {
 	componentDidMount() {
 		Animated.timing(this.entry, {
 			toValue: 1,
-			duration: 100,
+			duration: 200,
 			easing: Easing.poly(0.25),
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	}
 
 	exit = () => {
 		Animated.timing(this.entry, {
 			toValue: 0,
-			duration: 100,
+			duration: 200,
 			easing: Easing.poly(0.25),
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -78,7 +78,7 @@ class Focus extends Component {
 		const scrollHeight = {
 			paddingTop: SB_HEIGHT + 10,
 			paddingBottom: 10,
-			height: cardHeight + SB_HEIGHT + 20
+			height: cardHeight + SB_HEIGHT + 20,
 		};
 
 		let listStyle = {
@@ -92,10 +92,10 @@ class Focus extends Component {
 				{
 					translateY: this.entry.interpolate({
 						inputRange: [0, 1],
-						outputRange: [250, 0]
-					})
-				}
-			]
+						outputRange: [250, 0],
+					}),
+				},
+			],
 			// ...shadow
 		};
 
@@ -103,7 +103,7 @@ class Focus extends Component {
 			latitude: 37.78825,
 			longitude: -122.4324,
 			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421
+			longitudeDelta: 0.0421,
 		};
 
 		return (
@@ -122,8 +122,7 @@ class Focus extends Component {
 					style={[styles.swipeContainer, scrollHeight]}
 					horizontal
 					pagingEnabled
-					showsHorizontalScrollIndicator={false}
-				>
+					showsHorizontalScrollIndicator={false}>
 					<Page>
 						<View style={[styles.moveContainer]}>{this.props.children}</View>
 					</Page>
@@ -145,7 +144,7 @@ class Focus extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
 
 		// ...shadow
 	},
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 		right: 0,
-		left: 0
+		left: 0,
 	},
 	moveContainer: {
 		// backgroundColor: "white",
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
 		right: 10,
 		// left: 0,
 		// right: 0,
-		...shadow
+		...shadow,
 		// ...heavyShadow
 	},
 	separatorContainer: { width: SCREEN_WIDTH, borderRadius: 1, height: 1 },
@@ -175,7 +174,7 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		height: 1,
-		backgroundColor: "white"
+		backgroundColor: "white",
 	},
 	separator: {
 		position: "absolute",
@@ -183,11 +182,11 @@ const styles = StyleSheet.create({
 		left: 50,
 		right: 0,
 		height: 1,
-		backgroundColor: Colors.lightGray
+		backgroundColor: Colors.lightGray,
 	},
 	options: {
 		flex: 1,
-		paddingRight: 10
+		paddingRight: 10,
 	},
 	button: {
 		flex: 1,
@@ -195,19 +194,19 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: Colors.red,
-		...shadow
+		...shadow,
 	},
 	leave: {
 		fontSize: 18,
-		color: Colors.lightGray
+		color: Colors.lightGray,
 	},
 	statusBar: {
 		position: "absolute",
 		top: 0,
 		left: 0,
 		right: 0,
-		height: SB_HEIGHT
-	}
+		height: SB_HEIGHT,
+	},
 });
 
 export default Focus;

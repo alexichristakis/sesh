@@ -9,8 +9,7 @@ class Background extends React.PureComponent {
 			<LinearGradient
 				style={{ flex: 1 }}
 				locations={[0.5, 1]}
-				colors={[Colors.lightGray, Colors.mediumGray]}
-			>
+				colors={[Colors.lightGray, Colors.mediumGray]}>
 				{this.props.children}
 			</LinearGradient>
 		);

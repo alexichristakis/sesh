@@ -7,7 +7,7 @@ import {
 	View,
 	Image,
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -29,7 +29,7 @@ class User extends Component {
 	handlePressIn = () => {
 		Animated.spring(this.animated, {
 			toValue: 0.95,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -38,7 +38,7 @@ class User extends Component {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -53,16 +53,15 @@ class User extends Component {
 			// borderBottomRightRadius: this.props.index === maxIndex ? 15 : 0,
 			transform: [
 				{
-					scale: this.animated
-				}
-			]
+					scale: this.animated,
+				},
+			],
 		};
 
 		return (
 			<Animated.View
 				ref={item => (this.view = item)}
-				style={[styles.container, containerAdditionalStyle]}
-			>
+				style={[styles.container, containerAdditionalStyle]}>
 				<TouchableOpacity
 					// activeOpacity={0.8}
 					style={{ flex: 1, flexDirection: "row" }}
@@ -71,8 +70,7 @@ class User extends Component {
 					onPress={() => {
 						// ReactNativeHapticFeedback.trigger("impactLight");
 						console.log(this.props.index);
-					}}
-				>
+					}}>
 					<Image style={styles.image} source={{ uri: user.photo }} />
 					<Text style={styles.name}>{user.name}</Text>
 				</TouchableOpacity>
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "white",
 		justifyContent: "center",
-		padding: 5
+		padding: 5,
 		// ...shadow
 	},
 	image: {
@@ -94,23 +92,23 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE / 2,
 		height: ICON_SIZE,
-		width: ICON_SIZE
+		width: ICON_SIZE,
 	},
 	name: {
 		flex: 1,
 		marginLeft: 10,
 		alignSelf: "center",
 		fontSize: 20,
-		fontWeight: "900"
-		// color: Colors.currently,
+		fontWeight: "900",
+		// color: Colors.active,
 	},
 
 	time: {
 		alignSelf: "center",
 		fontSize: 12,
 		fontWeight: "300",
-		color: Colors.gray
-	}
+		color: Colors.gray,
+	},
 });
 
 export default User;

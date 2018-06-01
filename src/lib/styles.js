@@ -1,7 +1,7 @@
 const primary = "#007AFF";
 const groups = "#FF9500";
 const groupsTrans = "rgba(255, 149, 0, 0.5)";
-const currently = "#5AC8FA";
+const active = "#5AC8FA";
 const later = "#FF2C55";
 
 const red = "#ff3b30";
@@ -86,7 +86,7 @@ const colors = {
 	primary,
 	groups,
 	groupsTrans,
-	currently,
+	active,
 	later,
 	lightGray,
 	mediumGray,

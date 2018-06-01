@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		fontSize: 20,
 		fontWeight: "900"
-		// color: Colors.currently,
+		// color: Colors.active,
 	},
 
 	time: {

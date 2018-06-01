@@ -183,10 +183,10 @@ class NewMoveButton extends Component {
 					<TouchableWithoutFeedback
 						onPressIn={() => this.handlePressIn(this.currentlyScale)}
 						onPressOut={() => this.handlePressOut(this.currentlyScale)}
-						onPress={() => this.haptic(presentModal("sesh.CreateCurrentMove"))}
+						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}
 						style={styles.currentlyButton}>
 						{/* <Icon name="send" size={25} color={"white"} /> */}
-						<Icon name="plus" size={20} color={"white"} />
+						<Icon name="plus" size={30} color={"white"} />
 					</TouchableWithoutFeedback>
 				</Animated.View>
 

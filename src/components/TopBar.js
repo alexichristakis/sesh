@@ -34,7 +34,7 @@ class TopBar extends Component {
 		this.animated = new Animated.Value(1);
 
 		this.groupsScale = new Animated.Value(1);
-		this.currentlyScale = new Animated.Value(1);
+		this.activeScale = new Animated.Value(1);
 		this.laterScale = new Animated.Value(1);
 
 		this.profileScale = new Animated.Value(1);

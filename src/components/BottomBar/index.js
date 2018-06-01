@@ -48,7 +48,7 @@ class BottomBar extends Component {
 				/>
 				<NewMoveButton
 					ref={item => (this.button = item)}
-					onPressPresentModalTo={this.onPressPresentModalTo}
+					onPressPresentModalTo={this.props.onPressPresentModalTo}
 				/>
 			</Animated.View>
 		);
