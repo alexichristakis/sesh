@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Animated, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import { BlurView } from "react-native-blur";
 
@@ -30,7 +30,7 @@ class BackButton extends Component {
 	};
 
 	haptic = func => {
-		// ReactNativeHapticFeedback.trigger("impactLight");
+		ReactNativeHapticFeedback.trigger("impactLight");
 		func;
 	};
 

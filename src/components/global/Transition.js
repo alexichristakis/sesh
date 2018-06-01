@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, Easing, LayoutAnimation, StyleSheet, View, Image, Text } from "react-native";
+import { Animated, Easing, StyleSheet, View, Image, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";

@@ -13,7 +13,7 @@ import {
 import RNFS from "react-native-fs";
 import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
-// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
@@ -169,7 +169,7 @@ class TopBar extends Component {
 	};
 
 	haptic = func => {
-		// ReactNativeHapticFeedback.trigger("impactLight");
+		ReactNativeHapticFeedback.trigger("impactLight");
 		func;
 	};
 

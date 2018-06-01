@@ -3,7 +3,7 @@ import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react
 
 import { Navigation } from "react-native-navigation";
 import MapView, { Marker } from "react-native-maps";
-// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
@@ -22,7 +22,6 @@ class ActiveFocus extends Component {
 		this.animated = new Animated.Value(1);
 
 		this.state = {
-			pressed: false,
 			joined: this.props.joined,
 			loading: true,
 			position: null
@@ -56,7 +55,6 @@ class ActiveFocus extends Component {
 	};
 
 	handlePressIn = () => {
-		this.setState({ pressed: true });
 		Animated.spring(this.animated, {
 			toValue: 0.9,
 			useNativeDriver: true
@@ -64,7 +62,6 @@ class ActiveFocus extends Component {
 	};
 
 	handlePressOut = () => {
-		this.setState({ pressed: false });
 		Animated.spring(this.animated, {
 			toValue: 1,
 			friction: 3,
@@ -74,7 +71,7 @@ class ActiveFocus extends Component {
 	};
 
 	handleOnPress = () => {
-		// ReactNativeHapticFeedback.trigger("impactLight");
+		ReactNativeHapticFeedback.trigger("impactLight");
 		this.setState({ joined: !this.state.joined });
 	};
 
@@ -101,11 +98,7 @@ class ActiveFocus extends Component {
 						style={[
 							styles.joinButton,
 							{
-								backgroundColor:
-									(this.state.joined && !this.state.pressed) ||
-									(this.state.pressed && !this.state.joined)
-										? Colors.active
-										: "white"
+								backgroundColor: this.state.joined ? Colors.active : "white"
 							}
 						]}
 						onPressIn={this.handlePressIn}
@@ -116,11 +109,7 @@ class ActiveFocus extends Component {
 							style={[
 								styles.joinText,
 								{
-									color:
-										(this.state.joined && !this.state.pressed) ||
-										(this.state.pressed && !this.state.joined)
-											? "white"
-											: Colors.active
+									color: this.state.joined ? "white" : Colors.active
 								}
 							]}
 						>
