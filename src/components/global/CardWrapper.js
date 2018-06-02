@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		// padding: 10,
 		// paddingRight: 12,
-		marginBottom: 10
+		marginBottom: 10,
 		// overflow: "hidden"
-		// ...shadow
+		...shadow
 		// ...cardShadow
 	}
 });

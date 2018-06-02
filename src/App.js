@@ -48,14 +48,16 @@ Navigation.events().registerAppLaunchedListener(async () => {
 		});
 	} else {
 		Navigation.setRoot({
-			stack: {
-				children: [
-					{
-						component: {
-							name: "sesh.Register"
+			root: {
+				stack: {
+					children: [
+						{
+							component: {
+								name: "sesh.Register"
+							}
 						}
-					}
-				]
+					]
+				}
 			}
 		});
 	}

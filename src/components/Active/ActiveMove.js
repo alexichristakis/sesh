@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		borderRadius: 15,
 		overflow: "hidden",
+		...shadow
 	},
 	background: {
 		position: "absolute",
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 		backgroundColor: Colors.active,
-		opacity: 0.2,
+		opacity: 0.2
 	},
 	blur: {
 		flex: 1,
@@ -70,36 +71,36 @@ const styles = StyleSheet.create({
 		// backgroundColor: Colors.primary,
 
 		padding: 10,
-		paddingRight: 12,
+		paddingRight: 12
 
 		// ...shadow
 	},
 	top: {
 		flex: 2,
-		flexDirection: "row",
+		flexDirection: "row"
 	},
 	image: {
 		alignSelf: "center",
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE / 2,
 		height: ICON_SIZE,
-		width: ICON_SIZE,
+		width: ICON_SIZE
 	},
 	header: {
 		flex: 1,
 		flexDirection: "row",
 		alignSelf: "center",
 		marginLeft: 10,
-		marginBottom: 3,
+		marginBottom: 3
 	},
 	name: {
 		fontSize: 14,
 		fontWeight: "bold",
-		color: Colors.gray,
+		color: Colors.gray
 	},
 	group: {
 		fontSize: 24,
-		fontWeight: "800",
+		fontWeight: "800"
 		// color: Colors.active,
 	},
 	time: {
@@ -109,24 +110,24 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		// alignSelf: "center",
 		color: Colors.active,
-		fontWeight: "800",
+		fontWeight: "800"
 	},
 	mid: {
 		flex: 2,
-		marginVertical: 10,
+		marginVertical: 10
 	},
 	description: {
-		fontSize: 14,
+		fontSize: 14
 	},
 	bottom: {
 		flex: 1,
-		alignSelf: "flex-end",
+		alignSelf: "flex-end"
 	},
 	location: {
 		fontSize: 14,
 		// fontWeight: "200",
-		color: Colors.active,
-	},
+		color: Colors.active
+	}
 });
 
 export default ActiveMove;

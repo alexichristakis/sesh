@@ -11,17 +11,17 @@ import {
 	FlatList
 } from "react-native";
 
-import Background from "../global/Background";
-import MapCard from "../global/MapCard";
-import MapView from "react-native-maps";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 
+import TouchableScale from "./TouchableScale";
+import BackButton from "./BackButton";
+import Background from "./Background";
+import MapCard from "./MapCard";
+
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, heavyShadow, shadow } from "../../lib/styles";
-
-import BackButton from "../global/BackButton";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -127,7 +127,14 @@ class Focus extends Component {
 					showsHorizontalScrollIndicator={false}
 				>
 					<Page>
-						<View style={[styles.moveContainer]}>{this.props.children}</View>
+						<TouchableScale onPress={this.props.onPressPop} style={styles.moveContainer}>
+							{this.props.children}
+						</TouchableScale>
+						{/* <Animated.View>
+							<TouchableOpacity style={[styles.moveContainer]}>
+								{this.props.children}
+							</TouchableOpacity>
+						</Animated.View> */}
 					</Page>
 					<HalfPage>
 						<View style={styles.options}>
@@ -164,10 +171,10 @@ const styles = StyleSheet.create({
 		// padding: 10,
 		// paddingRight: 12,
 		left: 10,
-		right: 10,
+		right: 10
 		// left: 0,
 		// right: 0,
-		...shadow
+		// ...shadow
 		// ...heavyShadow
 	},
 	separatorContainer: { width: SCREEN_WIDTH, borderRadius: 1, height: 1 },
