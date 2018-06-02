@@ -7,7 +7,7 @@ import {
 	View,
 	Text,
 	Image,
-	TouchableOpacity
+	TouchableOpacity,
 } from "react-native";
 
 import RNFS from "react-native-fs";
@@ -28,7 +28,7 @@ class TopBar extends Component {
 		this.state = {
 			open: true,
 			loading: true,
-			photo: RNFS.DocumentDirectoryPath + "/profile_pic.png"
+			photo: RNFS.DocumentDirectoryPath + "/profile_pic.png",
 		};
 
 		this.animated = new Animated.Value(1);
@@ -69,26 +69,26 @@ class TopBar extends Component {
 				toValue: -1,
 				duration: duration,
 				easing: Easing.out(Easing.poly(0.25)),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
 				duration: duration,
 				easing: Easing.out(Easing.poly(0.25)),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
 				duration: duration,
 				easing: Easing.out(Easing.poly(0.25)),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
 				duration: duration,
 				easing: Easing.out(Easing.poly(0.25)),
-				useNativeDriver: true
-			}).start()
+				useNativeDriver: true,
+			}).start(),
 		]);
 	};
 
@@ -99,26 +99,26 @@ class TopBar extends Component {
 				toValue: 0,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
-			}).start()
+				useNativeDriver: true,
+			}).start(),
 		]);
 	};
 
@@ -129,33 +129,33 @@ class TopBar extends Component {
 				toValue: 1,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 1,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 1,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 1,
 				duration: 250,
 				easing: Easing.in(Easing.ease),
-				useNativeDriver: true
-			}).start()
+				useNativeDriver: true,
+			}).start(),
 		]);
 	};
 
 	handlePressIn = animatedValue => {
 		Animated.spring(animatedValue, {
 			toValue: 0.9,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -164,7 +164,7 @@ class TopBar extends Component {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -187,23 +187,23 @@ class TopBar extends Component {
 		const buttonTranslate = {
 			translateY: this.animated.interpolate({
 				inputRange: [0, 1],
-				outputRange: [0, 50]
-			})
+				outputRange: [0, 50],
+			}),
 		};
 
 		let profileButtonAnimatedStyle = {
 			transform: [buttonTranslate, { scale: this.profileScale }],
-			opacity: this.animated
+			opacity: this.animated,
 		};
 
 		let addFriendAnimatedStyle = {
 			transform: [buttonTranslate, { scale: this.addFriendScale }],
-			opacity: this.animated
+			opacity: this.animated,
 		};
 
 		let createGroupAnimatedStyle = {
 			transform: [buttonTranslate, { scale: this.createGroupScale }],
-			opacity: this.animated
+			opacity: this.animated,
 		};
 
 		let blurContainerAnimatedStyle = {
@@ -211,10 +211,10 @@ class TopBar extends Component {
 				{
 					translateY: this.animated.interpolate({
 						inputRange: [0, 1],
-						outputRange: [-BAR_HEIGHT - 30, 0]
-					})
-				}
-			]
+						outputRange: [-BAR_HEIGHT - 30, 0],
+					}),
+				},
+			],
 		};
 
 		let tabContainerAnimatedStyle = {
@@ -223,10 +223,10 @@ class TopBar extends Component {
 					translateY: this.animated.interpolate({
 						inputRange: [0, 1],
 						// outputRange: [0, BAR_HEIGHT]
-						outputRange: [-BAR_HEIGHT + SB_HEIGHT - 2, BAR_HEIGHT + 4]
-					})
-				}
-			]
+						outputRange: [-BAR_HEIGHT + SB_HEIGHT - 2, BAR_HEIGHT + 4],
+					}),
+				},
+			],
 		};
 
 		return (
@@ -242,8 +242,7 @@ class TopBar extends Component {
 							activeOpacity={1}
 							onPressIn={() => this.handlePressIn(this.addFriendScale)}
 							onPressOut={() => this.handlePressOut(this.addFriendScale)}
-							onPress={() => this.haptic(presentModal("sesh.AddFriend"))}
-						>
+							onPress={() => this.haptic(presentModal("sesh.AddFriend"))}>
 							<Icon name="user-plus" size={30} color={Colors.primary} />
 						</TouchableOpacity>
 					</Animated.View>
@@ -254,8 +253,7 @@ class TopBar extends Component {
 							onPressOut={() => this.handlePressOut(this.profileScale)}
 							onPress={() =>
 								this.haptic(presentOverlay("sesh.Profile", { onPressPushTo: presentOverlay }))
-							}
-						>
+							}>
 							<Image style={styles.image} resizeMode="cover" source={{ uri: this.state.photo }} />
 						</TouchableOpacity>
 					</Animated.View>
@@ -265,8 +263,7 @@ class TopBar extends Component {
 							activeOpacity={1}
 							onPressIn={() => this.handlePressIn(this.createGroupScale)}
 							onPressOut={() => this.handlePressOut(this.createGroupScale)}
-							onPress={() => this.haptic(presentStackModal("sesh.Groups"))}
-						>
+							onPress={() => this.haptic(presentStackModal("sesh.Groups"))}>
 							<Icon style={{ paddingLeft: 5 }} name="users" size={30} color={Colors.primary} />
 						</TouchableOpacity>
 					</Animated.View>
@@ -282,55 +279,55 @@ const styles = StyleSheet.create({
 		top: 0,
 		left: 0,
 		right: 0,
-		paddingHorizontal: 10
+		paddingHorizontal: 10,
 	},
 	fillCenter: {
 		flex: 1,
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
 	},
 	topBar: {
 		marginHorizontal: 5,
 		paddingTop: SB_HEIGHT,
 		flexDirection: "row",
-		top: -50
+		top: -50,
 	},
 	statusBar: {
 		position: "absolute",
 		top: -SB_HEIGHT,
 		left: 0,
 		right: 0,
-		height: SB_HEIGHT + BAR_HEIGHT + 30
+		height: SB_HEIGHT + BAR_HEIGHT + 30,
 	},
 	animated: {
 		position: "absolute",
 		left: 0,
 		right: 0,
-		top: SB_HEIGHT
+		top: SB_HEIGHT,
 	},
 	title: {
 		marginLeft: 50,
 		// flex: 1,
 		fontSize: 36,
 		fontWeight: "900",
-		alignSelf: "center"
+		alignSelf: "center",
 	},
 	textContainer: {
 		justifyContent: "center",
 		// alignItems: "center",
 		flexDirection: "row",
-		position: "absolute"
+		position: "absolute",
 		// padding: 20,
 		// top: 60,
 		// left: 0,
 		// right: 0,
 	},
 	button: {
-		flex: 1
+		flex: 1,
 	},
 	profileButton: {
 		flex: 3,
-		alignItems: "center"
+		alignItems: "center",
 		// flexDirection: "row",
 	},
 	addFriendButton: {
@@ -346,7 +343,7 @@ const styles = StyleSheet.create({
 		// borderColor: "white",
 		// borderRadius: 25,
 		height: 50,
-		width: 50
+		width: 50,
 		// ...shadow
 	},
 	addGroupButton: {
@@ -363,7 +360,7 @@ const styles = StyleSheet.create({
 		// borderColor: "white",
 		// borderRadius: 25,
 		height: 50,
-		width: 50
+		width: 50,
 		// ...shadow
 	},
 	image: {
@@ -371,14 +368,14 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_DIMENSION / 2,
 		height: ICON_DIMENSION,
-		width: ICON_DIMENSION
+		width: ICON_DIMENSION,
 	},
 	text: {
 		flex: 1,
 		fontSize: 18,
 		fontWeight: "bold",
 		textAlignVertical: "center",
-		textAlign: "center"
+		textAlign: "center",
 		// paddingBottom: 10,
 	},
 	indicator: {
@@ -386,8 +383,8 @@ const styles = StyleSheet.create({
 		// top: 0,
 		height: 3,
 		alignSelf: "center",
-		borderRadius: 2
-	}
+		borderRadius: 2,
+	},
 });
 
 export default TopBar;

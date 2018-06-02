@@ -258,8 +258,8 @@ const styles = StyleSheet.create({
 	subButton: {
 		alignItems: "center",
 		justifyContent: "center",
-		borderWidth: 2,
-		borderColor: "white",
+		// borderWidth: 2,
+		// borderColor: "white",
 		width: 50,
 		height: 50,
 		borderRadius: 25,

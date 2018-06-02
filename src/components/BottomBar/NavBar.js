@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
 		// bottom: 0,
 		// paddingBottom: 20,
 		// paddingTop: 5,
-		borderTopLeftRadius: 20,
-		borderTopRightRadius: 20,
+		borderTopLeftRadius: 15,
+		borderTopRightRadius: 15,
 		// backgroundColor: "red",
-		overflow: "hidden"
+		overflow: "hidden",
 	},
 	blur: {
 		// flex: 1
@@ -73,19 +73,19 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 		paddingTop: 5,
-		paddingBottom: SB_HEIGHT === 20 ? 5 : 25
+		paddingBottom: SB_HEIGHT === 20 ? 5 : 25,
 		// backgroundColor: "blue"
 		// paddingBottom: 20
 		// paddingTop: 100
 	},
 	button: {
-		flex: 1
+		flex: 1,
 	},
 	textContainer: {
 		flex: 1,
 		justifyContent: "center",
 		// alignItems: "center",
-		flexDirection: "row"
+		flexDirection: "row",
 		// position: "absolute"
 		// padding: 20,
 		// top: 60,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "bold",
 		textAlignVertical: "center",
-		textAlign: "center"
+		textAlign: "center",
 		// paddingBottom: 10,
 	},
 	indicator: {
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
 		// top: 0,
 		height: 3,
 		alignSelf: "center",
-		borderRadius: 2
-	}
+		borderRadius: 2,
+	},
 });
 
 export default NavBar;
