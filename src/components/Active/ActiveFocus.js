@@ -8,6 +8,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
+import TouchableScale from "../global/TouchableScale";
 import Focus from "../global/Focus";
 import MapCard from "../global/MapCard";
 import User from "../global/User";
@@ -24,7 +25,7 @@ class ActiveFocus extends Component {
 		this.state = {
 			joined: this.props.joined,
 			loading: true,
-			position: null
+			position: null,
 		};
 	}
 
@@ -34,7 +35,7 @@ class ActiveFocus extends Component {
 				this.setState({ position: position.coords, loading: false });
 			},
 			error => this.setState({ error: error.message }),
-			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
 		);
 	}
 
@@ -47,8 +48,8 @@ class ActiveFocus extends Component {
 			Navigation.pop(this.props.componentId, {
 				customTransition: {
 					animations: [],
-					duration: 0
-				}
+					duration: 0,
+				},
 			});
 			this.props.closeCard();
 		}, 100);
@@ -57,7 +58,7 @@ class ActiveFocus extends Component {
 	handlePressIn = () => {
 		Animated.spring(this.animated, {
 			toValue: 0.9,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -66,7 +67,7 @@ class ActiveFocus extends Component {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -81,9 +82,9 @@ class ActiveFocus extends Component {
 		let animatedStyle = {
 			transform: [
 				{
-					scale: this.animated
-				}
-			]
+					scale: this.animated,
+				},
+			],
 		};
 
 		let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
@@ -92,31 +93,24 @@ class ActiveFocus extends Component {
 			<View style={{ flex: 1, paddingTop: headerTopPadding }}>
 				{!this.state.loading && <MapCard location={this.state.position} />}
 				{this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
-				<Animated.View style={animatedStyle}>
-					<TouchableOpacity
-						activeOpacity={1}
+				<TouchableScale
+					style={[
+						styles.joinButton,
+						{
+							backgroundColor: this.state.joined ? Colors.active : "white",
+						},
+					]}
+					onPress={this.handleOnPress}>
+					<Text
 						style={[
-							styles.joinButton,
+							styles.joinText,
 							{
-								backgroundColor: this.state.joined ? Colors.active : "white"
-							}
-						]}
-						onPressIn={this.handlePressIn}
-						onPressOut={this.handlePressOut}
-						onPress={this.handleOnPress}
-					>
-						<Text
-							style={[
-								styles.joinText,
-								{
-									color: this.state.joined ? "white" : Colors.active
-								}
-							]}
-						>
-							{!this.state.joined ? "Join" : "Leave"}
-						</Text>
-					</TouchableOpacity>
-				</Animated.View>
+								color: this.state.joined ? "white" : Colors.active,
+							},
+						]}>
+						{!this.state.joined ? "Join" : "Leave"}
+					</Text>
+				</TouchableScale>
 			</View>
 		);
 	};
@@ -132,8 +126,7 @@ class ActiveFocus extends Component {
 				statusBarHeight={this.props.statusBarHeight}
 				closeCard={this.props.closeCard}
 				onPressPop={this.onPressPop}
-				renderItem={this._renderItem}
-			>
+				renderItem={this._renderItem}>
 				<ActiveMove index={this.props.index} length={this.props.length} move={this.props.data} />
 			</Focus>
 		);
@@ -147,13 +140,14 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		alignItems: "center",
 		justifyContent: "center",
-		// backgroundColor: "white",
-		...shadow
+		backgroundColor: "white",
+		// ...shadow,
 	},
 	joinText: {
+		// flex: 1,
 		// color: Colors.active,
-		fontSize: 18
-	}
+		fontSize: 18,
+	},
 });
 
 export default ActiveFocus;

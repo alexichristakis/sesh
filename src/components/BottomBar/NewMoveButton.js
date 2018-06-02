@@ -5,6 +5,8 @@ import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
+import TouchableScale from "../global/TouchableScale";
+
 import { SB_HEIGHT, SCREEN_WIDTH } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
@@ -13,7 +15,7 @@ class NewMoveButton extends Component {
 		super(props);
 
 		this.state = {
-			open: false
+			open: false,
 		};
 
 		this.rotation = new Animated.Value(0);
@@ -34,72 +36,70 @@ class NewMoveButton extends Component {
 		}
 	};
 
-	handlePressIn = animatedValue => {
-		Animated.spring(animatedValue, {
-			toValue: 0.9
-			// useNativeDriver: true,
-		}).start();
-	};
-
-	handlePressOut = animatedValue => {
-		Animated.spring(animatedValue, {
-			toValue: 1,
-			friction: 3,
-			tension: 40
-			// useNativeDriver: true,
-		}).start();
-	};
+	// handlePressIn = animatedValue => {
+	// 	Animated.spring(animatedValue, {
+	// 		toValue: 0.9
+	// 		// useNativeDriver: true,
+	// 	}).start();
+	// };
+	//
+	// handlePressOut = animatedValue => {
+	// 	Animated.spring(animatedValue, {
+	// 		toValue: 1,
+	// 		friction: 3,
+	// 		tension: 40
+	// 		// useNativeDriver: true,
+	// 	}).start();
+	// };
 
 	handleOpenButton = () => {
 		this.setState({ open: true });
-
 		Animated.parallel([
 			Animated.spring(this.rotation, {
 				toValue: 1,
-				friction: 5
+				friction: 5,
 				// duration: 400,
 				// useNativeDriver: false,
-			}).start(),
+			}),
 			Animated.timing(this.yTranslate, {
 				toValue: 1,
 				duration: 150,
 				delay: 25,
-				easing: Easing.ease
+				easing: Easing.ease,
 				// useNativeDriver: false,
-			}).start(),
+			}),
 			Animated.timing(this.xTranslate, {
 				toValue: 1,
 				duration: 150,
-				easing: Easing.ease
+				easing: Easing.ease,
 				// useNativeDriver: false,
-			}).start()
-		]);
+			}),
+		]).start();
 	};
 
 	handleCloseButton = () => {
 		this.setState({ open: false });
-
 		Animated.parallel([
 			Animated.spring(this.rotation, {
 				toValue: 0,
-				friction: 5
+				friction: 5,
 				// duration: 400,
 				// useNativeDriver: false,
-			}).start(),
+			}),
 			Animated.timing(this.yTranslate, {
 				toValue: 0,
 				duration: 150,
 				delay: 25,
-				easing: Easing.ease
+				easing: Easing.ease,
 				// useNativeDriver: false,
-			}).start(),
+			}),
 			Animated.timing(this.xTranslate, {
 				toValue: 0,
 				duration: 150,
-				easing: Easing.ease
+				easing: Easing.ease,
 				// useNativeDriver: false,
-			}).start()
-		]);
+			}),
+		]).start();
 	};
 
 	haptic = func => {
@@ -112,126 +112,150 @@ class NewMoveButton extends Component {
 		const presentModal = this.props.onPressPresentModalTo;
 
 		let mainAnimatedStyle = {
+			position: "absolute",
 			transform: [
 				{
 					rotateZ: this.rotation.interpolate({
 						inputRange: [0, 1],
-						outputRange: ["0deg", "45deg"]
-					})
+						outputRange: ["0deg", "45deg"],
+					}),
 				},
-				{
-					scale: this.mainButtonScale
-				}
-			]
+				// {
+				// 	scale: this.mainButtonScale,
+				// },
+			],
 		};
 
 		let activeAnimatedStyle = {
-			// opacity: this.animatedOpacity,
+			position: "absolute",
 			transform: [
 				{
 					translateY: this.yTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, -45]
-					})
+						outputRange: [0, -45],
+					}),
 				},
 				{
 					translateX: this.xTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, -45]
-					})
+						outputRange: [0, -45],
+					}),
 				},
-				{
-					scale: this.activeScale
-				}
-			]
+				// {
+				// 	scale: this.activeScale,
+				// },
+			],
 		};
 
 		let laterAnimatedStyle = {
-			// opacity: this.animatedOpacity,
+			position: "absolute",
 			transform: [
 				{
 					translateY: this.yTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, -45]
-					})
+						outputRange: [0, -45],
+					}),
 				},
 				{
 					translateX: this.xTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, 45]
-					})
+						outputRange: [0, 45],
+					}),
 				},
-				{
-					scale: this.laterScale
-				}
-			]
+				// {
+				// 	scale: this.laterScale,
+				// },
+			],
 		};
 
 		return (
 			<View style={styles.container}>
-				<Animated.View style={[styles.laterButton, laterAnimatedStyle]}>
-					<TouchableWithoutFeedback
-						onPressIn={() => this.handlePressIn(this.laterScale)}
-						onPressOut={() => this.handlePressOut(this.laterScale)}
-						onPress={() => this.haptic(presentModal("sesh.CreateLaterMove"))}
-						style={styles.laterButton}
-					>
+				<Animated.View style={laterAnimatedStyle}>
+					<TouchableScale
+						style={[styles.subButton, { backgroundColor: Colors.later }]}
+						animated={laterAnimatedStyle}
+						onPress={() => this.haptic(presentModal("sesh.CreateLaterMove"))}>
 						<Icon name="clock" size={25} color={"white"} />
-					</TouchableWithoutFeedback>
+					</TouchableScale>
 				</Animated.View>
-				<Animated.View style={[styles.activeButton, activeAnimatedStyle]}>
-					<TouchableWithoutFeedback
-						onPressIn={() => this.handlePressIn(this.activeScale)}
-						onPressOut={() => this.handlePressOut(this.activeScale)}
-						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}
-						style={styles.activeButton}
-					>
-						{/* <Icon name="send" size={25} color={"white"} /> */}
+				<Animated.View style={activeAnimatedStyle}>
+					<TouchableScale
+						style={[styles.subButton, { backgroundColor: Colors.active }]}
+						animated={activeAnimatedStyle}
+						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}>
 						<Icon name="plus" size={30} color={"white"} />
-					</TouchableWithoutFeedback>
+					</TouchableScale>
 				</Animated.View>
 
-				<Animated.View style={[styles.mainButton, mainAnimatedStyle]}>
-					<TouchableWithoutFeedback
+				<Animated.View style={mainAnimatedStyle}>
+					<TouchableScale
 						style={styles.mainButton}
-						onPressIn={() => this.handlePressIn(this.mainButtonScale)}
-						onPressOut={() => this.handlePressOut(this.mainButtonScale)}
-						onPress={this.handleOnPress}
-					>
+						animated={mainAnimatedStyle}
+						onPress={this.handleOnPress}>
 						<Icon name="plus" size={50} color={"white"} />
-					</TouchableWithoutFeedback>
+					</TouchableScale>
 				</Animated.View>
 			</View>
 		);
+
+		// return (
+		// 	<View style={styles.container}>
+		// 		<Animated.View style={[styles.laterButton, laterAnimatedStyle]}>
+		// 			<TouchableWithoutFeedback
+		// 				onPressIn={() => this.handlePressIn(this.laterScale)}
+		// 				onPressOut={() => this.handlePressOut(this.laterScale)}
+		// 				onPress={() => this.haptic(presentModal("sesh.CreateLaterMove"))}
+		// 				style={styles.laterButton}>
+		// 				<Icon name="clock" size={25} color={"white"} />
+		// 			</TouchableWithoutFeedback>
+		// 		</Animated.View>
+		// 		<Animated.View style={[styles.activeButton, activeAnimatedStyle]}>
+		// 			<TouchableWithoutFeedback
+		// 				onPressIn={() => this.handlePressIn(this.activeScale)}
+		// 				onPressOut={() => this.handlePressOut(this.activeScale)}
+		// 				onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}
+		// 				style={styles.activeButton}>
+		// 				{/* <Icon name="send" size={25} color={"white"} /> */}
+		// 				<Icon name="plus" size={30} color={"white"} />
+		// 			</TouchableWithoutFeedback>
+		// 		</Animated.View>
+		//
+		// 		<Animated.View style={[styles.mainButton, mainAnimatedStyle]}>
+		// 			<TouchableWithoutFeedback
+		// 				style={styles.mainButton}
+		// 				onPressIn={() => this.handlePressIn(this.mainButtonScale)}
+		// 				onPressOut={() => this.handlePressOut(this.mainButtonScale)}
+		// 				onPress={this.handleOnPress}>
+		// 				<Icon name="plus" size={50} color={"white"} />
+		// 			</TouchableWithoutFeedback>
+		// 		</Animated.View>
+		// 	</View>
+		// );
 	}
 }
 
 const styles = StyleSheet.create({
+	center: {
+		alignItems: "center",
+		justifyContent: "center",
+	},
 	container: {
-		// backgroundColor: "red",
+		alignItems: "center",
+		justifyContent: "center",
 		bottom: SB_HEIGHT === 20 ? 35 : 55,
 		left: SCREEN_WIDTH / 2,
 		position: "absolute",
-		alignItems: "center",
-		justifyContent: "center"
-		// ...shadow,
 	},
 	mainButton: {
-		position: "absolute",
 		alignItems: "center",
 		justifyContent: "center",
-		borderWidth: 1,
-		borderColor: Colors.lightGray,
 		width: 60,
 		height: 60,
 		borderRadius: 30,
-		// backgroundColor: "transparent",
 		backgroundColor: Colors.primary,
-		overflow: "hidden"
-		// borderRadius:
+		overflow: "hidden",
 	},
-	activeButton: {
-		position: "absolute",
+	subButton: {
 		alignItems: "center",
 		justifyContent: "center",
 		borderWidth: 2,
@@ -239,25 +263,8 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: Colors.active,
-		// backgroundColor: "transparent",
-		overflow: "hidden"
-		// borderRadius:
+		overflow: "hidden",
 	},
-	laterButton: {
-		position: "absolute",
-		alignItems: "center",
-		justifyContent: "center",
-		borderWidth: 2,
-		borderColor: "white",
-		width: 50,
-		height: 50,
-		borderRadius: 25,
-		backgroundColor: Colors.later,
-		// backgroundColor: "transparent",
-		overflow: "hidden"
-		// borderRadius:
-	}
 });
 
 export default NewMoveButton;

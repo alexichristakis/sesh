@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Animated, TouchableOpacity } from "react-native";
 
+import merge from "deepmerge";
+
 class TouchableScale extends Component {
 	constructor(props) {
 		super(props);
@@ -12,7 +14,7 @@ class TouchableScale extends Component {
 	handlePressIn = () => {
 		Animated.spring(this.animated, {
 			toValue: 0.95,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -21,7 +23,7 @@ class TouchableScale extends Component {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -29,19 +31,19 @@ class TouchableScale extends Component {
 		let containerAnimatedStyle = {
 			transform: [
 				{
-					scale: this.animated
-				}
-			]
+					scale: this.animated,
+				},
+			],
 		};
 
 		return (
-			<Animated.View style={[containerAnimatedStyle, this.props.style]}>
+			<Animated.View style={containerAnimatedStyle}>
 				<TouchableOpacity
+					style={this.props.style}
 					activeOpacity={1}
 					onPressIn={this.handlePressIn}
 					onPressOut={this.handlePressOut}
-					onPress={this.props.onPress}
-				>
+					onPress={this.props.onPress}>
 					{this.props.children}
 				</TouchableOpacity>
 			</Animated.View>
@@ -50,7 +52,7 @@ class TouchableScale extends Component {
 }
 
 TouchableScale.propTypes = {
-	onPress: PropTypes.func.isRequired
+	onPress: PropTypes.func.isRequired,
 };
 
 export default TouchableScale;
