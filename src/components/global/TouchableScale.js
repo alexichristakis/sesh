@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Animated, TouchableOpacity } from "react-native";
 
-import merge from "deepmerge";
-
 class TouchableScale extends Component {
 	constructor(props) {
 		super(props);
