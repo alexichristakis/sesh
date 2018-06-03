@@ -51,7 +51,7 @@ const data = [
   }
 ];
 
-class CreateCurrentMove extends Component {
+class CreateActiveMove extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -62,4 +62,4 @@ class CreateCurrentMove extends Component {
   }
 }
 
-export default CreateCurrentMove;
+export default CreateActiveMove;

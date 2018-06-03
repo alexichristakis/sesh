@@ -6,7 +6,7 @@ import {
 	StatusBar,
 	StyleSheet,
 	Dimensions,
-	Platform
+	Platform,
 } from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
@@ -14,10 +14,11 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import RNFS from "react-native-fs";
 
-import NewMoveButton from "./NewMoveButton";
-import TabBar from "./TabBar";
+import Background from "./global/Background";
+import TopBar from "./TopBar";
+import BottomBar from "./BottomBar";
 import Groups from "./Groups";
-import Currently from "./Currently";
+import Active from "./Active";
 import Later from "./Later";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
@@ -30,7 +31,7 @@ const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(0);
 
 const groupsOffset = new Animated.Value(0);
-const currentlyOffset = new Animated.Value(0);
+const activeOffset = new Animated.Value(0);
 const laterOffset = new Animated.Value(0);
 
 function Page(props: { children?: ReactElement<*> }) {
@@ -40,21 +41,21 @@ function Page(props: { children?: ReactElement<*> }) {
 function indicatorAnimate() {
 	return {
 		backgroundColor: xOffset.interpolate({
-			inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-			outputRange: [Colors.groups, Colors.currently, Colors.later]
+			inputRange: [0, SCREEN_WIDTH],
+			outputRange: [Colors.active, Colors.later],
 		}),
 		width: xOffset.interpolate({
-			inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-			outputRange: [60, 80, 50]
+			inputRange: [0, SCREEN_WIDTH],
+			outputRange: [40, 50],
 		}),
 		transform: [
 			{
 				translateX: xOffset.interpolate({
-					inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-					outputRange: [-SCREEN_WIDTH / 3, 0, SCREEN_WIDTH / 3]
-				})
-			}
-		]
+					inputRange: [0, SCREEN_WIDTH],
+					outputRange: [-SCREEN_WIDTH / 4, SCREEN_WIDTH / 4],
+				}),
+			},
+		],
 	};
 }
 
@@ -63,28 +64,19 @@ function textColorTransform(index: number) {
 		case 0:
 			return {
 				color: xOffset.interpolate({
-					inputRange: [-1 * SCREEN_WIDTH, 0, SCREEN_WIDTH],
-					outputRange: [Colors.gray, Colors.groups, Colors.gray],
-					extrapolate: "clamp"
-				})
+					inputRange: [0, SCREEN_WIDTH],
+					outputRange: [Colors.active, Colors.gray],
+					extrapolate: "clamp",
+				}),
 			};
 			break;
 		case 1:
 			return {
 				color: xOffset.interpolate({
-					inputRange: [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-					outputRange: [Colors.gray, Colors.currently, Colors.gray],
-					extrapolate: "clamp"
-				})
-			};
-			break;
-		case 2:
-			return {
-				color: xOffset.interpolate({
-					inputRange: [SCREEN_WIDTH, 2 * SCREEN_WIDTH, 3 * SCREEN_WIDTH],
-					outputRange: [Colors.gray, Colors.later, Colors.gray],
-					extrapolate: "clamp"
-				})
+					inputRange: [0, SCREEN_WIDTH],
+					outputRange: [Colors.gray, Colors.later],
+					extrapolate: "clamp",
+				}),
 			};
 			break;
 	}
@@ -100,7 +92,7 @@ class Home extends Component {
 			vertScrolling: false,
 			scrollDir: {
 				up: false,
-				down: false
+				down: false,
 			},
 
 			user: this.props.user,
@@ -108,22 +100,22 @@ class Home extends Component {
 
 			friends: [],
 			groups: [],
-			moves: []
+			moves: [],
 		};
 	}
 
-	// componentDidMount() {
-	// 	// fetch that data
-	// 	// const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
-	// 	const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-	// 	//
-	// 	// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
-	// 	RNFS.readFile(path, "base64").then(res => {
-	// 		console.log("finished");
-	// 		this.setState({ photo: "data:image/png;base64," + res, loading: false });
-	// 	});
-	// 	// console.log(res);
-	// }
+	async componentDidMount() {
+		// fetch that data
+		const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
+		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		//
+		await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+		RNFS.readFile(path, "base64").then(res => {
+			console.log("finished");
+			this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		});
+		// console.log(res);
+	}
 
 	_horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
 		// useNativeDriver: true,
@@ -131,7 +123,7 @@ class Home extends Component {
 
 	_onHorizScrollEnd = () => {
 		if (xOffset._value == 0) yOffset = groupsOffset;
-		else if (xOffset._value == SCREEN_WIDTH) yOffset = currentlyOffset;
+		else if (xOffset._value == SCREEN_WIDTH) yOffset = activeOffset;
 		else yOffset = laterOffset;
 	};
 
@@ -150,19 +142,17 @@ class Home extends Component {
 		}
 		yOffset = currentOffset;
 		if (xOffset._value == 0) groupsOffset = yOffset;
-		else if (xOffset._value == SCREEN_WIDTH) currentlyOffset = yOffset;
+		else if (xOffset._value == SCREEN_WIDTH) activeOffset = yOffset;
 		else laterOffset = yOffset;
 	};
 
 	shortenVertPadding = () => {
-		this.groups.list.shortenPadding();
-		this.currently.list.shortenPadding();
+		this.active.list.shortenPadding();
 		this.later.list.shortenPadding();
 	};
 
 	lengthenVertPadding = () => {
-		this.groups.list.lengthenPadding();
-		this.currently.list.lengthenPadding();
+		this.active.list.lengthenPadding();
 		this.later.list.lengthenPadding();
 	};
 
@@ -180,17 +170,19 @@ class Home extends Component {
 
 	clearScreen = () => {
 		this.topBar.handleFullCloseBar();
-		this.button.buttonExit();
+		this.bottomBar.handleHideBar();
+		// this.button.buttonExit();
 		// this.groups.list.fadeOut();
-		// this.currently.list.fadeOut();
+		// this.active.list.fadeOut();
 		// this.later.list.fadeOut();
 	};
 
 	returnScreen = () => {
 		this.topBar.handleOpenBar();
-		this.button.buttonReturn();
+		this.bottomBar.handleShowBar();
+		// this.button.buttonReturn();
 		// this.groups.list.fadeIn();
-		// this.currently.list.fadeIn();
+		// this.active.list.fadeIn();
 		// this.later.list.fadeIn();
 	};
 
@@ -199,8 +191,8 @@ class Home extends Component {
 			component: {
 				name: componentName,
 				passProps: props,
-				options: options
-			}
+				options: options,
+			},
 		});
 	};
 
@@ -209,8 +201,8 @@ class Home extends Component {
 			component: {
 				name: componentName,
 				passProps: props,
-				options: options
-			}
+				options: options,
+			},
 		});
 	};
 
@@ -221,24 +213,36 @@ class Home extends Component {
 				passProps: props,
 				options: {
 					overlay: {
-						interceptTouchOutside: true
-					}
-				}
-			}
+						interceptTouchOutside: true,
+					},
+				},
+			},
+		});
+	};
+
+	onPressPresentModalToStack = (componentName, props, options) => {
+		Navigation.showModal({
+			stack: {
+				children: [
+					{
+						component: {
+							name: componentName,
+							passProps: props,
+							options: options,
+						},
+					},
+				],
+			},
 		});
 	};
 
 	render() {
-		// if (this.state.loading) {
-		// 	return <View />;
-		// } else {
+		const groupsProps = {
+			onPressPushTo: this.onPressPushTo,
+		};
+
 		return (
-			<View style={styles.container}>
-				{/* <LinearGradient
-				style={styles.container}
-				locations={[0.5, 1]}
-				colors={["white", Colors.groups]}
-			> */}
+			<Background>
 				<StatusBar barStyle="dark-content" />
 				<Animated.ScrollView
 					horizontal
@@ -250,23 +254,10 @@ class Home extends Component {
 					scrollEventThrottle={16}
 					onScroll={this._horizOnScroll}
 					onMomentumScrollEnd={this._onHorizScrollEnd}
-					style={styles.scroll}
-				>
+					style={styles.scroll}>
 					<Page>
-						<Groups
-							ref={item => (this.groups = item)}
-							profilePic={this.state.photo}
-							clearScreen={this.clearScreen}
-							returnScreen={this.returnScreen}
-							onPressPushTo={this.onPressPushTo}
-							_onScrollBegin={this._onScollBegin}
-							_onScrollEnd={this._onScrollEnd}
-							_vertOnScroll={this._vertOnScroll}
-						/>
-					</Page>
-					<Page>
-						<Currently
-							ref={item => (this.currently = item)}
+						<Active
+							ref={item => (this.active = item)}
 							profilePic={this.state.photo}
 							clearScreen={this.clearScreen}
 							returnScreen={this.returnScreen}
@@ -290,40 +281,40 @@ class Home extends Component {
 					</Page>
 				</Animated.ScrollView>
 
-				<NewMoveButton
-					ref={item => (this.button = item)}
-					onPressPresentModalTo={this.onPressPresentModalTo}
-				/>
-
-				<TabBar
+				<TopBar
 					ref={item => (this.topBar = item)}
+					user={this.state.user}
+					onPressPushTo={this.onPressPushTo}
 					onPressPresentModalTo={this.onPressPresentModalTo}
+					onPressPresentModalToStack={this.onPressPresentModalToStack}
 					onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+					groupsProps={groupsProps}
 					profilePic={this.state.photo}
 					scrollDir={this.state.scrollDir}
+				/>
+
+				<BottomBar
+					ref={item => (this.bottomBar = item)}
 					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
-					scrollToMid={() => this.scrollView.scrollTo({ x: SCREEN_WIDTH, y: 0, animated: true })}
 					scrollToEnd={() => this.scrollView.scrollToEnd()}
-					xOffset={xOffset}
 					textColorTransform={textColorTransform}
 					indicatorAnimate={indicatorAnimate}
+					onPressPresentModalTo={this.onPressPresentModalTo}
 				/>
-				{/* </LinearGradient> */}
-			</View>
+			</Background>
 		);
-		// }
 	}
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: Colors.lightGray
+		backgroundColor: Colors.lightGray,
 	},
 	scroll: {
 		flex: 1,
-		flexDirection: "row"
-	}
+		flexDirection: "row",
+	},
 });
 
 export default Home;

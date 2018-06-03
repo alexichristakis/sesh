@@ -29,12 +29,6 @@ export default class App extends Component<Props> {
 		this.setState({ loading: true });
 		FacebookLogin(this.cancelLogin).then(user => {
 			if (user) {
-				console.log(user);
-				// Navigation.showModal({
-				//   component: {
-				//     name: "sesh.Home"
-				//   }
-				// });
 				Navigation.push(this.props.componentId, {
 					component: {
 						name: "sesh.Home",
@@ -59,7 +53,6 @@ export default class App extends Component<Props> {
 
 				<Button
 					style={{ backgroundColor: Colors.primary }}
-					// title="Facebook"
 					title={<Icon name="facebook" size={28} color={"white"} />}
 					onPress={this.onPressFacebook}
 					loading={this.state.loading}

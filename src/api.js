@@ -38,6 +38,7 @@ export const GetUser = () => {
 };
 
 ///* SET *///
+// note: firebase.firestore.GeoPoint(latitude, longitude)
 /* MOVES */
 export const SendMove = move => {};
 

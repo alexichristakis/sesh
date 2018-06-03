@@ -7,7 +7,7 @@ import {
 	View,
 	Text,
 	Image,
-	TouchableOpacity
+	TouchableOpacity,
 } from "react-native";
 
 import RNFS from "react-native-fs";
@@ -18,23 +18,23 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
 
-const BAR_HEIGHT = 80;
+const BAR_HEIGHT = 40;
 const ICON_DIMENSION = 60;
 
-class TabBar extends Component {
+class TopBar extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			open: true,
 			loading: true,
-			photo: ""
+			photo: RNFS.DocumentDirectoryPath + "/profile_pic.png",
 		};
 
 		this.animated = new Animated.Value(1);
 
 		this.groupsScale = new Animated.Value(1);
-		this.currentlyScale = new Animated.Value(1);
+		this.activeScale = new Animated.Value(1);
 		this.laterScale = new Animated.Value(1);
 
 		this.profileScale = new Animated.Value(1);
@@ -51,13 +51,13 @@ class TabBar extends Component {
 	componentDidMount() {
 		// fetch that data
 		// const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
-		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-		//
-		// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
-		RNFS.readFile(path, "base64").then(res => {
-			// console.log("finished");
-			this.setState({ photo: "data:image/png;base64," + res, loading: false });
-		});
+		// const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		// //
+		// // await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+		// RNFS.readFile(path, "base64").then(res => {
+		// 	// console.log("finished");
+		// 	this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		// });
 		// console.log(res);
 	}
 
@@ -68,93 +68,94 @@ class TabBar extends Component {
 			Animated.timing(this.animated, {
 				toValue: -1,
 				duration: duration,
-				useNativeDriver: true
+				easing: Easing.out(Easing.poly(0.25)),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
 				duration: duration,
-				useNativeDriver: true
+				easing: Easing.out(Easing.poly(0.25)),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
 				duration: duration,
-				useNativeDriver: true
+				easing: Easing.out(Easing.poly(0.25)),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
 				duration: duration,
-				useNativeDriver: true
-			}).start()
+				easing: Easing.out(Easing.poly(0.25)),
+				useNativeDriver: true,
+			}).start(),
 		]);
 	};
 
 	handleCloseBar = () => {
-		// console.log("close");
 		this.setState({ open: false });
 		Animated.parallel([
 			Animated.timing(this.animated, {
 				toValue: 0,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 0.3,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 0.3,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 0.3,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
-			}).start()
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
+			}).start(),
 		]);
 	};
 
 	handleOpenBar = () => {
-		// console.log("open");
-
 		this.setState({ open: true });
 		Animated.parallel([
 			Animated.timing(this.animated, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.profileScale, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.addFriendScale, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
 			}).start(),
 			Animated.timing(this.createGroupScale, {
 				toValue: 1,
 				duration: 250,
-				easing: Easing.ease,
-				useNativeDriver: true
-			}).start()
+				easing: Easing.in(Easing.ease),
+				useNativeDriver: true,
+			}).start(),
 		]);
 	};
 
 	handlePressIn = animatedValue => {
 		Animated.spring(animatedValue, {
 			toValue: 0.9,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -163,7 +164,7 @@ class TabBar extends Component {
 			toValue: 1,
 			friction: 3,
 			tension: 40,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start();
 	};
 
@@ -173,35 +174,35 @@ class TabBar extends Component {
 	};
 
 	render() {
-		// console.log("tab bar rendered!");
-		const textColorTransform = this.props.textColorTransform;
-		const indicatorAnimate = this.props.indicatorAnimate;
-
 		/* navigation functions */
 		const presentModal = this.props.onPressPresentModalTo;
+		const presentStackModal = this.props.onPressPresentModalToStack;
+		const pushTo = this.props.onPressPushTo;
 		const presentOverlay = this.props.onPressPresentOverlayTo;
-		const { scrollToStart, scrollToMid, scrollToEnd } = this.props;
+
+		/* others */
+		const { scrollToStart, scrollToEnd, textColorTransform, indicatorAnimate } = this.props;
 
 		const buttonTranslate = {
 			translateY: this.animated.interpolate({
 				inputRange: [0, 1],
-				outputRange: [0, 50]
-			})
+				outputRange: [0, 50],
+			}),
 		};
 
 		let profileButtonAnimatedStyle = {
 			transform: [buttonTranslate, { scale: this.profileScale }],
-			opacity: this.animated
+			opacity: this.animated,
 		};
 
 		let addFriendAnimatedStyle = {
 			transform: [buttonTranslate, { scale: this.addFriendScale }],
-			opacity: this.animated
+			opacity: this.animated,
 		};
 
 		let createGroupAnimatedStyle = {
 			transform: [buttonTranslate, { scale: this.createGroupScale }],
-			opacity: this.animated
+			opacity: this.animated,
 		};
 
 		let blurContainerAnimatedStyle = {
@@ -209,10 +210,10 @@ class TabBar extends Component {
 				{
 					translateY: this.animated.interpolate({
 						inputRange: [0, 1],
-						outputRange: [-BAR_HEIGHT, 0]
-					})
-				}
-			]
+						outputRange: [-BAR_HEIGHT - 30, 0],
+					}),
+				},
+			],
 		};
 
 		let tabContainerAnimatedStyle = {
@@ -220,10 +221,11 @@ class TabBar extends Component {
 				{
 					translateY: this.animated.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, BAR_HEIGHT]
-					})
-				}
-			]
+						// outputRange: [0, BAR_HEIGHT]
+						outputRange: [-BAR_HEIGHT + SB_HEIGHT - 2, BAR_HEIGHT + 4],
+					}),
+				},
+			],
 		};
 
 		return (
@@ -233,64 +235,38 @@ class TabBar extends Component {
 				</Animated.View>
 
 				<View style={styles.topBar}>
+					<Animated.View style={[styles.addFriendButton, addFriendAnimatedStyle]}>
+						<TouchableOpacity
+							activeOpacity={1}
+							style={styles.fillCenter}
+							onPressIn={() => this.handlePressIn(this.addFriendScale)}
+							onPressOut={() => this.handlePressOut(this.addFriendScale)}
+							onPress={() => this.haptic(presentModal("sesh.AddFriend"))}>
+							<Icon name="user-plus" size={30} color={Colors.primary} />
+						</TouchableOpacity>
+					</Animated.View>
 					<Animated.View style={[styles.profileButton, profileButtonAnimatedStyle]}>
 						<TouchableOpacity
 							activeOpacity={0.9}
 							onPressIn={() => this.handlePressIn(this.profileScale)}
 							onPressOut={() => this.handlePressOut(this.profileScale)}
-							onPress={() => this.haptic(presentOverlay("sesh.Profile"))}
-						>
-							<Image
-								style={styles.image}
-								resizeMode="cover"
-								// source={{ uri: this.props.profilePic }}
-								source={{ uri: this.state.photo }}
-							/>
-						</TouchableOpacity>
-					</Animated.View>
-					{/* <Animated.Text style={[styles.title, profileButtonAnimatedStyle]}>Sesh</Animated.Text> */}
-
-					<View style={{ flex: 5 }} />
-					<Animated.View
-						style={[styles.addFriendButton, addFriendAnimatedStyle, { marginRight: 10 }]}
-					>
-						<TouchableOpacity
-							style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-							activeOpacity={1}
-							onPressIn={() => this.handlePressIn(this.addFriendScale)}
-							onPressOut={() => this.handlePressOut(this.addFriendScale)}
-							onPress={() => this.haptic(presentModal("sesh.AddFriend"))}
-						>
-							<Icon name="user-plus" size={25} color={Colors.primary} />
+							onPress={() =>
+								this.haptic(presentOverlay("sesh.Profile", { user: this.props.user }))
+							}>
+							<Image style={styles.image} resizeMode="cover" source={{ uri: this.state.photo }} />
 						</TouchableOpacity>
 					</Animated.View>
 					<Animated.View style={[styles.addGroupButton, createGroupAnimatedStyle]}>
 						<TouchableOpacity
-							style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
 							activeOpacity={1}
+							style={styles.fillCenter}
 							onPressIn={() => this.handlePressIn(this.createGroupScale)}
 							onPressOut={() => this.handlePressOut(this.createGroupScale)}
-							onPress={() => this.haptic(presentModal("sesh.CreateGroup"))}
-						>
-							<Icon name="users" size={25} color={Colors.groups} />
+							onPress={() => this.haptic(presentStackModal("sesh.Groups"))}>
+							<Icon style={{ paddingLeft: 5 }} name="users" size={30} color={Colors.primary} />
 						</TouchableOpacity>
 					</Animated.View>
 				</View>
-
-				<Animated.View style={[styles.animated, tabContainerAnimatedStyle]}>
-					<View style={styles.textContainer}>
-						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToStart())}>
-							<Animated.Text style={[styles.text, textColorTransform(0)]}>Groups</Animated.Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToMid())}>
-							<Animated.Text style={[styles.text, textColorTransform(1)]}>Currently</Animated.Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.button} onPress={() => this.haptic(scrollToEnd())}>
-							<Animated.Text style={[styles.text, textColorTransform(2)]}>Later</Animated.Text>
-						</TouchableOpacity>
-					</View>
-					<Animated.View style={[styles.indicator, indicatorAnimate()]} />
-				</Animated.View>
 			</View>
 		);
 	}
@@ -302,54 +278,59 @@ const styles = StyleSheet.create({
 		top: 0,
 		left: 0,
 		right: 0,
-		paddingHorizontal: 10
+		paddingHorizontal: 10,
+	},
+	fillCenter: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	topBar: {
 		marginHorizontal: 5,
-		paddingTop: SB_HEIGHT + 10,
+		paddingTop: SB_HEIGHT,
 		flexDirection: "row",
-		top: -50
+		top: -50,
 	},
 	statusBar: {
 		position: "absolute",
 		top: -SB_HEIGHT,
 		left: 0,
 		right: 0,
-		height: SB_HEIGHT + BAR_HEIGHT + 30
+		height: SB_HEIGHT + BAR_HEIGHT + 30,
 	},
 	animated: {
 		position: "absolute",
 		left: 0,
 		right: 0,
-		top: SB_HEIGHT
+		top: SB_HEIGHT,
 	},
 	title: {
 		marginLeft: 50,
 		// flex: 1,
 		fontSize: 36,
 		fontWeight: "900",
-		alignSelf: "center"
+		alignSelf: "center",
 	},
 	textContainer: {
 		justifyContent: "center",
 		// alignItems: "center",
 		flexDirection: "row",
-		position: "absolute"
+		position: "absolute",
 		// padding: 20,
 		// top: 60,
 		// left: 0,
 		// right: 0,
 	},
 	button: {
-		flex: 1
+		flex: 1,
 	},
 	profileButton: {
-		flex: 1
+		flex: 3,
+		alignItems: "center",
 		// flexDirection: "row",
-		// backgroundColor: "red",
 	},
 	addFriendButton: {
-		// flex: 1,
+		flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
@@ -361,11 +342,11 @@ const styles = StyleSheet.create({
 		// borderColor: "white",
 		// borderRadius: 25,
 		height: 50,
-		width: 50
+		width: 50,
 		// ...shadow
 	},
 	addGroupButton: {
-		// flex: 1,
+		flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
@@ -378,22 +359,22 @@ const styles = StyleSheet.create({
 		// borderColor: "white",
 		// borderRadius: 25,
 		height: 50,
-		width: 50
+		width: 50,
 		// ...shadow
 	},
 	image: {
-		// flex: 1,
+		flex: 1,
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_DIMENSION / 2,
 		height: ICON_DIMENSION,
-		width: ICON_DIMENSION
+		width: ICON_DIMENSION,
 	},
 	text: {
 		flex: 1,
 		fontSize: 18,
 		fontWeight: "bold",
 		textAlignVertical: "center",
-		textAlign: "center"
+		textAlign: "center",
 		// paddingBottom: 10,
 	},
 	indicator: {
@@ -401,8 +382,8 @@ const styles = StyleSheet.create({
 		// top: 0,
 		height: 3,
 		alignSelf: "center",
-		borderRadius: 2
-	}
+		borderRadius: 2,
+	},
 });
 
-export default TabBar;
+export default TopBar;

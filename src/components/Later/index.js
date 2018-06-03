@@ -86,11 +86,10 @@ class Later extends Component {
 		};
 	}
 
-	transitionFrom = (source, onReturn, data, index, MoveComponent) => {
+	transitionFrom = (source, onReturn, data, MoveComponent) => {
 		let joined = this.state.joinedMoves.includes(data.id);
 		this.setState({ MoveComponent: MoveComponent });
 		this.transition.openCard(source, onReturn, data, {
-			idex: index,
 			joined: joined,
 			joinMove: this.joinMove,
 			leaveMove: this.leaveMove

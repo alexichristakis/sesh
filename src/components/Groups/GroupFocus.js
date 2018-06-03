@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
 
 import { Colors, shadow } from "../../lib/styles";
@@ -77,13 +77,12 @@ class GroupFocus extends Component {
 					duration: 0.1
 				}
 			});
-
 			this.props.closeCard();
 		}, 20);
 	};
 
 	onPressPresentModalTo = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
+		// ReactNativeHapticFeedback.trigger("impactLight");
 		Navigation.showModal({
 			component: {
 				name: "sesh.AddToGroup",
@@ -125,6 +124,7 @@ class GroupFocus extends Component {
 	render() {
 		return (
 			<Focus
+				groups
 				ref={item => (this.focus = item)}
 				data={data}
 				renderHeader={this._renderHeader}

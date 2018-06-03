@@ -1,58 +1,41 @@
 import React, { Component } from "react";
-import { Animated, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import {
+  Animated,
+  View,
+  KeyboardAvoidingView,
+  TouchableOpacity
+} from "react-native";
 import PropTypes from "prop-types";
 
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import { BlurView } from "react-native-blur";
 
+import TouchableScale from "./TouchableScale";
+
 import { Colors, shadow } from "../../lib/styles";
 
 class BackButton extends Component {
-  componentWillMount() {
-    this.animatedValue = new Animated.Value(1);
-  }
-
-  handlePressIn = () => {
-    Animated.spring(this.animatedValue, {
-      toValue: 0.9,
-      useNativeDriver: true
-    }).start();
-  };
-
-  handlePressOut = () => {
-    Animated.spring(this.animatedValue, {
-      toValue: 1,
-      friction: 3,
-      tension: 40,
-      useNativeDriver: true
-    }).start();
-  };
-
   haptic = func => {
     ReactNativeHapticFeedback.trigger("impactLight");
     func;
   };
 
   render() {
-    let animatedStyle = {
-      transform: [{ scale: this.animatedValue }]
+    let icon = this.props.list ? "list" : "chevron-down";
+    let blurStyle = {
+      paddingVertical: this.props.list ? 5 : 0,
+      paddingHorizontal: 20,
+      borderRadius: 15
     };
 
     return (
       <KeyboardAvoidingView behavior="position" enabled style={styles.button}>
-        <Animated.View style={animatedStyle}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPressIn={this.handlePressIn}
-            onPressOut={this.handlePressOut}
-            onPress={() => this.haptic(this.props.onPressPop())}
-          >
-            <BlurView blurAmount={20} blurType="xlight" style={styles.blur}>
-              <Icon name="chevron-down" size={28} color={Colors.primary} />
-            </BlurView>
-          </TouchableOpacity>
-        </Animated.View>
+        <TouchableScale onPress={() => this.haptic(this.props.onPressPop())}>
+          <BlurView blurAmount={20} blurType="xlight" style={blurStyle}>
+            <Icon name={icon} size={28} color={Colors.primary} />
+          </BlurView>
+        </TouchableScale>
       </KeyboardAvoidingView>
     );
   }
@@ -67,11 +50,8 @@ const styles = {
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
+    // backgroundColor: "transparent",
     ...shadow
-  },
-  blur: {
-    paddingHorizontal: 20,
-    borderRadius: 15
   }
 };
 

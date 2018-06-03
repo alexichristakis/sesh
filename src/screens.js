@@ -10,9 +10,10 @@ import SignIn from "./components/Authentication/SignIn";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import AddFriend from "./components/AddFriend";
+import Groups from "./components/Groups";
 import CreateGroup from "./components/Groups/CreateGroup";
 import AddToGroup from "./components/Groups/AddToGroup";
-import CreateCurrentMove from "./components/CreateMoves/CreateCurrentMove";
+import CreateActiveMove from "./components/CreateMoves/CreateActiveMove";
 import CreateLaterMove from "./components/CreateMoves/CreateLaterMove";
 
 // import Friends from "./components/Friends";
@@ -20,11 +21,11 @@ import CreateLaterMove from "./components/CreateMoves/CreateLaterMove";
 
 // import Focus from "./components/"
 
-import CurrentlyFocus from "./components/Currently/CurrentlyFocus";
+import ActiveFocus from "./components/Active/ActiveFocus";
 import LaterFocus from "./components/Later/LaterFocus";
 import GroupFocus from "./components/Groups/GroupFocus";
 
-// import Transition from "./components/Currently";
+// import Transition from "./components/Active";
 
 function sceneCreator(sceneComp, store) {
 	return () => {
@@ -43,16 +44,19 @@ function registerScreens() {
 	Navigation.registerComponent("sesh.Home", () => Home);
 	Navigation.registerComponent("sesh.Profile", () => Profile);
 	Navigation.registerComponent("sesh.AddFriend", () => AddFriend);
+
+	Navigation.registerComponent("sesh.Groups", () => Groups);
 	Navigation.registerComponent("sesh.CreateGroup", () => CreateGroup);
 	Navigation.registerComponent("sesh.AddToGroup", () => AddToGroup);
-	Navigation.registerComponent("sesh.CreateCurrentMove", () => CreateCurrentMove);
+
+	Navigation.registerComponent("sesh.CreateActiveMove", () => CreateActiveMove);
 	Navigation.registerComponent("sesh.CreateLaterMove", () => CreateLaterMove);
 
-	Navigation.registerComponent("sesh.CurrentlyFocus", () => CurrentlyFocus);
+	Navigation.registerComponent("sesh.ActiveFocus", () => ActiveFocus);
 	Navigation.registerComponent("sesh.LaterFocus", () => LaterFocus);
 	Navigation.registerComponent("sesh.GroupFocus", () => GroupFocus);
 }
 
 module.exports = {
-	registerScreens
+	registerScreens,
 };

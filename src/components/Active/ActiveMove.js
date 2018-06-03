@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 
+import Icon from "react-native-vector-icons/Feather";
+import LinearGradient from "react-native-linear-gradient";
 import { BlurView } from "react-native-blur";
 
 import { TimeAgo } from "../../lib/functions";
@@ -8,28 +10,21 @@ import { Colors, shadow } from "../../lib/styles";
 
 const ICON_SIZE = 50;
 
-class CurrentMove extends Component {
+class ActiveMove extends Component {
 	render() {
 		const move = this.props.move;
-
 		return (
-			<BlurView
-				blurType={"xlight"}
-				style={[
-					styles.container
-					// {
-					// 	backgroundColor: backgroundColor
-					// 	// backgroundColor: "rgba(246,246,246,1)"
-					// }
-				]}
-			>
+			<View style={styles.container}>
+				{!this.props.blur && <View style={styles.background} />}
+				{this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}
 				<View style={styles.top}>
 					<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
 					<View style={styles.header}>
 						<View style={{ flex: 2 }}>
 							<Text style={styles.group}>{move.group}</Text>
 							<View style={{ flexDirection: "row" }}>
-								<Text style={{ fontSize: 14 }}>from </Text>
+								<Icon name={"corner-down-right"} size={14} color={Colors.tertiary} />
+								<Text style={{ fontSize: 14, marginLeft: 3, color: Colors.gray }}>from </Text>
 								<Text style={styles.name}>{move.name}</Text>
 							</View>
 						</View>
@@ -40,9 +35,10 @@ class CurrentMove extends Component {
 					<Text style={styles.description}>{move.description}</Text>
 				</View>
 				<View style={styles.bottom}>
+					<Icon name={"compass"} size={12} color={Colors.primary} />
 					<Text style={styles.location}>{move.location}</Text>
 				</View>
-			</BlurView>
+			</View>
 		);
 	}
 }
@@ -50,41 +46,60 @@ class CurrentMove extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// flexDirection: "row",
-		// alignItems: "center",
-		// marginHorizontal: 10,
-		// borderWidth: 20,
-		// borderColor: Colors.primary,
 		borderRadius: 15,
 		padding: 10,
-		paddingRight: 12
+		paddingRight: 12,
+		overflow: "hidden",
+		// backgroundColor: "white",
+		backgroundColor: "rgba(255,255,255,0.5)",
+		...shadow,
+	},
+	background: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		backgroundColor: "white",
+		// opacity: 0.2
+	},
+	blur: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+
+		// ...shadow
 	},
 	top: {
 		flex: 2,
-		flexDirection: "row"
+		flexDirection: "row",
 	},
 	image: {
 		alignSelf: "center",
 		backgroundColor: Colors.gray,
 		borderRadius: ICON_SIZE / 2,
 		height: ICON_SIZE,
-		width: ICON_SIZE
+		width: ICON_SIZE,
 	},
 	header: {
 		flex: 1,
 		flexDirection: "row",
 		alignSelf: "center",
 		marginLeft: 10,
-		marginBottom: 3
+		marginBottom: 3,
 	},
 	name: {
 		fontSize: 14,
-		fontWeight: "bold"
+		fontWeight: "bold",
+		color: Colors.gray,
 	},
 	group: {
 		fontSize: 24,
-		fontWeight: "900"
-		// color: Colors.currently,
+		// fontWeight: "800"
+		fontWeight: "300",
+		// color: Colors.active,
 	},
 	time: {
 		flex: 1,
@@ -92,25 +107,29 @@ const styles = StyleSheet.create({
 		paddingTop: 4,
 		fontSize: 14,
 		// alignSelf: "center",
-		color: Colors.currently,
-		fontWeight: "900"
+		color: Colors.active,
+		fontWeight: "800",
 	},
 	mid: {
 		flex: 2,
-		marginVertical: 10
+		marginVertical: 10,
 	},
 	description: {
-		fontSize: 14
+		fontSize: 14,
+		fontWeight: "300",
 	},
 	bottom: {
 		flex: 1,
-		alignSelf: "flex-end"
+		flexDirection: "row",
+		alignItems: "center",
+		alignSelf: "flex-end",
 	},
 	location: {
+		marginLeft: 2,
 		fontSize: 14,
 		// fontWeight: "200",
-		color: Colors.currently
-	}
+		color: Colors.primary,
+	},
 });
 
-export default CurrentMove;
+export default ActiveMove;

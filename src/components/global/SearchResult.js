@@ -12,7 +12,7 @@ import {
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 
 import Checkmark from "./Checkmark";
@@ -40,7 +40,7 @@ class SearchResult extends Component {
 			<TouchableOpacity
 				style={styles.container}
 				onPress={() => {
-					ReactNativeHapticFeedback.trigger("impactLight");
+					// ReactNativeHapticFeedback.trigger("impactLight");
 					this.setState({ added: !this.state.added });
 					console.log(this.props.index);
 				}}
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		fontSize: 20,
 		fontWeight: "900"
-		// color: Colors.currently,
+		// color: Colors.active,
 	},
 
 	time: {
