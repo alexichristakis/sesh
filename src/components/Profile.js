@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
+import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 
 import BlurOverlay from "./global/BlurOverlay";
 import TouchableScale from "./global/TouchableScale";
 
+import { FacebookLogout } from "../api";
+
 class Profile extends Component {
 	render() {
 		return (
-			<BlurOverlay componentId={this.props.componentId}>
+			<BlurOverlay vibrancy componentId={this.props.componentId}>
 				<View style={styles.top}>
 					<Text style={{ fontSize: 30, fontWeight: "900", color: "white" }}>
 						{this.props.user.displayName}
@@ -17,8 +20,9 @@ class Profile extends Component {
 					<TouchableScale
 						onPress={() =>
 							FacebookLogout().then(() => {
-								this.dismiss;
-								Navigation.pop(this.props.componentId);
+								// this.dismiss;
+								Navigation.dismissOverlay(this.props.componentId);
+								this.props.onPressPop();
 							})
 						}>
 						<Icon name={"log-out"} size={30} color={"white"} />

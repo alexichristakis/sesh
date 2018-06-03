@@ -53,8 +53,16 @@ class Group extends Component {
 	render() {
 		const group = this.props.data;
 
+		let cardStyle = {
+			backgroundColor: "rgba(255,255,255,0.5)",
+			borderRadius: 15,
+			overflow: "hidden",
+		};
+
 		return (
-			<View style={styles.container}>
+			<View style={[styles.container, this.props.card ? cardStyle : {}]}>
+				{/* {this.props.card && <View style={styles.background} />} */}
+				{this.props.card && <BlurView blurType={"xlight"} style={styles.blur} />}
 				<View style={styles.pictures}>
 					<Image style={styles.image1} source={{ uri: this.state.photo }} />
 					<Image style={styles.image2} source={{ uri: this.state.photo }} />
@@ -71,7 +79,7 @@ class Group extends Component {
 								onEndEditing={this.onEndEditing}
 								onChangeText={text => this.onChangeText(text)}
 								placeholder={this.state.groupName}
-								placeholderTextColor={this.state.editing ? Colors.mediumGray : "black"}
+								placeholderTextColor={this.state.editing ? Colors.gray : "black"}
 							/>
 						)}
 						{this.props.editName && (
@@ -100,13 +108,24 @@ class Group extends Component {
 }
 
 const styles = StyleSheet.create({
-	border: {
-		// padding: 20,
-		borderWidth: 20,
-		borderColor: Colors.lightGray,
+	background: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		backgroundColor: "white",
+		// opacity: 0.2
+	},
+	blur: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
 	},
 	container: {
-		flex: 1,
+		// flex: 1,
 		flexDirection: "row",
 		alignItems: "center",
 		// backgroundColor: "transparent",

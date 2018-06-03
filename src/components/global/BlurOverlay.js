@@ -27,19 +27,29 @@ class BlurOverlay extends Component {
 	dismiss = () => {
 		Animated.timing(this.entry, {
 			toValue: 0,
-			duration: 300,
+			duration: 100,
 			easing: Easing.ease,
 			useNativeDriver: true,
-		}).start(() => Navigation.dismissOverlay(this.props.componentId));
+		}).start(() => {
+			Navigation.dismissOverlay(this.props.componentId);
+			if (this.props.onExit) this.props.onExit();
+		});
 	};
 
 	render() {
 		return (
 			<Animated.View style={{ flex: 1, opacity: this.entry }}>
 				<StatusBar barStyle="light-content" />
-				<VibrancyView blurType="dark" blurAmount={10} style={styles.vibrancy}>
-					{this.props.children}
-				</VibrancyView>
+				{this.props.vibrancy && (
+					<VibrancyView blurType="dark" blurAmount={10} style={styles.blur}>
+						{this.props.children}
+					</VibrancyView>
+				)}
+				{!this.props.vibrancy && (
+					<BlurView blurType="dark" blurAmount={10} style={styles.blur}>
+						{this.props.children}
+					</BlurView>
+				)}
 				<BackButton onPressPop={this.dismiss} />
 			</Animated.View>
 		);
@@ -47,7 +57,7 @@ class BlurOverlay extends Component {
 }
 
 const styles = StyleSheet.create({
-	vibrancy: {
+	blur: {
 		position: "absolute",
 		top: 0,
 		bottom: 0,

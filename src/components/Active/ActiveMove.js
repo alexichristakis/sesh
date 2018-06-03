@@ -24,7 +24,7 @@ class ActiveMove extends Component {
 							<Text style={styles.group}>{move.group}</Text>
 							<View style={{ flexDirection: "row" }}>
 								<Icon name={"corner-down-right"} size={14} color={Colors.tertiary} />
-								<Text style={{ fontSize: 14, marginLeft: 3, color: Colors.gray }}>from </Text>
+								<Text style={styles.from}>from </Text>
 								<Text style={styles.name}>{move.name}</Text>
 							</View>
 						</View>
@@ -69,8 +69,6 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0,
-
-		// ...shadow
 	},
 	top: {
 		flex: 2,
@@ -89,6 +87,11 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginLeft: 10,
 		marginBottom: 3,
+	},
+	from: {
+		fontSize: 14,
+		marginLeft: 3,
+		color: Colors.gray,
 	},
 	name: {
 		fontSize: 14,

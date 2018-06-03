@@ -17,7 +17,7 @@ import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
 import Transition from "../global/Transition";
 
-const data = [
+const DATA = [
 	{
 		id: "1",
 		name: "9pack",
@@ -95,25 +95,23 @@ class Groups extends Component {
 		super(props);
 
 		this.state = {
-			sharedData: {},
-			MoveComponent: null,
+			data: DATA,
 		};
 	}
 
-	transitionFrom = (source, onReturn, data, MoveComponent) => {
-		this.setState({ MoveComponent: MoveComponent, sharedData: data });
-		this.transition.openCard(source, onReturn, data, {
-			changeName: this.changeGroupName,
-		});
-	};
-
-	transitionFinished = (source, sharedData) => {
-		// this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
-	};
-
 	_keyExtractor = item => item.id.toString();
 
-	_renderItem = ({ item, index }) => <Group index={index} data={item} />;
+	_renderItem = ({ item, index }) => (
+		<TouchableScale
+			onPress={() =>
+				this.props.presentOverlay("sesh.GroupFocus", {
+					data: item,
+					changeName: this.changeGroupName,
+				})
+			}>
+			<Group index={index} data={item} />
+		</TouchableScale>
+	);
 
 	_renderSeparator = () => <View style={styles.separator} />;
 
@@ -126,21 +124,21 @@ class Groups extends Component {
 		</View>
 	);
 
-	changeGroupName = newName => {
-		const newData = { ...this.state.sharedData, name: newName };
-		this.setState({ MoveComponent: <Group data={newData} /> });
+	changeGroupName = (oldData, newName) => {
+		console.log("changing!!");
+		const newData = { ...oldData, name: newName };
+		// this.setState({ MoveComponent: <Group data={newData} /> });
+		console.log(newData);
+		const data = this.state.data;
+		console.log(data);
 		data.forEach(group => {
-			if (group.id === newData.id) group.name = newData.name;
-		});
-	};
-
-	onPressPushTo = (componentName, props, options) => {
-		Navigation.push(this.props.componentId, {
-			component: {
-				name: componentName,
-				passProps: props,
-				options: options,
-			},
+			console.log(group);
+			if (group.id === newData.id) {
+				console.log("setting new state");
+				group.name = newData.name;
+				this.setState({ data: data });
+				// break;
+			}
 		});
 	};
 
@@ -149,23 +147,14 @@ class Groups extends Component {
 			<Background>
 				<FlatList
 					style={styles.container}
-					data={data}
+					data={this.state.data}
 					keyExtractor={this._keyExtractor}
 					renderItem={this._renderItem}
 					ItemSeparatorComponent={this._renderSeparator}
 					ListHeaderComponent={this._renderHeader}
 				/>
-				<Transition
-					groups
-					ref={item => (this.transition = item)}
-					destinationPage={"sesh.GroupFocus"}
-					transitionFinished={this.transitionFinished}
-					onPressPushTo={this.onPressPushTo}
-					MoveComponent={this.state.MoveComponent}
-				/>
 
 				<BlurView blurType="xlight" style={styles.statusBar} />
-
 				<BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
 			</Background>
 		);

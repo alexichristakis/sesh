@@ -251,7 +251,12 @@ class TopBar extends Component {
 							onPressIn={() => this.handlePressIn(this.profileScale)}
 							onPressOut={() => this.handlePressOut(this.profileScale)}
 							onPress={() =>
-								this.haptic(presentOverlay("sesh.Profile", { user: this.props.user }))
+								this.haptic(
+									presentOverlay("sesh.Profile", {
+										user: this.props.user,
+										onPressPop: this.props.onPressPop,
+									}),
+								)
 							}>
 							<Image style={styles.image} resizeMode="cover" source={{ uri: this.state.photo }} />
 						</TouchableOpacity>
@@ -262,7 +267,9 @@ class TopBar extends Component {
 							style={styles.fillCenter}
 							onPressIn={() => this.handlePressIn(this.createGroupScale)}
 							onPressOut={() => this.handlePressOut(this.createGroupScale)}
-							onPress={() => this.haptic(presentStackModal("sesh.Groups"))}>
+							onPress={() =>
+								this.haptic(presentStackModal("sesh.Groups", { presentOverlay: presentOverlay }))
+							}>
 							<Icon style={{ paddingLeft: 5 }} name="users" size={30} color={Colors.primary} />
 						</TouchableOpacity>
 					</Animated.View>

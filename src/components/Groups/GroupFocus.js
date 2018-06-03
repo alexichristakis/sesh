@@ -7,6 +7,7 @@ import { Navigation } from "react-native-navigation";
 
 import { Colors, shadow } from "../../lib/styles";
 
+import BlurOverlay from "../global/BlurOverlay";
 import Focus from "../global/Focus";
 import User from "../global/User";
 import Group from "./Group";
@@ -17,43 +18,43 @@ const data = [
 		name: "Alexi Christakis",
 		size: 9,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
+		photo: "https://graph.facebook.com/1825693684117541/picture",
 	},
 	{
 		id: "2",
 		name: "William Oles",
 		size: 105,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
+		photo: "https://graph.facebook.com/1825693684117541/picture",
 	},
 	{
 		id: "3",
 		name: "Michelle Li",
 		size: 6,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
+		photo: "https://graph.facebook.com/1825693684117541/picture",
 	},
 	{
 		id: "4",
 		name: "Janvi Trivedi",
 		size: 63,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
+		photo: "https://graph.facebook.com/1825693684117541/picture",
 	},
 	{
 		id: "5",
 		name: "Max Golden",
 		size: 105,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
+		photo: "https://graph.facebook.com/1825693684117541/picture",
 	},
 	{
 		id: "6",
 		name: "Laszlo Gendler",
 		size: 9,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture"
-	}
+		photo: "https://graph.facebook.com/1825693684117541/picture",
+	},
 ];
 
 class GroupFocus extends Component {
@@ -62,23 +63,12 @@ class GroupFocus extends Component {
 
 		this.state = {
 			changedName: false,
-			newName: ""
+			newName: "",
 		};
 	}
 
-	onPressPop = () => {
-		this.focus.exit();
-		if (this.state.changedName) this.props.changeName(this.state.newName);
-
-		setTimeout(() => {
-			Navigation.pop(this.props.componentId, {
-				customTransition: {
-					animations: [],
-					duration: 0.1
-				}
-			});
-			this.props.closeCard();
-		}, 20);
+	_onExit = () => {
+		if (this.state.changedName) this.props.changeName(this.props.data, this.state.newName);
 	};
 
 	onPressPresentModalTo = () => {
@@ -88,9 +78,9 @@ class GroupFocus extends Component {
 				name: "sesh.AddToGroup",
 				passProps: {
 					...this.props.data,
-					statusBarHeight: this.props.statusBarHeight
-				}
-			}
+					statusBarHeight: this.props.statusBarHeight,
+				},
+			},
 		});
 	};
 
@@ -123,21 +113,9 @@ class GroupFocus extends Component {
 
 	render() {
 		return (
-			<Focus
-				groups
-				ref={item => (this.focus = item)}
-				data={data}
-				renderHeader={this._renderHeader}
-				renderFooter={this._renderFooter}
-				optionButton={"leave group"}
-				cardHeight={this.props.cardHeight}
-				statusBarHeight={this.props.statusBarHeight}
-				closeCard={this.props.closeCard}
-				onPressPop={this.onPressPop}
-				renderItem={this._renderItem}
-			>
-				<Group editName blur updateName={this.updateGroupName} data={this.props.data} />
-			</Focus>
+			<BlurOverlay componentId={this.props.componentId} onExit={this._onExit}>
+				<Group editName card updateName={this.updateGroupName} data={this.props.data} />
+			</BlurOverlay>
 		);
 	}
 }
@@ -147,12 +125,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingBottom: 10,
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
 	},
 	headerTitle: {
 		color: Colors.groups,
 		fontSize: 18,
-		fontWeight: "bold"
+		fontWeight: "bold",
 	},
 	footerContainer: {
 		flex: 1,
@@ -162,7 +140,7 @@ const styles = StyleSheet.create({
 		borderBottomLeftRadius: 15,
 		borderBottomRightRadius: 15,
 		backgroundColor: "white",
-		...shadow
+		...shadow,
 	},
 	footerSeparator: {
 		position: "absolute",
@@ -170,20 +148,20 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		height: 1,
-		backgroundColor: Colors.lightGray
+		backgroundColor: Colors.lightGray,
 	},
 	addMemberContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		paddingTop: 10
+		paddingTop: 10,
 		// padding: 5
 	},
 	addMember: {
 		color: Colors.groups,
 		fontWeight: "bold",
-		marginRight: 5
-	}
+		marginRight: 5,
+	},
 });
 
 export default GroupFocus;

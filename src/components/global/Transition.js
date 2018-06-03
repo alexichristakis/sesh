@@ -34,7 +34,7 @@ class Transition extends Component {
 	}
 
 	openCard = (source, onReturn, data, props) => {
-		if (!this.props.groups) this.props.clearScreen();
+		this.props.clearScreen();
 		this.setState({
 			open: true,
 			onReturn: onReturn,
@@ -69,7 +69,7 @@ class Transition extends Component {
 	};
 
 	closeCard = () => {
-		if (!this.props.groups) this.props.returnScreen();
+		this.props.returnScreen();
 		setTimeout(() => {
 			this.state.onReturn();
 		}, 195);

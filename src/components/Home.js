@@ -186,6 +186,10 @@ class Home extends Component {
 		// this.later.list.fadeIn();
 	};
 
+	onPressPop = () => {
+		Navigation.pop(this.props.componentId);
+	};
+
 	onPressPushTo = (componentName, props, options) => {
 		Navigation.push(this.props.componentId, {
 			component: {
@@ -288,6 +292,7 @@ class Home extends Component {
 					onPressPresentModalTo={this.onPressPresentModalTo}
 					onPressPresentModalToStack={this.onPressPresentModalToStack}
 					onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+					onPressPop={this.onPressPop}
 					groupsProps={groupsProps}
 					profilePic={this.state.photo}
 					scrollDir={this.state.scrollDir}
