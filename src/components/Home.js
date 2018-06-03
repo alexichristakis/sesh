@@ -283,6 +283,7 @@ class Home extends Component {
 
 				<TopBar
 					ref={item => (this.topBar = item)}
+					user={this.state.user}
 					onPressPushTo={this.onPressPushTo}
 					onPressPresentModalTo={this.onPressPresentModalTo}
 					onPressPresentModalToStack={this.onPressPresentModalToStack}
@@ -300,17 +301,6 @@ class Home extends Component {
 					indicatorAnimate={indicatorAnimate}
 					onPressPresentModalTo={this.onPressPresentModalTo}
 				/>
-				{/* <NavBar
-					ref={item => (this.navBar = item)}
-					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
-					scrollToEnd={() => this.scrollView.scrollToEnd()}
-					textColorTransform={textColorTransform}
-					indicatorAnimate={indicatorAnimate}
-				/>
-				<NewMoveButton
-					ref={item => (this.button = item)}
-					onPressPresentModalTo={this.onPressPresentModalTo}
-				/> */}
 			</Background>
 		);
 	}

@@ -13,7 +13,7 @@ import { YellowBox } from "react-native";
 YellowBox.ignoreWarnings([
 	"Warning: isMounted(...) is deprecated",
 	"Module RCTImageLoader",
-	"Class RCTCxxModule"
+	"Class RCTCxxModule",
 ]);
 
 registerScreens();
@@ -24,8 +24,8 @@ Navigation.events().registerAppLaunchedListener(async () => {
 		popGesture: false,
 		// modalPresentationStyle: "popover",
 		topBar: {
-			visible: false
-		}
+			visible: false,
+		},
 	});
 	let user = await UserAuthenticated();
 	console.log(user);
@@ -36,15 +36,20 @@ Navigation.events().registerAppLaunchedListener(async () => {
 					children: [
 						{
 							component: {
+								name: "sesh.Register",
+							},
+						},
+						{
+							component: {
 								name: "sesh.Home",
 								passProps: {
-									user: user._user
-								}
-							}
-						}
-					]
-				}
-			}
+									user: user._user,
+								},
+							},
+						},
+					],
+				},
+			},
 		});
 	} else {
 		Navigation.setRoot({
@@ -53,12 +58,12 @@ Navigation.events().registerAppLaunchedListener(async () => {
 					children: [
 						{
 							component: {
-								name: "sesh.Register"
-							}
-						}
-					]
-				}
-			}
+								name: "sesh.Register",
+							},
+						},
+					],
+				},
+			},
 		});
 	}
 });

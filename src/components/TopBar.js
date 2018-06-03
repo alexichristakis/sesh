@@ -174,15 +174,14 @@ class TopBar extends Component {
 	};
 
 	render() {
-		const textColorTransform = this.props.textColorTransform;
-		const indicatorAnimate = this.props.indicatorAnimate;
-
 		/* navigation functions */
 		const presentModal = this.props.onPressPresentModalTo;
 		const presentStackModal = this.props.onPressPresentModalToStack;
-		const presentOverlay = this.props.onPressPresentOverlayTo;
 		const pushTo = this.props.onPressPushTo;
-		const { scrollToStart, scrollToEnd } = this.props;
+		const presentOverlay = this.props.onPressPresentOverlayTo;
+
+		/* others */
+		const { scrollToStart, scrollToEnd, textColorTransform, indicatorAnimate } = this.props;
 
 		const buttonTranslate = {
 			translateY: this.animated.interpolate({
@@ -238,8 +237,8 @@ class TopBar extends Component {
 				<View style={styles.topBar}>
 					<Animated.View style={[styles.addFriendButton, addFriendAnimatedStyle]}>
 						<TouchableOpacity
-							style={styles.fillCenter}
 							activeOpacity={1}
+							style={styles.fillCenter}
 							onPressIn={() => this.handlePressIn(this.addFriendScale)}
 							onPressOut={() => this.handlePressOut(this.addFriendScale)}
 							onPress={() => this.haptic(presentModal("sesh.AddFriend"))}>
@@ -252,15 +251,15 @@ class TopBar extends Component {
 							onPressIn={() => this.handlePressIn(this.profileScale)}
 							onPressOut={() => this.handlePressOut(this.profileScale)}
 							onPress={() =>
-								this.haptic(presentOverlay("sesh.Profile", { onPressPushTo: presentOverlay }))
+								this.haptic(presentOverlay("sesh.Profile", { user: this.props.user }))
 							}>
 							<Image style={styles.image} resizeMode="cover" source={{ uri: this.state.photo }} />
 						</TouchableOpacity>
 					</Animated.View>
 					<Animated.View style={[styles.addGroupButton, createGroupAnimatedStyle]}>
 						<TouchableOpacity
-							style={styles.fillCenter}
 							activeOpacity={1}
+							style={styles.fillCenter}
 							onPressIn={() => this.handlePressIn(this.createGroupScale)}
 							onPressOut={() => this.handlePressOut(this.createGroupScale)}
 							onPress={() => this.haptic(presentStackModal("sesh.Groups"))}>
