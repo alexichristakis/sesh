@@ -1,13 +1,24 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
+import {
+	StyleSheet,
+	Animated,
+	Easing,
+	TouchableWithoutFeedback,
+	TouchableOpacity,
+	View,
+	FlatList,
+	Text,
+	Image,
+} from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
 // import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
+import { BlurView } from "react-native-blur";
 
 import { Colors, shadow } from "../../lib/styles";
+import { SB_HEIGHT, SCREEN_WIDTH } from "../../lib/constants";
 
-import BlurOverlay from "../global/BlurOverlay";
 import Focus from "../global/Focus";
 import User from "../global/User";
 import Group from "./Group";
@@ -61,14 +72,32 @@ class GroupFocus extends Component {
 	constructor(props) {
 		super(props);
 
+		this.entry = new Animated.Value(0);
 		this.state = {
 			changedName: false,
 			newName: "",
 		};
 	}
 
-	_onExit = () => {
-		if (this.state.changedName) this.props.changeName(this.props.data, this.state.newName);
+	componentDidMount() {
+		Animated.timing(this.entry, {
+			toValue: 1,
+			duration: 100,
+			easing: Easing.bounce,
+			useNativeDriver: true,
+		}).start();
+	}
+
+	dismiss = () => {
+		Animated.timing(this.entry, {
+			toValue: 0,
+			duration: 100,
+			easing: Easing.ease,
+			useNativeDriver: true,
+		}).start(() => {
+			Navigation.dismissOverlay(this.props.componentId);
+			if (this.state.changedName) this.props.changeName(this.props.data, this.state.newName);
+		});
 	};
 
 	onPressPresentModalTo = () => {
@@ -84,15 +113,19 @@ class GroupFocus extends Component {
 		});
 	};
 
+	_keyExtractor = item => item.id.toString();
+
 	_renderItem = ({ item, index }) => <User length={data.length} index={index} data={item} />;
 
 	_renderHeader = () => {
-		return (
-			<View style={styles.headerContainer}>
-				<Text style={styles.headerTitle}>Members:</Text>
-			</View>
-		);
+		return <View style={styles.header} />;
 	};
+
+	_renderSeparator = () => (
+		<View style={styles.separatorContainer}>
+			<View style={styles.separator} />
+		</View>
+	);
 
 	_renderFooter = () => {
 		return (
@@ -112,25 +145,66 @@ class GroupFocus extends Component {
 	};
 
 	render() {
+		let translate = {
+			transform: [
+				{
+					translateY: this.entry.interpolate({
+						inputRange: [0, 1],
+						outputRange: [250, 0],
+					}),
+				},
+			],
+		};
+
 		return (
-			<BlurOverlay componentId={this.props.componentId} onExit={this._onExit}>
-				<Group editName card updateName={this.updateGroupName} data={this.props.data} />
-			</BlurOverlay>
+			<Animated.View style={{ flex: 1, opacity: this.entry }}>
+				<TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.dismiss}>
+					<BlurView blurType="dark" blurAmount={10} style={styles.blur}>
+						<Animated.ScrollView style={translate}>
+							<Group editName card updateName={this.updateGroupName} data={this.props.data} />
+							<FlatList
+								data={data}
+								keyExtractor={this._keyExtractor}
+								ListHeaderComponent={this._renderHeader}
+								ListFooterComponent={this._renderFooter}
+								ItemSeparatorComponent={this._renderSeparator}
+								renderItem={this._renderItem}
+							/>
+						</Animated.ScrollView>
+					</BlurView>
+				</TouchableWithoutFeedback>
+			</Animated.View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	headerContainer: {
+	blur: {
+		position: "absolute",
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+		paddingTop: SB_HEIGHT,
+		paddingHorizontal: 10,
+	},
+	header: {
 		flex: 1,
 		paddingBottom: 10,
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	headerTitle: {
-		color: Colors.groups,
-		fontSize: 18,
-		fontWeight: "bold",
+	separatorContainer: {
+		// width: SCREEN_WIDTH - 80,
+		// marginLeft: 80,
+		height: 1,
+		backgroundColor: "rgba(255,255,255,0.8)",
+	},
+	separator: {
+		width: SCREEN_WIDTH - 50,
+		marginLeft: 50,
+		height: 0.5,
+		backgroundColor: Colors.gray,
 	},
 	footerContainer: {
 		flex: 1,
@@ -139,16 +213,15 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		borderBottomLeftRadius: 15,
 		borderBottomRightRadius: 15,
-		backgroundColor: "white",
-		...shadow,
+		backgroundColor: "rgba(255,255,255,0.8)",
 	},
 	footerSeparator: {
 		position: "absolute",
 		top: 0,
 		left: 0,
 		right: 0,
-		height: 1,
-		backgroundColor: Colors.lightGray,
+		height: 0.5,
+		backgroundColor: Colors.gray,
 	},
 	addMemberContainer: {
 		flexDirection: "row",

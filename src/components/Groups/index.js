@@ -119,7 +119,7 @@ class Groups extends Component {
 		<View style={styles.headerContainer}>
 			<Text style={styles.header}>Groups</Text>
 			<TouchableScale onPress={() => console.log("hi")}>
-				<Icon name={"plus"} size={30} color={Colors.primary} />
+				<Icon style={{ paddingBottom: 8 }} name={"plus"} size={30} color={Colors.primary} />
 			</TouchableScale>
 		</View>
 	);
@@ -145,6 +145,7 @@ class Groups extends Component {
 	render() {
 		return (
 			<Background>
+				{/* <View style={{ flex: 1, backgroundColor: "white" }}> */}
 				<FlatList
 					style={styles.container}
 					data={this.state.data}
@@ -156,6 +157,7 @@ class Groups extends Component {
 
 				<BlurView blurType="xlight" style={styles.statusBar} />
 				<BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
+				{/* </View> */}
 			</Background>
 		);
 	}
@@ -167,6 +169,7 @@ const styles = StyleSheet.create({
 		// paddingTop: 40
 	},
 	headerContainer: {
+		// backgroundColor: "red",
 		flexDirection: "row",
 		paddingHorizontal: 15,
 		justifyContent: "space-between",

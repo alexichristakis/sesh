@@ -110,8 +110,10 @@ const styles = StyleSheet.create({
 		paddingTop: 4,
 		fontSize: 14,
 		// alignSelf: "center",
-		color: Colors.active,
+		// color: Colors.active,
+		color: Colors.primary,
 		fontWeight: "800",
+		// fontWeight: "300",
 	},
 	mid: {
 		flex: 2,
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
 		marginLeft: 2,
 		fontSize: 14,
 		// fontWeight: "200",
+		fontWeight: "800",
 		color: Colors.primary,
 	},
 });

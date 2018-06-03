@@ -54,7 +54,7 @@ class Group extends Component {
 		const group = this.props.data;
 
 		let cardStyle = {
-			backgroundColor: "rgba(255,255,255,0.5)",
+			backgroundColor: "rgba(255,255,255,0.8)",
 			borderRadius: 15,
 			overflow: "hidden",
 		};
@@ -62,7 +62,7 @@ class Group extends Component {
 		return (
 			<View style={[styles.container, this.props.card ? cardStyle : {}]}>
 				{/* {this.props.card && <View style={styles.background} />} */}
-				{this.props.card && <BlurView blurType={"xlight"} style={styles.blur} />}
+				{/* {this.props.card && <BlurView blurType={"xlight"} style={styles.blur} />} */}
 				<View style={styles.pictures}>
 					<Image style={styles.image1} source={{ uri: this.state.photo }} />
 					<Image style={styles.image2} source={{ uri: this.state.photo }} />
