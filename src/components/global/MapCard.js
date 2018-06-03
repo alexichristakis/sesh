@@ -32,7 +32,12 @@ class MapCard extends Component {
 
 		let map = (
 			<MapView style={{ flex: 1 }} initialRegion={region}>
-				<Marker coordinate={location} title={title} />
+				<Marker
+					// title={"testing"}
+					description={"testing testing"}
+					coordinate={location}
+					title={title}
+				/>
 			</MapView>
 		);
 

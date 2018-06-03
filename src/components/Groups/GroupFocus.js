@@ -21,9 +21,11 @@ import { SB_HEIGHT, SCREEN_WIDTH } from "../../lib/constants";
 
 import Focus from "../global/Focus";
 import User from "../global/User";
+import MapCard from "../global/MapCard";
+import BackButton from "../global/BackButton";
 import Group from "./Group";
 
-const data = [
+const DATA = [
 	{
 		id: "1",
 		name: "Alexi Christakis",
@@ -74,6 +76,10 @@ class GroupFocus extends Component {
 
 		this.entry = new Animated.Value(0);
 		this.state = {
+			data: DATA,
+			renderedData: DATA.slice(0, 3),
+			loading: true,
+			listOpen: false,
 			changedName: false,
 			newName: "",
 		};
@@ -85,7 +91,7 @@ class GroupFocus extends Component {
 			duration: 100,
 			easing: Easing.bounce,
 			useNativeDriver: true,
-		}).start();
+		}).start(() => this.setState({ loading: false }));
 	}
 
 	dismiss = () => {
@@ -98,6 +104,11 @@ class GroupFocus extends Component {
 			Navigation.dismissOverlay(this.props.componentId);
 			if (this.state.changedName) this.props.changeName(this.props.data, this.state.newName);
 		});
+	};
+
+	onPressToggleLength = () => {
+		if (!this.state.listOpen) this.setState({ listOpen: true, renderedData: this.state.data });
+		else this.setState({ listOpen: false, renderedData: this.state.data.slice(0, 3) });
 	};
 
 	onPressPresentModalTo = () => {
@@ -115,7 +126,9 @@ class GroupFocus extends Component {
 
 	_keyExtractor = item => item.id.toString();
 
-	_renderItem = ({ item, index }) => <User length={data.length} index={index} data={item} />;
+	_renderItem = ({ item, index }) => (
+		<User length={this.state.data.length} index={index} data={item} />
+	);
 
 	_renderHeader = () => {
 		return <View style={styles.header} />;
@@ -129,12 +142,9 @@ class GroupFocus extends Component {
 
 	_renderFooter = () => {
 		return (
-			<TouchableOpacity style={styles.footerContainer} onPress={this.onPressPresentModalTo}>
+			<TouchableOpacity style={styles.footerContainer} onPress={this.onPressToggleLength}>
 				<View style={styles.footerSeparator} />
-				<View style={styles.addMemberContainer}>
-					<Text style={styles.addMember}>add member</Text>
-					<Icon name={"plus"} size={14} color={Colors.groups} />
-				</View>
+				<Text style={styles.showMore}>{this.state.listOpen ? "show less" : "show more"}</Text>
 			</TouchableOpacity>
 		);
 	};
@@ -158,21 +168,30 @@ class GroupFocus extends Component {
 
 		return (
 			<Animated.View style={{ flex: 1, opacity: this.entry }}>
-				<TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.dismiss}>
-					<BlurView blurType="dark" blurAmount={10} style={styles.blur}>
-						<Animated.ScrollView style={translate}>
-							<Group editName card updateName={this.updateGroupName} data={this.props.data} />
-							<FlatList
-								data={data}
-								keyExtractor={this._keyExtractor}
-								ListHeaderComponent={this._renderHeader}
-								ListFooterComponent={this._renderFooter}
-								ItemSeparatorComponent={this._renderSeparator}
-								renderItem={this._renderItem}
+				<BlurView blurType="dark" blurAmount={10} style={styles.blur}>
+					<Animated.ScrollView style={translate}>
+						<Group editName card updateName={this.updateGroupName} data={this.props.data} />
+						<FlatList
+							style={{ marginBottom: 10 }}
+							data={this.state.renderedData}
+							keyExtractor={this._keyExtractor}
+							ListHeaderComponent={this._renderHeader}
+							ListFooterComponent={this._renderFooter}
+							ItemSeparatorComponent={this._renderSeparator}
+							renderItem={this._renderItem}
+						/>
+						{!this.state.loading && (
+							<MapCard
+								location={{
+									latitude: 37.785834,
+									longitude: -122.406417,
+								}}
 							/>
-						</Animated.ScrollView>
-					</BlurView>
-				</TouchableWithoutFeedback>
+						)}
+						{this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
+					</Animated.ScrollView>
+				</BlurView>
+				<BackButton onPressPop={this.dismiss} />
 			</Animated.View>
 		);
 	}
@@ -208,7 +227,7 @@ const styles = StyleSheet.create({
 	},
 	footerContainer: {
 		flex: 1,
-		paddingBottom: 10,
+		paddingVertical: 10,
 		alignItems: "center",
 		justifyContent: "center",
 		borderBottomLeftRadius: 15,
@@ -223,14 +242,7 @@ const styles = StyleSheet.create({
 		height: 0.5,
 		backgroundColor: Colors.gray,
 	},
-	addMemberContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-		paddingTop: 10,
-		// padding: 5
-	},
-	addMember: {
+	showMore: {
 		color: Colors.groups,
 		fontWeight: "bold",
 		marginRight: 5,
