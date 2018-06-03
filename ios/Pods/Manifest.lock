@@ -91,30 +91,30 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.5.0)
-  - React (0.55.3):
-    - React/Core (= 0.55.3)
+  - React (0.55.4):
+    - React/Core (= 0.55.4)
   - react-native-maps (0.21.0):
     - React
-  - React/Core (0.55.3):
-    - yoga (= 0.55.3.React)
-  - React/DevSupport (0.55.3):
+  - React/Core (0.55.4):
+    - yoga (= 0.55.4.React)
+  - React/DevSupport (0.55.4):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.55.3)
-  - React/RCTActionSheet (0.55.3):
+  - React/fishhook (0.55.4)
+  - React/RCTActionSheet (0.55.4):
     - React/Core
-  - React/RCTAnimation (0.55.3):
+  - React/RCTAnimation (0.55.4):
     - React/Core
-  - React/RCTBlob (0.55.3):
+  - React/RCTBlob (0.55.4):
     - React/Core
-  - React/RCTImage (0.55.3):
+  - React/RCTImage (0.55.4):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.55.3):
+  - React/RCTNetwork (0.55.4):
     - React/Core
-  - React/RCTVibration (0.55.3):
+  - React/RCTVibration (0.55.4):
     - React/Core
-  - React/RCTWebSocket (0.55.3):
+  - React/RCTWebSocket (0.55.4):
     - React/Core
     - React/fishhook
     - React/RCTBlob
@@ -122,7 +122,7 @@ PODS:
     - React
   - RNReactNativeHapticFeedback (1.0.1):
     - React
-  - yoga (0.55.3.React)
+  - yoga (0.55.4.React)
 
 DEPENDENCIES:
   - FBSDKCoreKit

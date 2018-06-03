@@ -14,7 +14,7 @@
 		00646AC9B2B47F2FB0D19DA85509ED3A /* RCTMultiplicationAnimatedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 485B1849A0AC261A48E79D9B61B49C4B /* RCTMultiplicationAnimatedNode.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		007221ABE5A0669B2E0EB9B4E5D8065C /* tcp_server_windows.cc in Sources */ = {isa = PBXBuildFile; fileRef = E2563A1D64038743DB8E25D6F78D1772 /* tcp_server_windows.cc */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -DPB_FIELD_16BIT -fno-objc-arc"; }; };
 		0073078A4941EBEF39E5651FBD5DA890 /* windows.c in Sources */ = {isa = PBXBuildFile; fileRef = FE008CE54224EDCAC2D70CD4ED7BDFA6 /* windows.c */; settings = {COMPILER_FLAGS = "-DOPENSSL_NO_ASM -GCC_WARN_INHIBIT_ALL_WARNINGS -w -fno-objc-arc"; }; };
-		008D96BEBB58CE3D9A9741A8658EE9DA /* RNReactNativeHapticFeedback-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE2692AB74028260D4EBA5C65ED910B /* RNReactNativeHapticFeedback-dummy.m */; };
+		008D96BEBB58CE3D9A9741A8658EE9DA /* RNReactNativeHapticFeedback-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CA92F36A5A9A78A9720FB4A6B0814399 /* RNReactNativeHapticFeedback-dummy.m */; };
 		0094F7D081817B3965E1C15A15CD4B42 /* AIRMapPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FB68FE4EA27E339A3D976E9615783F8 /* AIRMapPolygon.m */; };
 		00A9F49D9C66653D70006DD48AAC1089 /* RCTSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B7166DA912325B5AC5858839A342EB10 /* RCTSRWebSocket.m */; };
 		00C48FAA34154021596A1681ADE15ABD /* FBSDKWebDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 87D4CD4B3F556BA7ACC9B8005CADE1D4 /* FBSDKWebDialog.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -373,7 +373,7 @@
 		214D10E32F96B6AC9984EE4AE7022298 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3458F1D025C71A913BFA22E0544B1447 /* internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		216BBFF3A992C2A377AAC819FB8D312A /* LOTRenderGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 467BBFE79A7C01770554BAE232EED88E /* LOTRenderGroup.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2176683ECC9BEC2870DD094665137F3C /* pkcs7.h in Headers */ = {isa = PBXBuildFile; fileRef = 143A7260C646C5DD768125BFF89CA0AF /* pkcs7.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		21804FAB34F8868776541BA61A26EDD3 /* DeviceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EB24FE9810955CC1B0BC4037E516CE /* DeviceUtils.m */; };
+		21804FAB34F8868776541BA61A26EDD3 /* DeviceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4378769F49159C49532B7C1763A28A /* DeviceUtils.m */; };
 		219C5EF89EF5F829DD426675FE78D691 /* RCTActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2A529662DA734AD4A5C694D5B0C59C /* RCTActivityIndicatorView.m */; };
 		21D2651D9D30C6BC5D293BD4899469EA /* gRPC-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 23684BB0E28B10FC5991B3E16FF81384 /* gRPC-dummy.m */; };
 		21E121EA9ED3738AE8BB2FC0297F69D9 /* RCTReconnectingWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 987B6D6AAD81514264E0931A0DC9E70F /* RCTReconnectingWebSocket.m */; };
@@ -729,7 +729,7 @@
 		402034E25FCFF02A0A72BF1CC109E8FC /* FIRNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D210D054F06F8AFCB2F369D77DCEFC /* FIRNetworkConstants.m */; };
 		40321611C42DE6FADC6E6AFAD3BFDEB9 /* FBSDKShareError.h in Headers */ = {isa = PBXBuildFile; fileRef = 61BF1424048E3F023B60B0768DAAC5B9 /* FBSDKShareError.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		403726DF019450110C1F6A896C01DE36 /* x509_def.c in Sources */ = {isa = PBXBuildFile; fileRef = 40A6DDB8CD42CE798301EE910CC38D73 /* x509_def.c */; settings = {COMPILER_FLAGS = "-DOPENSSL_NO_ASM -GCC_WARN_INHIBIT_ALL_WARNINGS -w -fno-objc-arc"; }; };
-		403858D5A97F540F497E5705CE54BF49 /* RNReactNativeHapticFeedback.h in Headers */ = {isa = PBXBuildFile; fileRef = 35CCE4BE721635FFEB139AA1867D4062 /* RNReactNativeHapticFeedback.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		403858D5A97F540F497E5705CE54BF49 /* RNReactNativeHapticFeedback.h in Headers */ = {isa = PBXBuildFile; fileRef = D34A1220E5117BDBE6C2FBCDADD5FB6C /* RNReactNativeHapticFeedback.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		403D987CFE7FA57790EE88ADDCC2A665 /* FBSDKLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = 46586535D8AA2E9187136CC90907F588 /* FBSDKLogo.m */; };
 		40A587D3EA7273F1FB13C2B6A9ECE05B /* conf_def.h in Headers */ = {isa = PBXBuildFile; fileRef = 6772D8789DD88CDE9D14F9C1A7A0CDA5 /* conf_def.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		40B7E9A8524CFB77773375E8D247F966 /* p_ed25519_asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 49F666A0BBC186943D8C61AEF929C970 /* p_ed25519_asn1.c */; settings = {COMPILER_FLAGS = "-DOPENSSL_NO_ASM -GCC_WARN_INHIBIT_ALL_WARNINGS -w -fno-objc-arc"; }; };
@@ -1318,7 +1318,7 @@
 		71A01E34A845BE8DF98A35A414B7EA5C /* FIRAuthNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EC3FEF0721EFDA71996883EDA2FABF /* FIRAuthNotificationManager.m */; };
 		71A989C69D08D64BADD4BB6E73A41456 /* transport_security.h in Headers */ = {isa = PBXBuildFile; fileRef = D7B7B6B2AA6030F128DEDE853F1DD1AB /* transport_security.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		71E1C061BB64C321C0180BAEB39F68E5 /* FIRGetOOBConfirmationCodeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37476DEF33586E228631CCFEF9F269 /* FIRGetOOBConfirmationCodeRequest.m */; };
-		720B05885A7AE546905DA9A03742EFED /* RNReactNativeHapticFeedback.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C6D930D18B42C83B55402C25B278B5 /* RNReactNativeHapticFeedback.m */; };
+		720B05885A7AE546905DA9A03742EFED /* RNReactNativeHapticFeedback.m in Sources */ = {isa = PBXBuildFile; fileRef = E71DA0DB1AC2121272FF6C8DB4F367EA /* RNReactNativeHapticFeedback.m */; };
 		7232A4105C3D9C4A65F2AD036C161FD0 /* FBSDKImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DBCD1F20448B1D157FE93E46B35E4B0 /* FBSDKImageDownloader.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		72492CE2B650FCC50F45EAA13CC05E96 /* channel_create.cc in Sources */ = {isa = PBXBuildFile; fileRef = C23A2014834C40E2051B1F40AB63E932 /* channel_create.cc */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -DPB_FIELD_16BIT -fno-objc-arc"; }; };
 		7254A39884B4F7418A0B3E854BB6A9D6 /* FIRVerifyPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4F34C1BD01247C6CCBBF4A4B11A4FF /* FIRVerifyPasswordRequest.m */; };
@@ -2422,7 +2422,7 @@
 		D00B2924D6B56E65BD83ACEF08DCD05C /* resolver_registry.cc in Sources */ = {isa = PBXBuildFile; fileRef = A623FA555D7A0C8137CCA55FB94D04C9 /* resolver_registry.cc */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -DPB_FIELD_16BIT -fno-objc-arc"; }; };
 		D00E64DB80020C554DE64C6FE76FDB12 /* string_view.cc in Sources */ = {isa = PBXBuildFile; fileRef = 59EF93F8CA796DE906E54BC25147C3DC /* string_view.cc */; settings = {COMPILER_FLAGS = "$(inherited) -Wno-comma -Wno-range-loop-analysis -fno-objc-arc"; }; };
 		D04252E1CDFBA403B4EDC7695F5A0C99 /* GRXWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DAF34E64BA4EE81362725F7A99C75A9 /* GRXWriter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D072A4DA016DC91D970FDECB2D90F525 /* DeviceUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C20C7090CFA99C568DE5E9D6456DE3 /* DeviceUtils.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D072A4DA016DC91D970FDECB2D90F525 /* DeviceUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = CC0E14D54C17257910F0CE3825D8FF56 /* DeviceUtils.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D091F6A37C58AAADB3177D599584C25B /* AIRMapPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = ADA14D8636E8F9F0B1BB1E94FB97D225 /* AIRMapPolyline.m */; };
 		D092AFA0B162DEBE387E85427B850E46 /* altscontext.pb.c in Sources */ = {isa = PBXBuildFile; fileRef = EE6230C2D2E2C7BFE42503E8BAF54ACB /* altscontext.pb.c */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -DPB_FIELD_16BIT -fno-objc-arc"; }; };
 		D09BFA49F6C0376357140AD89F0B649C /* pollset_windows.h in Headers */ = {isa = PBXBuildFile; fileRef = 21046713408E8BC13FEE26810BCC53B4 /* pollset_windows.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -3624,6 +3624,7 @@
 		14BBDF311AD04F60CECB5BD5149567E1 /* internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = internal.h; path = ssl/internal.h; sourceTree = "<group>"; };
 		14C8B1E794977B4745A0569AED21028C /* Wrappers.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Wrappers.pbobjc.h; path = objectivec/google/protobuf/Wrappers.pbobjc.h; sourceTree = "<group>"; };
 		14CCB5D43CC1FA7D5AE32BD8015CCEB6 /* credentials_provider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = credentials_provider.h; path = Firestore/core/src/firebase/firestore/auth/credentials_provider.h; sourceTree = "<group>"; };
+		14CE135B942A19D3C0BB6BB300C1D090 /* RNReactNativeHapticFeedback.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = RNReactNativeHapticFeedback.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		14E4C013D3FFDE3FFE7C713A24FC2911 /* FBSDKLoginCompletion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginCompletion.h; path = FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginCompletion.h; sourceTree = "<group>"; };
 		14EB0EA2A2908C53B0AF1A514C7C7B5E /* FSTLevelDBMutationQueue.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FSTLevelDBMutationQueue.mm; path = Firestore/Source/Local/FSTLevelDBMutationQueue.mm; sourceTree = "<group>"; };
 		1500C5C893170B6E47BBC200B1F12EC6 /* FIREmailAuthProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIREmailAuthProvider.h; path = Firebase/Auth/Source/Public/FIREmailAuthProvider.h; sourceTree = "<group>"; };
@@ -3922,7 +3923,6 @@
 		2D2A6A1BC3E437CCCD93C7D93454AFE4 /* FBSDKButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKButton.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKButton.h; sourceTree = "<group>"; };
 		2D476ACFD6F6DA074692BD67476079EB /* fork_windows.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = fork_windows.cc; path = src/core/lib/iomgr/fork_windows.cc; sourceTree = "<group>"; };
 		2D68F00A9F44C8EF13F4BD639CBDE087 /* _FBSDKLoginRecoveryAttempter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _FBSDKLoginRecoveryAttempter.m; path = FBSDKLoginKit/FBSDKLoginKit/Internal/_FBSDKLoginRecoveryAttempter.m; sourceTree = "<group>"; };
-		2D8B042CCB7A0F3E790A34D0333CF186 /* RNReactNativeHapticFeedback.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RNReactNativeHapticFeedback.xcconfig; sourceTree = "<group>"; };
 		2D8D713175C947F9D6B539E3A18D0335 /* Duration.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Duration.pbobjc.m; path = objectivec/google/protobuf/Duration.pbobjc.m; sourceTree = "<group>"; };
 		2D8EEE1C594922597B013B45421D323A /* AIRMapPolyline.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AIRMapPolyline.h; path = lib/ios/AirMaps/AIRMapPolyline.h; sourceTree = "<group>"; };
 		2DA37362552AAF70F2054BA7B9C224F7 /* internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = internal.h; path = third_party/fiat/internal.h; sourceTree = "<group>"; };
@@ -4026,7 +4026,6 @@
 		358B87F93C552DB310EB4404D05B0265 /* huffsyms.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = huffsyms.cc; path = src/core/ext/transport/chttp2/transport/huffsyms.cc; sourceTree = "<group>"; };
 		35916DEFC438DE92950BEFC283FBBAA5 /* RCTErrorCustomizer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTErrorCustomizer.h; sourceTree = "<group>"; };
 		35B1E20C3DCF8CE4D6C1B5B589327E63 /* libgRPC-ProtoRPC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libgRPC-ProtoRPC.a"; path = "libgRPC-ProtoRPC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		35CCE4BE721635FFEB139AA1867D4062 /* RNReactNativeHapticFeedback.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNReactNativeHapticFeedback.h; path = ios/RNReactNativeHapticFeedback.h; sourceTree = "<group>"; };
 		35ED32E62C5363EBCCB399824C24186F /* hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hmac.h; path = include/openssl/hmac.h; sourceTree = "<group>"; };
 		3608247FE2D270B35EA07CA37E7DDDEC /* chttp2_transport.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = chttp2_transport.cc; path = src/core/ext/transport/chttp2/transport/chttp2_transport.cc; sourceTree = "<group>"; };
 		361B352F29D5BC894D255C49686AAD8D /* bloom.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = bloom.cc; path = util/bloom.cc; sourceTree = "<group>"; };
@@ -4079,7 +4078,6 @@
 		3ABB5EF479F16799794E6B8B7D0DB1FC /* FBSDKDynamicFrameworkLoader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKDynamicFrameworkLoader.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.h; sourceTree = "<group>"; };
 		3AC5DB0C1CD673DF353134A7EA151CDD /* RCTSliderManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTSliderManager.h; sourceTree = "<group>"; };
 		3ADB34DF832D352E556C90687AF6D18E /* FBSDKLoginTooltipView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLoginTooltipView.m; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginTooltipView.m; sourceTree = "<group>"; };
-		3AE2692AB74028260D4EBA5C65ED910B /* RNReactNativeHapticFeedback-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RNReactNativeHapticFeedback-dummy.m"; sourceTree = "<group>"; };
 		3AEBFE878258C5C568ECE47B9E9922D0 /* FIRDocumentSnapshot.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FIRDocumentSnapshot.mm; path = Firestore/Source/API/FIRDocumentSnapshot.mm; sourceTree = "<group>"; };
 		3B075457447685AAB28D00B6A2E641C3 /* grpc_alts_credentials_client_options.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = grpc_alts_credentials_client_options.cc; path = src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc; sourceTree = "<group>"; };
 		3B179831BB45EB3732199E0AD1241BEE /* GRXBufferedPipe.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GRXBufferedPipe.h; path = "src/objective-c/RxLibrary/GRXBufferedPipe.h"; sourceTree = "<group>"; };
@@ -4269,6 +4267,7 @@
 		49FB2702AECB1C2FB5CF3C9EAA99E668 /* RCTSurfaceRootView.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = RCTSurfaceRootView.mm; sourceTree = "<group>"; };
 		49FB409F8AD23577D388D9962E4A469D /* p_dsa_asn1.c */ = {isa = PBXFileReference; includeInIndex = 1; name = p_dsa_asn1.c; path = crypto/evp/p_dsa_asn1.c; sourceTree = "<group>"; };
 		4A42056392D4605E1C9311F7228ECF37 /* RCTUIUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTUIUtils.m; sourceTree = "<group>"; };
+		4A4378769F49159C49532B7C1763A28A /* DeviceUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DeviceUtils.m; path = ios/DeviceUtils.m; sourceTree = "<group>"; };
 		4A4F1E7455E1C6AF4790025276AAB60F /* ber.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ber.c; path = crypto/bytestring/ber.c; sourceTree = "<group>"; };
 		4A60F30DC5182B22E8BDF214A8FCA801 /* RCTAppState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTAppState.m; sourceTree = "<group>"; };
 		4A87E2CF18D2C24534A0811519B0B90E /* FBSDKServerConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKServerConfiguration.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfiguration.m; sourceTree = "<group>"; };
@@ -5100,7 +5099,6 @@
 		905A0F41E0389B99A998010A1FEA459D /* method_params.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = method_params.h; path = src/core/ext/filters/client_channel/method_params.h; sourceTree = "<group>"; };
 		9086FC0BA15148B659C25C0738060A69 /* error_utils.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = error_utils.cc; path = src/core/lib/transport/error_utils.cc; sourceTree = "<group>"; };
 		908A9EBB6571C31667B5222B40A7F83B /* internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = internal.h; path = crypto/fipsmodule/cipher/internal.h; sourceTree = "<group>"; };
-		90AF1B2024B02CD564D551FA95E6A84F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		90C7E7C96780B13E5C850F8E8D973B6B /* lottie-ios.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = "lottie-ios.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		90F2711FADD4AEAC6872C90E43F646CA /* React-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "React-dummy.m"; sourceTree = "<group>"; };
 		9107BF8BFE89A3BCEDED0A9F73A7BF21 /* RCTCxxConvert.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTCxxConvert.m; sourceTree = "<group>"; };
@@ -5296,7 +5294,6 @@
 		A0671391074F4C0C7C7AFB54ADE4BFE3 /* FBSDKAppEventsStateManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppEventsStateManager.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsStateManager.m; sourceTree = "<group>"; };
 		A099F8BA5B1850B77F8C232EC876093E /* ssl_cipher.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = ssl_cipher.cc; path = ssl/ssl_cipher.cc; sourceTree = "<group>"; };
 		A0A5F6CF4FCA9A22E26FCD756A304795 /* RCTErrorInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTErrorInfo.m; sourceTree = "<group>"; };
-		A0C6D930D18B42C83B55402C25B278B5 /* RNReactNativeHapticFeedback.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RNReactNativeHapticFeedback.m; path = ios/RNReactNativeHapticFeedback.m; sourceTree = "<group>"; };
 		A0DABB91D605B91BF34A9E39FA703D85 /* e_des.c */ = {isa = PBXFileReference; includeInIndex = 1; name = e_des.c; path = crypto/fipsmodule/cipher/e_des.c; sourceTree = "<group>"; };
 		A0DB182154F15BBD109AA87E39855F77 /* rand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rand.h; path = include/openssl/rand.h; sourceTree = "<group>"; };
 		A0E0BA4A91C8207C218832B4C86ACD90 /* FBSDKInternalUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKInternalUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKInternalUtility.h; sourceTree = "<group>"; };
@@ -5360,6 +5357,7 @@
 		A5CD1844199D76319C14DFD0945E0FC4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A5D8C71A1FD767D76109F49736D27759 /* string.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = string.cc; path = src/core/lib/gpr/string.cc; sourceTree = "<group>"; };
 		A5EE4B148B102BAFF5D54F113E78ABB9 /* status.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = status.cc; path = util/status.cc; sourceTree = "<group>"; };
+		A5FB0A50937736CBA240C625653AFDD1 /* RNReactNativeHapticFeedback.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RNReactNativeHapticFeedback.xcconfig; sourceTree = "<group>"; };
 		A60087C0F05C325CFE3E3CD574E9EB8F /* alts_counter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = alts_counter.h; path = src/core/tsi/alts/frame_protector/alts_counter.h; sourceTree = "<group>"; };
 		A611ED6D08D8A59EBA08A7C9A4FC9B08 /* iomgr_custom.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = iomgr_custom.cc; path = src/core/lib/iomgr/iomgr_custom.cc; sourceTree = "<group>"; };
 		A61BF825E21A213B4BBB5C9B61152C89 /* RCTImageLoader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RCTImageLoader.m; path = Libraries/Image/RCTImageLoader.m; sourceTree = "<group>"; };
@@ -5432,6 +5430,7 @@
 		ABCB6227C222818B6EC2AD96C72D7442 /* RCTTabBarItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTTabBarItem.m; sourceTree = "<group>"; };
 		ABD30430BB2E432BFAD63E923E344586 /* RCTTiming.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTTiming.m; sourceTree = "<group>"; };
 		ABD72EACAF987F5D1C64CD4D28EBCC2A /* connect.c */ = {isa = PBXFileReference; includeInIndex = 1; name = connect.c; path = crypto/bio/connect.c; sourceTree = "<group>"; };
+		ABF15CB14B29738D366DDA865F544F41 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		ABF1D73329EE43248F75A31E590F8D89 /* FIRAuthDispatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRAuthDispatcher.m; path = Firebase/Auth/Source/FIRAuthDispatcher.m; sourceTree = "<group>"; };
 		AC00DD9495198DFD085F56F77954BB61 /* v3_genn.c */ = {isa = PBXFileReference; includeInIndex = 1; name = v3_genn.c; path = crypto/x509v3/v3_genn.c; sourceTree = "<group>"; };
 		AC1675EB33E8F22A6333A848C6C413D4 /* p256-x86_64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "p256-x86_64.h"; path = "crypto/fipsmodule/ec/p256-x86_64.h"; sourceTree = "<group>"; };
@@ -5667,6 +5666,7 @@
 		BE1BECE102DB04C4BC2810DB8B8760D5 /* v3_pmaps.c */ = {isa = PBXFileReference; includeInIndex = 1; name = v3_pmaps.c; path = crypto/x509v3/v3_pmaps.c; sourceTree = "<group>"; };
 		BE478577AEAC96A654D8830BA4E07BC2 /* leveldb_util.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = leveldb_util.h; path = Firestore/core/src/firebase/firestore/local/leveldb_util.h; sourceTree = "<group>"; };
 		BE8CDBDD97FB5FE20CBA3C8D10701470 /* tcp_client_windows.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = tcp_client_windows.cc; path = src/core/lib/iomgr/tcp_client_windows.cc; sourceTree = "<group>"; };
+		BE9FA59399E009C9F189B86521B7C1AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		BEB637FB632867D10859673387133149 /* tcp_client_posix.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = tcp_client_posix.cc; path = src/core/lib/iomgr/tcp_client_posix.cc; sourceTree = "<group>"; };
 		BEBACE7BA6462BAC2FDA00898127439C /* FBSDKLoginManager+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKLoginManager+Internal.h"; path = "FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginManager+Internal.h"; sourceTree = "<group>"; };
 		BEC53497193A0A82841ACDDF9351E468 /* sync_windows.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sync_windows.h; path = include/grpc/impl/codegen/sync_windows.h; sourceTree = "<group>"; };
@@ -5708,7 +5708,6 @@
 		C1CFA19A373C20E40C43551907B15B61 /* YGEnums.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YGEnums.h; path = yoga/YGEnums.h; sourceTree = "<group>"; };
 		C1D55EA2D992AB860FD12005D8E9F8E1 /* str_replace.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = str_replace.cc; path = "Firestore/third_party/abseil-cpp/absl/strings/str_replace.cc"; sourceTree = "<group>"; };
 		C1EDC34D5FC05885CC572D1B0E3C1959 /* ev_posix.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = ev_posix.cc; path = src/core/lib/iomgr/ev_posix.cc; sourceTree = "<group>"; };
-		C1F595EE904CA30BCC4AE6CAD479DE68 /* RNReactNativeHapticFeedback.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = RNReactNativeHapticFeedback.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C221CDF4EA48EF47B8B47C8BB8E47194 /* chttp2_plugin.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = chttp2_plugin.cc; path = src/core/ext/transport/chttp2/transport/chttp2_plugin.cc; sourceTree = "<group>"; };
 		C2235D898FF0C852BAEAC21BE76EC78B /* static_metadata.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = static_metadata.h; path = src/core/lib/transport/static_metadata.h; sourceTree = "<group>"; };
 		C22AF86FF44AA992C2DB32B39A68FC04 /* SourceContext.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SourceContext.pbobjc.h; path = objectivec/google/protobuf/SourceContext.pbobjc.h; sourceTree = "<group>"; };
@@ -5730,7 +5729,6 @@
 		C342779869E78427DD28BE3F2D111256 /* RCTSwitch.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTSwitch.h; sourceTree = "<group>"; };
 		C39406645E56A4AB1D1A3AAF5DFA942D /* version_set.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = version_set.cc; path = db/version_set.cc; sourceTree = "<group>"; };
 		C3994797DA2C5A31BF628C50B54AA413 /* AIRMapPolygon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AIRMapPolygon.h; path = lib/ios/AirMaps/AIRMapPolygon.h; sourceTree = "<group>"; };
-		C39A4553300BE3DE8890E8C9CEA2F357 /* RNReactNativeHapticFeedback-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RNReactNativeHapticFeedback-prefix.pch"; sourceTree = "<group>"; };
 		C39AE6727CCF833DD3B1588761299B4B /* s3_both.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = s3_both.cc; path = ssl/s3_both.cc; sourceTree = "<group>"; };
 		C3A7287AE1B20CBD617C6D9DB889091F /* a_mbstr.c */ = {isa = PBXFileReference; includeInIndex = 1; name = a_mbstr.c; path = crypto/asn1/a_mbstr.c; sourceTree = "<group>"; };
 		C3C45F183417CB0D3611F774F4255E02 /* alts_handshaker_service_api.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = alts_handshaker_service_api.cc; path = src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc; sourceTree = "<group>"; };
@@ -5775,7 +5773,6 @@
 		C6CA09CFBCA6524C0D5EAFBA80167090 /* FIRDocumentChange+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FIRDocumentChange+Internal.h"; path = "Firestore/Source/API/FIRDocumentChange+Internal.h"; sourceTree = "<group>"; };
 		C6E5816A31B2D3AF08DD431A0728C268 /* GPBArray_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBArray_PackagePrivate.h; path = objectivec/GPBArray_PackagePrivate.h; sourceTree = "<group>"; };
 		C6E8FCA5F50C1EDF625864ED751B996B /* slice_intern.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = slice_intern.cc; path = src/core/lib/slice/slice_intern.cc; sourceTree = "<group>"; };
-		C6EB24FE9810955CC1B0BC4037E516CE /* DeviceUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DeviceUtils.m; path = ios/DeviceUtils.m; sourceTree = "<group>"; };
 		C72943E5E1480D09866022DC28729622 /* a_i2d_fp.c */ = {isa = PBXFileReference; includeInIndex = 1; name = a_i2d_fp.c; path = crypto/asn1/a_i2d_fp.c; sourceTree = "<group>"; };
 		C747D5AED693DDAB93C4A5B1EE672258 /* cmac.c */ = {isa = PBXFileReference; includeInIndex = 1; name = cmac.c; path = crypto/cmac/cmac.c; sourceTree = "<group>"; };
 		C749324B7AF4D5BACF70B1656D91A0CC /* frame_handler.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = frame_handler.cc; path = src/core/tsi/alts/frame_protector/frame_handler.cc; sourceTree = "<group>"; };
@@ -5805,13 +5802,13 @@
 		C937FCF2BF675F490E6CE8CD60ED793A /* status.pb.c */ = {isa = PBXFileReference; includeInIndex = 1; name = status.pb.c; path = Firestore/Protos/nanopb/google/rpc/status.pb.c; sourceTree = "<group>"; };
 		C94310C8EF56EE2BAAF33C61C7D94C69 /* RCTNavigatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTNavigatorManager.h; sourceTree = "<group>"; };
 		C9B2C969D4FA2F87019D57FFDC68B368 /* event_listener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = event_listener.h; path = Firestore/core/include/firebase/firestore/event_listener.h; sourceTree = "<group>"; };
-		C9C20C7090CFA99C568DE5E9D6456DE3 /* DeviceUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DeviceUtils.h; path = ios/DeviceUtils.h; sourceTree = "<group>"; };
 		C9C5FF616454A43C0A2D30C4BA9FA4CD /* AIRMapLocalTileManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AIRMapLocalTileManager.h; path = lib/ios/AirMaps/AIRMapLocalTileManager.h; sourceTree = "<group>"; };
 		CA1DB465F80AADF94B6C8A32044A9659 /* RCTTabBarManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTTabBarManager.h; sourceTree = "<group>"; };
 		CA2D03C2468B7DF53659B16402FCB2A9 /* RCTJSCErrorHandling.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = RCTJSCErrorHandling.mm; sourceTree = "<group>"; };
 		CA322532A57420218AE5E3095CEE7C80 /* slice_hash_table.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = slice_hash_table.h; path = src/core/lib/slice/slice_hash_table.h; sourceTree = "<group>"; };
 		CA78D974463D5FB5446D9230EACCDD4A /* FIRVerifyAssertionRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRVerifyAssertionRequest.h; path = Firebase/Auth/Source/RPCs/FIRVerifyAssertionRequest.h; sourceTree = "<group>"; };
 		CA7ECFD1EFE7670C62567176537D4FAE /* div.c */ = {isa = PBXFileReference; includeInIndex = 1; name = div.c; path = crypto/fipsmodule/bn/div.c; sourceTree = "<group>"; };
+		CA92F36A5A9A78A9720FB4A6B0814399 /* RNReactNativeHapticFeedback-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RNReactNativeHapticFeedback-dummy.m"; sourceTree = "<group>"; };
 		CA935C3480081D6ED40A727A03F9CB5C /* AIRMapCircleManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AIRMapCircleManager.m; path = lib/ios/AirMaps/AIRMapCircleManager.m; sourceTree = "<group>"; };
 		CAABD7E272D23A6E2AC82E50DE466496 /* subchannel_index.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = subchannel_index.h; path = src/core/ext/filters/client_channel/subchannel_index.h; sourceTree = "<group>"; };
 		CAEFA0ACE78DC17661A032103680956C /* FIRAuthURLPresenter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRAuthURLPresenter.m; path = Firebase/Auth/Source/FIRAuthURLPresenter.m; sourceTree = "<group>"; };
@@ -5828,6 +5825,7 @@
 		CB7714F306A7ECA5D8D74125EFFCC112 /* connector.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = connector.cc; path = src/core/ext/filters/client_channel/connector.cc; sourceTree = "<group>"; };
 		CBBADA64B1A40C6237FDE4781C2D088D /* gRPC-ProtoRPC-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "gRPC-ProtoRPC-prefix.pch"; sourceTree = "<group>"; };
 		CBD30BC601A07ACC48B23543C8E2BEF7 /* RCTImageShadowView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RCTImageShadowView.h; path = Libraries/Image/RCTImageShadowView.h; sourceTree = "<group>"; };
+		CC0E14D54C17257910F0CE3825D8FF56 /* DeviceUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DeviceUtils.h; path = ios/DeviceUtils.h; sourceTree = "<group>"; };
 		CC48AC3E9124F99102447B7F8D66C283 /* wrappers.pb.c */ = {isa = PBXFileReference; includeInIndex = 1; name = wrappers.pb.c; path = Firestore/Protos/nanopb/google/protobuf/wrappers.pb.c; sourceTree = "<group>"; };
 		CC6C1C21A8AE55DC1B6FE03257AEFDC6 /* forkunsafe.c */ = {isa = PBXFileReference; includeInIndex = 1; name = forkunsafe.c; path = crypto/rand_extra/forkunsafe.c; sourceTree = "<group>"; };
 		CC7781885FBF41F61AA9750B0FAB42A7 /* FIRDeleteAccountRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRDeleteAccountRequest.h; path = Firebase/Auth/Source/RPCs/FIRDeleteAccountRequest.h; sourceTree = "<group>"; };
@@ -5917,6 +5915,7 @@
 		D2F9B6F19EB5F1346B7D38DE5174C490 /* FSTDocumentSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FSTDocumentSet.h; path = Firestore/Source/Model/FSTDocumentSet.h; sourceTree = "<group>"; };
 		D30C2FB5019559A51496563C1017C8B2 /* logging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = logging.h; path = util/logging.h; sourceTree = "<group>"; };
 		D343186617B74EE82D88D5D2501FBFB1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		D34A1220E5117BDBE6C2FBCDADD5FB6C /* RNReactNativeHapticFeedback.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNReactNativeHapticFeedback.h; path = ios/RNReactNativeHapticFeedback.h; sourceTree = "<group>"; };
 		D3592127011A7E0EDAA928E82F490F21 /* RCTNetworkTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RCTNetworkTask.m; path = Libraries/Network/RCTNetworkTask.m; sourceTree = "<group>"; };
 		D3632B4D264722330D33D6A05752D4F5 /* FBSDKAppGroupAddDialog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppGroupAddDialog.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKAppGroupAddDialog.m; sourceTree = "<group>"; };
 		D36639CD903D35FC282C0E3635203C62 /* ordered_code.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ordered_code.h; path = Firestore/core/src/firebase/firestore/util/ordered_code.h; sourceTree = "<group>"; };
@@ -6028,6 +6027,7 @@
 		DC0299B3D0DF63A9313B3AA59E0131E4 /* RCTInspectorDevServerHelper.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = RCTInspectorDevServerHelper.mm; sourceTree = "<group>"; };
 		DC09C610C3D43556DE8A0CE737D72AE5 /* libRNReactNativeHapticFeedback.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libRNReactNativeHapticFeedback.a; path = libRNReactNativeHapticFeedback.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2A14564471D02426E084AD28B69124 /* AIRMapCircleManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AIRMapCircleManager.h; path = lib/ios/AirMaps/AIRMapCircleManager.h; sourceTree = "<group>"; };
+		DC36CBB561B5F81B9DB3300A3481779A /* RNReactNativeHapticFeedback-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RNReactNativeHapticFeedback-prefix.pch"; sourceTree = "<group>"; };
 		DC5C13CFE4B003FDAC8183E640B42DF4 /* FBSDKServerConfigurationManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKServerConfigurationManager.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfigurationManager.h; sourceTree = "<group>"; };
 		DC63467D060D37C56CC486922188E442 /* x_algor.c */ = {isa = PBXFileReference; includeInIndex = 1; name = x_algor.c; path = crypto/x509/x_algor.c; sourceTree = "<group>"; };
 		DC9E003CF7F5DBFC14BB27DCFD900F90 /* FIRVerifyAssertionResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRVerifyAssertionResponse.h; path = Firebase/Auth/Source/RPCs/FIRVerifyAssertionResponse.h; sourceTree = "<group>"; };
@@ -6167,6 +6167,7 @@
 		E6D0C25328F447337CAD3BA70ADBFD03 /* RCTI18nManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTI18nManager.h; sourceTree = "<group>"; };
 		E6EAAF92B871C16A41BA28A55BFD2412 /* FBSDKGraphRequestBody.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequestBody.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/Network/FBSDKGraphRequestBody.m; sourceTree = "<group>"; };
 		E6EBE1A7EFB78EC2641C2F081E2853CB /* LOTLayerContainer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = LOTLayerContainer.m; sourceTree = "<group>"; };
+		E71DA0DB1AC2121272FF6C8DB4F367EA /* RNReactNativeHapticFeedback.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RNReactNativeHapticFeedback.m; path = ios/RNReactNativeHapticFeedback.m; sourceTree = "<group>"; };
 		E724DB1B92C367E2318F56B8AE7AB12C /* Query.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Query.pbobjc.h; path = Firestore/Protos/objc/google/firestore/v1beta1/Query.pbobjc.h; sourceTree = "<group>"; };
 		E7D8DEB4C1208AFDA4DC9674F68BF3D8 /* FBSDKConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKConstants.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKConstants.h; sourceTree = "<group>"; };
 		E8171D9D76BB8D44C0950185B71200D2 /* RCTDevSettings.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = RCTDevSettings.mm; sourceTree = "<group>"; };
@@ -8300,6 +8301,17 @@
 			name = fishhook;
 			sourceTree = "<group>";
 		};
+		4F27D5803382541FAB79E0D9EE25C8EA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB0A50937736CBA240C625653AFDD1 /* RNReactNativeHapticFeedback.xcconfig */,
+				CA92F36A5A9A78A9720FB4A6B0814399 /* RNReactNativeHapticFeedback-dummy.m */,
+				DC36CBB561B5F81B9DB3300A3481779A /* RNReactNativeHapticFeedback-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../../ios/Pods/Target Support Files/RNReactNativeHapticFeedback";
+			sourceTree = "<group>";
+		};
 		525BD4EB54D5EE4DA05C9F0272FEF345 /* Private */ = {
 			isa = PBXGroup;
 			children = (
@@ -8382,7 +8394,7 @@
 				DEE96AB74565622FC413F488585581E5 /* React */,
 				59828A4016E05A781551422C0FA3A720 /* react-native-maps */,
 				56A7EBB2D7A84AA464985C18199F2858 /* RNFS */,
-				849B5F3CDA48CE1F1171112A72B7B825 /* RNReactNativeHapticFeedback */,
+				BD3652B8C9CAAED7A1664DAA609D70D0 /* RNReactNativeHapticFeedback */,
 				E286A167FD8CE9964BA7E769076A034C /* yoga */,
 			);
 			name = "Development Pods";
@@ -8768,20 +8780,6 @@
 			);
 			name = "Support Files";
 			path = "../../ios/Pods/Target Support Files/lottie-react-native";
-			sourceTree = "<group>";
-		};
-		849B5F3CDA48CE1F1171112A72B7B825 /* RNReactNativeHapticFeedback */ = {
-			isa = PBXGroup;
-			children = (
-				C9C20C7090CFA99C568DE5E9D6456DE3 /* DeviceUtils.h */,
-				C6EB24FE9810955CC1B0BC4037E516CE /* DeviceUtils.m */,
-				35CCE4BE721635FFEB139AA1867D4062 /* RNReactNativeHapticFeedback.h */,
-				A0C6D930D18B42C83B55402C25B278B5 /* RNReactNativeHapticFeedback.m */,
-				C769FE48F15B8A8819BE429911CBDB25 /* Pod */,
-				9B4A3A9C21B2B700BF60D7D3D81618C1 /* Support Files */,
-			);
-			name = RNReactNativeHapticFeedback;
-			path = "../../node_modules/react-native-haptic-feedback";
 			sourceTree = "<group>";
 		};
 		8579233DB21608CC43900183A8A16A73 /* DevSupport */ = {
@@ -9384,17 +9382,6 @@
 			path = "gRPC-RxLibrary";
 			sourceTree = "<group>";
 		};
-		9B4A3A9C21B2B700BF60D7D3D81618C1 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				2D8B042CCB7A0F3E790A34D0333CF186 /* RNReactNativeHapticFeedback.xcconfig */,
-				3AE2692AB74028260D4EBA5C65ED910B /* RNReactNativeHapticFeedback-dummy.m */,
-				C39A4553300BE3DE8890E8C9CEA2F357 /* RNReactNativeHapticFeedback-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../../ios/Pods/Target Support Files/RNReactNativeHapticFeedback";
-			sourceTree = "<group>";
-		};
 		9CF1F861F3D3CFA8E62A555D686C8995 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -9656,6 +9643,20 @@
 			path = "gRPC-ProtoRPC";
 			sourceTree = "<group>";
 		};
+		BD3652B8C9CAAED7A1664DAA609D70D0 /* RNReactNativeHapticFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				CC0E14D54C17257910F0CE3825D8FF56 /* DeviceUtils.h */,
+				4A4378769F49159C49532B7C1763A28A /* DeviceUtils.m */,
+				D34A1220E5117BDBE6C2FBCDADD5FB6C /* RNReactNativeHapticFeedback.h */,
+				E71DA0DB1AC2121272FF6C8DB4F367EA /* RNReactNativeHapticFeedback.m */,
+				DB5B7DFEC319E0C0DFC22A836A164D52 /* Pod */,
+				4F27D5803382541FAB79E0D9EE25C8EA /* Support Files */,
+			);
+			name = RNReactNativeHapticFeedback;
+			path = "../../node_modules/react-native-haptic-feedback";
+			sourceTree = "<group>";
+		};
 		BDC4CA807DB2911B2BB9D5CCA2571B20 /* RCTVibration */ = {
 			isa = PBXGroup;
 			children = (
@@ -9858,15 +9859,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/leveldb-library";
-			sourceTree = "<group>";
-		};
-		C769FE48F15B8A8819BE429911CBDB25 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				90AF1B2024B02CD564D551FA95E6A84F /* README.md */,
-				C1F595EE904CA30BCC4AE6CAD479DE68 /* RNReactNativeHapticFeedback.podspec */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		C9395FC8B8CB5CF059944C692C8B3135 /* Pod */ = {
@@ -10360,6 +10352,16 @@
 				949C0EC2CA30324E75F41F0585B301AC /* Nodes */,
 			);
 			name = RCTAnimation;
+			sourceTree = "<group>";
+		};
+		DB5B7DFEC319E0C0DFC22A836A164D52 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				BE9FA59399E009C9F189B86521B7C1AD /* LICENSE */,
+				ABF15CB14B29738D366DDA865F544F41 /* README.md */,
+				14CE135B942A19D3C0BB6BB300C1D090 /* RNReactNativeHapticFeedback.podspec */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		DEE96AB74565622FC413F488585581E5 /* React */ = {
@@ -15709,7 +15711,7 @@
 		};
 		86D0DC6C2D7687BCED0ACDED227965C1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8B042CCB7A0F3E790A34D0333CF186 /* RNReactNativeHapticFeedback.xcconfig */;
+			baseConfigurationReference = A5FB0A50937736CBA240C625653AFDD1 /* RNReactNativeHapticFeedback.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -16237,7 +16239,7 @@
 		};
 		E5B3FF795AFAF1E5B596E0D612FD1853 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8B042CCB7A0F3E790A34D0333CF186 /* RNReactNativeHapticFeedback.xcconfig */;
+			baseConfigurationReference = A5FB0A50937736CBA240C625653AFDD1 /* RNReactNativeHapticFeedback.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
