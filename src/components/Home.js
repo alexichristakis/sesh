@@ -104,18 +104,18 @@ class Home extends Component {
 		};
 	}
 
-	// componentDidMount() {
-	// 	// fetch that data
-	// 	// const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
-	// 	const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-	// 	//
-	// 	// await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
-	// 	RNFS.readFile(path, "base64").then(res => {
-	// 		console.log("finished");
-	// 		this.setState({ photo: "data:image/png;base64," + res, loading: false });
-	// 	});
-	// 	// console.log(res);
-	// }
+	async componentDidMount() {
+		// fetch that data
+		const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
+		const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
+		//
+		await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+		RNFS.readFile(path, "base64").then(res => {
+			console.log("finished");
+			this.setState({ photo: "data:image/png;base64," + res, loading: false });
+		});
+		// console.log(res);
+	}
 
 	_horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
 		// useNativeDriver: true,
