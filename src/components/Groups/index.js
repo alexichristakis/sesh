@@ -109,11 +109,15 @@ class Groups extends Component {
     // this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
   };
 
+  _keyExtractor = item => item.id.toString();
+
   _renderItem = ({ item, index }) => (
     <CardWrapper data={item} transitionFrom={this.transitionFrom}>
       <Group index={index} data={item} />
     </CardWrapper>
   );
+
+  _renderHeader = () => <Text style={styles.header}>Groups</Text>;
 
   changeGroupName = newName => {
     const newData = { ...this.state.sharedData, name: newName };
@@ -136,14 +140,13 @@ class Groups extends Component {
   render() {
     return (
       <Background>
-        <VerticalList
-          groups
-          ref={item => (this.list = item)}
+        <FlatList
+          style={styles.container}
           data={data}
+          keyExtractor={this._keyExtractor}
+          ItemSeparatorComponent={this.renderSeparator}
           renderItem={this._renderItem}
-          onScroll={this.props._vertOnScroll}
-          onScrollBeginDrag={this.props._onScrollBegin}
-          onScrollEndDrag={this.props._onScrollEnd}
+          ListHeaderComponent={this._renderHeader}
         />
         <Transition
           groups
@@ -153,12 +156,9 @@ class Groups extends Component {
           onPressPushTo={this.onPressPushTo}
           MoveComponent={this.state.MoveComponent}
         />
-        <VibrancyView
-          style={{ position: "absolute", top: 0, left: 0, right: 0 }}
-          blurType="xlight"
-        >
-          <Text style={styles.header}>Groups</Text>
-        </VibrancyView>
+
+        <BlurView blurType="xlight" style={styles.statusBar} />
+
         <BackButton
           onPressPop={() => Navigation.dismissModal(this.props.componentId)}
         />
@@ -168,13 +168,24 @@ class Groups extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+    // paddingTop: 40
+  },
   header: {
     paddingTop: SB_HEIGHT,
     paddingBottom: 10,
     paddingHorizontal: 20,
-    color: "white",
+    // color: "white",
     fontSize: 28,
     fontWeight: "900"
+  },
+  statusBar: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: SB_HEIGHT
   }
 });
 
