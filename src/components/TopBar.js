@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
 		top: 0,
 		left: 0,
 		right: 0,
-		paddingHorizontal: 10,
+		paddingHorizontal: 15,
 	},
 	fillCenter: {
 		flex: 1,
@@ -286,8 +286,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	topBar: {
-		marginHorizontal: 5,
 		paddingTop: SB_HEIGHT,
+		justifyContent: "space-between",
 		flexDirection: "row",
 		top: -50,
 	},
@@ -325,12 +325,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	profileButton: {
-		flex: 3,
+		// flex: 3,
 		alignItems: "center",
 		// flexDirection: "row",
 	},
 	addFriendButton: {
-		flex: 1,
+		// flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
 		// ...shadow
 	},
 	addGroupButton: {
-		flex: 1,
+		// flex: 1,
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
