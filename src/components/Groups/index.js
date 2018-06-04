@@ -121,7 +121,7 @@ class Groups extends Component {
 
 	_renderHeader = () => (
 		<View style={styles.headerContainer}>
-			<Text style={styles.header}>Groups</Text>
+			<Text style={styles.header}>My Groups</Text>
 			<TouchableScale onPress={() => this.props.presentModal("sesh.CreateGroup")}>
 				<Icon style={{ paddingBottom: 8 }} name={"plus"} size={30} color={Colors.primary} />
 			</TouchableScale>

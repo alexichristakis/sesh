@@ -9,6 +9,7 @@ import {
 	Platform,
 } from "react-native";
 
+import codePush from "react-native-code-push";
 import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
@@ -340,4 +341,5 @@ const styles = StyleSheet.create({
 	},
 });
 
+Home = codePush(Home);
 export default Home;
