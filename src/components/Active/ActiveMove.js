@@ -47,7 +47,7 @@ class ActiveMove extends Component {
 							)}
 							{!this.props.focused && groupName}
 							<View style={{ flexDirection: "row" }}>
-								<Icon name={"corner-down-right"} size={14} color={Colors.tertiary} />
+								<Icon name={"corner-down-right"} size={14} color={Colors.primary} />
 								<Text style={styles.from}>from </Text>
 								<Text style={styles.name}>{move.name}</Text>
 							</View>
@@ -59,7 +59,7 @@ class ActiveMove extends Component {
 					<Text style={styles.description}>{move.description}</Text>
 				</View>
 				<View style={styles.bottom}>
-					<Icon name={"compass"} size={12} color={Colors.primary} />
+					<Icon name={"compass"} size={12} color={Colors.active} />
 					<Text style={styles.location}>{move.location}</Text>
 				</View>
 			</View>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		// alignSelf: "center",
 		// color: Colors.active,
-		color: Colors.primary,
+		color: Colors.active,
 		fontWeight: "800",
 		// fontWeight: "300",
 	},
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		// fontWeight: "200",
 		fontWeight: "800",
-		color: Colors.primary,
+		color: Colors.active,
 	},
 });
 
