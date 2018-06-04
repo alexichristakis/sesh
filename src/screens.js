@@ -16,6 +16,7 @@ import AddToGroup from "./components/Groups/AddToGroup";
 import CreateActiveMove from "./components/CreateMoves/CreateActiveMove";
 import CreateLaterMove from "./components/CreateMoves/CreateLaterMove";
 
+import Settings from "./components/Groups/Settings";
 // import Friends from "./components/Friends";
 // import Feed from "./components/Feed";
 
@@ -48,6 +49,7 @@ function registerScreens() {
 	Navigation.registerComponent("sesh.Groups", () => Groups);
 	Navigation.registerComponent("sesh.CreateGroup", () => CreateGroup);
 	Navigation.registerComponent("sesh.AddToGroup", () => AddToGroup);
+	Navigation.registerComponent("sesh.Settings", () => Settings);
 
 	Navigation.registerComponent("sesh.CreateActiveMove", () => CreateActiveMove);
 	Navigation.registerComponent("sesh.CreateLaterMove", () => CreateLaterMove);

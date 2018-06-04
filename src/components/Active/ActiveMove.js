@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
+import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import { BlurView } from "react-native-blur";
@@ -13,6 +14,17 @@ const ICON_SIZE = 50;
 class ActiveMove extends Component {
 	render() {
 		const move = this.props.move;
+
+		const group = {
+			id: "1",
+			name: move.group,
+			size: 9,
+			time: 1526598742850,
+			photo: "https://graph.facebook.com/1825693684117541/picture",
+		};
+
+		let groupName = <Text style={styles.group}>{move.group}</Text>;
+
 		return (
 			<View style={styles.container}>
 				{!this.props.blur && <View style={styles.background} />}
@@ -21,7 +33,17 @@ class ActiveMove extends Component {
 					<Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
 					<View style={styles.header}>
 						<View style={{ flex: 2 }}>
-							<Text style={styles.group}>{move.group}</Text>
+							{this.props.focused && (
+								<TouchableOpacity
+									onPress={() =>
+										this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
+											data: group,
+										})
+									}>
+									{groupName}
+								</TouchableOpacity>
+							)}
+							{!this.props.focused && groupName}
 							<View style={{ flexDirection: "row" }}>
 								<Icon name={"corner-down-right"} size={14} color={Colors.tertiary} />
 								<Text style={styles.from}>from </Text>

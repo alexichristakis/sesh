@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet, View, FlatList, Text } from "react-native";
+import { Animated, StyleSheet, TouchableHighlight, View, FlatList, Text } from "react-native";
 
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
 import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
@@ -102,15 +103,18 @@ class Groups extends Component {
 	_keyExtractor = item => item.id.toString();
 
 	_renderItem = ({ item, index }) => (
-		<TouchableScale
-			onPress={() =>
+		<TouchableHighlight
+			// style={{ paddingLeft: 10 }}
+			underlayColor={Colors.mediumGray}
+			onPress={() => {
+				ReactNativeHapticFeedback.trigger("impactLight");
 				this.props.presentOverlay("sesh.GroupFocus", {
 					data: item,
 					changeName: this.changeGroupName,
-				})
-			}>
-			<Group index={index} data={item} />
-		</TouchableScale>
+				});
+			}}>
+			<Group index={index} data={item} presentOverlay={this.props.presentOverlay} />
+		</TouchableHighlight>
 	);
 
 	_renderSeparator = () => <View style={styles.separator} />;
@@ -166,12 +170,13 @@ class Groups extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		// paddingLeft: 10,
 		// paddingTop: 40
 	},
 	headerContainer: {
 		// backgroundColor: "red",
 		flexDirection: "row",
-		paddingHorizontal: 15,
+		paddingHorizontal: 10,
 		justifyContent: "space-between",
 		alignItems: "center",
 	},
@@ -183,8 +188,8 @@ const styles = StyleSheet.create({
 		fontWeight: "800",
 	},
 	separator: {
-		width: SCREEN_WIDTH - 80,
-		marginLeft: 80,
+		width: SCREEN_WIDTH - 15,
+		marginLeft: 15,
 		height: 1.5,
 		backgroundColor: Colors.mediumGray,
 	},

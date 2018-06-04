@@ -50,7 +50,8 @@ class Transition extends Component {
 		Animated.timing(this.openProgress, {
 			toValue: 1,
 			duration: 200,
-			easing: Easing.poly(0.25),
+			// easing: Easing.poly(0.25),
+			easing: Easing.ease,
 			useNativeDriver: true,
 		}).start(() => {
 			this.props.onPressPushTo(
@@ -62,6 +63,7 @@ class Transition extends Component {
 					closeCard: this.closeCard,
 				},
 				{
+					// animated: false,
 					customTransition: { animations: [], duration: 0 },
 				},
 			);
@@ -76,7 +78,8 @@ class Transition extends Component {
 		Animated.timing(this.openProgress, {
 			toValue: 0,
 			duration: 200,
-			easing: Easing.poly(0.25),
+			// easing: Easing.poly(0.25),
+			// easing: Easing.ease,
 			useNativeDriver: true,
 		}).start(() => {
 			// this.props.transitionFinished();
@@ -90,14 +93,8 @@ class Transition extends Component {
 		if (this.state.open) {
 			let cardAnimatedStyle = {
 				position: "absolute",
-				// backgroundColor: "white",
-				// borderRadius: 15,
 				left: 10,
 				right: 10,
-				// left: x,
-				// right: x,
-				// padding: 10,
-				// paddingRight: 12,
 				transform: [
 					{
 						translateY: this.openProgress.interpolate({
@@ -106,7 +103,6 @@ class Transition extends Component {
 						}),
 					},
 				],
-				// ...shadow
 			};
 
 			let opacityStyle = {

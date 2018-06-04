@@ -17,6 +17,14 @@ import ActiveMove from "./ActiveMove";
 const data = [];
 
 class ActiveFocus extends Component {
+	// static get options() {
+	// 	return {
+	// 		topBar: {
+	// 			animate: false,
+	// 		},
+	// 	};
+	// }
+
 	constructor(props) {
 		super(props);
 
@@ -45,13 +53,16 @@ class ActiveFocus extends Component {
 		else this.props.leaveMove(this.props.data.id);
 
 		this.focus.exit();
-		setTimeout(() => {
-			Navigation.pop(this.props.componentId, {
-				customTransition: {
-					animations: [],
-					duration: 0,
-				},
-			});
+		setTimeout(async () => {
+			await Navigation.pop(this.props.componentId);
+			// Navigation.popTo("Component3");
+			console.log("pop");
+			// 	{
+			// 	customTransition: {
+			// 		animations: [],
+			// 		duration: 0,
+			// 	},
+			// });
 			this.props.closeCard();
 		}, 100);
 	};
@@ -130,9 +141,11 @@ class ActiveFocus extends Component {
 				renderItem={this._renderItem}>
 				<ActiveMove
 					blur
+					focused
 					index={this.props.index}
 					length={this.props.length}
 					move={this.props.data}
+					onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
 				/>
 			</Focus>
 		);

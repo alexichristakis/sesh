@@ -196,7 +196,10 @@ class Home extends Component {
 				name: componentName,
 				passProps: props,
 				options: options,
+
+				// options: { animated: false },
 			},
+			// animated: false,
 		});
 	};
 
@@ -266,6 +269,7 @@ class Home extends Component {
 							clearScreen={this.clearScreen}
 							returnScreen={this.returnScreen}
 							onPressPushTo={this.onPressPushTo}
+							onPressPresentOverlayTo={this.onPressPresentOverlayTo}
 							_onScrollBegin={this._onScollBegin}
 							_onScrollEnd={this._onScrollEnd}
 							_vertOnScroll={this._vertOnScroll}
@@ -278,6 +282,7 @@ class Home extends Component {
 							clearScreen={this.clearScreen}
 							returnScreen={this.returnScreen}
 							onPressPushTo={this.onPressPushTo}
+							onPressPresentOverlayTo={this.onPressPresentOverlayTo}
 							_onScrollBegin={this._onScollBegin}
 							_onScrollEnd={this._onScrollEnd}
 							_vertOnScroll={this._vertOnScroll}

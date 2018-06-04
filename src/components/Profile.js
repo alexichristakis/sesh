@@ -41,7 +41,6 @@ class Profile extends Component {
 		return (
 			<Animated.View style={{ flex: 1, opacity: this.entry }}>
 				<StatusBar barStyle="light-content" />
-
 				<VibrancyView blurType="dark" blurAmount={10} style={styles.vibrancy}>
 					<View style={styles.top}>
 						<Text style={{ fontSize: 30, fontWeight: "900", color: "white" }}>

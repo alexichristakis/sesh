@@ -6,6 +6,8 @@ import RNFS from "react-native-fs";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
+import TouchableScale from "../global/TouchableScale";
+
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow, cardShadow } from "../../lib/styles";
 
@@ -63,11 +65,13 @@ class Group extends Component {
 			<View style={[styles.container, this.props.card ? cardStyle : {}]}>
 				{/* {this.props.card && <View style={styles.background} />} */}
 				{/* {this.props.card && <BlurView blurType={"xlight"} style={styles.blur} />} */}
-				<View style={styles.pictures}>
-					<Image style={styles.image1} source={{ uri: this.state.photo }} />
-					<Image style={styles.image2} source={{ uri: this.state.photo }} />
-					<Image style={styles.image3} source={{ uri: this.state.photo }} />
-				</View>
+				{this.props.card && (
+					<View style={styles.pictures}>
+						<Image style={styles.image1} source={{ uri: this.state.photo }} />
+						<Image style={styles.image2} source={{ uri: this.state.photo }} />
+						<Image style={styles.image3} source={{ uri: this.state.photo }} />
+					</View>
+				)}
 				<View style={styles.mid}>
 					<View style={{ flexDirection: "row", alignItems: "center" }}>
 						{!this.props.editName && <Text style={styles.name}>{group.name}</Text>}
@@ -92,7 +96,13 @@ class Group extends Component {
 						)}
 					</View>
 					<View style={{ flexDirection: "row", alignItems: "center" }}>
-						<Text style={styles.size}>{group.size} members</Text>
+						<Text style={styles.size}>{group.size}</Text>
+						<FeatherIcon
+							style={{ paddingLeft: 5, paddingBottom: 1 }}
+							name={"users"}
+							size={14}
+							color={Colors.groups}
+						/>
 						<EntypoIcon
 							style={{ paddingTop: 2 }}
 							name={"dot-single"}
@@ -102,6 +112,14 @@ class Group extends Component {
 						<Text style={styles.time}>{TimeAgo(group.time)}</Text>
 					</View>
 				</View>
+				<TouchableScale onPress={() => this.props.presentOverlay("sesh.Settings")}>
+					<FeatherIcon
+						style={{ paddingRight: 5, paddingBottom: 1 }}
+						name={"settings"}
+						size={20}
+						color={Colors.gray}
+					/>
+				</TouchableScale>
 			</View>
 		);
 	}
@@ -186,7 +204,7 @@ const styles = StyleSheet.create({
 	},
 	mid: {
 		flex: 5,
-		// marginLeft: 10,
+		marginLeft: 10,
 	},
 	name: {
 		fontSize: 24,

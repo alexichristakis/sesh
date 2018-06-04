@@ -93,6 +93,7 @@ class Active extends Component {
 			joined: joined,
 			joinMove: this.joinMove,
 			leaveMove: this.leaveMove,
+			onPressPresentOverlayTo: this.props.onPressPresentOverlayTo,
 		});
 	};
 

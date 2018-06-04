@@ -3,6 +3,7 @@ import {
 	StyleSheet,
 	Animated,
 	Easing,
+	StatusBar,
 	TouchableWithoutFeedback,
 	TouchableOpacity,
 	View,
@@ -12,7 +13,7 @@ import {
 } from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
-// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
@@ -88,8 +89,8 @@ class GroupFocus extends Component {
 	componentDidMount() {
 		Animated.timing(this.entry, {
 			toValue: 1,
-			duration: 100,
-			easing: Easing.bounce,
+			duration: 200,
+			easing: Easing.ease,
 			useNativeDriver: true,
 		}).start(() => this.setState({ loading: false }));
 	}
@@ -97,7 +98,7 @@ class GroupFocus extends Component {
 	dismiss = () => {
 		Animated.timing(this.entry, {
 			toValue: 0,
-			duration: 100,
+			duration: 200,
 			easing: Easing.ease,
 			useNativeDriver: true,
 		}).start(() => {
@@ -107,6 +108,7 @@ class GroupFocus extends Component {
 	};
 
 	onPressToggleLength = () => {
+		ReactNativeHapticFeedback.trigger("impactLight");
 		if (!this.state.listOpen) this.setState({ listOpen: true, renderedData: this.state.data });
 		else this.setState({ listOpen: false, renderedData: this.state.data.slice(0, 3) });
 	};
@@ -160,7 +162,7 @@ class GroupFocus extends Component {
 				{
 					translateY: this.entry.interpolate({
 						inputRange: [0, 1],
-						outputRange: [250, 0],
+						outputRange: [500, 0],
 					}),
 				},
 			],
@@ -168,9 +170,10 @@ class GroupFocus extends Component {
 
 		return (
 			<Animated.View style={{ flex: 1, opacity: this.entry }}>
+				<StatusBar barStyle="light-content" />
 				<BlurView blurType="dark" blurAmount={10} style={styles.blur}>
 					<Animated.ScrollView style={translate}>
-						<Group editName card updateName={this.updateGroupName} data={this.props.data} />
+						<Group card updateName={this.updateGroupName} data={this.props.data} />
 						<FlatList
 							style={{ marginBottom: 10 }}
 							data={this.state.renderedData}
