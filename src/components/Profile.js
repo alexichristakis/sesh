@@ -50,7 +50,8 @@ class Profile extends Component {
 							onPress={() =>
 								FacebookLogout().then(() => {
 									this.dismiss;
-									Navigation.pop(this.props.componentId);
+									// Navigation.pop(this.props.componentId);
+									this.props.onPressPop();
 								})
 							}>
 							<Icon name={"log-out"} size={30} color={"white"} />

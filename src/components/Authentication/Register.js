@@ -17,7 +17,7 @@ export default class App extends Component<Props> {
 		super(props);
 
 		this.state = {
-			loading: false
+			loading: false,
 		};
 	}
 
@@ -29,13 +29,14 @@ export default class App extends Component<Props> {
 		this.setState({ loading: true });
 		FacebookLogin(this.cancelLogin).then(user => {
 			if (user) {
+				console.log(user);
 				Navigation.push(this.props.componentId, {
 					component: {
 						name: "sesh.Home",
 						passProps: {
-							user: user._user
-						}
-					}
+							user: user.user._user,
+						},
+					},
 				});
 			}
 		});
@@ -68,16 +69,16 @@ const styles = StyleSheet.create({
 		padding: 50,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#F5FCFF"
+		backgroundColor: "#F5FCFF",
 	},
 	welcome: {
 		fontSize: 20,
 		textAlign: "center",
-		margin: 10
+		margin: 10,
 	},
 	instructions: {
 		textAlign: "center",
 		color: "#333333",
-		marginBottom: 5
-	}
+		marginBottom: 5,
+	},
 });
