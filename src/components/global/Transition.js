@@ -62,10 +62,10 @@ class Transition extends Component {
 					data: data,
 					closeCard: this.closeCard,
 				},
-				{
-					// animated: false,
-					customTransition: { animations: [], duration: 0 },
-				},
+				// {
+				// 	// animated: false,
+				// 	customTransition: { animations: [], duration: 0 },
+				// },
 			);
 		});
 	};

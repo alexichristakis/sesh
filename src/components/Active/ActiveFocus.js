@@ -53,8 +53,9 @@ class ActiveFocus extends Component {
 		else this.props.leaveMove(this.props.data.id);
 
 		this.focus.exit();
-		setTimeout(async () => {
-			await Navigation.pop(this.props.componentId);
+		setTimeout(() => {
+			// await Navigation.pop(this.props.componentId);
+			Navigation.dismissOverlay(this.props.componentId);
 			// Navigation.popTo("Component3");
 			console.log("pop");
 			// 	{

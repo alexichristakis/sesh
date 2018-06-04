@@ -63,12 +63,15 @@ class Settings extends Component {
 		return (
 			<Animated.View style={[styles.background, { opacity: this.entry }]}>
 				<Animated.View style={[styles.container, translate]}>
-					{/* <Text style={{ alignSelf: "center" }}>Options:</Text> */}
+					<Text
+						style={{ alignSelf: "center", color: Colors.primary, fontSize: 20, marginBottom: 10 }}>
+						{this.props.groupName}
+					</Text>
 					<ColorButton textStyle={textStyle} title={"edit name"} color={Colors.primary} />
 					<ColorButton textStyle={textStyle} title={"add members"} color={Colors.primary} />
 					<ColorButton textStyle={textStyle} title={"leave group"} color={Colors.primary} />
 					<TouchableOpacity style={{ alignSelf: "center", paddingTop: 10 }} onPress={this.dismiss}>
-						<Text style={{ color: Colors.primary }}>cancel</Text>
+						<Text style={{ color: Colors.primary, fontSize: 16 }}>cancel</Text>
 					</TouchableOpacity>
 				</Animated.View>
 			</Animated.View>

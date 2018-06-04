@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import { BlurView } from "react-native-blur";
@@ -35,11 +36,12 @@ class ActiveMove extends Component {
 						<View style={{ flex: 2 }}>
 							{this.props.focused && (
 								<TouchableOpacity
-									onPress={() =>
+									onPress={() => {
+										ReactNativeHapticFeedback.trigger("impactLight");
 										this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
 											data: group,
-										})
-									}>
+										});
+									}}>
 									{groupName}
 								</TouchableOpacity>
 							)}

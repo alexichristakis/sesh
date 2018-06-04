@@ -122,7 +122,7 @@ class Groups extends Component {
 	_renderHeader = () => (
 		<View style={styles.headerContainer}>
 			<Text style={styles.header}>Groups</Text>
-			<TouchableScale onPress={() => console.log("hi")}>
+			<TouchableScale onPress={() => this.props.presentModal("sesh.CreateGroup")}>
 				<Icon style={{ paddingBottom: 8 }} name={"plus"} size={30} color={Colors.primary} />
 			</TouchableScale>
 		</View>
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
 	headerContainer: {
 		// backgroundColor: "red",
 		flexDirection: "row",
-		paddingHorizontal: 10,
+		paddingHorizontal: 15,
 		justifyContent: "space-between",
 		alignItems: "center",
 	},

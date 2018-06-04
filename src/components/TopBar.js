@@ -268,7 +268,12 @@ class TopBar extends Component {
 							onPressIn={() => this.handlePressIn(this.createGroupScale)}
 							onPressOut={() => this.handlePressOut(this.createGroupScale)}
 							onPress={() =>
-								this.haptic(presentStackModal("sesh.Groups", { presentOverlay: presentOverlay }))
+								this.haptic(
+									presentStackModal("sesh.Groups", {
+										presentOverlay: presentOverlay,
+										presentModal: presentModal,
+									}),
+								)
 							}>
 							<Icon style={{ paddingLeft: 5 }} name="users" size={30} color={Colors.primary} />
 						</TouchableOpacity>
