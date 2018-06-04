@@ -65,7 +65,7 @@ class Settings extends Component {
 				<Animated.View style={[styles.container, translate]}>
 					<Text
 						style={{ alignSelf: "center", color: Colors.primary, fontSize: 20, marginBottom: 10 }}>
-						{this.props.groupName}
+						{this.props.name}
 					</Text>
 					<ColorButton textStyle={textStyle} title={"edit name"} color={Colors.primary} />
 					<ColorButton textStyle={textStyle} title={"add members"} color={Colors.primary} />

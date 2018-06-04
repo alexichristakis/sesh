@@ -114,7 +114,7 @@ class Group extends Component {
 				</View>
 				{!this.props.card && (
 					<TouchableScale
-						onPress={() => this.props.presentOverlay("sesh.Settings", { groupName: group.name })}>
+						onPress={() => this.props.presentOverlay("sesh.Settings", { name: group.name })}>
 						<FeatherIcon
 							style={{ paddingRight: 5, paddingBottom: 1 }}
 							name={"settings"}
