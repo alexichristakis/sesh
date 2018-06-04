@@ -49,9 +49,9 @@ class Profile extends Component {
 						<TouchableScale
 							onPress={() =>
 								FacebookLogout().then(() => {
-									this.dismiss;
-									// Navigation.pop(this.props.componentId);
+									this.dismiss();
 									this.props.onPressPop();
+									// Navigation.pop(this.props.componentId);
 								})
 							}>
 							<Icon name={"log-out"} size={30} color={"white"} />

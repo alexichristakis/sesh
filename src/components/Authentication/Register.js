@@ -30,6 +30,7 @@ export default class App extends Component<Props> {
 		FacebookLogin(this.cancelLogin).then(user => {
 			if (user) {
 				console.log(user);
+				this.setState({ loading: false });
 				Navigation.push(this.props.componentId, {
 					component: {
 						name: "sesh.Home",

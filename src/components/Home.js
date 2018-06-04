@@ -157,9 +157,9 @@ class Home extends Component {
 		this.later.list.lengthenPadding();
 	};
 
-	scrollViewRef = view => {
-		this.scrollView = view.getNode();
-	};
+	// scrollViewRef = view => {
+	// 	this.scrollView = view.getNode();
+	// };
 
 	_onScollBegin = () => {
 		this.setState({ vertScrolling: true });
@@ -269,7 +269,8 @@ class Home extends Component {
 					horizontal
 					pagingEnabled
 					bounces={false}
-					ref={this.scrollViewRef}
+					// ref={this.scrollViewRef}
+					ref={item => (this.scrollView = item)}
 					showsHorizontalScrollIndicator={false}
 					showsVerticalScrollIndicator={false}
 					scrollEventThrottle={16}
@@ -319,8 +320,8 @@ class Home extends Component {
 
 				<BottomBar
 					ref={item => (this.bottomBar = item)}
-					scrollToStart={() => this.scrollView.scrollTo({ x: 0, y: 0, animated: true })}
-					scrollToEnd={() => this.scrollView.scrollToEnd()}
+					scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
+					scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
 					textColorTransform={textColorTransform}
 					indicatorAnimate={indicatorAnimate}
 					onPressPresentModalTo={this.onPressPresentModalTo}
