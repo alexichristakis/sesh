@@ -15,7 +15,7 @@ class NewMoveButton extends Component {
 		super(props);
 
 		this.state = {
-			open: false,
+			open: false
 		};
 
 		this.rotation = new Animated.Value(0);
@@ -36,28 +36,12 @@ class NewMoveButton extends Component {
 		}
 	};
 
-	// handlePressIn = animatedValue => {
-	// 	Animated.spring(animatedValue, {
-	// 		toValue: 0.9
-	// 		// useNativeDriver: true,
-	// 	}).start();
-	// };
-	//
-	// handlePressOut = animatedValue => {
-	// 	Animated.spring(animatedValue, {
-	// 		toValue: 1,
-	// 		friction: 3,
-	// 		tension: 40
-	// 		// useNativeDriver: true,
-	// 	}).start();
-	// };
-
 	handleOpenButton = () => {
 		this.setState({ open: true });
 		Animated.parallel([
 			Animated.spring(this.rotation, {
 				toValue: 1,
-				friction: 5,
+				friction: 5
 				// duration: 400,
 				// useNativeDriver: false,
 			}),
@@ -65,15 +49,15 @@ class NewMoveButton extends Component {
 				toValue: 1,
 				duration: 150,
 				delay: 25,
-				easing: Easing.ease,
+				easing: Easing.ease
 				// useNativeDriver: false,
 			}),
 			Animated.timing(this.xTranslate, {
 				toValue: 1,
 				duration: 150,
-				easing: Easing.ease,
+				easing: Easing.ease
 				// useNativeDriver: false,
-			}),
+			})
 		]).start();
 	};
 
@@ -82,7 +66,7 @@ class NewMoveButton extends Component {
 		Animated.parallel([
 			Animated.spring(this.rotation, {
 				toValue: 0,
-				friction: 5,
+				friction: 5
 				// duration: 400,
 				// useNativeDriver: false,
 			}),
@@ -90,15 +74,15 @@ class NewMoveButton extends Component {
 				toValue: 0,
 				duration: 150,
 				delay: 25,
-				easing: Easing.ease,
+				easing: Easing.ease
 				// useNativeDriver: false,
 			}),
 			Animated.timing(this.xTranslate, {
 				toValue: 0,
 				duration: 150,
-				easing: Easing.ease,
+				easing: Easing.ease
 				// useNativeDriver: false,
-			}),
+			})
 		]).start();
 	};
 
@@ -117,13 +101,10 @@ class NewMoveButton extends Component {
 				{
 					rotateZ: this.rotation.interpolate({
 						inputRange: [0, 1],
-						outputRange: ["0deg", "45deg"],
-					}),
-				},
-				// {
-				// 	scale: this.mainButtonScale,
-				// },
-			],
+						outputRange: ["0deg", "45deg"]
+					})
+				}
+			]
 		};
 
 		let activeAnimatedStyle = {
@@ -132,19 +113,16 @@ class NewMoveButton extends Component {
 				{
 					translateY: this.yTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, -45],
-					}),
+						outputRange: [0, -45]
+					})
 				},
 				{
 					translateX: this.xTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, -45],
-					}),
-				},
-				// {
-				// 	scale: this.activeScale,
-				// },
-			],
+						outputRange: [0, -45]
+					})
+				}
+			]
 		};
 
 		let laterAnimatedStyle = {
@@ -153,19 +131,19 @@ class NewMoveButton extends Component {
 				{
 					translateY: this.yTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, -45],
-					}),
+						outputRange: [0, -45]
+					})
 				},
 				{
 					translateX: this.xTranslate.interpolate({
 						inputRange: [0, 1],
-						outputRange: [0, 45],
-					}),
-				},
+						outputRange: [0, 45]
+					})
+				}
 				// {
 				// 	scale: this.laterScale,
 				// },
-			],
+			]
 		};
 
 		return (
@@ -174,7 +152,8 @@ class NewMoveButton extends Component {
 					<TouchableScale
 						style={[styles.subButton, { backgroundColor: Colors.later }]}
 						animated={laterAnimatedStyle}
-						onPress={() => this.haptic(presentModal("sesh.CreateLaterMove"))}>
+						onPress={() => this.haptic(presentModal("sesh.CreateLaterMove"))}
+					>
 						<Icon name="clock" size={25} color={"white"} />
 					</TouchableScale>
 				</Animated.View>
@@ -182,7 +161,8 @@ class NewMoveButton extends Component {
 					<TouchableScale
 						style={[styles.subButton, { backgroundColor: Colors.active }]}
 						animated={activeAnimatedStyle}
-						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}>
+						onPress={() => this.haptic(presentModal("sesh.CreateActiveMove"))}
+					>
 						<Icon name="plus" size={30} color={"white"} />
 					</TouchableScale>
 				</Animated.View>
@@ -191,7 +171,8 @@ class NewMoveButton extends Component {
 					<TouchableScale
 						style={styles.mainButton}
 						animated={mainAnimatedStyle}
-						onPress={this.handleOnPress}>
+						onPress={this.handleOnPress}
+					>
 						<Icon name="plus" size={50} color={"white"} />
 					</TouchableScale>
 				</Animated.View>
@@ -237,14 +218,14 @@ class NewMoveButton extends Component {
 const styles = StyleSheet.create({
 	center: {
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "center"
 	},
 	container: {
 		alignItems: "center",
 		justifyContent: "center",
 		bottom: SB_HEIGHT === 20 ? 35 : 55,
 		left: SCREEN_WIDTH / 2,
-		position: "absolute",
+		position: "absolute"
 	},
 	mainButton: {
 		alignItems: "center",
@@ -253,7 +234,7 @@ const styles = StyleSheet.create({
 		height: 60,
 		borderRadius: 30,
 		backgroundColor: Colors.primary,
-		overflow: "hidden",
+		overflow: "hidden"
 	},
 	subButton: {
 		alignItems: "center",
@@ -263,8 +244,8 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		overflow: "hidden",
-	},
+		overflow: "hidden"
+	}
 });
 
 export default NewMoveButton;
