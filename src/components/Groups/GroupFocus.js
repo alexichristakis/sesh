@@ -9,7 +9,7 @@ import {
 	View,
 	FlatList,
 	Text,
-	Image,
+	Image
 } from "react-native";
 
 import Icon from "react-native-vector-icons/Feather";
@@ -32,43 +32,43 @@ const DATA = [
 		name: "Alexi Christakis",
 		size: 9,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "2",
 		name: "William Oles",
 		size: 105,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "3",
 		name: "Michelle Li",
 		size: 6,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "4",
 		name: "Janvi Trivedi",
 		size: 63,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "5",
 		name: "Max Golden",
 		size: 105,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture",
+		photo: "https://graph.facebook.com/1825693684117541/picture"
 	},
 	{
 		id: "6",
 		name: "Laszlo Gendler",
 		size: 9,
 		time: 1526598742850,
-		photo: "https://graph.facebook.com/1825693684117541/picture",
-	},
+		photo: "https://graph.facebook.com/1825693684117541/picture"
+	}
 ];
 
 class GroupFocus extends Component {
@@ -82,7 +82,7 @@ class GroupFocus extends Component {
 			loading: true,
 			listOpen: false,
 			changedName: false,
-			newName: "",
+			newName: ""
 		};
 	}
 
@@ -91,7 +91,7 @@ class GroupFocus extends Component {
 			toValue: 1,
 			duration: 200,
 			easing: Easing.ease,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start(() => this.setState({ loading: false }));
 	}
 
@@ -100,7 +100,7 @@ class GroupFocus extends Component {
 			toValue: 0,
 			duration: 200,
 			easing: Easing.ease,
-			useNativeDriver: true,
+			useNativeDriver: true
 		}).start(() => {
 			Navigation.dismissOverlay(this.props.componentId);
 			if (this.state.changedName) this.props.changeName(this.props.data, this.state.newName);
@@ -108,7 +108,6 @@ class GroupFocus extends Component {
 	};
 
 	onPressToggleLength = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
 		if (!this.state.listOpen) this.setState({ listOpen: true, renderedData: this.state.data });
 		else this.setState({ listOpen: false, renderedData: this.state.data.slice(0, 3) });
 	};
@@ -120,9 +119,9 @@ class GroupFocus extends Component {
 				name: "sesh.AddToGroup",
 				passProps: {
 					...this.props.data,
-					statusBarHeight: this.props.statusBarHeight,
-				},
-			},
+					statusBarHeight: this.props.statusBarHeight
+				}
+			}
 		});
 	};
 
@@ -162,10 +161,10 @@ class GroupFocus extends Component {
 				{
 					translateY: this.entry.interpolate({
 						inputRange: [0, 1],
-						outputRange: [500, 0],
-					}),
-				},
-			],
+						outputRange: [500, 0]
+					})
+				}
+			]
 		};
 
 		return (
@@ -187,7 +186,7 @@ class GroupFocus extends Component {
 							<MapCard
 								location={{
 									latitude: 37.785834,
-									longitude: -122.406417,
+									longitude: -122.406417
 								}}
 							/>
 						)}
@@ -208,25 +207,25 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		paddingTop: SB_HEIGHT,
-		paddingHorizontal: 10,
+		paddingHorizontal: 10
 	},
 	header: {
 		flex: 1,
 		paddingBottom: 10,
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "center"
 	},
 	separatorContainer: {
 		// width: SCREEN_WIDTH - 80,
 		// marginLeft: 80,
 		height: 1,
-		backgroundColor: "rgba(255,255,255,0.8)",
+		backgroundColor: "rgba(255,255,255,0.8)"
 	},
 	separator: {
 		width: SCREEN_WIDTH - 50,
 		marginLeft: 50,
 		height: 0.5,
-		backgroundColor: Colors.gray,
+		backgroundColor: Colors.gray
 	},
 	footerContainer: {
 		flex: 1,
@@ -235,7 +234,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		borderBottomLeftRadius: 15,
 		borderBottomRightRadius: 15,
-		backgroundColor: "rgba(255,255,255,0.8)",
+		backgroundColor: "rgba(255,255,255,0.8)"
 	},
 	footerSeparator: {
 		position: "absolute",
@@ -243,13 +242,13 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		height: 0.5,
-		backgroundColor: Colors.gray,
+		backgroundColor: Colors.gray
 	},
 	showMore: {
 		color: Colors.groups,
 		fontWeight: "bold",
-		marginRight: 5,
-	},
+		marginRight: 5
+	}
 });
 
 export default GroupFocus;
