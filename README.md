@@ -1,11 +1,11 @@
-### sesh
+# sesh
 
 the future of social media
 
-# to run
+### to run
 
-npm install && react-native run-ios --simulator="iPhone X"
+`npm install && react-native run-ios --simulator="iPhone X"`
 
-# to release
+### to release
 
-code-push release-react sesh-iOS ios -d Production
+`code-push release-react sesh-iOS ios -d Production`
