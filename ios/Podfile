@@ -1,50 +1,66 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+platform :ios, '10.0'
+
+install! 'cocoapods', :deterministic_uuids => false,
+:integrate_targets => false
 
 target 'sesh' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
+  rn_path = '../node_modules/react-native'
 
-  # Pods for sesh
-  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [
-    # 'BatchedBridge', # Required For React Native 0.45.0+
+  # React pods
+  pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
+  pod 'React', path: rn_path, subspecs: [
     'Core',
+    'CxxBridge',
     'DevSupport',
-    'RCTNetwork',
     'RCTActionSheet',
     'RCTAnimation',
-    'RCTBlob',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
     'RCTVibration',
-    'RCTImage'
-    # Add any other subspecs you want to use in your project
+    'RCTWebSocket',
   ]
 
-  # FIREBASE
+  # React Native third party dependencies podspecs
+  pod 'DoubleConversion', :podspec => "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
+  pod 'glog', :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"
+  pod 'Folly', :podspec => "#{rn_path}/third-party-podspecs/Folly.podspec"
+  
+  # Firebase
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
 
-  # pod 'Firebase/Messaging'
-
-  # FACEBOOK
+  # Facebook
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
+  pod 'FBSDKPlacesKit'
 
-  # LOTTIE
+  # CodePush
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+  
+  # Lottie
   pod 'lottie-ios', :path => '../node_modules/lottie-ios'
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
+  # maps
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+  
+  # gradient
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
-  #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+end
 
-  pod 'RNReactNativeHapticFeedback', :path => '../node_modules/react-native-haptic-feedback'
-
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
-
-#    pod 'CodePush', :path => '../node_modules/react-native-code-push'
-
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
   end
+end

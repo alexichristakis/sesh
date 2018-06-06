@@ -11,7 +11,7 @@ class MapCard extends Component {
 		super(props);
 
 		this.state = {
-			loading: true,
+			loading: true
 		};
 	}
 
@@ -27,7 +27,7 @@ class MapCard extends Component {
 			latitude: location.latitude,
 			longitude: location.longitude,
 			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421,
+			longitudeDelta: 0.0421
 		};
 
 		let map = (
@@ -44,12 +44,13 @@ class MapCard extends Component {
 		return (
 			<View
 				style={{
-					height: 200,
+					height: 500,
 					backgroundColor: "#F9F5ED",
 					borderRadius: 15,
 					overflow: "hidden",
-					...shadow,
-				}}>
+					...shadow
+				}}
+			>
 				{this.state.loading && <ActivityIndicator style={{ marginTop: 100 }} size={"large"} />}
 				{!this.state.loading && map}
 			</View>

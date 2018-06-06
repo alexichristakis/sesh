@@ -9,38 +9,38 @@
 #import <CodePush/CodePush.h>
 
 #import <React/RCTBundleURLProvider.h>
-#import <ReactNativeNavigation/ReactNativeNavigation.h>
 #import <React/RCTRootView.h>
+//#import <ReactNativeNavigation/ReactNativeNavigation.h>
+#import "ReactNativeNavigation.h"
 
 #import <Firebase.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [FIRApp configure];
-
+  
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
-
-
+  
   NSURL *
     #ifdef DEBUG
         jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
     #else
         jsCodeLocation = [CodePush bundleURL];
     #endif
-  
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-
+  
   return YES;
 }
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-
+  
   BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
                                                                 openURL:url
                                                       sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]

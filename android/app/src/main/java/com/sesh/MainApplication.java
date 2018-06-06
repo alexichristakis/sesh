@@ -3,18 +3,11 @@ package com.sesh;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.rnfs.RNFSPackage;
-import com.reactlibrary.RNReactNativeHapticFeedbackPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.microsoft.codepush.react.CodePush;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import com.reactlibrary.RNReactNativeHapticFeedbackPackage;
 import com.cmcewen.blurview.BlurViewPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -42,18 +35,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNFSPackage(),
-            new RNReactNativeHapticFeedbackPackage(),
-            new FBSDKPackage(),
             new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
+            new FBSDKPackage(),
             new RNFirebasePackage(),
+            new RNReactNativeHapticFeedbackPackage(),
             new BlurViewPackage(),
-            new VectorIconsPackage(),
-            new LinearGradientPackage(),
-            new VectorIconsPackage(),
-            new LinearGradientPackage(),
-            new VectorIconsPackage(),
-            new VectorIconsPackage(),
             new VectorIconsPackage()
       );
     }
