@@ -136,16 +136,16 @@ class Home extends Component {
       const diff = currentOffset - (yOffset || 0);
       if (diff <= 0) {
         this.lengthenVertPadding();
-        this.setState({ scrollDir: { up: true, down: false } });
+        this.setState({ barOpen: true, scrollDir: { up: true, down: false } });
       } else {
         this.shortenVertPadding();
-        this.setState({ scrollDir: { up: false, down: true } });
+        this.setState({ barOpen: false, scrollDir: { up: false, down: true } });
       }
       this.setState({ vertScrolling: false });
     }
     yOffset = currentOffset;
-    if (xOffset._value == 0) groupsOffset = yOffset;
-    else if (xOffset._value == SCREEN_WIDTH) activeOffset = yOffset;
+    if (xOffset._value === 0) groupsOffset = yOffset;
+    else if (xOffset._value === SCREEN_WIDTH) activeOffset = yOffset;
     else laterOffset = yOffset;
   };
 
@@ -168,14 +168,14 @@ class Home extends Component {
   };
 
   clearScreen = () => {
-    this.topBar.handleCloseBar();
+    if (this.state.barOpen) this.topBar.handleCloseBar();
     this.bottomBar.handleHideBar();
     if (xOffset._value === 0) this.active.list.fadeOut();
     else this.later.list.fadeOut();
   };
 
   returnScreen = () => {
-    this.topBar.handleOpenBar();
+    if (this.state.barOpen) this.topBar.handleOpenBar();
     this.bottomBar.handleShowBar();
     if (xOffset._value === 0) this.active.list.fadeIn();
     else this.later.list.fadeIn();

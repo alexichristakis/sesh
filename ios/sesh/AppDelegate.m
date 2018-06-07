@@ -32,6 +32,7 @@
     #else
         jsCodeLocation = [CodePush bundleURL];
     #endif
+  
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   
   return YES;
