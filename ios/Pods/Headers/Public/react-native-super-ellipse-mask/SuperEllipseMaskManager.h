@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-super-ellipse-mask/ios/SuperEllipseMaskManager.h

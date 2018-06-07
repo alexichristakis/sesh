@@ -114,6 +114,8 @@ PODS:
     - React/Core (= 0.55.4)
   - react-native-maps (0.21.0):
     - React
+  - react-native-super-ellipse-mask (1.0.7):
+    - React
   - React/Core (0.55.4):
     - yoga (= 0.55.4.React)
   - React/CxxBridge (0.55.4):
@@ -179,6 +181,7 @@ DEPENDENCIES:
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-super-ellipse-mask (from `../node_modules/react-native-super-ellipse-mask`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -242,6 +245,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-super-ellipse-mask:
+    :path: "../node_modules/react-native-super-ellipse-mask"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
@@ -280,9 +285,10 @@ SPEC CHECKSUMS:
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   React: aa2040dbb6f317b95314968021bd2888816e03d5
   react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
+  react-native-super-ellipse-mask: cedf7655779e816aee36c2d9ab8d238cd419797e
   SSZipArchive: 51a800ebb77f95a8329b6ced1faaff394b47f509
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: a7cc34a7f3c4ee28912defc5b6713e80a47f000d
+PODFILE CHECKSUM: 48e29de703ebd8cff5b21439a1069b8301ffea94
 
 COCOAPODS: 1.5.3
