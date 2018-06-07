@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -21,7 +21,7 @@ class VerticalList extends Component {
   fadeOut = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 200,
+      duration: TRANSITION_DURATION,
       easing: Easing.ease,
       useNativeDriver: true
     }).start();
@@ -30,8 +30,8 @@ class VerticalList extends Component {
   fadeIn = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 1,
-      duration: 200,
-      easing: Easing.ease,
+      duration: TRANSITION_DURATION,
+      easing: Easing.out(Easing.ease),
       useNativeDriver: true
     }).start();
   };

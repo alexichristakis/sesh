@@ -6,7 +6,7 @@ import { Navigation } from "react-native-navigation";
 
 import Background from "./Background";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 class Transition extends Component {
@@ -56,24 +56,16 @@ class Transition extends Component {
     this.props.clearScreen();
     Animated.timing(this.openProgress, {
       toValue: 1,
-      duration: 200,
-      // easing: Easing.poly(0.25),
+      duration: TRANSITION_DURATION,
       easing: Easing.ease,
       useNativeDriver: true
     }).start(() => {
-      this.props.onPressPushTo(
-        this.props.destinationPage,
-        {
-          ...props,
-          cardHeight: this.state.sourceDimension.height,
-          data: data,
-          closeCard: this.closeCard
-        }
-        // {
-        // 	// animated: false,
-        // 	customTransition: { animations: [], duration: 0 },
-        // },
-      );
+      this.props.onPressPushTo(this.props.destinationPage, {
+        ...props,
+        cardHeight: this.state.sourceDimension.height,
+        data: data,
+        closeCard: this.closeCard
+      });
     });
   };
 
@@ -81,12 +73,11 @@ class Transition extends Component {
     this.props.returnScreen();
     setTimeout(() => {
       this.state.onReturn();
-    }, 195);
+    }, TRANSITION_DURATION - 5);
     Animated.timing(this.openProgress, {
       toValue: 0,
-      duration: 200,
-      // easing: Easing.poly(0.25),
-      // easing: Easing.ease,
+      duration: TRANSITION_DURATION,
+      easing: Easing.out(Easing.ease),
       useNativeDriver: true
     }).start(() => {
       // this.props.transitionFinished();
@@ -122,9 +113,6 @@ class Transition extends Component {
     if (this.state.open) {
       return (
         <View style={styles.container}>
-          {/* <Animated.View style={[styles.cover, opacityStyle]}>
-            <Background />
-          </Animated.View> */}
           <Animated.View style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
         </View>
       );

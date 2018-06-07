@@ -129,6 +129,7 @@ class Home extends Component {
     else yOffset = laterOffset;
   };
 
+  /* TODO: fix this logic. still uses old groups xOffset */
   _vertOnScroll = event => {
     const currentOffset = event.nativeEvent.contentOffset.y;
     if (this.state.vertScrolling) {
@@ -173,15 +174,15 @@ class Home extends Component {
   clearScreen = () => {
     this.topBar.handleCloseBar();
     this.bottomBar.handleHideBar();
-    this.active.list.fadeOut();
-    this.later.list.fadeOut();
+    if (xOffset._value === 0) this.active.list.fadeOut();
+    else this.later.list.fadeOut();
   };
 
   returnScreen = () => {
     this.topBar.handleOpenBar();
     this.bottomBar.handleShowBar();
-    this.active.list.fadeIn();
-    this.later.list.fadeIn();
+    if (xOffset._value === 0) this.active.list.fadeIn();
+    else this.later.list.fadeIn();
   };
 
   onPressPop = () => {
