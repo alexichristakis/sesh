@@ -52,17 +52,6 @@ class TopBar extends Component {
     // console.log(res);
   }
 
-  handleFullCloseBar = () => {
-    const duration = 150;
-    this.setState({ open: false });
-    Animated.timing(this.animated, {
-      toValue: -1,
-      duration: duration,
-      easing: Easing.out(Easing.poly(0.25)),
-      useNativeDriver: true
-    }).start();
-  };
-
   handleCloseBar = () => {
     this.setState({ open: false });
     Animated.timing(this.animated, {
@@ -143,7 +132,8 @@ class TopBar extends Component {
     return (
       <View style={styles.container}>
         <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
-          <BlurView blurType="xlight" style={styles.statusBar} />
+          <View style={[styles.statusBar, { backgroundColor: Colors.primary, opacity: 0.8 }]} />
+          <BlurView blurType="light" style={styles.statusBar} />
         </Animated.View>
         <View style={styles.topBar}>
           <Animated.View style={[styles.addFriendButton, animatedStyle]}>
@@ -151,7 +141,7 @@ class TopBar extends Component {
               style={styles.fillCenter}
               onPress={this.hapticModal("sesh.AddFriend", { user: this.props.user })}
             >
-              <Icon name="user-plus" size={30} color={Colors.primary} />
+              <Icon name="user-plus" size={30} color={"white"} />
             </TouchableScale>
           </Animated.View>
           <Animated.View style={[styles.profileButton, animatedStyle]}>
@@ -173,7 +163,7 @@ class TopBar extends Component {
                 presentModal: presentModal
               })}
             >
-              <Icon style={{ paddingLeft: 5 }} name="users" size={30} color={Colors.primary} />
+              <Icon style={{ paddingLeft: 5 }} name="users" size={30} color={"white"} />
             </TouchableScale>
           </Animated.View>
         </View>
@@ -188,7 +178,11 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    overflow: "hidden",
+    paddingBottom: 10,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20
   },
   fillCenter: {
     flex: 1,

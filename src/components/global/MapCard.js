@@ -7,55 +7,55 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 class MapCard extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			loading: true
-		};
-	}
+    this.state = {
+      loading: true
+    };
+  }
 
-	componentDidMount() {
-		setTimeout(() => {
-			this.setState({ loading: false });
-		}, 200);
-	}
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 200);
+  }
 
-	render() {
-		const { location, title, style } = this.props;
-		const region = {
-			latitude: location.latitude,
-			longitude: location.longitude,
-			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421
-		};
+  render() {
+    const { location, title, style } = this.props;
+    const region = {
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421
+    };
 
-		let map = (
-			<MapView style={{ flex: 1 }} initialRegion={region}>
-				<Marker
-					// title={"testing"}
-					// description={"testing testing"}
-					coordinate={location}
-					title={title}
-				/>
-			</MapView>
-		);
+    let map = (
+      <MapView showsUserLocation style={{ flex: 1 }} initialRegion={region}>
+        <Marker
+          // title={"testing"}
+          // description={"testing testing"}
+          coordinate={location}
+          title={title}
+        />
+      </MapView>
+    );
 
-		return (
-			<View
-				style={{
-					height: 500,
-					backgroundColor: "#F9F5ED",
-					borderRadius: 15,
-					overflow: "hidden",
-					...shadow
-				}}
-			>
-				{this.state.loading && <ActivityIndicator style={{ marginTop: 100 }} size={"large"} />}
-				{!this.state.loading && map}
-			</View>
-		);
-	}
+    return (
+      <View
+        style={{
+          height: this.props.large ? 300 : 200,
+          backgroundColor: "#F9F5ED",
+          borderRadius: 15,
+          overflow: "hidden",
+          ...shadow
+        }}
+      >
+        {this.state.loading && <ActivityIndicator style={{ marginTop: 100 }} size={"large"} />}
+        {!this.state.loading && map}
+      </View>
+    );
+  }
 }
 
 export default MapCard;

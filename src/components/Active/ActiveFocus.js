@@ -17,157 +17,163 @@ import ActiveMove from "./ActiveMove";
 const data = [];
 
 class ActiveFocus extends Component {
-	// static get options() {
-	// 	return {
-	// 		topBar: {
-	// 			animate: false,
-	// 		},
-	// 	};
-	// }
+  // static get options() {
+  // 	return {
+  // 		topBar: {
+  // 			animate: false,
+  // 		},
+  // 	};
+  // }
 
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.animated = new Animated.Value(1);
+    this.animated = new Animated.Value(1);
 
-		this.state = {
-			joined: this.props.joined,
-			loading: true,
-			position: null,
-		};
-	}
+    this.state = {
+      joined: this.props.joined,
+      loading: true,
+      position: null
+    };
+  }
 
-	async componentDidMount() {
-		navigator.geolocation.getCurrentPosition(
-			position => {
-				this.setState({ position: position.coords, loading: false });
-				console.log(position.coords);
-			},
-			error => this.setState({ error: error.message }),
-			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-		);
-	}
+  async componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({ position: position.coords, loading: false });
+        console.log(position.coords);
+      },
+      error => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  }
 
-	onPressPop = () => {
-		if (this.state.joined) this.props.joinMove(this.props.data.id);
-		else this.props.leaveMove(this.props.data.id);
+  onPressPop = () => {
+    if (this.state.joined) this.props.joinMove(this.props.data.id);
+    else this.props.leaveMove(this.props.data.id);
 
-		this.focus.exit();
-		setTimeout(() => {
-			// await Navigation.pop(this.props.componentId);
-			Navigation.dismissOverlay(this.props.componentId);
-			// Navigation.popTo("Component3");
-			console.log("pop");
-			// 	{
-			// 	customTransition: {
-			// 		animations: [],
-			// 		duration: 0,
-			// 	},
-			// });
-			this.props.closeCard();
-		}, 100);
-	};
+    this.focus.exit();
+    setTimeout(() => {
+      Navigation.dismissOverlay(this.props.componentId);
+      // Navigation.pop(this.props.componentId, {
+      //   // options: {
+      //   customTransition: {
+      //     animations: {
+      //       push: {
+      //         enable: false
+      //       }
+      //     }
+      //   }
+      //   // }
+      // });
 
-	handlePressIn = () => {
-		Animated.spring(this.animated, {
-			toValue: 0.9,
-			useNativeDriver: true,
-		}).start();
-	};
+      this.props.closeCard();
+    }, 100);
+  };
 
-	handlePressOut = () => {
-		Animated.spring(this.animated, {
-			toValue: 1,
-			friction: 3,
-			tension: 40,
-			useNativeDriver: true,
-		}).start();
-	};
+  handlePressIn = () => {
+    Animated.spring(this.animated, {
+      toValue: 0.9,
+      useNativeDriver: true
+    }).start();
+  };
 
-	handleOnPress = () => {
-		ReactNativeHapticFeedback.trigger("impactLight");
-		this.setState({ joined: !this.state.joined });
-	};
+  handlePressOut = () => {
+    Animated.spring(this.animated, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true
+    }).start();
+  };
 
-	_renderItem = ({ item }) => <User data={item} />;
+  handleOnPress = () => {
+    ReactNativeHapticFeedback.trigger("impactLight");
+    this.setState({ joined: !this.state.joined });
+  };
 
-	_renderHeader = () => {
-		let animatedStyle = {
-			transform: [
-				{
-					scale: this.animated,
-				},
-			],
-		};
+  _renderItem = ({ item }) => <User data={item} />;
 
-		let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
+  _renderHeader = () => {
+    let animatedStyle = {
+      transform: [
+        {
+          scale: this.animated
+        }
+      ]
+    };
 
-		return (
-			<View style={{ flex: 1, paddingTop: headerTopPadding }}>
-				{!this.state.loading && <MapCard location={this.state.position} />}
-				{this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
-				<TouchableScale
-					style={[
-						styles.joinButton,
-						{
-							backgroundColor: this.state.joined ? Colors.primary : "white",
-						},
-					]}
-					onPress={this.handleOnPress}>
-					<Text
-						style={[
-							styles.joinText,
-							{
-								color: this.state.joined ? "white" : Colors.primary,
-							},
-						]}>
-						{!this.state.joined ? "Join" : "Leave"}
-					</Text>
-				</TouchableScale>
-			</View>
-		);
-	};
+    let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
-	render() {
-		return (
-			<Focus
-				ref={item => (this.focus = item)}
-				data={data}
-				renderHeader={this._renderHeader}
-				optionButton={"ended"}
-				cardHeight={this.props.cardHeight}
-				statusBarHeight={this.props.statusBarHeight}
-				closeCard={this.props.closeCard}
-				onPressPop={this.onPressPop}
-				renderItem={this._renderItem}>
-				<ActiveMove
-					blur
-					focused
-					index={this.props.index}
-					length={this.props.length}
-					move={this.props.data}
-					onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-				/>
-			</Focus>
-		);
-	}
+    return (
+      <View style={{ flex: 1, paddingTop: headerTopPadding }}>
+        {!this.state.loading && <MapCard large location={this.state.position} />}
+        {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
+        <TouchableScale
+          style={[
+            styles.joinButton,
+            {
+              backgroundColor: this.state.joined ? Colors.primary : "white"
+            }
+          ]}
+          onPress={this.handleOnPress}
+        >
+          <Text
+            style={[
+              styles.joinText,
+              {
+                color: this.state.joined ? "white" : Colors.primary
+              }
+            ]}
+          >
+            {!this.state.joined ? "Join" : "Leave"}
+          </Text>
+        </TouchableScale>
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <Focus
+        ref={item => (this.focus = item)}
+        data={data}
+        renderHeader={this._renderHeader}
+        optionButton={"ended"}
+        cardHeight={this.props.cardHeight}
+        statusBarHeight={this.props.statusBarHeight}
+        closeCard={this.props.closeCard}
+        onPressPop={this.onPressPop}
+        renderItem={this._renderItem}
+      >
+        <ActiveMove
+          blur
+          focused
+          index={this.props.index}
+          length={this.props.length}
+          move={this.props.data}
+          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
+        />
+      </Focus>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-	joinButton: {
-		marginVertical: 20,
-		padding: 15,
-		borderRadius: 15,
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		// ...shadow,
-	},
-	joinText: {
-		// flex: 1,
-		// color: Colors.active,
-		fontSize: 18,
-	},
+  joinButton: {
+    marginVertical: 20,
+    padding: 15,
+    borderRadius: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white"
+    // ...shadow,
+  },
+  joinText: {
+    // flex: 1,
+    // color: Colors.active,
+    fontSize: 18
+  }
 });
 
 export default ActiveFocus;

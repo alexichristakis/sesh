@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  View,
-  FlatList,
-  Text
-} from "react-native";
+import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
@@ -37,7 +30,7 @@ class VerticalList extends Component {
   fadeIn = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 1,
-      duration: 500,
+      duration: 300,
       easing: Easing.ease,
       useNativeDriver: true
     }).start();
@@ -71,7 +64,7 @@ class VerticalList extends Component {
 
   render() {
     let animatedStyle = {
-      paddingTop: 75,
+      paddingTop: 80,
       transform: [
         {
           translateY: this.animatedTranslate.interpolate({

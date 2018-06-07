@@ -171,21 +171,17 @@ class Home extends Component {
   };
 
   clearScreen = () => {
-    this.topBar.handleFullCloseBar();
+    this.topBar.handleCloseBar();
     this.bottomBar.handleHideBar();
-    // this.button.buttonExit();
-    // this.groups.list.fadeOut();
-    // this.active.list.fadeOut();
-    // this.later.list.fadeOut();
+    this.active.list.fadeOut();
+    this.later.list.fadeOut();
   };
 
   returnScreen = () => {
     this.topBar.handleOpenBar();
     this.bottomBar.handleShowBar();
-    // this.button.buttonReturn();
-    // this.groups.list.fadeIn();
-    // this.active.list.fadeIn();
-    // this.later.list.fadeIn();
+    this.active.list.fadeIn();
+    this.later.list.fadeIn();
   };
 
   onPressPop = () => {
@@ -194,17 +190,19 @@ class Home extends Component {
 
   onPressPushTo = (componentName, props, options) => {
     // Navigation.push(this.props.componentId, {
-    // 	component: {
-    // 		name: componentName,
-    // 		passProps: props,
-    // 		options: options,
-    //
-    // 		// options: { animated: false },
-    // 	},
-    // 	// animated: false,
+    //   component: {
+    //     name: componentName,
+    //     passProps: props,
+    //     options: {
+    //       animations: {
+    //         push: {
+    //           enable: false
+    //         }
+    //       },
+    //       ...options
+    //     }
+    //   }
     // });
-    /* UNTIL THIS IS FIXED IN RNN */
-
     Navigation.showOverlay({
       component: {
         name: componentName,
@@ -212,7 +210,8 @@ class Home extends Component {
         options: {
           overlay: {
             interceptTouchOutside: true
-          }
+          },
+          ...options
         }
       }
     });
@@ -265,7 +264,7 @@ class Home extends Component {
 
     return (
       <Background>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="light-content" />
         <Animated.ScrollView
           horizontal
           pagingEnabled
