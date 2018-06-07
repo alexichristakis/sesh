@@ -53,15 +53,18 @@ class ActiveMove extends Component {
                 <Text style={styles.name}>{move.name}</Text>
               </View>
             </View>
-            <Text style={styles.time}>{TimeAgo(move.time)}</Text>
+            {/* <Text style={styles.time}>{TimeAgo(move.time)}</Text> */}
           </View>
         </View>
         <View style={styles.mid}>
           <Text style={styles.description}>{move.description}</Text>
         </View>
         <View style={styles.bottom}>
-          <Icon name={"compass"} size={12} color={Colors.active} />
-          <Text style={styles.location}>{move.location}</Text>
+          <Text style={styles.time}>{TimeAgo(move.time)}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name={"compass"} size={14} color={Colors.active} />
+            <Text style={styles.location}>{move.location}</Text>
+          </View>
         </View>
       </View>
     );
@@ -72,8 +75,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 15,
-    padding: 10,
-    paddingRight: 12,
+    // paddingTop: 10,
+    // paddingRight: 12,
     overflow: "hidden",
     // backgroundColor: "white",
     backgroundColor: "rgba(255,255,255,0.5)"
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   top: {
+    padding: 10,
     flex: 2,
     flexDirection: "row"
   },
@@ -130,9 +134,9 @@ const styles = StyleSheet.create({
     // color: Colors.active,
   },
   time: {
-    flex: 1,
+    // flex: 1,
     textAlign: "right",
-    paddingTop: 4,
+    // paddingTop: 4,
     fontSize: 14,
     // alignSelf: "center",
     // color: Colors.active,
@@ -142,7 +146,9 @@ const styles = StyleSheet.create({
   },
   mid: {
     flex: 2,
-    marginVertical: 10
+    // marginVertical: 10,
+    paddingHorizontal: 10,
+    marginBottom: 5
   },
   description: {
     fontSize: 14,
@@ -150,9 +156,14 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     flexDirection: "row",
     alignItems: "center",
-    alignSelf: "flex-end"
+    justifyContent: "space-between"
+    // backgroundColor: Colors.active
+    // bacl
+    // alignSelf: "flex-end"
   },
   location: {
     marginLeft: 2,

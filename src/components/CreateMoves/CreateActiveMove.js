@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { StyleSheet, Keyboard, View, Text, TextInput } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 
 import SelectGroup from "./SelectGroup";
 import BackButton from "../global/BackButton";
+
+import { Colors } from "../../lib/styles";
+import { SB_HEIGHT } from "../../lib/constants";
 
 const data = [
   {
@@ -52,14 +55,43 @@ const data = [
 ];
 
 class CreateActiveMove extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: ""
+    };
+  }
+
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: SB_HEIGHT + 10, paddingHorizontal: 15 }}>
+        <TextInput
+          autoFocus
+          multiline
+          style={styles.name}
+          onChangeText={text => this.setState({ text })}
+          placeholder={"What's going on?"}
+          placeholderTextColor={Colors.gray}
+        />
         <SelectGroup data={data} />
-        <BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
+        <BackButton
+          onPressPop={() => {
+            Keyboard.dismiss();
+            Navigation.dismissModal(this.props.componentId);
+          }}
+        />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  name: {
+    fontSize: 20,
+    fontWeight: "300"
+    // color: "white"
+  }
+});
 
 export default CreateActiveMove;
