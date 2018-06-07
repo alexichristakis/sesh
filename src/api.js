@@ -117,18 +117,22 @@ const NewUser = user => {
     let profile_pic = "https://graph.facebook.com/" + id + "/picture?type=large";
     let uid = user.user._user.uid;
 
+    let user = {
+      email,
+      first_name,
+      last_name,
+      display_name,
+      id,
+      uid,
+      profile_pic
+    };
+
+    /* set in RNFS */
+
     firestore
       .collection("users")
       .doc(uid)
-      .set({
-        email,
-        first_name,
-        last_name,
-        display_name,
-        id,
-        uid,
-        profile_pic
-      })
+      .set(user)
       .then(resolve(true));
   });
 };

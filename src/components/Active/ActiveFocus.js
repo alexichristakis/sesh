@@ -14,7 +14,35 @@ import MapCard from "../global/MapCard";
 import User from "../global/User";
 import ActiveMove from "./ActiveMove";
 
-const data = [];
+const data = [
+  {
+    key: "1",
+    coords: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
+    title: "9pack",
+    description: "dinner in pierson college"
+  },
+  {
+    key: "2",
+    coords: {
+      latitude: 47.679239,
+      longitude: -122.267227
+    },
+    title: "Fence Club",
+    description: "sesh"
+  },
+  {
+    key: "3",
+    coords: {
+      latitude: 47.663461,
+      longitude: -122.284221
+    },
+    title: "Splash Bros",
+    description: "splashing around"
+  }
+];
 
 class ActiveFocus extends Component {
   // static get options() {
@@ -40,8 +68,8 @@ class ActiveFocus extends Component {
   async componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        this.setState({ position: position.coords, loading: false });
-        console.log(position.coords);
+        this.setState({ position: position, loading: false });
+        // console.log(position.coords);
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -107,7 +135,7 @@ class ActiveFocus extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        {!this.state.loading && <MapCard large location={this.state.position} />}
+        {!this.state.loading && <MapCard large markers={data} />}
         {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
         <TouchableScale
           style={[
@@ -137,7 +165,7 @@ class ActiveFocus extends Component {
     return (
       <Focus
         ref={item => (this.focus = item)}
-        data={data}
+        // data={data}
         renderHeader={this._renderHeader}
         optionButton={"ended"}
         cardHeight={this.props.cardHeight}

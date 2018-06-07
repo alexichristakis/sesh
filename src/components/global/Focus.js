@@ -84,10 +84,6 @@ class Focus extends Component {
     };
 
     let listStyle = {
-      // position: "absolute",
-      // top: 0,
-      // bottom: 0,
-      // // left: 1
       paddingHorizontal: 20,
       paddingTop: listTopPadding,
       transform: [

@@ -22,7 +22,8 @@ class TopBar extends Component {
       open: true,
       loading: true,
       // photo: RNFS.DocumentDirectoryPath + "/profile_pic.png"
-      photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
+      // photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
+      photo: this.props.user.photoURL + "?type=large"
     };
 
     this.animated = new Animated.Value(1);

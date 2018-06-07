@@ -22,22 +22,25 @@ class MapCard extends Component {
   }
 
   render() {
-    const { location, title, style } = this.props;
+    const { markers, style } = this.props;
+    // console.log(markers);
     const region = {
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: markers[0].coords.latitude,
+      longitude: markers[0].coords.longitude,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421
     };
 
     let map = (
       <MapView showsUserLocation style={{ flex: 1 }} initialRegion={region}>
-        <Marker
-          // title={"testing"}
-          // description={"testing testing"}
-          coordinate={location}
-          title={title}
-        />
+        {markers.map(marker => (
+          <Marker
+            key={marker.key}
+            coordinate={marker.coords}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
       </MapView>
     );
 

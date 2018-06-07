@@ -59,7 +59,7 @@ class Transition extends Component {
       duration: 200,
       // easing: Easing.poly(0.25),
       easing: Easing.ease,
-      useNativeDriver: true /* for some reason this is faster on js thread? */
+      useNativeDriver: true
     }).start(() => {
       this.props.onPressPushTo(
         this.props.destinationPage,
@@ -87,7 +87,7 @@ class Transition extends Component {
       duration: 200,
       // easing: Easing.poly(0.25),
       // easing: Easing.ease,
-      useNativeDriver: true /* for some reason this is faster on js thread? */
+      useNativeDriver: true
     }).start(() => {
       // this.props.transitionFinished();
       this.setState({ open: false });
