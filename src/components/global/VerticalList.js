@@ -21,7 +21,7 @@ class VerticalList extends Component {
   fadeOut = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 500,
+      duration: 200,
       easing: Easing.ease,
       useNativeDriver: true
     }).start();
@@ -30,7 +30,7 @@ class VerticalList extends Component {
   fadeIn = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 1,
-      duration: 300,
+      duration: 200,
       easing: Easing.ease,
       useNativeDriver: true
     }).start();
@@ -73,7 +73,11 @@ class VerticalList extends Component {
           })
         }
       ],
-      opacity: this.animatedOpacity
+      opacity: this.animatedOpacity.interpolate({
+        inputRange: [0, 0.7, 1],
+        outputRange: [0, 0, 1],
+        extrapolate: "clamp"
+      })
     };
 
     return (
