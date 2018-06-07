@@ -45,14 +45,6 @@ const data = [
 ];
 
 class ActiveFocus extends Component {
-  // static get options() {
-  // 	return {
-  // 		topBar: {
-  // 			animate: false,
-  // 		},
-  // 	};
-  // }
-
   constructor(props) {
     super(props);
 
@@ -141,7 +133,7 @@ class ActiveFocus extends Component {
           style={[
             styles.joinButton,
             {
-              backgroundColor: this.state.joined ? Colors.primary : "white"
+              backgroundColor: this.state.joined ? Colors.active : "white"
             }
           ]}
           onPress={this.handleOnPress}
@@ -150,7 +142,7 @@ class ActiveFocus extends Component {
             style={[
               styles.joinText,
               {
-                color: this.state.joined ? "white" : Colors.primary
+                color: this.state.joined ? "white" : Colors.active
               }
             ]}
           >

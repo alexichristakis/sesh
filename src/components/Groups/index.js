@@ -124,7 +124,7 @@ class Groups extends Component {
     <View style={styles.headerContainer}>
       <Text style={styles.header}>My Groups</Text>
       <TouchableScale onPress={() => this.props.presentModal("sesh.CreateGroup")}>
-        <Icon style={{ paddingBottom: 8 }} name={"plus"} size={30} color={Colors.primary} />
+        <Icon style={{ paddingBottom: 8 }} name={"plus"} size={30} color={Colors.groups} />
       </TouchableScale>
     </View>
   );
@@ -159,8 +159,11 @@ class Groups extends Component {
           ListHeaderComponent={this._renderHeader}
         />
 
-        <BlurView blurType="light" style={styles.statusBar} />
+        {/* <BlurView blurType="light" style={styles.statusBar} /> */}
         {/* <View style={[styles.statusBar, { backgroundColor: Colors.primary }]} /> */}
+        <View style={[styles.statusBar, { backgroundColor: Colors.groups, opacity: 0.8 }]} />
+        <BlurView blurType="light" style={styles.statusBar} />
+
         <BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
       </Background>
     );
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     flexDirection: "row",
     paddingHorizontal: 15,
+    paddingVertical: 10,
     justifyContent: "space-between",
     alignItems: "center"
   },
