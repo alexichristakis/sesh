@@ -85,7 +85,11 @@ class Focus extends Component {
 
     let listStyle = {
       paddingHorizontal: 20,
-      paddingTop: listTopPadding,
+      paddingTop: listTopPadding
+    };
+
+    let animatedStyle = {
+      flex: 1,
       transform: [
         {
           translateY: this.entry.interpolate({
@@ -98,15 +102,18 @@ class Focus extends Component {
 
     return (
       <Background>
-        <AnimatedFlatList
-          style={listStyle}
-          data={this.props.data}
-          keyExtractor={this._keyExtractor}
-          renderItem={this.props.renderItem}
-          ListHeaderComponent={this.props.renderHeader}
-          ListFooterComponent={this.props.renderFooter}
-          ItemSeparatorComponent={this.renderSeparator}
-        />
+        <Animated.View style={animatedStyle}>
+          <FlatList
+            style={listStyle}
+            data={this.props.data}
+            keyExtractor={this._keyExtractor}
+            renderItem={this.props.renderItem}
+            ListHeaderComponent={this.props.renderHeader}
+            ListFooterComponent={this.props.renderFooter}
+            ItemSeparatorComponent={this.renderSeparator}
+          />
+          <BackButton list onPressPop={this.props.onPressPop} />
+        </Animated.View>
 
         <ScrollView
           style={[styles.swipeContainer, scrollHeight]}
@@ -128,7 +135,6 @@ class Focus extends Component {
           </HalfPage>
         </ScrollView>
 
-        <BackButton list onPressPop={this.props.onPressPop} />
         <View style={[styles.statusBar, { backgroundColor: Colors.primary, opacity: 0.8 }]} />
         <BlurView blurType="light" style={styles.statusBar} />
       </Background>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
@@ -27,46 +28,52 @@ class ActiveMove extends Component {
     let groupName = <Text style={styles.group}>{move.group}</Text>;
 
     return (
-      <View style={styles.container}>
-        {!this.props.blur && <View style={styles.background} />}
-        {this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}
-        <View style={styles.top}>
-          <Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
-          <View style={styles.header}>
-            <View style={{ flex: 2 }}>
-              {this.props.focused && (
-                <TouchableOpacity
-                  onPress={() => {
-                    ReactNativeHapticFeedback.trigger("impactLight");
-                    this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
-                      data: group
-                    });
-                  }}
-                >
-                  {groupName}
-                </TouchableOpacity>
-              )}
-              {!this.props.focused && groupName}
-              <View style={{ flexDirection: "row" }}>
-                <Icon name={"corner-down-right"} size={14} color={Colors.primary} />
-                <Text style={styles.from}>from </Text>
-                <Text style={styles.name}>{move.name}</Text>
+      <SuperEllipseMask radius={15}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: this.props.blur ? "rgba(255,255,255,0.5)" : "white" }
+          ]}
+        >
+          {this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}
+          <View style={styles.top}>
+            <Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
+            <View style={styles.header}>
+              <View style={{ flex: 2 }}>
+                {this.props.focused && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      ReactNativeHapticFeedback.trigger("impactLight");
+                      this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
+                        data: group
+                      });
+                    }}
+                  >
+                    {groupName}
+                  </TouchableOpacity>
+                )}
+                {!this.props.focused && groupName}
+                <View style={{ flexDirection: "row" }}>
+                  <Icon name={"corner-down-right"} size={14} color={Colors.primary} />
+                  <Text style={styles.from}>from </Text>
+                  <Text style={styles.name}>{move.name}</Text>
+                </View>
               </View>
+              {/* <Text style={styles.time}>{TimeAgo(move.time)}</Text> */}
             </View>
-            {/* <Text style={styles.time}>{TimeAgo(move.time)}</Text> */}
+          </View>
+          <View style={styles.mid}>
+            <Text style={styles.description}>{move.description}</Text>
+          </View>
+          <View style={styles.bottom}>
+            <Text style={styles.time}>{TimeAgo(move.time)}</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Icon name={"compass"} size={14} color={Colors.active} />
+              <Text style={styles.location}>{move.location}</Text>
+            </View>
           </View>
         </View>
-        <View style={styles.mid}>
-          <Text style={styles.description}>{move.description}</Text>
-        </View>
-        <View style={styles.bottom}>
-          <Text style={styles.time}>{TimeAgo(move.time)}</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon name={"compass"} size={14} color={Colors.active} />
-            <Text style={styles.location}>{move.location}</Text>
-          </View>
-        </View>
-      </View>
+      </SuperEllipseMask>
     );
   }
 }
@@ -74,12 +81,12 @@ class ActiveMove extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 15,
+    // borderRadius: 15,
     // paddingTop: 10,
     // paddingRight: 12,
-    overflow: "hidden",
+    overflow: "hidden"
     // backgroundColor: "white",
-    backgroundColor: "rgba(255,255,255,0.5)"
+    // backgroundColor: "rgba(255,255,255,0.5)"
     // ...shadow,
   },
   background: {

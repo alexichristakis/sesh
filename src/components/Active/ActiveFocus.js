@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import MapView, { Marker } from "react-native-maps";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
@@ -74,7 +75,6 @@ class ActiveFocus extends Component {
     this.focus.exit();
     setTimeout(() => {
       Navigation.pop(this.props.componentId);
-
       this.props.closeCard();
     }, 100);
   };
@@ -114,9 +114,10 @@ class ActiveFocus extends Component {
     let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
     return (
-      <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        {!this.state.loading && <MapCard large markers={data} />}
-        {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
+      <View shouldRasterizeIOS style={{ flex: 1, paddingTop: headerTopPadding }}>
+        {/* {!this.state.loading && <MapCard large markers={data} />} */}
+        <MapCard large markers={data} />
+        {/* {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />} */}
         <TouchableScale
           style={[
             styles.joinButton,
@@ -147,7 +148,7 @@ class ActiveFocus extends Component {
         ref={item => (this.focus = item)}
         // data={data}
         renderHeader={this._renderHeader}
-        optionButton={"ended"}
+        optionButton={"end"}
         cardHeight={this.props.cardHeight}
         statusBarHeight={this.props.statusBarHeight}
         closeCard={this.props.closeCard}
@@ -169,12 +170,12 @@ class ActiveFocus extends Component {
 
 const styles = StyleSheet.create({
   joinButton: {
+    flex: 1,
     marginVertical: 20,
     padding: 15,
     borderRadius: 15,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white"
+    justifyContent: "center"
     // ...shadow,
   },
   joinText: {

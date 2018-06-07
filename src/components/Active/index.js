@@ -39,7 +39,7 @@ const data = [
     name: "Alexi Christakis",
     group: "Splash Bros",
     time: 1526598742850,
-    description: "suite dinner in pierson!",
+    description: "splish splash 11 pac",
     // location: "Pierson College – 0.24mi",
     location: "0.24mi",
 
