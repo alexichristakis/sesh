@@ -189,27 +189,18 @@ class Home extends Component {
   };
 
   onPressPushTo = (componentName, props, options) => {
-    // Navigation.push(this.props.componentId, {
-    //   component: {
-    //     name: componentName,
-    //     passProps: props,
-    //     options: {
-    //       animations: {
-    //         push: {
-    //           enable: false
-    //         }
-    //       },
-    //       ...options
-    //     }
-    //   }
-    // });
-    Navigation.showOverlay({
+    Navigation.push(this.props.componentId, {
       component: {
         name: componentName,
         passProps: props,
         options: {
-          overlay: {
-            interceptTouchOutside: true
+          animations: {
+            push: {
+              enable: false
+            },
+            pop: {
+              enable: false
+            }
           },
           ...options
         }

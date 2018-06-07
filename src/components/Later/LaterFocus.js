@@ -61,7 +61,6 @@ class LaterFocus extends Component {
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({ position: position, loading: false });
-        // console.log(position.coords);
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -71,19 +70,7 @@ class LaterFocus extends Component {
   onPressPop = () => {
     this.focus.exit();
     setTimeout(() => {
-      Navigation.dismissOverlay(this.props.componentId);
-      // Navigation.pop(this.props.componentId, {
-      //   // options: {
-      //   customTransition: {
-      //     animations: {
-      //       push: {
-      //         enable: false
-      //       }
-      //     }
-      //   }
-      //   // }
-      // });
-
+      Navigation.pop(this.props.componentId);
       this.props.closeCard();
     }, 100);
   };
