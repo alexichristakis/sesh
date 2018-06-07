@@ -75,7 +75,6 @@ class ActiveFocus extends Component {
     this.focus.exit();
     setTimeout(() => {
       Navigation.pop(this.props.componentId);
-
       this.props.closeCard();
     }, 100);
   };
@@ -115,7 +114,7 @@ class ActiveFocus extends Component {
     let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
     return (
-      <View style={{ flex: 1, paddingTop: headerTopPadding }}>
+      <View shouldRasterizeIOS style={{ flex: 1, paddingTop: headerTopPadding }}>
         {/* {!this.state.loading && <MapCard large markers={data} />} */}
         <MapCard large markers={data} />
         {/* {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />} */}
@@ -149,7 +148,7 @@ class ActiveFocus extends Component {
         ref={item => (this.focus = item)}
         // data={data}
         renderHeader={this._renderHeader}
-        optionButton={"ended"}
+        optionButton={"end"}
         cardHeight={this.props.cardHeight}
         statusBarHeight={this.props.statusBarHeight}
         closeCard={this.props.closeCard}

@@ -28,9 +28,13 @@ class ActiveMove extends Component {
     let groupName = <Text style={styles.group}>{move.group}</Text>;
 
     return (
-      <SuperEllipseMask radius={20}>
-        <View style={styles.container}>
-          {!this.props.blur && <View style={styles.background} />}
+      <SuperEllipseMask radius={15}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: this.props.blur ? "rgba(255,255,255,0.5)" : "white" }
+          ]}
+        >
           {this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}
           <View style={styles.top}>
             <Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
@@ -80,9 +84,9 @@ const styles = StyleSheet.create({
     // borderRadius: 15,
     // paddingTop: 10,
     // paddingRight: 12,
-    overflow: "hidden",
+    overflow: "hidden"
     // backgroundColor: "white",
-    backgroundColor: "rgba(255,255,255,0.5)"
+    // backgroundColor: "rgba(255,255,255,0.5)"
     // ...shadow,
   },
   background: {

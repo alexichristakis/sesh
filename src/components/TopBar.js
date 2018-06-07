@@ -120,17 +120,6 @@ class TopBar extends Component {
       ]
     };
 
-    let tabContainerAnimatedStyle = {
-      transform: [
-        {
-          translateY: this.animated.interpolate({
-            inputRange: [0, 1],
-            outputRange: [-BAR_HEIGHT + SB_HEIGHT - 2, BAR_HEIGHT + 4]
-          })
-        }
-      ]
-    };
-
     return (
       // <SuperEllipseMask radius={{ bottomLeft: 20, bottomRight: 20 }}>
       <View style={styles.container}>

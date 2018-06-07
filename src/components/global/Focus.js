@@ -135,7 +135,6 @@ class Focus extends Component {
           </HalfPage>
         </ScrollView>
 
-        {/* <BackButton list onPressPop={this.props.onPressPop} /> */}
         <View style={[styles.statusBar, { backgroundColor: Colors.primary, opacity: 0.8 }]} />
         <BlurView blurType="light" style={styles.statusBar} />
       </Background>

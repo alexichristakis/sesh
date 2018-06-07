@@ -45,18 +45,22 @@ class MapCard extends Component {
       </MapView>
     );
 
+    const height = this.props.large ? 300 : 200;
+
     return (
       <SuperEllipseMask radius={20}>
         <View
           style={{
-            height: this.props.large ? 300 : 200,
+            height: height,
             backgroundColor: "#F9F5ED"
             // borderRadius: 15,
             // overflow: "hidden",
             // ...shadow
           }}
         >
-          {this.state.loading && <ActivityIndicator style={{ marginTop: 100 }} size={"large"} />}
+          {this.state.loading && (
+            <ActivityIndicator style={{ marginTop: height / 2 }} size={"large"} />
+          )}
           {!this.state.loading && map}
         </View>
       </SuperEllipseMask>

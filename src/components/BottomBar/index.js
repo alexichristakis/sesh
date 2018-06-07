@@ -7,52 +7,52 @@ import NewMoveButton from "./NewMoveButton";
 const yTranslate = new Animated.Value(0);
 
 class BottomBar extends Component {
-	handleHideBar = () => {
-		if (this.button.state.open) this.button.handleCloseButton();
-		Animated.timing(yTranslate, {
-			toValue: 1,
-			duration: 150,
-			easing: Easing.out(Easing.poly(0.25)),
-			useNativeDriver: true
-		}).start();
-	};
+  handleHideBar = () => {
+    if (this.button.state.open) this.button.handleCloseButton();
+    Animated.timing(yTranslate, {
+      toValue: 1,
+      duration: 150,
+      easing: Easing.out(Easing.poly(0.25)),
+      useNativeDriver: true
+    }).start();
+  };
 
-	handleShowBar = () => {
-		Animated.timing(yTranslate, {
-			toValue: 0,
-			duration: 150,
-			easing: Easing.in(Easing.poly(0.25)),
-			useNativeDriver: true
-		}).start();
-	};
+  handleShowBar = () => {
+    Animated.timing(yTranslate, {
+      toValue: 0,
+      duration: 150,
+      easing: Easing.in(Easing.poly(0.25)),
+      useNativeDriver: true
+    }).start();
+  };
 
-	render() {
-		let animatedStyle = {
-			transform: [
-				{
-					translateY: yTranslate.interpolate({
-						inputRange: [0, 1],
-						outputRange: [0, 80]
-					})
-				}
-			]
-		};
+  render() {
+    let animatedStyle = {
+      transform: [
+        {
+          translateY: yTranslate.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 85]
+          })
+        }
+      ]
+    };
 
-		return (
-			<Animated.View style={animatedStyle}>
-				<NavBar
-					scrollToStart={this.props.scrollToStart}
-					scrollToEnd={this.props.scrollToEnd}
-					textColorTransform={this.props.textColorTransform}
-					indicatorAnimate={this.props.indicatorAnimate}
-				/>
-				<NewMoveButton
-					ref={item => (this.button = item)}
-					onPressPresentModalTo={this.props.onPressPresentModalTo}
-				/>
-			</Animated.View>
-		);
-	}
+    return (
+      <Animated.View style={animatedStyle}>
+        <NavBar
+          scrollToStart={this.props.scrollToStart}
+          scrollToEnd={this.props.scrollToEnd}
+          textColorTransform={this.props.textColorTransform}
+          indicatorAnimate={this.props.indicatorAnimate}
+        />
+        <NewMoveButton
+          ref={item => (this.button = item)}
+          onPressPresentModalTo={this.props.onPressPresentModalTo}
+        />
+      </Animated.View>
+    );
+  }
 }
 
 export default BottomBar;

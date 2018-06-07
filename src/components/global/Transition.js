@@ -80,7 +80,6 @@ class Transition extends Component {
       easing: Easing.out(Easing.ease),
       useNativeDriver: true
     }).start(() => {
-      // this.props.transitionFinished();
       this.setState({ open: false });
     });
   };
@@ -102,17 +101,9 @@ class Transition extends Component {
       ]
     };
 
-    let opacityStyle = {
-      opacity: this.openProgress.interpolate({
-        inputRange: [0, 0.7, 1],
-        outputRange: [0, 0, 1],
-        extrapolate: "clamp"
-      })
-    };
-
     if (this.state.open) {
       return (
-        <View style={styles.container}>
+        <View shouldRasterizeIOS style={styles.container}>
           <Animated.View style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
         </View>
       );
