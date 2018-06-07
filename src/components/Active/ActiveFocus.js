@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
 
 import { Navigation } from "react-native-navigation";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import MapView, { Marker } from "react-native-maps";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
@@ -115,8 +116,9 @@ class ActiveFocus extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        {!this.state.loading && <MapCard large markers={data} />}
-        {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
+        {/* {!this.state.loading && <MapCard large markers={data} />} */}
+        <MapCard large markers={data} />
+        {/* {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />} */}
         <TouchableScale
           style={[
             styles.joinButton,
@@ -169,12 +171,12 @@ class ActiveFocus extends Component {
 
 const styles = StyleSheet.create({
   joinButton: {
+    flex: 1,
     marginVertical: 20,
     padding: 15,
     borderRadius: 15,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white"
+    justifyContent: "center"
     // ...shadow,
   },
   joinText: {

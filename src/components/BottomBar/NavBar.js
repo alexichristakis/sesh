@@ -28,6 +28,7 @@ class NavBar extends Component {
 
     return (
       <View style={styles.container}>
+        <View style={[styles.blur, { backgroundColor: Colors.primary, opacity: 0.3 }]} />
         <BlurView style={styles.blur} blurAmount={50} blurType={"light"}>
           <View style={styles.textContainer}>
             <TouchableOpacity style={styles.button} onPress={this.haptic(scrollToStart)}>
@@ -58,8 +59,8 @@ const styles = StyleSheet.create({
     // bottom: 0,
     // paddingBottom: 20,
     // paddingTop: 5,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
     // backgroundColor: "red",
     overflow: "hidden"
   },

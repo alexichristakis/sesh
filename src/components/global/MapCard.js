@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ActivityIndicator, View, Text, Image } from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
@@ -45,18 +46,20 @@ class MapCard extends Component {
     );
 
     return (
-      <View
-        style={{
-          height: this.props.large ? 300 : 200,
-          backgroundColor: "#F9F5ED",
-          borderRadius: 15,
-          overflow: "hidden",
-          ...shadow
-        }}
-      >
-        {this.state.loading && <ActivityIndicator style={{ marginTop: 100 }} size={"large"} />}
-        {!this.state.loading && map}
-      </View>
+      <SuperEllipseMask radius={20}>
+        <View
+          style={{
+            height: this.props.large ? 300 : 200,
+            backgroundColor: "#F9F5ED"
+            // borderRadius: 15,
+            // overflow: "hidden",
+            // ...shadow
+          }}
+        >
+          {this.state.loading && <ActivityIndicator style={{ marginTop: 100 }} size={"large"} />}
+          {!this.state.loading && map}
+        </View>
+      </SuperEllipseMask>
     );
   }
 }

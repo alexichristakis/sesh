@@ -149,7 +149,7 @@ class Groups extends Component {
 
   render() {
     return (
-      <Background>
+      <View style={{ flex: 1, backgroundColor: Colors.lightGray }}>
         <FlatList
           style={styles.container}
           data={this.state.data}
@@ -165,7 +165,7 @@ class Groups extends Component {
         <BlurView blurType="light" style={styles.statusBar} />
 
         <BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
-      </Background>
+      </View>
     );
   }
 }

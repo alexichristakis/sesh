@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, Text, Image } from "react-native";
 
 // import RNFS from "react-native-fs";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -131,11 +132,13 @@ class TopBar extends Component {
     };
 
     return (
+      // <SuperEllipseMask radius={{ bottomLeft: 20, bottomRight: 20 }}>
       <View style={styles.container}>
         <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
           <View style={[styles.statusBar, { backgroundColor: Colors.primary, opacity: 0.8 }]} />
           <BlurView blurType="light" style={styles.statusBar} />
         </Animated.View>
+
         <View style={styles.topBar}>
           <Animated.View style={[styles.addFriendButton, animatedStyle]}>
             <TouchableScale
@@ -169,21 +172,23 @@ class TopBar extends Component {
           </Animated.View>
         </View>
       </View>
+      // </SuperEllipseMask>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    // flex: 1,
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     paddingHorizontal: 15,
     overflow: "hidden",
-    paddingBottom: 10,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20
+    paddingBottom: 10
+    // borderBottomLeftRadius: 20,
+    // borderBottomRightRadius: 20
   },
   fillCenter: {
     flex: 1,

@@ -257,7 +257,6 @@ class Home extends Component {
           horizontal
           pagingEnabled
           bounces={false}
-          // ref={this.scrollViewRef}
           ref={item => (this.scrollView = item)}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

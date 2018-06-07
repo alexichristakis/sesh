@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  View,
-  KeyboardAvoidingView,
-  TouchableOpacity
-} from "react-native";
+import { Animated, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
+// import SuperEllipseMask from "react-native-super-ellipse-mask";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import { BlurView } from "react-native-blur";
@@ -30,6 +26,7 @@ class BackButton extends Component {
     };
 
     return (
+      // <SuperEllipseMask radius={20}>
       <KeyboardAvoidingView behavior="position" enabled style={styles.button}>
         <TouchableScale onPress={() => this.haptic(this.props.onPressPop())}>
           <BlurView blurAmount={20} blurType="xlight" style={blurStyle}>
@@ -37,6 +34,7 @@ class BackButton extends Component {
           </BlurView>
         </TouchableScale>
       </KeyboardAvoidingView>
+      // </SuperEllipseMask>
     );
   }
 }
@@ -47,7 +45,7 @@ const styles = {
     paddingBottom: 30,
     bottom: 10,
     alignSelf: "center",
-    borderRadius: 15,
+    // borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
     // backgroundColor: "transparent",
