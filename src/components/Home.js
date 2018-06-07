@@ -159,10 +159,6 @@ class Home extends Component {
     this.later.list.lengthenPadding();
   };
 
-  // scrollViewRef = view => {
-  // 	this.scrollView = view.getNode();
-  // };
-
   _onScollBegin = () => {
     this.setState({ vertScrolling: true });
   };
