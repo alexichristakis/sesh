@@ -64,7 +64,7 @@ class VerticalList extends Component {
 
   render() {
     let animatedStyle = {
-      paddingTop: 80,
+      paddingTop: SB_HEIGHT === 40 ? 63 : 68,
       transform: [
         {
           translateY: this.animatedTranslate.interpolate({
