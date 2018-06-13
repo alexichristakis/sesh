@@ -29,17 +29,22 @@ class NavBar extends Component {
     return (
       <View style={styles.container}>
         {/* <View style={[styles.blur, { backgroundColor: Colors.primary, opacity: 0.3 }]} /> */}
-        <BlurView style={styles.blur} blurAmount={50} blurType={"light"}>
-          <View style={styles.textContainer}>
-            <TouchableOpacity style={styles.button} onPress={this.haptic(scrollToStart)}>
+        {/* <BlurView style={styles.blur} blurAmount={50} blurType={"light"}> */}
+        <View style={styles.textContainer}>
+          <TouchableOpacity style={styles.button} onPress={this.haptic(scrollToStart)}>
+            <BlurView blurType={"xlight"} style={styles.blur}>
               <Animated.Text style={[styles.text, textColorTransform(0)]}>Now</Animated.Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={this.haptic(scrollToEnd)}>
+            </BlurView>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={this.haptic(scrollToEnd)}>
+            <BlurView blurType={"xlight"} style={styles.blur}>
               <Animated.Text style={[styles.text, textColorTransform(1)]}>Later</Animated.Text>
-            </TouchableOpacity>
-          </View>
-          <Animated.View style={[styles.indicator, indicatorAnimate()]} />
-        </BlurView>
+            </BlurView>
+          </TouchableOpacity>
+        </View>
+        {/* <Animated.View style={[styles.indicator, indicatorAnimate()]} /> */}
+        {/* </BlurView> */}
       </View>
     );
   }
@@ -50,8 +55,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 0,
-    height: SB_HEIGHT + 15,
+    bottom: 13,
+    // height: SB_HEIGHT + 100,
     // // borderRadius: 15,
     // // borderTopLeftRadius: 100,
     // left: 0,
@@ -61,37 +66,33 @@ const styles = StyleSheet.create({
     // paddingTop: 5,
     // borderTopLeftRadius: 20,
     // borderTopRightRadius: 20,
-    // backgroundColor: "red",
-    overflow: "hidden"
+    // backgroundColor: "blue",
+    overflow: "hidden",
+    paddingHorizontal: 50,
+    // backgroundColor: "blue",
+    paddingBottom: SB_HEIGHT === 20 ? 5 : 25
   },
   blur: {
-    // flex: 1
-    position: "absolute",
-    // // borderRadius: 15,
-    // // borderTopLeftRadius: 100,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    paddingTop: 5,
-    paddingBottom: SB_HEIGHT === 20 ? 5 : 25
-    // backgroundColor: "blue"
-    // paddingBottom: 20
-    // paddingTop: 100
+    paddingVertical: 5,
+    borderRadius: 15
   },
   button: {
-    flex: 1
+    flex: 1,
+    marginHorizontal: 35,
+    // paddingVertical: 5,
+    // backgroundColor: "white",
+    borderRadius: 15
   },
   textContainer: {
     flex: 1,
-    justifyContent: "center",
-    // alignItems: "center",
     flexDirection: "row"
-    // position: "absolute"
-    // padding: 20,
-    // top: 60,
-    // left: 0,
-    // right: 0,
+    // marginBottom: 5
+    // paddingBottom: 5,
+    // backgroundColor: "blue"
+    // backgroundColor: "red"
+    // paddingBottom: 5
+    // backgroundColor: "red",
+    // paddingHorizontal: 50
   },
   text: {
     flex: 1,
@@ -99,14 +100,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlignVertical: "center",
     textAlign: "center"
+    // borderWidth: 3,
+    // borderColor: "white"
+    // paddingBottom: 10
     // paddingBottom: 10,
   },
   indicator: {
     // top: 22,
     // top: 0,
-    height: 3,
+    width: 5,
+    height: 5,
     alignSelf: "center",
-    borderRadius: 1.5
+    borderRadius: 2.5
   }
 });
 
