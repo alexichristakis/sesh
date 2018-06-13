@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Text, Image } from "react-native";
+import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 // import RNFS from "react-native-fs";
+import LinearGradient from "react-native-linear-gradient";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
@@ -12,8 +13,8 @@ import TouchableScale from "./global/TouchableScale";
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
 
-const BAR_HEIGHT = 40;
-const ICON_DIMENSION = 60;
+const BAR_HEIGHT = 30;
+const ICON_DIMENSION = 50;
 
 class TopBar extends Component {
   constructor(props) {
@@ -91,13 +92,17 @@ class TopBar extends Component {
     const pushTo = this.props.onPressPushTo;
     const presentOverlay = this.props.onPressPresentOverlayTo;
 
+    const { scrollToStart, scrollToEnd, indicatorAnimate } = this.props;
+
+    const { colorTransform } = this.props;
+
     let animatedStyle = {
       opacity: this.animated,
       transform: [
         {
           translateY: this.animated.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, 50]
+            outputRange: [0, ICON_DIMENSION]
           })
         },
         {
@@ -121,61 +126,74 @@ class TopBar extends Component {
     };
 
     return (
-      // <SuperEllipseMask radius={{ bottomLeft: 20, bottomRight: 20 }}>
       <View style={styles.container}>
-        <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
-          <View style={[styles.statusBar, { backgroundColor: Colors.primary, opacity: 0.8 }]} />
-          <BlurView blurType="light" style={styles.statusBar} />
-        </Animated.View>
+        <SuperEllipseMask radius={{ bottomRight: 20, bottomLeft: 20 }}>
+          <View style={{ width: SCREEN_WIDTH, paddingHorizontal: 15, paddingBottom: 10 }}>
+            <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
+              <LinearGradient
+                style={styles.statusBar}
+                locations={[0.5, 1]}
+                colors={[Colors.header2, Colors.header1]}
+              />
+              <BlurView blurType="light" style={styles.statusBar} />
+            </Animated.View>
 
-        <View style={styles.topBar}>
-          <Animated.View style={[styles.addFriendButton, animatedStyle]}>
-            <TouchableScale
-              style={styles.fillCenter}
-              onPress={this.hapticModal("sesh.AddFriend", { user: this.props.user })}
-            >
-              <Icon name="user-plus" size={30} color={"white"} />
-            </TouchableScale>
-          </Animated.View>
-          <Animated.View style={[styles.profileButton, animatedStyle]}>
-            <TouchableScale
-              onPress={this.hapticOverlay("sesh.Profile", {
-                user: this.props.user,
-                onPressPop: this.props.onPressPop
-              })}
-            >
-              <Image style={styles.image} resizeMode="cover" source={{ uri: this.state.photo }} />
-            </TouchableScale>
-          </Animated.View>
+            <View style={styles.topBar}>
+              <Animated.View style={[styles.addFriendButton, animatedStyle]}>
+                <TouchableScale
+                  style={styles.fillCenter}
+                  onPress={this.hapticModal("sesh.AddFriend", { user: this.props.user })}
+                >
+                  <Icon name="user-plus" size={28} color={"white"} />
+                </TouchableScale>
+              </Animated.View>
+              <Animated.View style={[styles.profileButton, animatedStyle]}>
+                <TouchableScale
+                  onPress={this.hapticOverlay("sesh.Profile", {
+                    user: this.props.user,
+                    onPressPop: this.props.onPressPop
+                  })}
+                >
+                  <Image
+                    style={styles.image}
+                    resizeMode="cover"
+                    source={{ uri: this.state.photo }}
+                  />
+                </TouchableScale>
+              </Animated.View>
 
-          <Animated.View style={[styles.addGroupButton, animatedStyle]}>
-            <TouchableScale
-              style={styles.fillCenter}
-              onPress={this.hapticModal("sesh.Groups", {
-                presentOverlay: presentOverlay,
-                presentModal: presentModal
-              })}
-            >
-              <Icon style={{ paddingLeft: 5 }} name="users" size={30} color={"white"} />
-            </TouchableScale>
-          </Animated.View>
-        </View>
+              <Animated.View style={[styles.addGroupButton, animatedStyle]}>
+                <TouchableScale
+                  style={styles.fillCenter}
+                  onPress={this.hapticModal("sesh.Groups", {
+                    presentOverlay: presentOverlay,
+                    presentModal: presentModal
+                  })}
+                >
+                  <Icon style={{ paddingLeft: 5 }} name="users" size={28} color={"white"} />
+                </TouchableScale>
+              </Animated.View>
+            </View>
+          </View>
+        </SuperEllipseMask>
       </View>
-      // </SuperEllipseMask>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    // backgroundColor: "red",
+    // height: 200,
     // flex: 1,
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 15,
-    overflow: "hidden",
-    paddingBottom: 10
+    // height: 100,
+    // paddingHorizontal: 15,
+    overflow: "hidden"
+    // paddingBottom: 10
     // borderBottomLeftRadius: 20,
     // borderBottomRightRadius: 20
   },
@@ -185,6 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   topBar: {
+    flex: 1,
     paddingTop: SB_HEIGHT,
     justifyContent: "space-between",
     flexDirection: "row",
@@ -196,12 +215,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: SB_HEIGHT + BAR_HEIGHT + 30
+    // paddingTop: 100
   },
   animated: {
     position: "absolute",
     left: 0,
     right: 0,
-    top: SB_HEIGHT
+    top: SB_HEIGHT,
+    paddingTop: 40,
+    paddingBottom: 5
   },
   title: {
     marginLeft: 50,
@@ -259,18 +281,30 @@ const styles = StyleSheet.create({
     height: ICON_DIMENSION,
     width: ICON_DIMENSION
   },
+  textContainer: {
+    flex: 1,
+    flexDirection: "row"
+    // marginBottom: 5
+    // paddingBottom: 5,
+    // backgroundColor: "blue"
+    // backgroundColor: "red"
+    // paddingBottom: 5
+    // backgroundColor: "red",
+    // paddingHorizontal: 50
+  },
   text: {
     flex: 1,
     fontSize: 18,
     fontWeight: "bold",
     textAlignVertical: "center",
-    textAlign: "center"
+    textAlign: "center",
+    color: "white"
     // paddingBottom: 10,
   },
   indicator: {
     top: 22,
     // top: 0,
-    height: 3,
+    height: 300,
     alignSelf: "center",
     borderRadius: 2
   }
