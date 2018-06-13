@@ -28,7 +28,7 @@ class ActiveMove extends Component {
     let groupName = <Text style={styles.group}>{move.group}</Text>;
 
     return (
-      <SuperEllipseMask radius={15}>
+      <SuperEllipseMask radius={10}>
         <View
           style={[
             styles.container,
@@ -54,8 +54,7 @@ class ActiveMove extends Component {
                 )}
                 {!this.props.focused && groupName}
                 <View style={{ flexDirection: "row" }}>
-                  <Icon name={"corner-down-right"} size={14} color={Colors.primary} />
-                  <Text style={styles.from}>from </Text>
+                  <Icon name={"corner-left-up"} size={14} color={Colors.active} />
                   <Text style={styles.name}>{move.name}</Text>
                 </View>
               </View>
@@ -68,7 +67,7 @@ class ActiveMove extends Component {
           <View style={styles.bottom}>
             <Text style={styles.time}>{TimeAgo(move.time)}</Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Icon name={"compass"} size={14} color={Colors.active} />
+              <Icon name={"compass"} size={14} color={Colors.gray} />
               <Text style={styles.location}>{move.location}</Text>
             </View>
           </View>
@@ -130,14 +129,16 @@ const styles = StyleSheet.create({
     color: Colors.gray
   },
   name: {
+    paddingTop: 2,
+    paddingLeft: 3,
     fontSize: 14,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: Colors.gray
   },
   group: {
-    fontSize: 24,
+    fontSize: 22
     // fontWeight: "800"
-    fontWeight: "300"
+    // fontWeight: "300"
     // color: Colors.active,
   },
   time: {
@@ -147,37 +148,39 @@ const styles = StyleSheet.create({
     fontSize: 14,
     // alignSelf: "center",
     // color: Colors.active,
-    color: Colors.active,
-    fontWeight: "800"
+    color: Colors.gray
+    // fontWeight: "800"
     // fontWeight: "300",
   },
   mid: {
     flex: 2,
     // marginVertical: 10,
-    paddingHorizontal: 10,
-    marginBottom: 5
+    paddingHorizontal: 10
+    // marginBottom: 5
   },
   description: {
-    fontSize: 14,
-    fontWeight: "300"
+    fontSize: 22
+    // fontWeight: "200"
+    // fontWeight: "800"
   },
   bottom: {
     flex: 1,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-    // backgroundColor: Colors.active
+    // backgroundColor: Colors.gray
     // bacl
     // alignSelf: "flex-end"
   },
   location: {
+    paddingTop: 1,
     marginLeft: 2,
     fontSize: 14,
     // fontWeight: "200",
-    fontWeight: "800",
-    color: Colors.active
+    // fontWeight: "800",
+    color: Colors.gray
   }
 });
 

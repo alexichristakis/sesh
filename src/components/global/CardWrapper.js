@@ -99,8 +99,8 @@ class CardWrapper extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 10,
-    marginBottom: 15
+    marginHorizontal: 8,
+    marginBottom: 8
   }
 });
 
