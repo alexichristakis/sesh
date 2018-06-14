@@ -11,6 +11,7 @@ import {
   FlatList
 } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
@@ -135,7 +136,11 @@ class Focus extends Component {
           </HalfPage>
         </ScrollView>
 
-        <View style={[styles.statusBar, { backgroundColor: Colors.primary, opacity: 0.8 }]} />
+        <LinearGradient
+          style={[styles.gradient]}
+          locations={[0.5, 1]}
+          colors={[Colors.header2, Colors.header1]}
+        />
         <BlurView blurType="light" style={styles.statusBar} />
       </Background>
     );
@@ -147,6 +152,14 @@ const styles = StyleSheet.create({
     flex: 1
 
     // ...shadow
+  },
+  gradient: {
+    position: "absolute",
+    top: -SB_HEIGHT - 20,
+    left: 0,
+    right: 0,
+    height: SB_HEIGHT + 60
+    // paddingTop: 100
   },
   swipeContainer: {
     position: "absolute",
@@ -160,8 +173,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     // padding: 10,
     // paddingRight: 12,
-    left: 10,
-    right: 10
+    left: 7,
+    right: 7
     // left: 0,
     // right: 0,
     // ...shadow

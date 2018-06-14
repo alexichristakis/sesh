@@ -15,11 +15,8 @@ class CardWrapper extends Component {
   constructor(props) {
     super(props);
 
-    this.animated = new Animated.Value(1);
-    this.entry = new Animated.Value(1);
-    this.openProgress = new Animated.Value(0);
+    this.animatedOpacity = new Animated.Value(1);
     this.state = {
-      open: false,
       height: 0,
       width: 0,
       pageX: 0,
@@ -30,15 +27,15 @@ class CardWrapper extends Component {
   }
 
   onLeave = () => {
-    Animated.timing(this.entry, {
+    Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 10,
+      duration: 0,
       useNativeDriver: true
     }).start();
   };
 
   onReturn = () => {
-    Animated.timing(this.entry, {
+    Animated.timing(this.animatedOpacity, {
       toValue: 1,
       duration: 0,
       useNativeDriver: true
@@ -72,17 +69,8 @@ class CardWrapper extends Component {
   };
 
   render() {
-    let containerAnimatedStyle = {
-      opacity: this.entry,
-      transform: [
-        {
-          scale: this.animated
-        }
-      ]
-    };
-
     let opacity = {
-      opacity: this.entry
+      opacity: this.animatedOpacity
     };
 
     return (
@@ -99,8 +87,8 @@ class CardWrapper extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8,
-    marginBottom: 8
+    marginHorizontal: 7,
+    marginBottom: 7
   }
 });
 

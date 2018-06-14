@@ -89,8 +89,8 @@ class Transition extends Component {
 
     let cardAnimatedStyle = {
       position: "absolute",
-      left: 10,
-      right: 10,
+      left: 7,
+      right: 7,
       transform: [
         {
           translateY: this.openProgress.interpolate({

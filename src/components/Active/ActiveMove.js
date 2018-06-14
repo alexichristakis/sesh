@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     color: Colors.gray
   },
   group: {
-    fontSize: 22
+    fontSize: 24
     // fontWeight: "800"
     // fontWeight: "300"
     // color: Colors.active,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     // marginBottom: 5
   },
   description: {
-    fontSize: 22
+    fontSize: 14
     // fontWeight: "200"
     // fontWeight: "800"
   },
