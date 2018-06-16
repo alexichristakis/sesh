@@ -190,6 +190,8 @@ class Active extends Component {
     //   onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
     // });
 
+    this.props.clearScreen();
+    this.list.fadeOut();
     this.transition.beginTransition(MoveComponent, source, onReturn, data, {
       joined: joined,
       joinMove: this.joinMove,
@@ -239,17 +241,15 @@ class Active extends Component {
           onScroll={this.props._vertOnScroll}
           onScrollBeginDrag={this.props._onScrollBegin}
           onScrollEndDrag={this.props._onScrollEnd}
-          statusBarHeight={this.props.statusBarHeight}
         />
         <Transition
           ref={item => (this.transition = item)}
           destinationPage={"sesh.ActiveFocus"}
           transitionFinished={this.transitionFinished}
-          clearScreen={this.props.clearScreen}
+          // clearScreen={this.props.clearScreen}
           returnScreen={this.props.returnScreen}
           onPressPushTo={this.props.onPressPushTo}
           MoveComponent={this.state.MoveComponent}
-          statusBarHeight={this.props.statusBarHeight}
         />
       </View>
     );

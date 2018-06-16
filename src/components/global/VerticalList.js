@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+// const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class VerticalList extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class VerticalList extends Component {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
       duration: TRANSITION_DURATION,
-      easing: Easing.ease,
+      // easing: Easing.ease,
       useNativeDriver: true
     }).start();
   };
@@ -31,7 +31,7 @@ class VerticalList extends Component {
     Animated.timing(this.animatedOpacity, {
       toValue: 1,
       duration: TRANSITION_DURATION,
-      easing: Easing.out(Easing.ease),
+      easing: Easing.ease,
       useNativeDriver: true
     }).start();
   };
@@ -40,6 +40,7 @@ class VerticalList extends Component {
     Animated.timing(this.animatedTranslate, {
       toValue: 0,
       duration: 250,
+      easing: Easing.in(Easing.ease),
       useNativeDriver: true
     }).start();
   };
@@ -64,7 +65,7 @@ class VerticalList extends Component {
 
   render() {
     let animatedStyle = {
-      paddingTop: SB_HEIGHT === 40 ? 63 : 68,
+      // paddingTop: SB_HEIGHT === 40 ? 63 : 68,
       transform: [
         {
           translateY: this.animatedTranslate.interpolate({
@@ -73,35 +74,41 @@ class VerticalList extends Component {
           })
         }
       ],
+      // opacity: this.animatedOpacity
       opacity: this.animatedOpacity.interpolate({
         inputRange: [0, 0.7, 1],
-        outputRange: [0, 0, 1],
-        extrapolate: "clamp"
+        outputRange: [0, 0, 1]
       })
     };
 
     return (
-      <AnimatedFlatList
-        style={[styles.container, animatedStyle]}
-        contentContainerStyle={styles.content}
-        data={this.props.data}
-        renderItem={this.props.renderItem}
-        // ItemSeparatorComponent={this.renderSeparator}
-        scrollEventThrottle={50}
-        onScroll={this.props.onScroll}
-        onScrollBeginDrag={this.props.onScrollBeginDrag}
-        onScrollEndDrag={this.props.onScrollEndDrag}
-        keyExtractor={this._keyExtractor}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={this.props.renderHeader}
-      />
+      <Animated.View style={[styles.container, animatedStyle]}>
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.content}
+          data={this.props.data}
+          renderItem={this.props.renderItem}
+          // ItemSeparatorComponent={this.renderSeparator}
+          scrollEventThrottle={50}
+          onScroll={this.props.onScroll}
+          onScrollBeginDrag={this.props.onScrollBeginDrag}
+          onScrollEndDrag={this.props.onScrollEndDrag}
+          keyExtractor={this._keyExtractor}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={this.props.renderHeader}
+        />
+      </Animated.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  list: {
     // flex: 1,
+    paddingTop: SB_HEIGHT === 40 ? 63 : 68,
     position: "absolute",
     top: 0,
     left: 0,

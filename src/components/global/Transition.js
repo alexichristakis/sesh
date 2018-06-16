@@ -53,7 +53,7 @@ class Transition extends Component {
   };
 
   openCard = (source, onReturn, data, props) => {
-    this.props.clearScreen();
+    // this.props.clearScreen();
     Animated.timing(this.openProgress, {
       toValue: 1,
       duration: TRANSITION_DURATION,

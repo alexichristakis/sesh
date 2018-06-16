@@ -37,7 +37,15 @@ class ActiveMove extends Component {
         >
           {this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}
           <View style={styles.top}>
-            <Image style={styles.image} resizeMode="cover" source={{ uri: move.photo }} />
+            <Image
+              style={styles.image}
+              resizeMode="cover"
+              source={{ uri: move.photo, cache: "force-cache" }}
+              // source={{
+              //   uri: 'https://farm5.staticflickr.com/4374/36390435575_7e51b26c00_z.jpg',
+              //   cache: 'force-cache'
+              // }}
+            />
             <View style={styles.header}>
               <View style={{ flex: 2 }}>
                 {this.props.focused && (

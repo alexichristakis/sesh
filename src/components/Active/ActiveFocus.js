@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 20,
     padding: 15,
-    borderRadius: 15,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center"
     // ...shadow,

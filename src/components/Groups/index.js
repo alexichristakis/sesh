@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Animated, StyleSheet, TouchableHighlight, View, FlatList, Text } from "react-native";
 
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Navigation } from "react-native-navigation";
 import { BlurView, VibrancyView } from "react-native-blur";
@@ -151,18 +152,41 @@ class Groups extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: Colors.lightGray }}>
         <FlatList
-          style={styles.container}
+          style={styles.list}
           data={this.state.data}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           ItemSeparatorComponent={this._renderSeparator}
-          ListHeaderComponent={this._renderHeader}
+          showsVerticalScrollIndicator={false}
+          // ListHeaderComponent={this._renderHeader}
         />
 
-        {/* <BlurView blurType="light" style={styles.statusBar} /> */}
-        {/* <View style={[styles.statusBar, { backgroundColor: Colors.primary }]} /> */}
-        <View style={[styles.statusBar, { backgroundColor: Colors.groups, opacity: 0.8 }]} />
-        <BlurView blurType="light" style={styles.statusBar} />
+        <View style={[styles.statusBar]}>
+          <SuperEllipseMask radius={{ bottomRight: 20, bottomLeft: 20 }}>
+            <View
+              style={{
+                width: SCREEN_WIDTH,
+                paddingTop: SB_HEIGHT,
+                // paddingBottom: 15,
+                paddingHorizontal: 15
+              }}
+            >
+              <LinearGradient
+                style={styles.statusBar}
+                locations={[0.5, 1]}
+                colors={[Colors.groupsHeader1, Colors.groupsHeader2]}
+              />
+              <BlurView blurType="light" style={styles.statusBar} />
+
+              <View style={styles.headerContainer}>
+                <Text style={styles.header}>My Groups</Text>
+                <TouchableScale onPress={() => this.props.presentModal("sesh.CreateGroup")}>
+                  <Icon style={{ paddingBottom: 8 }} name={"plus"} size={30} color={"white"} />
+                </TouchableScale>
+              </View>
+            </View>
+          </SuperEllipseMask>
+        </View>
 
         <BackButton onPressPop={() => Navigation.dismissModal(this.props.componentId)} />
       </View>
@@ -171,23 +195,21 @@ class Groups extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
+  list: {
+    flex: 1,
     // paddingLeft: 10,
-    // paddingTop: 40
+    paddingTop: 40
   },
   headerContainer: {
     // backgroundColor: "red",
     flexDirection: "row",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
     justifyContent: "space-between",
     alignItems: "center"
   },
   header: {
     // paddingTop: SB_HEIGHT,
     paddingBottom: 10,
-    // color: "white",
+    color: "white",
     fontSize: 28,
     fontWeight: "800"
   },
@@ -202,7 +224,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: SB_HEIGHT
+    height: SB_HEIGHT + 55
   }
 });
 

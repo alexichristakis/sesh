@@ -6,6 +6,8 @@ const secondary = "#FF2C55";
 const tertiary = "#5856d6";
 
 const groups = "#FF9500";
+const groupsHeader1 = "#FFBB5C";
+const groupsHeader2 = "#FF9500";
 // const active = "#5856d6";
 const active = "#9121D3";
 const later = "#FF9500";
@@ -25,8 +27,6 @@ const lightGray = "#F6F6F6";
 // const darkerGray = "rgb(209,211,212)";
 const mediumGray = "rgb(230,231,232)";
 const gray = "#979797";
-
-const card = {};
 
 const shadow = {
   shadowRadius: 0.75,
@@ -107,6 +107,8 @@ const colors = {
   active,
   later,
   groups,
+  groupsHeader1,
+  groupsHeader2,
   lightGray,
   mediumGray,
   // darkerGray,

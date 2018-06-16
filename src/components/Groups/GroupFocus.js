@@ -186,7 +186,7 @@ class GroupFocus extends Component {
   };
 
   render() {
-    let translate = {
+    let translateAnimatedStyle = {
       transform: [
         {
           translateY: this.entry.interpolate({
@@ -197,11 +197,19 @@ class GroupFocus extends Component {
       ]
     };
 
+    let containerAnimatedStyle = {
+      flex: 1,
+      opacity: this.entry.interpolate({
+        inputRange: [0, 0.5, 1],
+        outputRange: [0, 0.9, 1]
+      })
+    };
+
     return (
-      <Animated.View style={{ flex: 1, opacity: this.entry }}>
+      <Animated.View style={containerAnimatedStyle}>
         <StatusBar barStyle="light-content" />
         <BlurView blurType="dark" blurAmount={10} style={styles.blur}>
-          <Animated.ScrollView style={translate}>
+          <Animated.ScrollView style={translateAnimatedStyle}>
             <Group card updateName={this.updateGroupName} data={this.props.data} />
             <FlatList
               style={{ marginBottom: 10 }}
@@ -216,7 +224,7 @@ class GroupFocus extends Component {
             {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
           </Animated.ScrollView>
         </BlurView>
-        <BackButton onPressPop={this.dismiss} />
+        <BackButton list onPressPop={this.dismiss} />
       </Animated.View>
     );
   }

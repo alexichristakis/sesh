@@ -70,7 +70,7 @@ class TopBar extends Component {
     Animated.timing(this.animated, {
       toValue: 1,
       duration: 250,
-      easing: Easing.in(Easing.ease),
+      easing: Easing.out(Easing.ease),
       useNativeDriver: true
     }).start();
   };

@@ -170,8 +170,8 @@ class Home extends Component {
   clearScreen = () => {
     if (this.state.barOpen) this.topBar.handleCloseBar();
     this.bottomBar.handleHideBar();
-    if (xOffset._value === 0) this.active.list.fadeOut();
-    else this.later.list.fadeOut();
+    // if (xOffset._value === 0) this.active.list.fadeOut();
+    // else this.later.list.fadeOut();
   };
 
   returnScreen = () => {
@@ -330,5 +330,5 @@ const styles = StyleSheet.create({
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;
