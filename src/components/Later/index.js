@@ -86,6 +86,7 @@ class Later extends Component {
   }
 
   transitionFrom = (source, onReturn, data, MoveComponent) => {
+    this.props.clearScreen();
     this.transition.beginTransition(MoveComponent, source, onReturn, data, {
       onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
     });
@@ -118,7 +119,6 @@ class Later extends Component {
           ref={item => (this.transition = item)}
           destinationPage={"sesh.LaterFocus"}
           transitionFinished={this.transitionFinished}
-          clearScreen={this.props.clearScreen}
           returnScreen={this.props.returnScreen}
           onPressPushTo={this.props.onPressPushTo}
           MoveComponent={this.state.MoveComponent}

@@ -5,7 +5,7 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const SB_HEIGHT = Platform.OS === "ios" && SCREEN_HEIGHT === 812 ? 40 : 20;
 
-const TRANSITION_DURATION = 250;
+const TRANSITION_DURATION = 200;
 
 module.exports = {
   SCREEN_WIDTH,

@@ -10,7 +10,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import TouchableScale from "./global/TouchableScale";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
 
 const BAR_HEIGHT = 30;
@@ -59,8 +59,8 @@ class TopBar extends Component {
     this.setState({ open: false });
     Animated.timing(this.animated, {
       toValue: 0,
-      duration: 250,
-      easing: Easing.in(Easing.ease),
+      duration: TRANSITION_DURATION,
+      easing: Easing.ease,
       useNativeDriver: true
     }).start();
   };
@@ -69,8 +69,8 @@ class TopBar extends Component {
     this.setState({ open: true });
     Animated.timing(this.animated, {
       toValue: 1,
-      duration: 250,
-      easing: Easing.out(Easing.ease),
+      duration: TRANSITION_DURATION,
+      easing: Easing.ease,
       useNativeDriver: true
     }).start();
   };

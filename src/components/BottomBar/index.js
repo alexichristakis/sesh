@@ -12,7 +12,7 @@ class BottomBar extends Component {
     Animated.timing(yTranslate, {
       toValue: 1,
       duration: 150,
-      easing: Easing.out(Easing.poly(0.25)),
+      easing: Easing.ease,
       useNativeDriver: true
     }).start();
   };
@@ -21,7 +21,7 @@ class BottomBar extends Component {
     Animated.timing(yTranslate, {
       toValue: 0,
       duration: 150,
-      easing: Easing.in(Easing.poly(0.25)),
+      easing: Easing.ease,
       useNativeDriver: true
     }).start();
   };

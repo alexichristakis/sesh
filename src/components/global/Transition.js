@@ -77,7 +77,7 @@ class Transition extends Component {
     Animated.timing(this.openProgress, {
       toValue: 0,
       duration: TRANSITION_DURATION,
-      easing: Easing.out(Easing.ease),
+      easing: Easing.ease,
       useNativeDriver: true
     }).start(() => {
       this.setState({ open: false });
@@ -101,10 +101,20 @@ class Transition extends Component {
       ]
     };
 
+    let opacity = {
+      opacity: this.openProgress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1]
+      })
+    };
+
     if (this.state.open) {
       return (
-        <View shouldRasterizeIOS style={styles.container}>
-          <Animated.View style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
+        <View style={styles.container}>
+          <Animated.View style={[styles.background, opacity]} />
+          <Animated.View shouldRasterizeIOS style={cardAnimatedStyle}>
+            {this.state.MoveComponent}
+          </Animated.View>
         </View>
       );
     } else {
@@ -119,8 +129,16 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     bottom: 0,
+    right: 0
+    // backgroundColor: "transparent"
+  },
+  background: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
     right: 0,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.mediumGray
   },
   cover: {
     flex: 1,

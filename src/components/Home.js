@@ -170,15 +170,11 @@ class Home extends Component {
   clearScreen = () => {
     if (this.state.barOpen) this.topBar.handleCloseBar();
     this.bottomBar.handleHideBar();
-    // if (xOffset._value === 0) this.active.list.fadeOut();
-    // else this.later.list.fadeOut();
   };
 
   returnScreen = () => {
     if (this.state.barOpen) this.topBar.handleOpenBar();
     this.bottomBar.handleShowBar();
-    if (xOffset._value === 0) this.active.list.fadeIn();
-    else this.later.list.fadeIn();
   };
 
   onPressPop = () => {
@@ -251,7 +247,7 @@ class Home extends Component {
     };
 
     return (
-      <Background>
+      <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <Animated.ScrollView
           horizontal
@@ -314,7 +310,7 @@ class Home extends Component {
           indicatorAnimate={indicatorAnimate}
           onPressPresentModalTo={this.onPressPresentModalTo}
         />
-      </Background>
+      </View>
     );
   }
 }

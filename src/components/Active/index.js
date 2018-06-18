@@ -191,7 +191,6 @@ class Active extends Component {
     // });
 
     this.props.clearScreen();
-    this.list.fadeOut();
     this.transition.beginTransition(MoveComponent, source, onReturn, data, {
       joined: joined,
       joinMove: this.joinMove,

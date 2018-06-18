@@ -49,8 +49,6 @@ class ActiveFocus extends Component {
   constructor(props) {
     super(props);
 
-    this.animated = new Animated.Value(1);
-
     this.state = {
       joined: this.props.joined,
       loading: true,
@@ -79,22 +77,6 @@ class ActiveFocus extends Component {
     }, 100);
   };
 
-  handlePressIn = () => {
-    Animated.spring(this.animated, {
-      toValue: 0.9,
-      useNativeDriver: true
-    }).start();
-  };
-
-  handlePressOut = () => {
-    Animated.spring(this.animated, {
-      toValue: 1,
-      friction: 3,
-      tension: 40,
-      useNativeDriver: true
-    }).start();
-  };
-
   handleOnPress = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
     this.setState({ joined: !this.state.joined });
@@ -103,14 +85,6 @@ class ActiveFocus extends Component {
   _renderItem = ({ item }) => <User data={item} />;
 
   _renderHeader = () => {
-    let animatedStyle = {
-      transform: [
-        {
-          scale: this.animated
-        }
-      ]
-    };
-
     let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
     return (
@@ -118,25 +92,29 @@ class ActiveFocus extends Component {
         {/* {!this.state.loading && <MapCard large markers={data} />} */}
         <MapCard large markers={data} />
         {/* {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />} */}
-        <TouchableScale
-          style={[
-            styles.joinButton,
-            {
-              backgroundColor: this.state.joined ? Colors.active : "white"
-            }
-          ]}
-          onPress={this.handleOnPress}
-        >
-          <Text
-            style={[
-              styles.joinText,
-              {
-                color: this.state.joined ? "white" : Colors.active
-              }
-            ]}
-          >
-            {!this.state.joined ? "Join" : "Leave"}
-          </Text>
+
+        <TouchableScale style={{ marginVertical: 20 }} onPress={this.handleOnPress}>
+          <SuperEllipseMask radius={10}>
+            <View
+              style={[
+                styles.joinButton,
+                {
+                  backgroundColor: this.state.joined ? Colors.active : "white"
+                }
+              ]}
+            >
+              <Text
+                style={[
+                  styles.joinText,
+                  {
+                    color: this.state.joined ? "white" : Colors.active
+                  }
+                ]}
+              >
+                {!this.state.joined ? "Join" : "Leave"}
+              </Text>
+            </View>
+          </SuperEllipseMask>
         </TouchableScale>
       </View>
     );
@@ -171,9 +149,9 @@ class ActiveFocus extends Component {
 const styles = StyleSheet.create({
   joinButton: {
     flex: 1,
-    marginVertical: 20,
+    // marginVertical: 20,
     padding: 15,
-    borderRadius: 10,
+    // borderRadius: 10,
     alignItems: "center",
     justifyContent: "center"
     // ...shadow,
