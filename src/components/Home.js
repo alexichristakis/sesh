@@ -83,6 +83,30 @@ function textColorTransform(index: number) {
   }
 }
 
+function barTransform(index: number) {
+  const base = { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 };
+  switch (index) {
+    case 0:
+      return {
+        ...base,
+        opacity: xOffset.interpolate({
+          inputRange: [0, SCREEN_WIDTH / 2, 3 * SCREEN_WIDTH / 4, SCREEN_WIDTH],
+          outputRange: [1, 0.8, 1, 0]
+        })
+      };
+      break;
+    case 1:
+      return {
+        ...base,
+        opacity: xOffset.interpolate({
+          inputRange: [0, SCREEN_WIDTH / 2, 3 * SCREEN_WIDTH / 4, SCREEN_WIDTH],
+          outputRange: [0, 0.8, 1, 1]
+        })
+      };
+      break;
+  }
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -298,6 +322,7 @@ class Home extends Component {
           onPressPresentOverlayTo={this.onPressPresentOverlayTo}
           onPressPop={this.onPressPop}
           groupsProps={groupsProps}
+          barTransform={barTransform}
           profilePic={this.state.photo}
           scrollDir={this.state.scrollDir}
         />
@@ -318,7 +343,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.lightGray
+    backgroundColor: Colors.mediumGray
   },
   scroll: {
     flex: 1,
@@ -326,5 +351,5 @@ const styles = StyleSheet.create({
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;

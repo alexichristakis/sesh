@@ -1,7 +1,11 @@
-const header1 = "rgba(23,184,255,1)";
-const header2 = "rgba(0,147,255,0.8)";
+const activeHeader1 = "rgba(23,184,255,1)";
+const activeHeader2 = "rgba(0,147,255,0.8)";
 
-const primary = "#5AC8FA";
+const laterHeader1 = "rgba(163,90,240,1)";
+const laterHeader2 = "rgba(130,0,220,0.8)";
+
+// const primary = "#5AC8FA";
+const primary = "#2b49ff";
 const secondary = "#FF2C55";
 const tertiary = "#5856d6";
 
@@ -9,8 +13,10 @@ const groups = "#FF9500";
 const groupsHeader1 = "#FFBB5C";
 const groupsHeader2 = "#FF9500";
 // const active = "#5856d6";
-const active = "#9121D3";
-const later = "#FF9500";
+// const active = "#9121D3";
+const active = "rgba(23,184,255,1)";
+// const later = "#FF9500";
+const later = "rgba(130,0,220,1)";
 
 /* Apple colors */
 const red = "#FF3B30";
@@ -25,7 +31,7 @@ const pink = "#FF2C55";
 const lightGray = "#F6F6F6";
 // const mediumGray = "#EFEFEF";
 // const darkerGray = "rgb(209,211,212)";
-const mediumGray = "rgb(230,231,232)";
+const mediumGray = "rgb(212,214,216)";
 const gray = "#979797";
 
 const shadow = {
@@ -99,8 +105,10 @@ const cardShadow = {
 };
 
 const colors = {
-  header1,
-  header2,
+  activeHeader1,
+  activeHeader2,
+  laterHeader1,
+  laterHeader2,
   primary,
   secondary,
   tertiary,

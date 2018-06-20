@@ -21,7 +21,7 @@ import BackButton from "./BackButton";
 import Background from "./Background";
 import MapCard from "./MapCard";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, CARD_GUTTER } from "../../lib/constants";
 import { Colors, heavyShadow, shadow } from "../../lib/styles";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -44,9 +44,10 @@ class Focus extends Component {
   componentDidMount() {
     Animated.timing(this.entry, {
       toValue: 1,
-      duration: 200,
+      duration: 100,
       // easing: Easing.poly(0.25),
-      easing: Easing.in(Easing.poly(0.25)),
+      // easing: Easing.in(Easing.poly(0.25)),
+      easing: Easing.in(Easing.quad),
       useNativeDriver: true
     }).start();
   }
@@ -56,7 +57,8 @@ class Focus extends Component {
       toValue: 0,
       duration: 100,
       // easing: Easing.poly(2),
-      easing: Easing.out(Easing.poly(0.25)),
+      // easing: Easing.out(Easing.poly(0.25)),
+      easing: Easing.out(Easing.quad),
       useNativeDriver: true
     }).start();
   };
@@ -95,7 +97,7 @@ class Focus extends Component {
         {
           translateY: this.entry.interpolate({
             inputRange: [0, 1],
-            outputRange: [250, 0]
+            outputRange: [SCREEN_HEIGHT / 2, 0]
           })
         }
       ]
@@ -139,7 +141,7 @@ class Focus extends Component {
         <LinearGradient
           style={[styles.gradient]}
           locations={[0.5, 1]}
-          colors={[Colors.header2, Colors.header1]}
+          colors={[Colors.activeHeader2, Colors.activeHeader1]}
         />
         <BlurView blurType="light" style={styles.statusBar} />
       </Background>
@@ -173,8 +175,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     // padding: 10,
     // paddingRight: 12,
-    left: 7,
-    right: 7
+    left: CARD_GUTTER,
+    right: CARD_GUTTER
     // left: 0,
     // right: 0,
     // ...shadow

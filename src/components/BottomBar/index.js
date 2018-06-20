@@ -4,6 +4,8 @@ import { Animated, Easing } from "react-native";
 import NavBar from "./NavBar";
 import NewMoveButton from "./NewMoveButton";
 
+import { TRANSITION_DURATION } from "../../lib/constants";
+
 const yTranslate = new Animated.Value(0);
 
 class BottomBar extends Component {
@@ -11,8 +13,8 @@ class BottomBar extends Component {
     if (this.button.state.open) this.button.handleCloseButton();
     Animated.timing(yTranslate, {
       toValue: 1,
-      duration: 150,
-      easing: Easing.ease,
+      duration: TRANSITION_DURATION,
+      easing: Easing.in(Easing.quad),
       useNativeDriver: true
     }).start();
   };
@@ -20,8 +22,8 @@ class BottomBar extends Component {
   handleShowBar = () => {
     Animated.timing(yTranslate, {
       toValue: 0,
-      duration: 150,
-      easing: Easing.ease,
+      duration: TRANSITION_DURATION,
+      easing: Easing.out(Easing.quad),
       useNativeDriver: true
     }).start();
   };

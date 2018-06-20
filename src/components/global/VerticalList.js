@@ -46,6 +46,8 @@ class VerticalList extends Component {
   };
 
   render() {
+    console.log("vertical list rendered");
+
     let animatedStyle = {
       // paddingTop: SB_HEIGHT === 40 ? 63 : 68,
       transform: [
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    paddingTop: SB_HEIGHT === 40 ? 63 : 68,
+    paddingTop: SB_HEIGHT === 40 ? 61 : 66,
     position: "absolute",
     top: 0,
     left: 0,

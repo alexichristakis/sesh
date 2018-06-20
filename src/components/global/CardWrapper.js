@@ -10,6 +10,7 @@ import TouchableScale from "./TouchableScale";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow, cardShadow } from "../../lib/styles";
+import { CARD_GUTTER } from "../../lib/constants";
 
 class CardWrapper extends Component {
   constructor(props) {
@@ -87,8 +88,8 @@ class CardWrapper extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 7,
-    marginBottom: 7
+    marginHorizontal: CARD_GUTTER,
+    marginBottom: CARD_GUTTER
   }
 });
 

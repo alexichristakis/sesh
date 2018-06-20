@@ -230,6 +230,8 @@ class Active extends Component {
   };
 
   render() {
+    console.log("active view rendered");
+
     const { openProgress } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "transparent" }}>

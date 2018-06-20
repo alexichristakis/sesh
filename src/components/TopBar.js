@@ -60,7 +60,7 @@ class TopBar extends Component {
     Animated.timing(this.animated, {
       toValue: 0,
       duration: TRANSITION_DURATION,
-      easing: Easing.ease,
+      easing: Easing.in(Easing.quad),
       useNativeDriver: true
     }).start();
   };
@@ -70,7 +70,7 @@ class TopBar extends Component {
     Animated.timing(this.animated, {
       toValue: 1,
       duration: TRANSITION_DURATION,
-      easing: Easing.ease,
+      easing: Easing.out(Easing.quad),
       useNativeDriver: true
     }).start();
   };
@@ -86,6 +86,7 @@ class TopBar extends Component {
   };
 
   render() {
+    console.log("topbar rendered");
     /* navigation functions */
     const presentModal = this.props.onPressPresentModalTo;
     const presentStackModal = this.props.onPressPresentModalToStack;
@@ -94,7 +95,7 @@ class TopBar extends Component {
 
     const { scrollToStart, scrollToEnd, indicatorAnimate } = this.props;
 
-    const { colorTransform } = this.props;
+    const { colorTransform, barTransform } = this.props;
 
     let animatedStyle = {
       opacity: this.animated,
@@ -127,14 +128,24 @@ class TopBar extends Component {
 
     return (
       <View style={styles.container}>
-        <SuperEllipseMask radius={{ bottomRight: 20, bottomLeft: 20 }}>
+        <SuperEllipseMask radius={{ bottomRight: 15, bottomLeft: 15 }}>
           <View style={{ width: SCREEN_WIDTH, paddingHorizontal: 15, paddingBottom: 10 }}>
             <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
-              <LinearGradient
-                style={styles.statusBar}
-                locations={[0.5, 1]}
-                colors={[Colors.header2, Colors.header1]}
-              />
+              <Animated.View style={[barTransform(0)]}>
+                <LinearGradient
+                  style={styles.statusBar}
+                  locations={[0.5, 1]}
+                  colors={[Colors.activeHeader2, Colors.activeHeader1]}
+                />
+              </Animated.View>
+              <Animated.View style={[barTransform(1)]}>
+                <LinearGradient
+                  style={styles.statusBar}
+                  locations={[0.5, 1]}
+                  colors={[Colors.laterHeader2, Colors.laterHeader1]}
+                />
+              </Animated.View>
+
               <BlurView blurType="light" style={styles.statusBar} />
             </Animated.View>
 

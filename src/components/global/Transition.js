@@ -6,7 +6,13 @@ import { Navigation } from "react-native-navigation";
 
 import Background from "./Background";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../../lib/constants";
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  SB_HEIGHT,
+  TRANSITION_DURATION,
+  CARD_GUTTER
+} from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 class Transition extends Component {
@@ -54,10 +60,12 @@ class Transition extends Component {
 
   openCard = (source, onReturn, data, props) => {
     // this.props.clearScreen();
+    // const pageY = this.state.pageY;
+    // console.log(pageY);
     Animated.timing(this.openProgress, {
       toValue: 1,
       duration: TRANSITION_DURATION,
-      easing: Easing.ease,
+      easing: Easing.in(Easing.quad),
       useNativeDriver: true
     }).start(() => {
       this.props.onPressPushTo(this.props.destinationPage, {
@@ -77,7 +85,7 @@ class Transition extends Component {
     Animated.timing(this.openProgress, {
       toValue: 0,
       duration: TRANSITION_DURATION,
-      easing: Easing.ease,
+      easing: Easing.out(Easing.quad),
       useNativeDriver: true
     }).start(() => {
       this.setState({ open: false });
@@ -85,12 +93,14 @@ class Transition extends Component {
   };
 
   render() {
+    console.log("transition rendered");
+
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
 
     let cardAnimatedStyle = {
       position: "absolute",
-      left: 7,
-      right: 7,
+      left: CARD_GUTTER,
+      right: CARD_GUTTER,
       transform: [
         {
           translateY: this.openProgress.interpolate({
@@ -112,9 +122,7 @@ class Transition extends Component {
       return (
         <View style={styles.container}>
           <Animated.View style={[styles.background, opacity]} />
-          <Animated.View shouldRasterizeIOS style={cardAnimatedStyle}>
-            {this.state.MoveComponent}
-          </Animated.View>
+          <Animated.View shouldRasterizeIOS style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
         </View>
       );
     } else {
