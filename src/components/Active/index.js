@@ -179,6 +179,8 @@ class Active extends Component {
     };
   }
 
+  shouldComponentUpdate(nextProps, nextState) {}
+
   transitionFrom = (source, onReturn, data, MoveComponent) => {
     let joined = this.state.joinedMoves.includes(data.id);
     // this.setState({ MoveComponent: MoveComponent });
@@ -230,9 +232,9 @@ class Active extends Component {
   };
 
   render() {
-    console.log("active view rendered");
+    // console.log("active view rendered");
 
-    const { openProgress } = this.state;
+    // const { openProgress } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "transparent" }}>
         <VerticalList

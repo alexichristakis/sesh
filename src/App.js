@@ -28,7 +28,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
 		},
 	});
 	let user = await UserAuthenticated();
-	console.log(user);
+	// console.log(user);
 	if (user) {
 		Navigation.setRoot({
 			root: {

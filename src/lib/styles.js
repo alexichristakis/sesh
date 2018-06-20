@@ -4,6 +4,8 @@ const activeHeader2 = "rgba(0,147,255,0.8)";
 const laterHeader1 = "rgba(163,90,240,1)";
 const laterHeader2 = "rgba(130,0,220,0.8)";
 
+const whiteTrans = "rgba(255,255,255,0.8)";
+
 // const primary = "#5AC8FA";
 const primary = "#2b49ff";
 const secondary = "#FF2C55";
@@ -105,6 +107,7 @@ const cardShadow = {
 };
 
 const colors = {
+  whiteTrans,
   activeHeader1,
   activeHeader2,
   laterHeader1,

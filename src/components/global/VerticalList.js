@@ -46,7 +46,7 @@ class VerticalList extends Component {
   };
 
   render() {
-    console.log("vertical list rendered");
+    // console.log("vertical list rendered");
 
     let animatedStyle = {
       // paddingTop: SB_HEIGHT === 40 ? 63 : 68,

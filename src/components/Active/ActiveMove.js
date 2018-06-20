@@ -32,7 +32,7 @@ class ActiveMove extends Component {
         <View
           style={[
             styles.container,
-            { backgroundColor: this.props.blur ? "rgba(255,255,255,0.8)" : "white" }
+            { backgroundColor: this.props.blur ? Colors.whiteTrans : "white" }
           ]}
         >
           {this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}

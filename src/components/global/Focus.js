@@ -138,11 +138,20 @@ class Focus extends Component {
           </HalfPage>
         </ScrollView>
 
-        <LinearGradient
-          style={[styles.gradient]}
-          locations={[0.5, 1]}
-          colors={[Colors.activeHeader2, Colors.activeHeader1]}
-        />
+        {this.props.active && (
+          <LinearGradient
+            style={[styles.gradient]}
+            locations={[0.5, 1]}
+            colors={[Colors.activeHeader2, Colors.activeHeader1]}
+          />
+        )}
+        {this.props.later && (
+          <LinearGradient
+            style={[styles.gradient]}
+            locations={[0.5, 1]}
+            colors={[Colors.laterHeader2, Colors.laterHeader1]}
+          />
+        )}
         <BlurView blurType="light" style={styles.statusBar} />
       </Background>
     );

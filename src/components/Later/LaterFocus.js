@@ -111,8 +111,7 @@ class LaterFocus extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        {!this.state.loading && <MapCard large markers={data} />}
-        {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
+        <MapCard large markers={data} />
       </View>
     );
   };
@@ -120,6 +119,7 @@ class LaterFocus extends Component {
   render() {
     return (
       <Focus
+        later
         ref={item => (this.focus = item)}
         // data={data}
         renderHeader={this._renderHeader}

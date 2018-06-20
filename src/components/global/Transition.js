@@ -93,7 +93,7 @@ class Transition extends Component {
   };
 
   render() {
-    console.log("transition rendered");
+    // console.log("transition rendered");
 
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
 
@@ -122,7 +122,9 @@ class Transition extends Component {
       return (
         <View style={styles.container}>
           <Animated.View style={[styles.background, opacity]} />
-          <Animated.View shouldRasterizeIOS style={cardAnimatedStyle}>{this.state.MoveComponent}</Animated.View>
+          <Animated.View shouldRasterizeIOS style={cardAnimatedStyle}>
+            {this.state.MoveComponent}
+          </Animated.View>
         </View>
       );
     } else {

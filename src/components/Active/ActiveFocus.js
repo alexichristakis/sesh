@@ -72,7 +72,7 @@ class ActiveFocus extends Component {
 
     this.focus.exit();
     setTimeout(() => {
-    this.props.closeCard();
+      this.props.closeCard();
       Navigation.pop(this.props.componentId);
       // this.props.closeCard();
     }, 100);
@@ -90,9 +90,7 @@ class ActiveFocus extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        {/* {!this.state.loading && <MapCard large markers={data} />} */}
         <MapCard large markers={data} />
-        {/* {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />} */}
 
         <TouchableScale style={{ marginVertical: 20 }} onPress={this.handleOnPress}>
           <SuperEllipseMask radius={10}>
@@ -124,6 +122,7 @@ class ActiveFocus extends Component {
   render() {
     return (
       <Focus
+        active
         ref={item => (this.focus = item)}
         // data={data}
         renderHeader={this._renderHeader}
