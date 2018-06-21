@@ -7,7 +7,7 @@ const SB_HEIGHT = Platform.OS === "ios" && SCREEN_HEIGHT === 812 ? 40 : 20;
 
 const TRANSITION_DURATION = 200;
 
-const CARD_GUTTER = 5;
+const CARD_GUTTER = 6;
 
 module.exports = {
   SCREEN_WIDTH,

@@ -70,8 +70,8 @@ class LaterFocus extends Component {
   onPressPop = () => {
     this.focus.exit();
     setTimeout(() => {
-      Navigation.pop(this.props.componentId);
       this.props.closeCard();
+      Navigation.dismissOverlay(this.props.componentId);
     }, 100);
   };
 
@@ -99,14 +99,6 @@ class LaterFocus extends Component {
   _renderItem = ({ item }) => <User data={item} />;
 
   _renderHeader = () => {
-    let animatedStyle = {
-      transform: [
-        {
-          scale: this.animated
-        }
-      ]
-    };
-
     let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
     return (

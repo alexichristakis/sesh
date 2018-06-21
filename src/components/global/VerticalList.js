@@ -14,6 +14,23 @@ class VerticalList extends Component {
     // this.animatedPadding = new Animated.Value(105);
     this.animatedOpacity = new Animated.Value(1);
     this.animatedTranslate = new Animated.Value(1);
+
+    this.state = {
+      shortened: false
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.shortened && nextProps.shortened) {
+      this.setState({ shortened: true }, () => this.shortenPadding());
+    } else if (this.state.shortened && !nextProps.shortened) {
+      this.setState({ shortened: false }, () => this.lengthenPadding());
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.shortened === nextProps.shortened) return false;
+    else return true;
   }
 
   _keyExtractor = item => item.id.toString();
@@ -47,6 +64,7 @@ class VerticalList extends Component {
 
   render() {
     // console.log("vertical list rendered");
+    // console.log("VerticalList props: ", this.props);
 
     let animatedStyle = {
       // paddingTop: SB_HEIGHT === 40 ? 63 : 68,

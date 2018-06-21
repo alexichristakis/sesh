@@ -3,6 +3,7 @@ import { Animated, Easing, StyleSheet, View, Image, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
+import { BlurView } from "react-native-blur";
 
 import Background from "./Background";
 
@@ -121,7 +122,10 @@ class Transition extends Component {
     if (this.state.open) {
       return (
         <View style={styles.container}>
-          <Animated.View style={[styles.background, opacity]} />
+          {/* <Animated.View style={[styles.background, opacity]} /> */}
+          <Animated.View style={[styles.background, opacity]}>
+            <BlurView blurType="dark" blurAmount={10} style={styles.background} />
+          </Animated.View>
           <Animated.View shouldRasterizeIOS style={cardAnimatedStyle}>
             {this.state.MoveComponent}
           </Animated.View>
@@ -147,8 +151,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     bottom: 0,
-    right: 0,
-    backgroundColor: Colors.mediumGray
+    right: 0
+    // backgroundColor: Colors.mediumGray
   },
   cover: {
     flex: 1,

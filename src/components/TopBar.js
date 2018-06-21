@@ -145,7 +145,6 @@ class TopBar extends Component {
                   colors={[Colors.laterHeader2, Colors.laterHeader1]}
                 />
               </Animated.View>
-
               <BlurView blurType="light" style={styles.statusBar} />
             </Animated.View>
 

@@ -18,7 +18,7 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
 import { Colors, shadow } from "../../lib/styles";
-import { SB_HEIGHT, SCREEN_WIDTH } from "../../lib/constants";
+import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER } from "../../lib/constants";
 
 import Focus from "../global/Focus";
 import User from "../global/User";
@@ -224,7 +224,7 @@ class GroupFocus extends Component {
             {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
           </Animated.ScrollView>
         </BlurView>
-        <BackButton list onPressPop={this.dismiss} />
+        <BackButton onPressPop={this.dismiss} />
       </Animated.View>
     );
   }
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     paddingTop: SB_HEIGHT,
-    paddingHorizontal: 10
+    paddingHorizontal: CARD_GUTTER
   },
   header: {
     flex: 1,

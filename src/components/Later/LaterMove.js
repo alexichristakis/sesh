@@ -144,9 +144,9 @@ const styles = StyleSheet.create({
     color: Colors.gray
   },
   group: {
-    fontSize: 24
+    fontSize: 24,
     // fontWeight: "800"
-    // fontWeight: "300"
+    fontWeight: "300"
     // color: Colors.active,
   },
   time: {

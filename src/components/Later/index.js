@@ -107,9 +107,10 @@ class Later extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: "transparent" }}>
         <VerticalList
-          ref={item => (this.list = item)}
+          // ref={item => (this.list = item)}
           data={data}
           renderItem={this._renderItem}
+          shortened={this.props.shortened}
           onScroll={this.props._vertOnScroll}
           onScrollBeginDrag={this.props._onScrollBegin}
           onScrollEndDrag={this.props._onScrollEnd}
@@ -120,7 +121,7 @@ class Later extends Component {
           destinationPage={"sesh.LaterFocus"}
           transitionFinished={this.transitionFinished}
           returnScreen={this.props.returnScreen}
-          onPressPushTo={this.props.onPressPushTo}
+          onPressPushTo={this.props.onPressPresentOverlayTo}
           MoveComponent={this.state.MoveComponent}
           statusBarHeight={this.props.statusBarHeight}
         />

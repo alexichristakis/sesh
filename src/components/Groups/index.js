@@ -162,7 +162,7 @@ class Groups extends Component {
         />
 
         <View style={[styles.statusBar]}>
-          <SuperEllipseMask radius={{ bottomRight: 20, bottomLeft: 20 }}>
+          <SuperEllipseMask radius={{ bottomRight: 15, bottomLeft: 15 }}>
             <View
               style={{
                 width: SCREEN_WIDTH,

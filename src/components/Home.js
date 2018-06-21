@@ -90,7 +90,7 @@ function barTransform(index: number) {
       return {
         ...base,
         opacity: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH / 2, 3 * SCREEN_WIDTH / 4, SCREEN_WIDTH],
+          inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [1, 0.8, 1, 0]
         })
       };
@@ -99,7 +99,7 @@ function barTransform(index: number) {
       return {
         ...base,
         opacity: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH / 2, 3 * SCREEN_WIDTH / 4, SCREEN_WIDTH],
+          inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [0, 0.8, 1, 1]
         })
       };
@@ -159,10 +159,10 @@ class Home extends Component {
     if (this.state.vertScrolling) {
       const diff = currentOffset - (yOffset || 0);
       if (diff <= 0) {
-        this.lengthenVertPadding();
+        // this.lengthenVertPadding();
         this.setState({ barOpen: true, scrollDir: { up: true, down: false } });
       } else {
-        this.shortenVertPadding();
+        // this.shortenVertPadding();
         this.setState({ barOpen: false, scrollDir: { up: false, down: true } });
       }
       this.setState({ vertScrolling: false });
@@ -172,16 +172,16 @@ class Home extends Component {
     else if (xOffset._value === SCREEN_WIDTH) activeOffset = yOffset;
     else laterOffset = yOffset;
   };
-
-  shortenVertPadding = () => {
-    this.active.list.shortenPadding();
-    this.later.list.shortenPadding();
-  };
-
-  lengthenVertPadding = () => {
-    this.active.list.lengthenPadding();
-    this.later.list.lengthenPadding();
-  };
+  //
+  // shortenVertPadding = () => {
+  //   this.active.list.shortenPadding();
+  //   this.later.list.shortenPadding();
+  // };
+  //
+  // lengthenVertPadding = () => {
+  //   this.active.list.lengthenPadding();
+  //   this.later.list.lengthenPadding();
+  // };
 
   _onScollBegin = () => {
     this.setState({ vertScrolling: true });
@@ -287,7 +287,8 @@ class Home extends Component {
         >
           <Page>
             <Active
-              ref={item => (this.active = item)}
+              // ref={item => (this.active = item)}
+              shortened={!this.state.barOpen}
               profilePic={this.state.photo}
               clearScreen={this.clearScreen}
               returnScreen={this.returnScreen}
@@ -300,7 +301,8 @@ class Home extends Component {
           </Page>
           <Page>
             <Later
-              ref={item => (this.later = item)}
+              // ref={item => (this.later = item)}
+              shortened={!this.state.barOpen}
               profilePic={this.state.photo}
               clearScreen={this.clearScreen}
               returnScreen={this.returnScreen}
