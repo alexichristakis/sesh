@@ -75,7 +75,7 @@ class ActiveFocus extends Component {
       this.props.closeCard();
       Navigation.pop(this.props.componentId);
       // this.props.closeCard();
-    }, 100);
+    }, 50);
   };
 
   handleOnPress = () => {

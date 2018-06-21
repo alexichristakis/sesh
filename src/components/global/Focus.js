@@ -81,7 +81,7 @@ class Focus extends Component {
     const listTopPadding = cardHeight + SB_HEIGHT - 20;
 
     const scrollHeight = {
-      paddingTop: SB_HEIGHT + 10,
+      paddingTop: SB_HEIGHT + CARD_GUTTER,
       paddingBottom: 10,
       height: cardHeight + SB_HEIGHT + 20
     };

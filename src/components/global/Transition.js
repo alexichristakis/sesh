@@ -105,7 +105,7 @@ class Transition extends Component {
         {
           translateY: this.openProgress.interpolate({
             inputRange: [0, 1],
-            outputRange: [pageY, SB_HEIGHT + 10]
+            outputRange: [pageY, SB_HEIGHT + CARD_GUTTER]
           })
         }
       ]
