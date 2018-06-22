@@ -75,10 +75,12 @@ class Transition extends Component {
         data: data,
         closeCard: this.closeCard
       });
+      // this.setState({ open: false });
     });
   };
 
   closeCard = () => {
+    // this.setState({ open: true });
     this.props.returnScreen();
     setTimeout(() => {
       this.state.onReturn();

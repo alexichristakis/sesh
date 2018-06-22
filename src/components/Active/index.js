@@ -245,8 +245,6 @@ class Active extends Component {
           renderItem={this._renderItem}
           shortened={this.props.shortened}
           onScroll={this.props._vertOnScroll}
-          onScrollBeginDrag={this.props._onScrollBegin}
-          onScrollEndDrag={this.props._onScrollEnd}
         />
         <Transition
           ref={item => (this.transition = item)}

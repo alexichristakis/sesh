@@ -32,8 +32,10 @@ class TopBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.open && nextProps.scrollDir.down) this.handleCloseBar();
-    else if (!this.state.open && nextProps.scrollDir.up) this.handleOpenBar();
+    if (this.state.open && !nextProps.barOpen)
+      this.setState({ open: false }, this.handleCloseBar());
+    else if (!this.state.open && nextProps.barOpen)
+      this.setState({ open: true }, this.handleOpenBar());
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,7 +58,6 @@ class TopBar extends Component {
   }
 
   handleCloseBar = () => {
-    this.setState({ open: false });
     Animated.timing(this.animated, {
       toValue: 0,
       duration: TRANSITION_DURATION,
@@ -66,7 +67,6 @@ class TopBar extends Component {
   };
 
   handleOpenBar = () => {
-    this.setState({ open: true });
     Animated.timing(this.animated, {
       toValue: 1,
       duration: TRANSITION_DURATION,
