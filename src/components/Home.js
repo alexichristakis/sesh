@@ -113,7 +113,7 @@ class Home extends Component {
     this.state = {
       loading: true,
       barOpen: true,
-      // vertScrolling: false,
+      vertScrolling: false,
 
       user: this.props.user,
       photo: "",
@@ -139,8 +139,11 @@ class Home extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.barOpen == nextState.barOpen) return false;
-    else return true;
+    // console.log("should component update? ", nextState, this.state);
+    if (this.state.barOpen === nextState.barOpen) return false;
+    else if (nextState.vertScrolling) return true;
+    else if (!this.state.vertScrolling) return false;
+    else return false;
   }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
@@ -154,14 +157,27 @@ class Home extends Component {
 
   _vertOnScroll = event => {
     const currentOffset = event.nativeEvent.contentOffset.y;
-    const diff = currentOffset - (yOffset._value || 0);
+    const diff = currentOffset - (yOffset || 0);
 
-    if (diff <= 0) this.setState({ barOpen: true });
-    else this.setState({ barOpen: false });
-
+    if (this.state.vertScrolling) {
+      if (diff <= 0) {
+        this.setState({ barOpen: true });
+      } else {
+        this.setState({ barOpen: false });
+      }
+    }
     yOffset = currentOffset;
     if (xOffset._value === 0) activeOffset = yOffset;
     else laterOffset = yOffset;
+  };
+
+  _onScrollBegin = () => {
+    console.log("scroll begin");
+    this.setState({ vertScrolling: true });
+  };
+
+  _onScrollEnd = () => {
+    this.setState({ vertScrolling: false });
   };
 
   clearScreen = () => {
@@ -268,6 +284,8 @@ class Home extends Component {
               returnScreen={this.returnScreen}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+              _onScrollBegin={this._onScrollBegin}
+              _onScrollEnd={this._onScrollEnd}
               _vertOnScroll={this._vertOnScroll}
             />
           </Page>
@@ -280,6 +298,8 @@ class Home extends Component {
               returnScreen={this.returnScreen}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+              _onScrollBegin={this._onScrollBegin}
+              _onScrollEnd={this._onScrollEnd}
               _vertOnScroll={this._vertOnScroll}
             />
           </Page>
@@ -323,5 +343,5 @@ const styles = StyleSheet.create({
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;

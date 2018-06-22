@@ -19,7 +19,7 @@ class MapCard extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ loading: false });
-    }, 200);
+    }, 400);
   }
 
   render() {

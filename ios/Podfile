@@ -58,6 +58,9 @@ target 'sesh' do
   # squircle
   pod 'react-native-super-ellipse-mask', :path => '../node_modules/react-native-super-ellipse-mask'
 
+  # interactable
+  pod 'Interactable', :path => '../node_modules/react-native-interactable'
+
 end
 
 post_install do |installer|

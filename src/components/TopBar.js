@@ -32,10 +32,8 @@ class TopBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.open && !nextProps.barOpen)
-      this.setState({ open: false }, this.handleCloseBar());
-    else if (!this.state.open && nextProps.barOpen)
-      this.setState({ open: true }, this.handleOpenBar());
+    if (this.state.open && !nextProps.barOpen) this.handleCloseBar();
+    else if (!this.state.open && nextProps.barOpen) this.handleOpenBar();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -58,21 +56,27 @@ class TopBar extends Component {
   }
 
   handleCloseBar = () => {
-    Animated.timing(this.animated, {
-      toValue: 0,
-      duration: TRANSITION_DURATION,
-      easing: Easing.in(Easing.quad),
-      useNativeDriver: true
-    }).start();
+    this.setState(
+      { open: false },
+      Animated.timing(this.animated, {
+        toValue: 0,
+        duration: TRANSITION_DURATION,
+        easing: Easing.in(Easing.quad),
+        useNativeDriver: true
+      }).start()
+    );
   };
 
   handleOpenBar = () => {
-    Animated.timing(this.animated, {
-      toValue: 1,
-      duration: TRANSITION_DURATION,
-      easing: Easing.out(Easing.quad),
-      useNativeDriver: true
-    }).start();
+    this.setState(
+      { open: true },
+      Animated.timing(this.animated, {
+        toValue: 1,
+        duration: TRANSITION_DURATION,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true
+      }).start()
+    );
   };
 
   hapticModal = (page, props) => () => {
@@ -127,7 +131,7 @@ class TopBar extends Component {
     };
 
     return (
-      <View style={styles.container}>
+      <View pointerEvents={this.state.open ? "auto" : "none"} style={styles.container}>
         <SuperEllipseMask radius={{ bottomRight: 15, bottomLeft: 15 }}>
           <View style={{ width: SCREEN_WIDTH, paddingHorizontal: 15, paddingBottom: 10 }}>
             <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>

@@ -17,6 +17,7 @@
 #import "Firestore/Source/API/FSTUserDataConverter.h"
 
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -41,6 +42,7 @@
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 #include "Firestore/core/src/firebase/firestore/util/string_apple.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 
 namespace util = firebase::firestore::util;
 using firebase::firestore::model::ArrayTransform;
@@ -55,7 +57,7 @@ using firebase::firestore::model::TransformOperation;
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const RESERVED_FIELD_DESIGNATOR = @"__";
+static const char *RESERVED_FIELD_DESIGNATOR = "__";
 
 #pragma mark - FSTParsedSetData
 
@@ -216,6 +218,9 @@ typedef NS_ENUM(NSInteger, FSTUserDataSource) {
 /** Returns true for the non-query parse contexts (Set, MergeSet and Update) */
 - (BOOL)isWrite;
 
+/** Returns 'YES' if 'fieldPath' was traversed when creating this context. */
+- (BOOL)containsFieldPath:(const FieldPath &)fieldPath;
+
 - (const FieldPath *)path;
 
 - (const std::vector<FieldPath> *)fieldMask;
@@ -277,7 +282,7 @@ typedef NS_ENUM(NSInteger, FSTUserDataSource) {
                                                         arrayElement:NO
                                                      fieldTransforms:_fieldTransforms
                                                            fieldMask:_fieldMask];
-  [context validatePathSegment:fieldName];
+  [context validatePathSegment:util::MakeStringView(fieldName)];
   return context;
 }
 
@@ -329,20 +334,37 @@ typedef NS_ENUM(NSInteger, FSTUserDataSource) {
   }
 }
 
+- (BOOL)containsFieldPath:(const FieldPath &)fieldPath {
+  for (const FieldPath &field : *_fieldMask) {
+    if (fieldPath.IsPrefixOf(field)) {
+      return YES;
+    }
+  }
+
+  for (const FieldTransform &fieldTransform : *_fieldTransforms) {
+    if (fieldPath.IsPrefixOf(fieldTransform.path())) {
+      return YES;
+    }
+  }
+
+  return NO;
+}
+
 - (void)validatePath {
   // TODO(b/34871131): Remove nil check once we have proper paths for fields within arrays.
   if (_path == nullptr) {
     return;
   }
-  for (const auto &segment : *_path) {
-    [self validatePathSegment:util::WrapNSStringNoCopy(segment)];
+  for (const std::string &segment : *_path) {
+    [self validatePathSegment:segment];
   }
 }
 
-- (void)validatePathSegment:(NSString *)segment {
-  if ([self isWrite] && [segment hasPrefix:RESERVED_FIELD_DESIGNATOR] &&
-      [segment hasSuffix:RESERVED_FIELD_DESIGNATOR]) {
-    FSTThrowInvalidArgument(@"Document fields cannot begin and end with %@%@",
+- (void)validatePathSegment:(absl::string_view)segment {
+  absl::string_view designator{RESERVED_FIELD_DESIGNATOR};
+  if ([self isWrite] && absl::StartsWith(segment, designator) &&
+      absl::EndsWith(segment, designator)) {
+    FSTThrowInvalidArgument(@"Document fields cannot begin and end with %s%@",
                             RESERVED_FIELD_DESIGNATOR, [self fieldDescription]);
   }
 }
@@ -441,7 +463,8 @@ typedef NS_ENUM(NSInteger, FSTUserDataSource) {
             @"All elements in mergeFields: must be NSStrings or FIRFieldPaths.");
       }
 
-      if ([updateData valueForPath:path] == nil) {
+      // Verify that all elements specified in the field mask are part of the parsed context.
+      if (![context containsFieldPath:path]) {
         FSTThrowInvalidArgument(
             @"Field '%s' is specified in your field mask but missing from your input data.",
             path.CanonicalString().c_str());

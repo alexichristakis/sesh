@@ -57,6 +57,7 @@ class ActiveFocus extends Component {
   }
 
   async componentDidMount() {
+    // console.log("active focus mounted");
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({ position: position, loading: false });
@@ -133,14 +134,13 @@ class ActiveFocus extends Component {
         onPressPop={this.onPressPop}
         renderItem={this._renderItem}
       >
-        <ActiveMove
+        {/* <ActiveMove
           blur
-          focused
           index={this.props.index}
           length={this.props.length}
           move={this.props.data}
           onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        />
+        /> */}
       </Focus>
     );
   }

@@ -209,7 +209,7 @@ class Active extends Component {
 
   _renderItem = ({ item, index }) => (
     <CardWrapper data={item} transitionFrom={this.transitionFrom}>
-      <ActiveMove move={item} />
+      <ActiveMove onPressPresentOverlayTo={this.props.onPressPresentOverlayTo} move={item} />
     </CardWrapper>
   );
 
@@ -245,10 +245,13 @@ class Active extends Component {
           renderItem={this._renderItem}
           shortened={this.props.shortened}
           onScroll={this.props._vertOnScroll}
+          _onScrollBegin={this.props._onScrollBegin}
+          _onScrollEnd={this.props._onScrollEnd}
         />
         <Transition
           ref={item => (this.transition = item)}
           destinationPage={"sesh.ActiveFocus"}
+          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
           transitionFinished={this.transitionFinished}
           // clearScreen={this.props.clearScreen}
           returnScreen={this.props.returnScreen}
