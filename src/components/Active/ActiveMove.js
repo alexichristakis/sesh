@@ -25,8 +25,6 @@ class ActiveMove extends Component {
       photo: "https://graph.facebook.com/1825693684117541/picture"
     };
 
-    let groupName = <Text style={styles.group}>{move.group}</Text>;
-
     return (
       <SuperEllipseMask radius={10}>
         <View
@@ -48,25 +46,22 @@ class ActiveMove extends Component {
             />
             <View style={styles.header}>
               <View style={{ flex: 2 }}>
-                {this.props.focused && (
-                  <TouchableOpacity
-                    onPress={() => {
-                      ReactNativeHapticFeedback.trigger("impactLight");
-                      this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
-                        data: group
-                      });
-                    }}
-                  >
-                    {groupName}
-                  </TouchableOpacity>
-                )}
-                {!this.props.focused && groupName}
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log("pressed!");
+                    ReactNativeHapticFeedback.trigger("impactLight");
+                    this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
+                      data: group
+                    });
+                  }}
+                >
+                  <Text style={styles.group}>{move.group}</Text>
+                </TouchableOpacity>
                 <View style={{ flexDirection: "row" }}>
                   <Icon name={"corner-left-up"} size={14} color={Colors.active} />
                   <Text style={styles.name}>{move.name}</Text>
                 </View>
               </View>
-              {/* <Text style={styles.time}>{TimeAgo(move.time)}</Text> */}
             </View>
           </View>
           <View style={styles.mid}>
@@ -144,9 +139,9 @@ const styles = StyleSheet.create({
     color: Colors.gray
   },
   group: {
-    fontSize: 24
+    fontSize: 24,
+    fontWeight: "300"
     // fontWeight: "800"
-    // fontWeight: "300"
     // color: Colors.active,
   },
   time: {

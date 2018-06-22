@@ -32,8 +32,8 @@ class TopBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.open && nextProps.scrollDir.down) this.handleCloseBar();
-    else if (!this.state.open && nextProps.scrollDir.up) this.handleOpenBar();
+    if (this.state.open && !nextProps.barOpen) this.handleCloseBar();
+    else if (!this.state.open && nextProps.barOpen) this.handleOpenBar();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,23 +56,27 @@ class TopBar extends Component {
   }
 
   handleCloseBar = () => {
-    this.setState({ open: false });
-    Animated.timing(this.animated, {
-      toValue: 0,
-      duration: TRANSITION_DURATION,
-      easing: Easing.in(Easing.quad),
-      useNativeDriver: true
-    }).start();
+    this.setState(
+      { open: false },
+      Animated.timing(this.animated, {
+        toValue: 0,
+        duration: TRANSITION_DURATION,
+        easing: Easing.in(Easing.quad),
+        useNativeDriver: true
+      }).start()
+    );
   };
 
   handleOpenBar = () => {
-    this.setState({ open: true });
-    Animated.timing(this.animated, {
-      toValue: 1,
-      duration: TRANSITION_DURATION,
-      easing: Easing.out(Easing.quad),
-      useNativeDriver: true
-    }).start();
+    this.setState(
+      { open: true },
+      Animated.timing(this.animated, {
+        toValue: 1,
+        duration: TRANSITION_DURATION,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true
+      }).start()
+    );
   };
 
   hapticModal = (page, props) => () => {
@@ -127,7 +131,7 @@ class TopBar extends Component {
     };
 
     return (
-      <View style={styles.container}>
+      <View pointerEvents={this.state.open ? "auto" : "none"} style={styles.container}>
         <SuperEllipseMask radius={{ bottomRight: 15, bottomLeft: 15 }}>
           <View style={{ width: SCREEN_WIDTH, paddingHorizontal: 15, paddingBottom: 10 }}>
             <Animated.View style={[styles.animated, blurContainerAnimatedStyle]}>
@@ -145,7 +149,6 @@ class TopBar extends Component {
                   colors={[Colors.laterHeader2, Colors.laterHeader1]}
                 />
               </Animated.View>
-
               <BlurView blurType="light" style={styles.statusBar} />
             </Animated.View>
 

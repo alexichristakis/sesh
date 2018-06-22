@@ -30,17 +30,19 @@ class CardWrapper extends Component {
   onLeave = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 0,
+      duration: 10,
       useNativeDriver: true
     }).start();
   };
 
   onReturn = () => {
-    Animated.timing(this.animatedOpacity, {
-      toValue: 1,
-      duration: 0,
-      useNativeDriver: true
-    }).start();
+    return new Promise(resolve => {
+      Animated.timing(this.animatedOpacity, {
+        toValue: 1,
+        duration: 10,
+        useNativeDriver: true
+      }).start(() => resolve(true));
+    });
   };
 
   handleOnPress = () => {

@@ -19,7 +19,7 @@ class MapCard extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ loading: false });
-    }, 200);
+    }, 400);
   }
 
   render() {
@@ -48,7 +48,7 @@ class MapCard extends Component {
     const height = this.props.large ? 300 : 200;
 
     return (
-      <SuperEllipseMask radius={10}>
+      <SuperEllipseMask style={style} radius={10}>
         <View
           style={{
             height: height,

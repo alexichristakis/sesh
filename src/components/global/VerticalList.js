@@ -14,6 +14,23 @@ class VerticalList extends Component {
     // this.animatedPadding = new Animated.Value(105);
     this.animatedOpacity = new Animated.Value(1);
     this.animatedTranslate = new Animated.Value(1);
+
+    this.state = {
+      shortened: false
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.shortened && nextProps.shortened) {
+      this.setState({ shortened: true }, () => this.shortenPadding());
+    } else if (this.state.shortened && !nextProps.shortened) {
+      this.setState({ shortened: false }, () => this.lengthenPadding());
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.shortened === nextProps.shortened) return false;
+    else return true;
   }
 
   _keyExtractor = item => item.id.toString();
@@ -47,6 +64,7 @@ class VerticalList extends Component {
 
   render() {
     // console.log("vertical list rendered");
+    // console.log("VerticalList props: ", this.props);
 
     let animatedStyle = {
       // paddingTop: SB_HEIGHT === 40 ? 63 : 68,
@@ -72,10 +90,10 @@ class VerticalList extends Component {
         data={this.props.data}
         renderItem={this.props.renderItem}
         // ItemSeparatorComponent={this.renderSeparator}
-        scrollEventThrottle={50}
+        scrollEventThrottle={16}
         onScroll={this.props.onScroll}
-        onScrollBeginDrag={this.props.onScrollBeginDrag}
-        onScrollEndDrag={this.props.onScrollEndDrag}
+        onScrollBeginDrag={this.props._onScrollBegin}
+        onScrollEndDrag={this.props._onScrollEnd}
         keyExtractor={this._keyExtractor}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={this.props.renderHeader}

@@ -179,7 +179,9 @@ class Active extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {}
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if ()
+  // }
 
   transitionFrom = (source, onReturn, data, MoveComponent) => {
     let joined = this.state.joinedMoves.includes(data.id);
@@ -207,7 +209,7 @@ class Active extends Component {
 
   _renderItem = ({ item, index }) => (
     <CardWrapper data={item} transitionFrom={this.transitionFrom}>
-      <ActiveMove move={item} />
+      <ActiveMove onPressPresentOverlayTo={this.props.onPressPresentOverlayTo} move={item} />
     </CardWrapper>
   );
 
@@ -241,17 +243,19 @@ class Active extends Component {
           ref={item => (this.list = item)}
           data={data}
           renderItem={this._renderItem}
+          shortened={this.props.shortened}
           onScroll={this.props._vertOnScroll}
-          onScrollBeginDrag={this.props._onScrollBegin}
-          onScrollEndDrag={this.props._onScrollEnd}
+          _onScrollBegin={this.props._onScrollBegin}
+          _onScrollEnd={this.props._onScrollEnd}
         />
         <Transition
           ref={item => (this.transition = item)}
           destinationPage={"sesh.ActiveFocus"}
+          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
           transitionFinished={this.transitionFinished}
           // clearScreen={this.props.clearScreen}
           returnScreen={this.props.returnScreen}
-          onPressPushTo={this.props.onPressPushTo}
+          onPressPushTo={this.props.onPressPresentOverlayTo}
           MoveComponent={this.state.MoveComponent}
         />
       </View>

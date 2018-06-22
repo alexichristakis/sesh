@@ -57,6 +57,7 @@ class ActiveFocus extends Component {
   }
 
   async componentDidMount() {
+    // console.log("active focus mounted");
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({ position: position, loading: false });
@@ -73,7 +74,8 @@ class ActiveFocus extends Component {
     this.focus.exit();
     setTimeout(() => {
       this.props.closeCard();
-      Navigation.pop(this.props.componentId);
+      // Navigation.pop(this.props.componentId);
+      Navigation.dismissOverlay(this.props.componentId);
       // this.props.closeCard();
     }, 50);
   };
@@ -89,10 +91,9 @@ class ActiveFocus extends Component {
     let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
     return (
-      <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        <MapCard large markers={data} />
-
-        <TouchableScale style={{ marginVertical: 20 }} onPress={this.handleOnPress}>
+      <View style={{ flex: 1 }}>
+        <MapCard style={{ marginVertical: 8 }} markers={data} />
+        <TouchableScale onPress={this.handleOnPress}>
           <SuperEllipseMask radius={10}>
             <View
               style={[
@@ -133,14 +134,13 @@ class ActiveFocus extends Component {
         onPressPop={this.onPressPop}
         renderItem={this._renderItem}
       >
-        <ActiveMove
+        {/* <ActiveMove
           blur
-          focused
           index={this.props.index}
           length={this.props.length}
           move={this.props.data}
           onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        />
+        /> */}
       </Focus>
     );
   }

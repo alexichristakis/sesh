@@ -5,10 +5,12 @@
     "type": "MIT"
   },
   "homepage": "https://github.com/everdrone/react-native-super-ellipse-mask",
-  "authors": "everdrone",
+  "authors": {
+    "name": "everdrone"
+  },
   "summary": "Apple flavored smooth corners for React Native",
   "source": {
-    "git": "https://github.com/everdrone/react-native-super-ellipse-mask"
+    "git": "git+https://github.com/everdrone/react-native-super-ellipse-mask.git"
   },
   "source_files": "ios/**/*.{h,m}",
   "platforms": {

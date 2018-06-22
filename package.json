@@ -17,6 +17,7 @@
     "react-native-fbsdk": "^0.7.0",
     "react-native-firebase": "^4.2.0",
     "react-native-haptic-feedback": "^1.1.6",
+    "react-native-interactable": "^0.1.10",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-maps": "^0.21.0",
     "react-native-navigation": "^2.0.2328",

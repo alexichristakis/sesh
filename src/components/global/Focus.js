@@ -11,6 +11,7 @@ import {
   FlatList
 } from "react-native";
 
+import Interactable from "react-native-interactable";
 import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
@@ -27,11 +28,11 @@ import { Colors, heavyShadow, shadow } from "../../lib/styles";
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 function Page(props: { children?: ReactElement<*> }) {
-  return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
+  return <View style={{ width: SCREEN_WIDTH }}>{props.children}</View>;
 }
 
 function HalfPage(props: { children?: ReactElement<*> }) {
-  return <View style={{ flex: 1, width: SCREEN_WIDTH / 2 }}>{props.children}</View>;
+  return <View style={{ width: SCREEN_WIDTH / 2 }}>{props.children}</View>;
 }
 
 class Focus extends Component {
@@ -78,16 +79,17 @@ class Focus extends Component {
   render() {
     const { cardHeight } = this.props;
     // const listTopPadding = cardHeight + SB_HEIGHT - (SB_HEIGHT === 40 ? 20 : 0);
-    const listTopPadding = cardHeight + SB_HEIGHT - 20;
+    const listTopPadding = 0; //cardHeight + (SB_HEIGHT === 40 ? 0 : 5);
 
     const scrollHeight = {
-      paddingTop: SB_HEIGHT + CARD_GUTTER,
-      paddingBottom: 10,
-      height: cardHeight + SB_HEIGHT + 20
+      // paddingTop: SB_HEIGHT + CARD_GUTTER,
+      // paddingTop: CARD_GUTTER,
+      // paddingBottom: 10,
+      // height: cardHeight + 2 * CARD_GUTTER
     };
 
     let listStyle = {
-      paddingHorizontal: 20,
+      paddingHorizontal: 2 * CARD_GUTTER,
       paddingTop: listTopPadding
     };
 
@@ -104,21 +106,42 @@ class Focus extends Component {
     };
 
     return (
-      <Background>
-        <Animated.View style={animatedStyle}>
-          <FlatList
-            style={listStyle}
-            data={this.props.data}
-            keyExtractor={this._keyExtractor}
-            renderItem={this.props.renderItem}
-            ListHeaderComponent={this.props.renderHeader}
-            ListFooterComponent={this.props.renderFooter}
-            ItemSeparatorComponent={this.renderSeparator}
-          />
-          <BackButton list onPressPop={this.props.onPressPop} />
-        </Animated.View>
+      <View
+        style={{
+          flex: 1
+          // paddingTop: SB_HEIGHT,
 
-        <ScrollView
+          // position: "absolute",
+          // top: SB_HEIGHT,
+          // left: 0,
+          // right: 0,
+          // bottom: 0,
+          // backgroundColor: "red"
+        }}
+      >
+        {/* <Animated.View style={animatedStyle}> */}
+        <FlatList
+          style={listStyle}
+          data={this.props.data}
+          keyExtractor={this._keyExtractor}
+          renderItem={this.props.renderItem}
+          ListHeaderComponent={this.props.renderHeader}
+          ListFooterComponent={this.props.renderFooter}
+          ItemSeparatorComponent={this.renderSeparator}
+        />
+        {/* <BackButton list onPressPop={this.props.onPressPop} /> */}
+        {/* </Animated.View> */}
+
+        {/* <Interactable.View
+          style={[styles.swipeContainer, scrollHeight]}
+          verticalOnly={true}
+          snapPoints={[{ y: 0 }]}
+          // onDrag={this.props.onPressPop}
+        >
+          <View style={styles.moveContainer}>{this.props.children}</View>
+        </Interactable.View> */}
+
+        {/* <ScrollView
           style={[styles.swipeContainer, scrollHeight]}
           horizontal
           pagingEnabled
@@ -136,9 +159,9 @@ class Focus extends Component {
               </TouchableOpacity>
             </View>
           </HalfPage>
-        </ScrollView>
+        </ScrollView> */}
 
-        {this.props.active && (
+        {/* {this.props.active && (
           <LinearGradient
             style={[styles.gradient]}
             locations={[0.5, 1]}
@@ -151,9 +174,9 @@ class Focus extends Component {
             locations={[0.5, 1]}
             colors={[Colors.laterHeader2, Colors.laterHeader1]}
           />
-        )}
-        <BlurView blurType="light" style={styles.statusBar} />
-      </Background>
+        )} */}
+        {/* <BlurView blurType="light" style={styles.statusBar} /> */}
+      </View>
     );
   }
 }
@@ -177,6 +200,8 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0
+    // bottom: 0,
+    // backgroundColor: "red"
   },
   moveContainer: {
     // backgroundColor: "white",
@@ -210,14 +235,15 @@ const styles = StyleSheet.create({
   },
   options: {
     flex: 1,
-    paddingRight: 10
+    paddingRight: CARD_GUTTER
   },
   button: {
     flex: 1,
-    borderRadius: 15,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.red,
+    marginBottom: CARD_GUTTER,
     ...shadow
   },
   leave: {
