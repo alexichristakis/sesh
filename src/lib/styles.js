@@ -106,6 +106,14 @@ const cardShadow = {
   shadowColor: "#000000"
 };
 
+const FillAbsolute = {
+  position: "absolute",
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0
+};
+
 const colors = {
   whiteTrans,
   activeHeader1,
@@ -130,7 +138,8 @@ const colors = {
 
 module.exports = {
   Colors: colors,
-  shadow: shadow,
+  shadow,
+  FillAbsolute,
   cardShadow,
   iconShadow,
   shadowBottom,

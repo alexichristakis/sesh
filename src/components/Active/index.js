@@ -183,7 +183,7 @@ class Active extends Component {
   //   if ()
   // }
 
-  transitionFrom = (source, onReturn, data, MoveComponent) => {
+  transitionFrom = (source, onReturn, data) => {
     let joined = this.state.joinedMoves.includes(data.id);
     // this.setState({ MoveComponent: MoveComponent });
     // this.
@@ -195,7 +195,7 @@ class Active extends Component {
     // });
 
     this.props.clearScreen();
-    this.transition.beginTransition(MoveComponent, source, onReturn, data, {
+    this.transition.beginTransition(source, onReturn, data, {
       joined: joined,
       joinMove: this.joinMove,
       leaveMove: this.leaveMove,

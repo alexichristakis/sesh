@@ -139,7 +139,6 @@ class Home extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log("should component update? ", nextState, this.state);
     if (this.state.barOpen === nextState.barOpen) return false;
     else if (nextState.vertScrolling) return true;
     else if (!this.state.vertScrolling) return false;
@@ -172,7 +171,6 @@ class Home extends Component {
   };
 
   _onScrollBegin = () => {
-    console.log("scroll begin");
     this.setState({ vertScrolling: true });
   };
 
@@ -255,7 +253,6 @@ class Home extends Component {
   };
 
   render() {
-    console.log("home rendered");
     const groupsProps = {
       onPressPushTo: this.onPressPushTo
     };
@@ -343,5 +340,5 @@ const styles = StyleSheet.create({
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;

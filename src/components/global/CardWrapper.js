@@ -30,7 +30,7 @@ class CardWrapper extends Component {
   onLeave = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 10,
+      duration: 5,
       useNativeDriver: true
     }).start();
   };
@@ -39,7 +39,7 @@ class CardWrapper extends Component {
     return new Promise(resolve => {
       Animated.timing(this.animatedOpacity, {
         toValue: 1,
-        duration: 10,
+        duration: 5,
         useNativeDriver: true
       }).start(() => resolve(true));
     });
@@ -49,16 +49,17 @@ class CardWrapper extends Component {
     ReactNativeHapticFeedback.trigger("impactLight");
     this.onLeave();
     this.view.getNode().measure((x, y, width, height, pageX, pageY) => {
-      this.setState({ pageX: pageX, pageY: pageY });
-      const dimensions = {
-        height: this.state.height,
-        width: this.state.width,
-        x: this.state.x,
-        y: this.state.y,
-        pageX: this.state.pageX,
-        pageY: this.state.pageY
-      };
-      this.props.transitionFrom(dimensions, this.onReturn, this.props.data, this.props.children);
+      this.setState({ pageX: pageX, pageY: pageY }, () => {
+        const dimensions = {
+          height: this.state.height,
+          width: this.state.width,
+          x: this.state.x,
+          y: this.state.y,
+          pageX: this.state.pageX,
+          pageY: this.state.pageY
+        };
+        this.props.transitionFrom(dimensions, this.onReturn, this.props.data);
+      });
     });
   };
 

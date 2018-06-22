@@ -90,7 +90,6 @@ class TopBar extends Component {
   };
 
   render() {
-    console.log("topbar rendered");
     /* navigation functions */
     const presentModal = this.props.onPressPresentModalTo;
     const presentStackModal = this.props.onPressPresentModalToStack;
