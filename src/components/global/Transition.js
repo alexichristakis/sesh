@@ -30,7 +30,6 @@ class Transition extends Component {
     this.state = {
       transitioning: false,
       open: false,
-      // MoveComponent: null,
       onReturn: null,
       sourceDimension: {
         height: 0,
@@ -45,13 +44,6 @@ class Transition extends Component {
     if (this.state.transitioning !== nextState.transitioning) return true;
     else return false;
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { MoveComponent } = nextProps;
-  //   if (MoveComponent) {
-  //     this.setState({ MoveComponent: MoveComponent, open: true });
-  //   }
-  // }
 
   beginTransition = (source, onReturn, data, props) => {
     this.setState(
@@ -82,7 +74,7 @@ class Transition extends Component {
   handleOnDrag = event => {
     const { state, x, y } = event.nativeEvent;
     if (state === "end") {
-      if (y > 100) {
+      if (y > 75) {
         this.setState({ open: false, transitioning: true }, () => {
           this.interactable.snapTo({ index: 0 });
           this.props.returnScreen();
@@ -91,7 +83,7 @@ class Transition extends Component {
     }
   };
 
-  handleClose = event => {
+  handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 0) {
       this.state.onReturn().then(() => this.setState({ transitioning: false }));
@@ -99,7 +91,6 @@ class Transition extends Component {
   };
 
   render() {
-    // console.log("rendered transition");
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
 
     let opacity = {
@@ -133,7 +124,7 @@ class Transition extends Component {
           <Animated.View style={[FillAbsolute, opacity]}>
             <BlurView blurType="dark" blurAmount={10} style={FillAbsolute} />
           </Animated.View>
-          <View style={{ flex: 1 }}>
+          <View pointerEvents={this.state.transitioning ? "none" : "auto"} style={{ flex: 1 }}>
             <Interactable.View
               animatedNativeDriver
               ref={item => (this.interactable = item)}
@@ -143,7 +134,7 @@ class Transition extends Component {
               initialPosition={{ y: pageY }}
               animatedValueY={this.deltaY}
               onDrag={this.handleOnDrag}
-              onSnap={this.handleClose}
+              onSnap={this.handleOnSnap}
             >
               {Move}
             </Interactable.View>

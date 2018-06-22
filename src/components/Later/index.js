@@ -85,9 +85,9 @@ class Later extends Component {
     };
   }
 
-  transitionFrom = (source, onReturn, data, MoveComponent) => {
+  transitionFrom = (source, onReturn, data) => {
     this.props.clearScreen();
-    this.transition.beginTransition(MoveComponent, source, onReturn, data, {
+    this.transition.beginTransition(source, onReturn, data, {
       onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
     });
   };
