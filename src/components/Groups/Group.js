@@ -57,8 +57,8 @@ class Group extends Component {
     const group = this.props.data;
 
     let cardStyle = {
-      backgroundColor: "rgba(255,255,255,0.8)",
-      borderRadius: 15,
+      backgroundColor: Colors.whiteTrans,
+      borderRadius: 10,
       overflow: "hidden"
     };
 

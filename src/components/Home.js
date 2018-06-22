@@ -31,7 +31,6 @@ import {} from "../api";
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(0);
 
-const groupsOffset = new Animated.Value(0);
 const activeOffset = new Animated.Value(0);
 const laterOffset = new Animated.Value(0);
 
@@ -90,7 +89,7 @@ function barTransform(index: number) {
       return {
         ...base,
         opacity: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH / 2, 3 * SCREEN_WIDTH / 4, SCREEN_WIDTH],
+          inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [1, 0.8, 1, 0]
         })
       };
@@ -99,7 +98,7 @@ function barTransform(index: number) {
       return {
         ...base,
         opacity: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH / 2, 3 * SCREEN_WIDTH / 4, SCREEN_WIDTH],
+          inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [0, 0.8, 1, 1]
         })
       };
@@ -114,11 +113,7 @@ class Home extends Component {
     this.state = {
       loading: true,
       barOpen: true,
-      vertScrolling: false,
-      scrollDir: {
-        up: false,
-        down: false
-      },
+      // vertScrolling: false,
 
       user: this.props.user,
       photo: "",
@@ -143,52 +138,30 @@ class Home extends Component {
     // console.log(res);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.barOpen == nextState.barOpen) return false;
+    else return true;
+  }
+
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
-    // useNativeDriver: true,
+    // useNativeDriver: true
   });
 
   _onHorizScrollEnd = () => {
-    if (xOffset._value == 0) yOffset = groupsOffset;
-    else if (xOffset._value == SCREEN_WIDTH) yOffset = activeOffset;
+    if (xOffset._value === 0) yOffset = activeOffset;
     else yOffset = laterOffset;
   };
 
-  /* TODO: fix this logic. still uses old groups xOffset */
   _vertOnScroll = event => {
     const currentOffset = event.nativeEvent.contentOffset.y;
-    if (this.state.vertScrolling) {
-      const diff = currentOffset - (yOffset || 0);
-      if (diff <= 0) {
-        this.lengthenVertPadding();
-        this.setState({ barOpen: true, scrollDir: { up: true, down: false } });
-      } else {
-        this.shortenVertPadding();
-        this.setState({ barOpen: false, scrollDir: { up: false, down: true } });
-      }
-      this.setState({ vertScrolling: false });
-    }
+    const diff = currentOffset - (yOffset._value || 0);
+
+    if (diff <= 0) this.setState({ barOpen: true });
+    else this.setState({ barOpen: false });
+
     yOffset = currentOffset;
-    if (xOffset._value === 0) groupsOffset = yOffset;
-    else if (xOffset._value === SCREEN_WIDTH) activeOffset = yOffset;
+    if (xOffset._value === 0) activeOffset = yOffset;
     else laterOffset = yOffset;
-  };
-
-  shortenVertPadding = () => {
-    this.active.list.shortenPadding();
-    this.later.list.shortenPadding();
-  };
-
-  lengthenVertPadding = () => {
-    this.active.list.lengthenPadding();
-    this.later.list.lengthenPadding();
-  };
-
-  _onScollBegin = () => {
-    this.setState({ vertScrolling: true });
-  };
-
-  _onScrollEnd = () => {
-    this.setState({ vertScrolling: false });
   };
 
   clearScreen = () => {
@@ -266,6 +239,7 @@ class Home extends Component {
   };
 
   render() {
+    console.log("home rendered");
     const groupsProps = {
       onPressPushTo: this.onPressPushTo
     };
@@ -287,27 +261,25 @@ class Home extends Component {
         >
           <Page>
             <Active
-              ref={item => (this.active = item)}
+              // ref={item => (this.active = item)}
+              shortened={!this.state.barOpen}
               profilePic={this.state.photo}
               clearScreen={this.clearScreen}
               returnScreen={this.returnScreen}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-              _onScrollBegin={this._onScollBegin}
-              _onScrollEnd={this._onScrollEnd}
               _vertOnScroll={this._vertOnScroll}
             />
           </Page>
           <Page>
             <Later
-              ref={item => (this.later = item)}
+              // ref={item => (this.later = item)}
+              shortened={!this.state.barOpen}
               profilePic={this.state.photo}
               clearScreen={this.clearScreen}
               returnScreen={this.returnScreen}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-              _onScrollBegin={this._onScollBegin}
-              _onScrollEnd={this._onScrollEnd}
               _vertOnScroll={this._vertOnScroll}
             />
           </Page>
@@ -324,7 +296,7 @@ class Home extends Component {
           groupsProps={groupsProps}
           barTransform={barTransform}
           profilePic={this.state.photo}
-          scrollDir={this.state.scrollDir}
+          barOpen={this.state.barOpen}
         />
 
         <BottomBar

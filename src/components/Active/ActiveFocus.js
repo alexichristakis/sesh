@@ -73,7 +73,8 @@ class ActiveFocus extends Component {
     this.focus.exit();
     setTimeout(() => {
       this.props.closeCard();
-      Navigation.pop(this.props.componentId);
+      // Navigation.pop(this.props.componentId);
+      Navigation.dismissOverlay(this.props.componentId);
       // this.props.closeCard();
     }, 50);
   };
@@ -89,10 +90,9 @@ class ActiveFocus extends Component {
     let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
 
     return (
-      <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        <MapCard large markers={data} />
-
-        <TouchableScale style={{ marginVertical: 20 }} onPress={this.handleOnPress}>
+      <View style={{ flex: 1 }}>
+        <MapCard style={{ marginVertical: 8 }} markers={data} />
+        <TouchableScale onPress={this.handleOnPress}>
           <SuperEllipseMask radius={10}>
             <View
               style={[
