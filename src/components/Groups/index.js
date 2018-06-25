@@ -12,7 +12,7 @@ import { SCREEN_WIDTH, SB_HEIGHT } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
 
 import Group from "./Group";
-import Background from "../global/Background";
+// import Background from "../global/Background";
 import TouchableScale from "../global/TouchableScale";
 import BackButton from "../global/BackButton";
 import VerticalList from "../global/VerticalList";

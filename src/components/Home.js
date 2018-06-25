@@ -15,7 +15,9 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 // import RNFS from "react-native-fs";
 
-import Background from "./global/Background";
+import Transition from "./global/Transition";
+import Background from "./Background";
+import Drawer from "./Drawer";
 import TopBar from "./TopBar";
 import BottomBar from "./BottomBar";
 import Groups from "./Groups";
@@ -82,7 +84,7 @@ function textColorTransform(index: number) {
   }
 }
 
-function barTransform(index: number) {
+function backgroundTransform(index: number) {
   const base = { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 };
   switch (index) {
     case 0:
@@ -178,14 +180,21 @@ class Home extends Component {
     this.setState({ vertScrolling: false });
   };
 
+  handleTransition = (source, onReturn, data, props) => {
+    this.clearScreen();
+    this.transition.beginTransition(source, onReturn, data, props);
+  };
+
   clearScreen = () => {
     if (this.state.barOpen) this.topBar.handleCloseBar();
-    this.bottomBar.handleHideBar();
+    this.drawer.handleHideDrawer();
+    // this.bottomBar.handleHideBar();
   };
 
   returnScreen = () => {
     if (this.state.barOpen) this.topBar.handleOpenBar();
-    this.bottomBar.handleShowBar();
+    this.drawer.handleShowDrawer();
+    // this.bottomBar.handleShowBar();
   };
 
   onPressPop = () => {
@@ -258,7 +267,8 @@ class Home extends Component {
     };
 
     return (
-      <View style={styles.container}>
+      // <View style={styles.container}>
+      <Background backgroundTransform={backgroundTransform}>
         <StatusBar barStyle="light-content" />
         <Animated.ScrollView
           horizontal
@@ -277,8 +287,9 @@ class Home extends Component {
               // ref={item => (this.active = item)}
               shortened={!this.state.barOpen}
               profilePic={this.state.photo}
-              clearScreen={this.clearScreen}
-              returnScreen={this.returnScreen}
+              // clearScreen={this.clearScreen}
+              // returnScreen={this.returnScreen}
+              handleTransition={this.handleTransition}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
               _onScrollBegin={this._onScrollBegin}
@@ -302,7 +313,7 @@ class Home extends Component {
           </Page>
         </Animated.ScrollView>
 
-        <TopBar
+        {/* <TopBar
           ref={item => (this.topBar = item)}
           user={this.state.user}
           onPressPushTo={this.onPressPushTo}
@@ -314,17 +325,29 @@ class Home extends Component {
           barTransform={barTransform}
           profilePic={this.state.photo}
           barOpen={this.state.barOpen}
+        /> */}
+
+        <Transition
+          ref={item => (this.transition = item)}
+          onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+          // clearScreen={this.props.clearScreen}
+          returnScreen={this.returnScreen}
+          // onPressPushTo={this.props.onPressPresentOverlayTo}
+          // MoveComponent={this.state.MoveComponent}
         />
 
-        <BottomBar
+        <Drawer ref={item => (this.drawer = item)} />
+
+        {/* <BottomBar
           ref={item => (this.bottomBar = item)}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
           textColorTransform={textColorTransform}
           indicatorAnimate={indicatorAnimate}
           onPressPresentModalTo={this.onPressPresentModalTo}
-        />
-      </View>
+        /> */}
+      </Background>
+      //</View>
     );
   }
 }

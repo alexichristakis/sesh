@@ -8,7 +8,7 @@ import { BlurView } from "react-native-blur";
 
 import ActiveFocus from "../Active/ActiveFocus";
 import TouchableScale from "./TouchableScale";
-import Background from "./Background";
+// import Background from "./Background";
 import ActiveMove from "../Active/ActiveMove";
 
 import {
@@ -130,7 +130,10 @@ class Transition extends Component {
               ref={item => (this.interactable = item)}
               style={styles.card}
               verticalOnly={true}
-              snapPoints={[{ y: pageY }, { y: SB_HEIGHT + CARD_GUTTER }]}
+              snapPoints={[
+                { y: pageY, damping: 0.5, tension: 600 },
+                { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
+              ]}
               initialPosition={{ y: pageY }}
               animatedValueY={this.deltaY}
               onDrag={this.handleOnDrag}
