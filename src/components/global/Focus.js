@@ -89,7 +89,7 @@ class Focus extends Component {
     };
 
     let listStyle = {
-      paddingHorizontal: 2 * CARD_GUTTER,
+      paddingHorizontal: CARD_GUTTER,
       paddingTop: listTopPadding
     };
 

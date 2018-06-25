@@ -302,13 +302,12 @@ class Home extends Component {
     };
 
     return (
-      // <View style={styles.container}>
       <Background backgroundTransform={backgroundTransform}>
         <StatusBar barStyle="light-content" />
         <Animated.ScrollView
           horizontal
           pagingEnabled
-          bounces={false}
+          // bounces={false}
           ref={item => (this.scrollView = item)}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -319,11 +318,8 @@ class Home extends Component {
         >
           <Page>
             <Active
-              // ref={item => (this.active = item)}
               shortened={!this.state.barOpen}
               profilePic={this.state.photo}
-              // clearScreen={this.clearScreen}
-              // returnScreen={this.returnScreen}
               handleTransition={this.handleTransition}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
@@ -334,11 +330,9 @@ class Home extends Component {
           </Page>
           <Page>
             <Later
-              // ref={item => (this.later = item)}
               shortened={!this.state.barOpen}
               profilePic={this.state.photo}
-              clearScreen={this.clearScreen}
-              returnScreen={this.returnScreen}
+              handleTransition={this.handleTransition}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
               _onScrollBegin={this._onScrollBegin}
@@ -380,7 +374,6 @@ class Home extends Component {
           onPressPresentModalTo={this.onPressPresentModalTo}
         /> */}
       </Background>
-      //</View>
     );
   }
 }
@@ -396,5 +389,5 @@ const styles = StyleSheet.create({
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;

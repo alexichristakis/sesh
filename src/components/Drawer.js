@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
     top: DRAWER_HEIGHT,
     height: SCREEN_HEIGHT - DRAWER_HEIGHT,
     width: SCREEN_WIDTH,
-    // backgroundColor: Colors.lightGray
-    backgroundColor: "blue"
+    backgroundColor: Colors.lightGray
+    // backgroundColor: "blue"
   },
   actionButtonContainer: {
     flexDirection: "row",

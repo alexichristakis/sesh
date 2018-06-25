@@ -92,7 +92,7 @@ class ActiveFocus extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MapCard style={{ marginVertical: 8 }} markers={data} />
+        <MapCard style={{ marginVertical: 5 }} markers={data} />
         <TouchableScale onPress={this.handleOnPress}>
           <SuperEllipseMask radius={10}>
             <View

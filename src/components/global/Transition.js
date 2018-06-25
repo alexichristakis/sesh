@@ -8,8 +8,8 @@ import { BlurView } from "react-native-blur";
 
 import ActiveFocus from "../Active/ActiveFocus";
 import TouchableScale from "./TouchableScale";
-// import Background from "./Background";
 import ActiveMove from "../Active/ActiveMove";
+import LaterMove from "../Later/LaterMove";
 
 import {
   SCREEN_WIDTH,
@@ -142,11 +142,7 @@ class Transition extends Component {
               {Move}
             </Interactable.View>
             <Animated.View style={focusStyle}>
-              <ActiveFocus
-                data={this.state.data}
-                closeCard={this.closeCard}
-                cardHeight={this.state.sourceDimension.height}
-              />
+              <ActiveFocus data={this.state.data} closeCard={this.closeCard} cardHeight={height} />
             </Animated.View>
           </View>
         </View>
