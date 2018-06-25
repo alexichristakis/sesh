@@ -4,7 +4,7 @@ import { ActivityIndicator, View, Text, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 class MapCard extends Component {
@@ -16,14 +16,27 @@ class MapCard extends Component {
     };
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 600);
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     this.setState({ loading: false });
+  //   }, 600);
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loading) this.setState({ loading: true });
+    else if (!nextProps.loading) this.setState({ loading: false });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.loading !== nextState.loading) return true;
+    else return false;
   }
 
   render() {
-    const { markers, style } = this.props;
+    const {
+      markers = [{ key: "test", coords: { latitude: 47.675598, longitude: -122.263837 } }],
+      style
+    } = this.props;
     // console.log(markers);
     const region = {
       latitude: markers[0].coords.latitude,
@@ -45,10 +58,10 @@ class MapCard extends Component {
       </MapView>
     );
 
-    const height = this.props.large ? 300 : 200;
+    const height = this.props.large ? SCREEN_HEIGHT / 2 : 200;
 
     return (
-      <SuperEllipseMask style={style} radius={10}>
+      <SuperEllipseMask style={style} radius={BORDER_RADIUS}>
         <View
           style={{
             height: height,

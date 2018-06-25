@@ -9,9 +9,17 @@ import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 import TouchableScale from "./global/TouchableScale";
+import MapCard from "./global/MapCard";
+import ColorButton from "./global/ColorButton";
 
 import { Colors, FillAbsolute, heavyShadow } from "../lib/styles";
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, ANIMATION_DURATION } from "../lib/constants";
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  SB_HEIGHT,
+  ANIMATION_DURATION,
+  CARD_GUTTER
+} from "../lib/constants";
 
 const BUTTON_SIZE = 40;
 const ICON_DIMENSION = 50;
@@ -23,9 +31,22 @@ class Drawer extends Component {
 
     this.animated = new Animated.Value(0);
     this.state = {
-      hidden: false
+      hidden: false,
+      open: false
+      // dragging: false,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log("next props: ", nextProps.hidden);
+    if (nextProps.hidden) this.setState({ hidden: true }, this.handleHideDrawer());
+    else if (!nextProps.hidden) this.setState({ hidden: false }, this.handleShowDrawer());
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.hidden === nextState.hidden) return false;
+  //   else return true;
+  // }
 
   handleHideDrawer = () => {
     Animated.timing(this.animated, {
@@ -47,21 +68,16 @@ class Drawer extends Component {
     }).start();
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log("next props: ", nextProps.hidden);
-    if (nextProps.hidden) this.setState({ hidden: true }, this.handleHideDrawer());
-    else if (!nextProps.hidden) this.setState({ hidden: false }, this.handleShowDrawer());
-  }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.hidden === nextState.hidden) return false;
-  //   else return true;
-  // }
+  handleOnSnap = event => {
+    const { index } = event.nativeEvent;
+    if (index === 0) {
+      this.setState({ open: true });
+    } else {
+      this.setState({ open: false });
+    }
+  };
 
   render() {
-    const closed = { y: SCREEN_HEIGHT - DRAWER_HEIGHT };
-    const open = { y: SB_HEIGHT + 2 };
-
     let animatedTranslate = {
       transform: [
         {
@@ -73,6 +89,25 @@ class Drawer extends Component {
       ]
     };
 
+    let OpenContent = (
+      <View style={{ paddingHorizontal: CARD_GUTTER }}>
+        <MapCard loading={!this.state.open} large />
+        <ColorButton
+          title={"My Groups"}
+          color={Colors.groups}
+          onPress={() => console.log("hello")}
+        />
+        <ColorButton
+          title={"My Friends"}
+          color={Colors.primary}
+          onPress={() => console.log("hello")}
+        />
+      </View>
+    );
+
+    const closed = { y: SCREEN_HEIGHT - DRAWER_HEIGHT };
+    const open = { y: SB_HEIGHT + 2 };
+
     return (
       <Animated.View style={[FillAbsolute, animatedTranslate]} pointerEvents={"box-none"}>
         <Interactable.View
@@ -80,6 +115,7 @@ class Drawer extends Component {
           ref={view => (this.interactable = view)}
           verticalOnly={true}
           snapPoints={[open, closed]}
+          onSnap={this.handleOnSnap}
           boundaries={{
             top: SB_HEIGHT - 5,
             bottom: SCREEN_HEIGHT - DRAWER_HEIGHT + 5,
@@ -89,8 +125,11 @@ class Drawer extends Component {
           // animatedValueY={this.deltaY}
         >
           <View style={styles.curveContainer}>
-            <BlurView blurType={"xlight"} blurAmount={15} style={styles.curve} />
+            <SuperEllipseMask style={styles.rotate} radius={SCREEN_WIDTH * 4}>
+              <BlurView blurType={"xlight"} blurAmount={15} style={styles.blur} />
+            </SuperEllipseMask>
           </View>
+
           <View style={styles.background} />
           <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>
             <View style={styles.actionButtonContainer}>
@@ -114,6 +153,7 @@ class Drawer extends Component {
                 </View>
               </TouchableScale>
             </View>
+            {OpenContent}
           </View>
         </Interactable.View>
       </Animated.View>
@@ -128,27 +168,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#efefef"
   },
+  blur: {
+    height: SCREEN_WIDTH * 8,
+    width: SCREEN_WIDTH * 8
+  },
+  rotate: {
+    position: "absolute",
+    marginTop: SCREEN_HEIGHT / 3 + 5,
+    height: SCREEN_WIDTH * 8,
+    width: SCREEN_WIDTH * 8,
+    left: -SCREEN_WIDTH * 3.5,
+    transform: [{ rotateZ: "45deg" }],
+    backgroundColor: "transparent"
+  },
   curveContainer: {
     position: "absolute",
     width: SCREEN_WIDTH,
     height: DRAWER_HEIGHT + 5,
-
-    // paddingTop: 50,
     overflow: "hidden",
-    // backgroundColor: "red",
     ...heavyShadow
-  },
-  curve: {
-    position: "absolute",
-    top: 5,
-    borderRadius: SCREEN_WIDTH * 2,
-    left: -SCREEN_WIDTH * 1.5,
-    height: SCREEN_WIDTH * 4,
-    width: SCREEN_WIDTH * 4,
-    // borderWidth: 0.1,
-    // borderColor: Colors.gray,
-    transform: [{ rotateZ: "45deg" }]
-    // // backgroundColor: Colors.secondary
   },
   background: {
     position: "absolute",

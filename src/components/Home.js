@@ -25,7 +25,7 @@ import Active from "./Active";
 import Later from "./Later";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
-import { Colors } from "../lib/styles";
+import { Colors, FillAbsolute } from "../lib/styles";
 
 /* import fetch functions */
 import {} from "../api";
@@ -67,51 +67,36 @@ function indicatorAnimate(index: number) {
       };
       break;
   }
-  //   return {
-  //     width: xOffset.interpolate({
-  //       inputRange: [0, SCREEN_WIDTH],
-  //       outputRange: [40, 50]
-  //     }),
-  //     transform: [
-  //       {
-  //         translateX: xOffset.interpolate({
-  //           inputRange: [0, SCREEN_WIDTH],
-  //           outputRange: [-SCREEN_WIDTH / 6, SCREEN_WIDTH / 6]
-  //         })
-  //       }
-  //     ]
-  //   };
 }
 
-function textColorTransform(index: number) {
-  switch (index) {
-    case 0:
-      return {
-        color: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH],
-          outputRange: [Colors.active, Colors.gray],
-          extrapolate: "clamp"
-        })
-      };
-      break;
-    case 1:
-      return {
-        color: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH],
-          outputRange: [Colors.gray, Colors.later],
-          extrapolate: "clamp"
-        })
-      };
-      break;
-  }
-}
+// function textColorTransform(index: number) {
+//   switch (index) {
+//     case 0:
+//       return {
+//         color: xOffset.interpolate({
+//           inputRange: [0, SCREEN_WIDTH],
+//           outputRange: [Colors.active, Colors.gray],
+//           extrapolate: "clamp"
+//         })
+//       };
+//       break;
+//     case 1:
+//       return {
+//         color: xOffset.interpolate({
+//           inputRange: [0, SCREEN_WIDTH],
+//           outputRange: [Colors.gray, Colors.later],
+//           extrapolate: "clamp"
+//         })
+//       };
+//       break;
+//   }
+// }
 
 function backgroundTransform(index: number) {
-  const base = { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 };
   switch (index) {
     case 0:
       return {
-        ...base,
+        ...FillAbsolute,
         opacity: xOffset.interpolate({
           inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [1, 0.8, 1, 0]
@@ -120,7 +105,7 @@ function backgroundTransform(index: number) {
       break;
     case 1:
       return {
-        ...base,
+        ...FillAbsolute,
         opacity: xOffset.interpolate({
           inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [0, 0.8, 1, 1]
@@ -175,7 +160,7 @@ class Home extends Component {
   }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
-    // useNativeDriver: true
+    useNativeDriver: true
   });
 
   _onHorizScrollEnd = () => {
@@ -208,24 +193,28 @@ class Home extends Component {
   };
 
   handleTransition = (source, onReturn, data, props) => {
-    this.clearScreen();
-    this.transition.beginTransition(source, onReturn, data, props);
+    // this.clearScreen();
+
+    this.setState({ focused: true }, () =>
+      this.transition.beginTransition(source, onReturn, data, props)
+    );
   };
 
-  clearScreen = () => {
-    this.setState({ focused: true }, () => {
-      console.log("focused");
-      if (this.state.barOpen) this.topBar.handleCloseBar();
-    });
-
-    // this.drawer.handleHideDrawer();
-    // this.bottomBar.handleHideBar();
-  };
+  // clearScreen = () => {
+  //   this.setState({ focused: true }, () => {
+  //     console.log("focused");
+  //     if (this.state.barOpen) this.topBar.handleCloseBar();
+  //   });
+  //
+  //   // this.drawer.handleHideDrawer();
+  //   // this.bottomBar.handleHideBar();
+  // };
 
   returnScreen = () => {
-    this.setState({ focused: false }, () => {
-      if (this.state.barOpen) this.topBar.handleOpenBar();
-    });
+    this.setState({ focused: false });
+    // this.setState({ focused: false }, () => {
+    //   if (this.state.barOpen) this.topBar.handleOpenBar();
+    // });
 
     // this.drawer.handleShowDrawer();
     // this.bottomBar.handleShowBar();
@@ -344,8 +333,8 @@ class Home extends Component {
 
         <TopBar
           ref={item => (this.topBar = item)}
-          barOpen={this.state.barOpen}
           indicatorAnimate={indicatorAnimate}
+          barOpen={this.state.barOpen}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
@@ -353,10 +342,7 @@ class Home extends Component {
         <Transition
           ref={item => (this.transition = item)}
           onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-          // clearScreen={this.props.clearScreen}
           returnScreen={this.returnScreen}
-          // onPressPushTo={this.props.onPressPresentOverlayTo}
-          // MoveComponent={this.state.MoveComponent}
         />
 
         <Drawer
@@ -379,10 +365,6 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.mediumGray
-  },
   scroll: {
     flex: 1,
     flexDirection: "row"
