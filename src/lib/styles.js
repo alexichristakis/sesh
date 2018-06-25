@@ -78,7 +78,7 @@ const shadowBottom = {
 
 const heavyShadow = {
   shadowRadius: 4,
-  shadowOpacity: 0.1,
+  shadowOpacity: 0.25,
   shadowOffset: {
     height: 2,
     width: 0
@@ -131,6 +131,7 @@ const colors = {
   lightGray,
   mediumGray,
   // darkerGray,
+  blue,
   gray,
   red,
   green

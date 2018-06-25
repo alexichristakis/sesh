@@ -48,7 +48,7 @@ function indicatorAnimate(index: number) {
           {
             scale: xOffset.interpolate({
               inputRange: [0, SCREEN_WIDTH],
-              outputRange: [1.5, 1]
+              outputRange: [2, 1]
             })
           }
         ]
@@ -60,7 +60,7 @@ function indicatorAnimate(index: number) {
           {
             scale: xOffset.interpolate({
               inputRange: [0, SCREEN_WIDTH],
-              outputRange: [1, 1.5]
+              outputRange: [1, 2]
             })
           }
         ]
@@ -137,10 +137,11 @@ class Home extends Component {
     this.state = {
       loading: true,
       barOpen: true,
+      focused: false,
       vertScrolling: false,
 
       user: this.props.user,
-      photo: "",
+      photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
 
       friends: [],
       groups: [],
@@ -163,10 +164,14 @@ class Home extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.barOpen === nextState.barOpen) return false;
-    else if (nextState.vertScrolling) return true;
-    else if (!this.state.vertScrolling) return false;
+    if (this.state.barOpen !== nextState.barOpen) return true;
+    else if (this.state.focused !== nextState.focused) return true;
     else return false;
+    // if (this.state.barOpen === nextState.barOpen) return false;
+    // else if (nextState.vertScrolling) return true;
+    // else if (!this.state.vertScrolling) return false;
+    // else if (this.state.focused !== nextState.focused) return true;
+    // else return false;
   }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
@@ -208,14 +213,21 @@ class Home extends Component {
   };
 
   clearScreen = () => {
-    if (this.state.barOpen) this.topBar.handleCloseBar();
-    this.drawer.handleHideDrawer();
+    this.setState({ focused: true }, () => {
+      console.log("focused");
+      if (this.state.barOpen) this.topBar.handleCloseBar();
+    });
+
+    // this.drawer.handleHideDrawer();
     // this.bottomBar.handleHideBar();
   };
 
   returnScreen = () => {
-    if (this.state.barOpen) this.topBar.handleOpenBar();
-    this.drawer.handleShowDrawer();
+    this.setState({ focused: false }, () => {
+      if (this.state.barOpen) this.topBar.handleOpenBar();
+    });
+
+    // this.drawer.handleShowDrawer();
     // this.bottomBar.handleShowBar();
   };
 
@@ -284,6 +296,7 @@ class Home extends Component {
   };
 
   render() {
+    console.log("rendered home");
     const groupsProps = {
       onPressPushTo: this.onPressPushTo
     };
@@ -352,7 +365,11 @@ class Home extends Component {
           // MoveComponent={this.state.MoveComponent}
         />
 
-        <Drawer ref={item => (this.drawer = item)} />
+        <Drawer
+          ref={item => (this.drawer = item)}
+          hidden={this.state.focused}
+          photo={this.state.photo}
+        />
 
         {/* <BottomBar
           ref={item => (this.bottomBar = item)}

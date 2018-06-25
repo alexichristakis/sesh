@@ -7,7 +7,7 @@ import { Colors, FillAbsolute } from "../lib/styles";
 
 class Background extends React.PureComponent {
   render() {
-    console.log(Colors);
+    // console.log(Colors);
     const { backgroundTransform } = this.props;
     return (
       <View style={{ flex: 1 }}>

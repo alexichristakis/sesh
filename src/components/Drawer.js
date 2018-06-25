@@ -1,71 +1,122 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, View, Text } from "react-native";
+import { StyleSheet, Easing, Animated, View, Text, Image } from "react-native";
 
 import Interactable from "react-native-interactable";
 import { BlurView } from "react-native-blur";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 import TouchableScale from "./global/TouchableScale";
 
-import { Colors, FillAbsolute } from "../lib/styles";
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
+import { Colors, FillAbsolute, heavyShadow } from "../lib/styles";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, ANIMATION_DURATION } from "../lib/constants";
 
-const BUTTON_SIZE = 50;
+const BUTTON_SIZE = 40;
+const ICON_DIMENSION = 50;
+const DRAWER_HEIGHT = 80;
 
 class Drawer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.animated = new Animated.Value(0);
+    this.state = {
+      hidden: false
+    };
+  }
+
   handleHideDrawer = () => {
-    this.interactable.snapTo({ index: 2 });
+    Animated.timing(this.animated, {
+      toValue: 1,
+      delay: 50,
+      duration: 100,
+      easing: Easing.in(Easing.quad),
+      useNativeDriver: true
+    }).start();
   };
 
   handleShowDrawer = () => {
-    this.interactable.snapTo({ index: 1 });
+    Animated.timing(this.animated, {
+      toValue: 0,
+      delay: 50,
+      duration: 100,
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: true
+    }).start();
   };
 
+  componentWillReceiveProps(nextProps) {
+    console.log("next props: ", nextProps.hidden);
+    if (nextProps.hidden) this.setState({ hidden: true }, this.handleHideDrawer());
+    else if (!nextProps.hidden) this.setState({ hidden: false }, this.handleShowDrawer());
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.hidden === nextState.hidden) return false;
+  //   else return true;
+  // }
+
   render() {
+    const closed = { y: SCREEN_HEIGHT - DRAWER_HEIGHT };
+    const open = { y: SB_HEIGHT + 2 };
+
+    let animatedTranslate = {
+      transform: [
+        {
+          translateY: this.animated.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, DRAWER_HEIGHT]
+          })
+        }
+      ]
+    };
+
     return (
-      <View style={FillAbsolute} pointerEvents={"box-none"}>
+      <Animated.View style={[FillAbsolute, animatedTranslate]} pointerEvents={"box-none"}>
         <Interactable.View
+          animatedNativeDriver
           ref={view => (this.interactable = view)}
-          // style={AbsoluteFill}
           verticalOnly={true}
-          snapPoints={[{ y: SB_HEIGHT + 5 }, { y: SCREEN_HEIGHT - 100 }, { y: SCREEN_HEIGHT }]}
-          boundaries={{ top: -300 }}
-          initialPosition={{ y: SCREEN_HEIGHT - 100 }}
-          // animatedValueY={this._deltaY}
+          snapPoints={[open, closed]}
+          boundaries={{
+            top: SB_HEIGHT - 5,
+            bottom: SCREEN_HEIGHT - DRAWER_HEIGHT + 5,
+            haptics: true
+          }}
+          initialPosition={closed}
+          // animatedValueY={this.deltaY}
         >
-          <SuperEllipseMask radius={{ topRight: 20, topLeft: 20 }}>
-            <BlurView
-              blurType={"xlight"}
-              blurAmount={15}
-              style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
-            >
-              <View style={styles.actionButtonContainer}>
-                <TouchableScale onPress={() => console.log("hello!")}>
-                  <View style={[styles.button, { backgroundColor: Colors.activeBackground1 }]}>
-                    <View style={{ flexDirection: "row" }}>
-                      <AwesomeIcon name={"bolt"} size={24} color={"white"} />
-                      <FeatherIcon name={"plus"} size={14} color={"white"} />
-                    </View>
+          <View style={styles.curveContainer}>
+            <BlurView blurType={"xlight"} blurAmount={15} style={styles.curve} />
+          </View>
+          <View style={styles.background} />
+          <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>
+            <View style={styles.actionButtonContainer}>
+              <TouchableScale onPress={() => console.log("hello!")}>
+                <View style={styles.button}>
+                  <View style={{ flexDirection: "row" }}>
+                    <AwesomeIcon name={"bolt"} size={30} color={Colors.activeBackground1} />
+                    <FeatherIcon name={"plus"} size={14} color={Colors.activeBackground1} />
                   </View>
-                </TouchableScale>
-                <TouchableScale onPress={() => console.log("hello!")}>
-                  <AwesomeIcon name={"bolt"} size={24} />
-                </TouchableScale>
-                <TouchableScale onPress={() => console.log("hello!")}>
-                  <View style={[styles.button, { backgroundColor: Colors.laterBackground1 }]}>
-                    <View style={{ flexDirection: "row" }}>
-                      <AwesomeIcon name={"clock-o"} size={24} color={"white"} />
-                      <FeatherIcon name={"plus"} size={14} color={"white"} />
-                    </View>
+                </View>
+              </TouchableScale>
+              <TouchableScale onPress={() => console.log("hello!")}>
+                <Image source={{ uri: this.props.photo }} style={styles.photo} />
+              </TouchableScale>
+              <TouchableScale onPress={() => console.log("hello!")}>
+                <View style={styles.button}>
+                  <View style={{ flexDirection: "row" }}>
+                    <AwesomeIcon name={"clock-o"} size={30} color={Colors.laterBackground1} />
+                    <FeatherIcon name={"plus"} size={14} color={Colors.laterBackground1} />
                   </View>
-                </TouchableScale>
-              </View>
-            </BlurView>
-          </SuperEllipseMask>
+                </View>
+              </TouchableScale>
+            </View>
+          </View>
         </Interactable.View>
-      </View>
+      </Animated.View>
     );
   }
 }
@@ -77,13 +128,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#efefef"
   },
+  curveContainer: {
+    position: "absolute",
+    width: SCREEN_WIDTH,
+    height: DRAWER_HEIGHT + 5,
+
+    // paddingTop: 50,
+    overflow: "hidden",
+    // backgroundColor: "red",
+    ...heavyShadow
+  },
+  curve: {
+    position: "absolute",
+    top: 5,
+    borderRadius: SCREEN_WIDTH * 2,
+    left: -SCREEN_WIDTH * 1.5,
+    height: SCREEN_WIDTH * 4,
+    width: SCREEN_WIDTH * 4,
+    // borderWidth: 0.1,
+    // borderColor: Colors.gray,
+    transform: [{ rotateZ: "45deg" }]
+    // // backgroundColor: Colors.secondary
+  },
+  background: {
+    position: "absolute",
+    top: DRAWER_HEIGHT,
+    height: SCREEN_HEIGHT - DRAWER_HEIGHT,
+    width: SCREEN_WIDTH,
+    // backgroundColor: Colors.lightGray
+    backgroundColor: "blue"
+  },
   actionButtonContainer: {
     flexDirection: "row",
-    paddingHorizontal: 20,
+    paddingHorizontal: 80,
     width: SCREEN_WIDTH,
-    height: 100,
+    height: DRAWER_HEIGHT,
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    // paddingVertical: 10
+    paddingBottom: SB_HEIGHT === 40 ? 10 : 0
   },
   button: {
     // backgroundColor: Colors.activeBackground1,
@@ -92,6 +175,12 @@ const styles = StyleSheet.create({
     borderRadius: BUTTON_SIZE / 2,
     justifyContent: "center",
     alignItems: "center"
+  },
+  photo: {
+    height: ICON_DIMENSION,
+    width: ICON_DIMENSION,
+    borderRadius: ICON_DIMENSION / 2,
+    backgroundColor: Colors.gray
   },
   panel: {
     flex: 1

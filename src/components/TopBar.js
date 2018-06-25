@@ -114,7 +114,7 @@ class TopBar extends Component {
             <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(0)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
                 {/* <Text style={styles.text}>Now</Text> */}
-                <AwesomeIcon name={"bolt"} size={24} color={"white"} />
+                <AwesomeIcon name={"bolt"} size={18} color={"white"} />
               </TouchableScale>
             </Animated.View>
             {/* </Animated.View> */}
@@ -122,7 +122,7 @@ class TopBar extends Component {
             <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(1)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
                 {/* <Text style={styles.text}>Later</Text> */}
-                <AwesomeIcon name={"clock-o"} size={24} color={"white"} />
+                <AwesomeIcon name={"clock-o"} size={18} color={"white"} />
               </TouchableScale>
             </Animated.View>
             {/* </Animated.View> */}
