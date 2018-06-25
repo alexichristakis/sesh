@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    paddingTop: SB_HEIGHT === 40 ? 61 : 66,
+    paddingTop: SB_HEIGHT === 40 ? 51 : 56,
     position: "absolute",
     top: 0,
     left: 0,

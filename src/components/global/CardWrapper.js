@@ -30,7 +30,7 @@ class CardWrapper extends Component {
   onLeave = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 5,
+      duration: 10,
       useNativeDriver: true
     }).start();
   };

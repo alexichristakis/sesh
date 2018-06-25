@@ -40,25 +40,47 @@ function Page(props: { children?: ReactElement<*> }) {
   return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
 }
 
-function indicatorAnimate() {
-  return {
-    backgroundColor: xOffset.interpolate({
-      inputRange: [0, SCREEN_WIDTH],
-      outputRange: [Colors.active, Colors.later]
-    }),
-    width: xOffset.interpolate({
-      inputRange: [0, SCREEN_WIDTH],
-      outputRange: [40, 50]
-    }),
-    transform: [
-      {
-        translateX: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH],
-          outputRange: [-SCREEN_WIDTH / 4, SCREEN_WIDTH / 4]
-        })
-      }
-    ]
-  };
+function indicatorAnimate(index: number) {
+  switch (index) {
+    case 0:
+      return {
+        transform: [
+          {
+            scale: xOffset.interpolate({
+              inputRange: [0, SCREEN_WIDTH],
+              outputRange: [1.5, 1]
+            })
+          }
+        ]
+      };
+      break;
+    case 1:
+      return {
+        transform: [
+          {
+            scale: xOffset.interpolate({
+              inputRange: [0, SCREEN_WIDTH],
+              outputRange: [1, 1.5]
+            })
+          }
+        ]
+      };
+      break;
+  }
+  //   return {
+  //     width: xOffset.interpolate({
+  //       inputRange: [0, SCREEN_WIDTH],
+  //       outputRange: [40, 50]
+  //     }),
+  //     transform: [
+  //       {
+  //         translateX: xOffset.interpolate({
+  //           inputRange: [0, SCREEN_WIDTH],
+  //           outputRange: [-SCREEN_WIDTH / 6, SCREEN_WIDTH / 6]
+  //         })
+  //       }
+  //     ]
+  //   };
 }
 
 function textColorTransform(index: number) {
@@ -313,19 +335,13 @@ class Home extends Component {
           </Page>
         </Animated.ScrollView>
 
-        {/* <TopBar
+        <TopBar
           ref={item => (this.topBar = item)}
-          user={this.state.user}
-          onPressPushTo={this.onPressPushTo}
-          onPressPresentModalTo={this.onPressPresentModalTo}
-          onPressPresentModalToStack={this.onPressPresentModalToStack}
-          onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-          onPressPop={this.onPressPop}
-          groupsProps={groupsProps}
-          barTransform={barTransform}
-          profilePic={this.state.photo}
           barOpen={this.state.barOpen}
-        /> */}
+          indicatorAnimate={indicatorAnimate}
+          scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
+          scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
+        />
 
         <Transition
           ref={item => (this.transition = item)}
@@ -363,5 +379,5 @@ const styles = StyleSheet.create({
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;
