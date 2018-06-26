@@ -10,6 +10,7 @@ import { BlurView } from "react-native-blur";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 50;
 
@@ -26,7 +27,7 @@ class ActiveMove extends Component {
     };
 
     return (
-      <SuperEllipseMask radius={10}>
+      <SuperEllipseMask radius={BORDER_RADIUS}>
         <View
           style={[
             styles.container,

@@ -15,7 +15,9 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 // import RNFS from "react-native-fs";
 
-import Background from "./global/Background";
+import Transition from "./global/Transition";
+import Background from "./Background";
+import Drawer from "./Drawer";
 import TopBar from "./TopBar";
 import BottomBar from "./BottomBar";
 import Groups from "./Groups";
@@ -23,7 +25,7 @@ import Active from "./Active";
 import Later from "./Later";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
-import { Colors } from "../lib/styles";
+import { Colors, FillAbsolute } from "../lib/styles";
 
 /* import fetch functions */
 import {} from "../api";
@@ -38,56 +40,63 @@ function Page(props: { children?: ReactElement<*> }) {
   return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
 }
 
-function indicatorAnimate() {
-  return {
-    backgroundColor: xOffset.interpolate({
-      inputRange: [0, SCREEN_WIDTH],
-      outputRange: [Colors.active, Colors.later]
-    }),
-    width: xOffset.interpolate({
-      inputRange: [0, SCREEN_WIDTH],
-      outputRange: [40, 50]
-    }),
-    transform: [
-      {
-        translateX: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH],
-          outputRange: [-SCREEN_WIDTH / 4, SCREEN_WIDTH / 4]
-        })
-      }
-    ]
-  };
-}
-
-function textColorTransform(index: number) {
+function indicatorAnimate(index: number) {
   switch (index) {
     case 0:
       return {
-        color: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH],
-          outputRange: [Colors.active, Colors.gray],
-          extrapolate: "clamp"
-        })
+        transform: [
+          {
+            scale: xOffset.interpolate({
+              inputRange: [0, SCREEN_WIDTH],
+              outputRange: [1, 0.5]
+            })
+          }
+        ]
       };
       break;
     case 1:
       return {
-        color: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH],
-          outputRange: [Colors.gray, Colors.later],
-          extrapolate: "clamp"
-        })
+        transform: [
+          {
+            scale: xOffset.interpolate({
+              inputRange: [0, SCREEN_WIDTH],
+              outputRange: [0.5, 1]
+            })
+          }
+        ]
       };
       break;
   }
 }
 
-function barTransform(index: number) {
-  const base = { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 };
+// function textColorTransform(index: number) {
+//   switch (index) {
+//     case 0:
+//       return {
+//         color: xOffset.interpolate({
+//           inputRange: [0, SCREEN_WIDTH],
+//           outputRange: [Colors.active, Colors.gray],
+//           extrapolate: "clamp"
+//         })
+//       };
+//       break;
+//     case 1:
+//       return {
+//         color: xOffset.interpolate({
+//           inputRange: [0, SCREEN_WIDTH],
+//           outputRange: [Colors.gray, Colors.later],
+//           extrapolate: "clamp"
+//         })
+//       };
+//       break;
+//   }
+// }
+
+function backgroundTransform(index: number) {
   switch (index) {
     case 0:
       return {
-        ...base,
+        ...FillAbsolute,
         opacity: xOffset.interpolate({
           inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [1, 0.8, 1, 0]
@@ -96,7 +105,7 @@ function barTransform(index: number) {
       break;
     case 1:
       return {
-        ...base,
+        ...FillAbsolute,
         opacity: xOffset.interpolate({
           inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [0, 0.8, 1, 1]
@@ -113,10 +122,11 @@ class Home extends Component {
     this.state = {
       loading: true,
       barOpen: true,
+      focused: false,
       vertScrolling: false,
 
       user: this.props.user,
-      photo: "",
+      photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
 
       friends: [],
       groups: [],
@@ -139,14 +149,18 @@ class Home extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.barOpen === nextState.barOpen) return false;
-    else if (nextState.vertScrolling) return true;
-    else if (!this.state.vertScrolling) return false;
+    if (this.state.barOpen !== nextState.barOpen) return true;
+    else if (this.state.focused !== nextState.focused) return true;
     else return false;
+    // if (this.state.barOpen === nextState.barOpen) return false;
+    // else if (nextState.vertScrolling) return true;
+    // else if (!this.state.vertScrolling) return false;
+    // else if (this.state.focused !== nextState.focused) return true;
+    // else return false;
   }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
-    // useNativeDriver: true
+    useNativeDriver: true
   });
 
   _onHorizScrollEnd = () => {
@@ -178,14 +192,32 @@ class Home extends Component {
     this.setState({ vertScrolling: false });
   };
 
-  clearScreen = () => {
-    if (this.state.barOpen) this.topBar.handleCloseBar();
-    this.bottomBar.handleHideBar();
+  handleTransition = (source, onReturn, data, props) => {
+    // this.clearScreen();
+
+    this.setState({ focused: true }, () =>
+      this.transition.beginTransition(source, onReturn, data, props)
+    );
   };
 
+  // clearScreen = () => {
+  //   this.setState({ focused: true }, () => {
+  //     console.log("focused");
+  //     if (this.state.barOpen) this.topBar.handleCloseBar();
+  //   });
+  //
+  //   // this.drawer.handleHideDrawer();
+  //   // this.bottomBar.handleHideBar();
+  // };
+
   returnScreen = () => {
-    if (this.state.barOpen) this.topBar.handleOpenBar();
-    this.bottomBar.handleShowBar();
+    this.setState({ focused: false });
+    // this.setState({ focused: false }, () => {
+    //   if (this.state.barOpen) this.topBar.handleOpenBar();
+    // });
+
+    // this.drawer.handleShowDrawer();
+    // this.bottomBar.handleShowBar();
   };
 
   onPressPop = () => {
@@ -253,17 +285,18 @@ class Home extends Component {
   };
 
   render() {
+    console.log("rendered home");
     const groupsProps = {
       onPressPushTo: this.onPressPushTo
     };
 
     return (
-      <View style={styles.container}>
+      <Background backgroundTransform={backgroundTransform}>
         <StatusBar barStyle="light-content" />
         <Animated.ScrollView
           horizontal
           pagingEnabled
-          bounces={false}
+          // bounces={false}
           ref={item => (this.scrollView = item)}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -274,11 +307,9 @@ class Home extends Component {
         >
           <Page>
             <Active
-              // ref={item => (this.active = item)}
               shortened={!this.state.barOpen}
               profilePic={this.state.photo}
-              clearScreen={this.clearScreen}
-              returnScreen={this.returnScreen}
+              handleTransition={this.handleTransition}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
               _onScrollBegin={this._onScrollBegin}
@@ -288,11 +319,9 @@ class Home extends Component {
           </Page>
           <Page>
             <Later
-              // ref={item => (this.later = item)}
               shortened={!this.state.barOpen}
               profilePic={this.state.photo}
-              clearScreen={this.clearScreen}
-              returnScreen={this.returnScreen}
+              handleTransition={this.handleTransition}
               onPressPushTo={this.onPressPushTo}
               onPressPresentOverlayTo={this.onPressPresentOverlayTo}
               _onScrollBegin={this._onScrollBegin}
@@ -304,41 +333,43 @@ class Home extends Component {
 
         <TopBar
           ref={item => (this.topBar = item)}
-          user={this.state.user}
-          onPressPushTo={this.onPressPushTo}
-          onPressPresentModalTo={this.onPressPresentModalTo}
-          onPressPresentModalToStack={this.onPressPresentModalToStack}
-          onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-          onPressPop={this.onPressPop}
-          groupsProps={groupsProps}
-          barTransform={barTransform}
-          profilePic={this.state.photo}
+          indicatorAnimate={indicatorAnimate}
           barOpen={this.state.barOpen}
+          scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
+          scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
 
-        <BottomBar
+        <Transition
+          ref={item => (this.transition = item)}
+          onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+          returnScreen={this.returnScreen}
+        />
+
+        <Drawer
+          ref={item => (this.drawer = item)}
+          hidden={this.state.focused}
+          photo={this.state.photo}
+        />
+
+        {/* <BottomBar
           ref={item => (this.bottomBar = item)}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
           textColorTransform={textColorTransform}
           indicatorAnimate={indicatorAnimate}
           onPressPresentModalTo={this.onPressPresentModalTo}
-        />
-      </View>
+        /> */}
+      </Background>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.mediumGray
-  },
   scroll: {
     flex: 1,
     flexDirection: "row"
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;

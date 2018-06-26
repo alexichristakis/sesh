@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
+import { Colors } from "../../lib/styles";
+
 class ColorButton extends Component {
   constructor(props) {
     super(props);
@@ -29,12 +31,15 @@ class ColorButton extends Component {
           styles.button,
           {
             borderColor: this.props.color,
-            backgroundColor: this.state.pressed ? this.props.color : "white"
+            backgroundColor: this.state.pressed ? this.props.color : "transparent"
           }
         ]}
       >
         <Text
-          style={[this.props.textStyle, { color: this.state.pressed ? "white" : this.props.color }]}
+          style={[
+            this.props.textStyle,
+            { color: this.state.pressed ? Colors.lightGray : this.props.color }
+          ]}
         >
           {this.props.title}
         </Text>

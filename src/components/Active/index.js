@@ -194,8 +194,8 @@ class Active extends Component {
     //   onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
     // });
 
-    this.props.clearScreen();
-    this.transition.beginTransition(source, onReturn, data, {
+    // this.props.clearScreen();
+    this.props.handleTransition(source, onReturn, data, {
       joined: joined,
       joinMove: this.joinMove,
       leaveMove: this.leaveMove,
@@ -248,7 +248,7 @@ class Active extends Component {
           _onScrollBegin={this.props._onScrollBegin}
           _onScrollEnd={this.props._onScrollEnd}
         />
-        <Transition
+        {/* <Transition
           ref={item => (this.transition = item)}
           destinationPage={"sesh.ActiveFocus"}
           onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
@@ -256,8 +256,8 @@ class Active extends Component {
           // clearScreen={this.props.clearScreen}
           returnScreen={this.props.returnScreen}
           onPressPushTo={this.props.onPressPresentOverlayTo}
-          MoveComponent={this.state.MoveComponent}
-        />
+          // MoveComponent={this.state.MoveComponent}
+        /> */}
       </View>
     );
   }

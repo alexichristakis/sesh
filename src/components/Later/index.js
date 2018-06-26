@@ -86,8 +86,7 @@ class Later extends Component {
   }
 
   transitionFrom = (source, onReturn, data) => {
-    this.props.clearScreen();
-    this.transition.beginTransition(source, onReturn, data, {
+    this.props.handleTransition(source, onReturn, data, {
       onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
     });
   };
@@ -103,7 +102,6 @@ class Later extends Component {
   );
 
   render() {
-    const { openProgress } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "transparent" }}>
         <VerticalList
@@ -115,14 +113,14 @@ class Later extends Component {
           _onScrollBegin={this.props._onScrollBegin}
           _onScrollEnd={this.props._onScrollEnd}
         />
-        <Transition
+        {/* <Transition
           ref={item => (this.transition = item)}
           destinationPage={"sesh.LaterFocus"}
           transitionFinished={this.transitionFinished}
           returnScreen={this.props.returnScreen}
           onPressPushTo={this.props.onPressPresentOverlayTo}
           MoveComponent={this.state.MoveComponent}
-        />
+        /> */}
       </View>
     );
   }

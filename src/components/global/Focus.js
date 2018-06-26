@@ -19,7 +19,7 @@ import Icon from "react-native-vector-icons/Feather";
 
 import TouchableScale from "./TouchableScale";
 import BackButton from "./BackButton";
-import Background from "./Background";
+// import Background from "./Background";
 import MapCard from "./MapCard";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, CARD_GUTTER } from "../../lib/constants";
@@ -89,7 +89,7 @@ class Focus extends Component {
     };
 
     let listStyle = {
-      paddingHorizontal: 2 * CARD_GUTTER,
+      paddingHorizontal: CARD_GUTTER,
       paddingTop: listTopPadding
     };
 

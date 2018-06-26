@@ -1,8 +1,8 @@
-const activeHeader1 = "rgba(23,184,255,1)";
-const activeHeader2 = "rgba(0,147,255,0.8)";
+const activeBackground1 = "rgba(74,226,255,1)";
+const activeBackground2 = "rgba(59,188,255,1)";
 
-const laterHeader1 = "rgba(163,90,240,1)";
-const laterHeader2 = "rgba(130,0,220,0.8)";
+const laterBackground1 = "rgba(137,89,255,1)";
+const laterBackground2 = "rgba(134,60,255,1)";
 
 const whiteTrans = "rgba(255,255,255,0.8)";
 
@@ -77,8 +77,8 @@ const shadowBottom = {
 };
 
 const heavyShadow = {
-  shadowRadius: 4,
-  shadowOpacity: 0.1,
+  shadowRadius: 8,
+  shadowOpacity: 1,
   shadowOffset: {
     height: 2,
     width: 0
@@ -116,10 +116,10 @@ const FillAbsolute = {
 
 const colors = {
   whiteTrans,
-  activeHeader1,
-  activeHeader2,
-  laterHeader1,
-  laterHeader2,
+  activeBackground1,
+  activeBackground2,
+  laterBackground1,
+  laterBackground2,
   primary,
   secondary,
   tertiary,
@@ -131,6 +131,7 @@ const colors = {
   lightGray,
   mediumGray,
   // darkerGray,
+  blue,
   gray,
   red,
   green

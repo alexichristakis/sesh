@@ -8,8 +8,8 @@ import { BlurView } from "react-native-blur";
 
 import ActiveFocus from "../Active/ActiveFocus";
 import TouchableScale from "./TouchableScale";
-import Background from "./Background";
 import ActiveMove from "../Active/ActiveMove";
+import LaterMove from "../Later/LaterMove";
 
 import {
   SCREEN_WIDTH,
@@ -24,7 +24,6 @@ class Transition extends Component {
   constructor(props) {
     super(props);
 
-    this.openProgress = new Animated.Value(0);
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
 
     this.state = {
@@ -67,12 +66,13 @@ class Transition extends Component {
   openCard = (source, onReturn, data, props) => {
     setTimeout(() => {
       this.interactable.snapTo({ index: 1 });
-      this.setState({ transitioning: false, open: true });
+      this.setState({ open: true });
     }, 5);
   };
 
   handleOnDrag = event => {
     const { state, x, y } = event.nativeEvent;
+    // this.setState({ transitioning: true });
     if (state === "end") {
       if (y > 75) {
         this.setState({ open: false, transitioning: true }, () => {
@@ -87,6 +87,8 @@ class Transition extends Component {
     const { index } = event.nativeEvent;
     if (index === 0) {
       this.state.onReturn().then(() => this.setState({ transitioning: false }));
+    } else {
+      this.setState({ transitioning: false });
     }
   };
 
@@ -130,7 +132,10 @@ class Transition extends Component {
               ref={item => (this.interactable = item)}
               style={styles.card}
               verticalOnly={true}
-              snapPoints={[{ y: pageY }, { y: SB_HEIGHT + CARD_GUTTER }]}
+              snapPoints={[
+                { y: pageY, damping: 0.5, tension: 600 },
+                { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
+              ]}
               initialPosition={{ y: pageY }}
               animatedValueY={this.deltaY}
               onDrag={this.handleOnDrag}
@@ -140,9 +145,10 @@ class Transition extends Component {
             </Interactable.View>
             <Animated.View style={focusStyle}>
               <ActiveFocus
+                transitioning={this.state.transitioning}
                 data={this.state.data}
                 closeCard={this.closeCard}
-                cardHeight={this.state.sourceDimension.height}
+                cardHeight={height}
               />
             </Animated.View>
           </View>

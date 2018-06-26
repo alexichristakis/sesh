@@ -53,6 +53,16 @@ class Group extends Component {
     }
   };
 
+  presentOptionsOverlay = item => () => {
+    console.log("transition!");
+    Navigation.presentOverlay({
+      component: {
+        name: "sesh.Settings",
+        passProps: { name: item.name, data: item }
+      }
+    });
+  };
+
   render() {
     const group = this.props.data;
 
@@ -114,9 +124,7 @@ class Group extends Component {
           </View>
         </View>
         {!this.props.card && (
-          <TouchableScale
-            onPress={() => this.props.presentOverlay("sesh.Settings", { name: group.name })}
-          >
+          <TouchableScale onPress={this.presentOptionsOverlay(group)}>
             <FeatherIcon
               style={{ paddingRight: 5, paddingBottom: 1 }}
               name={"settings"}
