@@ -24,7 +24,6 @@ class Transition extends Component {
   constructor(props) {
     super(props);
 
-    this.openProgress = new Animated.Value(0);
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
 
     this.state = {

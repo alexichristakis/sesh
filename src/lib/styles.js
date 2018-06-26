@@ -77,8 +77,8 @@ const shadowBottom = {
 };
 
 const heavyShadow = {
-  shadowRadius: 4,
-  shadowOpacity: 0.25,
+  shadowRadius: 8,
+  shadowOpacity: 1,
   shadowOffset: {
     height: 2,
     width: 0

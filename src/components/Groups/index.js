@@ -105,15 +105,8 @@ class Groups extends Component {
 
   _renderItem = ({ item, index }) => (
     <TouchableHighlight
-      // style={{ paddingLeft: 10 }}
       underlayColor={Colors.mediumGray}
-      onPress={() => {
-        ReactNativeHapticFeedback.trigger("impactLight");
-        this.props.presentOverlay("sesh.GroupFocus", {
-          data: item,
-          changeName: this.changeGroupName
-        });
-      }}
+      onPress={this.presentGroupFocusOverlay(item)}
     >
       <Group index={index} data={item} presentOverlay={this.props.presentOverlay} />
     </TouchableHighlight>
@@ -144,6 +137,19 @@ class Groups extends Component {
         group.name = newData.name;
         this.setState({ data: data });
         // break;
+      }
+    });
+  };
+
+  presentGroupFocusOverlay = item => () => {
+    console.log("navigate!", item);
+    ReactNativeHapticFeedback.trigger("impactLight");
+    Navigation.showOverlay({
+      component: {
+        name: "sesh.GroupFocus",
+        passProps: {
+          data: item
+        }
       }
     });
   };

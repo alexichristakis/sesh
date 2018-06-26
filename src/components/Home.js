@@ -48,7 +48,7 @@ function indicatorAnimate(index: number) {
           {
             scale: xOffset.interpolate({
               inputRange: [0, SCREEN_WIDTH],
-              outputRange: [2, 1]
+              outputRange: [1, 0.5]
             })
           }
         ]
@@ -60,7 +60,7 @@ function indicatorAnimate(index: number) {
           {
             scale: xOffset.interpolate({
               inputRange: [0, SCREEN_WIDTH],
-              outputRange: [1, 2]
+              outputRange: [0.5, 1]
             })
           }
         ]
@@ -371,5 +371,5 @@ const styles = StyleSheet.create({
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;

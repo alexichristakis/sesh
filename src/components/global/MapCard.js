@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ActivityIndicator, View, Text, Image } from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
+import Icon from "react-native-vector-icons/Ionicons";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
@@ -53,7 +54,9 @@ class MapCard extends Component {
             coordinate={marker.coords}
             title={marker.title}
             description={marker.description}
-          />
+          >
+            <Icon name={"ios-pin"} size={28} color={Colors.activeBackground1} />
+          </Marker>
         ))}
       </MapView>
     );

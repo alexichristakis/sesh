@@ -7,6 +7,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { BlurView, VibrancyView } from "react-native-blur";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import IonIcon from "react-native-vector-icons/Ionicons";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import TouchableScale from "./global/TouchableScale";
@@ -114,7 +115,7 @@ class TopBar extends Component {
             <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(0)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
                 {/* <Text style={styles.text}>Now</Text> */}
-                <AwesomeIcon name={"bolt"} size={18} color={"white"} />
+                <AwesomeIcon name={"bolt"} size={36} color={"white"} />
               </TouchableScale>
             </Animated.View>
             {/* </Animated.View> */}
@@ -122,7 +123,8 @@ class TopBar extends Component {
             <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(1)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
                 {/* <Text style={styles.text}>Later</Text> */}
-                <AwesomeIcon name={"clock-o"} size={18} color={"white"} />
+                {/* <AwesomeIcon name={"clock-o"} size={18} color={"white"} /> */}
+                <IonIcon name={"ios-time"} size={36} color={"white"} />
               </TouchableScale>
             </Animated.View>
             {/* </Animated.View> */}
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     top: 0
   },
   textContainer: {
-    top: SB_HEIGHT + 10,
+    top: SB_HEIGHT + 5,
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center"
