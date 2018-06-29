@@ -1,12 +1,20 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  Animated,
+  View,
+  TouchableOpacity,
+  Text,
+  Image
+} from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import MapView, { Marker } from "react-native-maps";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 import TouchableScale from "../global/TouchableScale";
@@ -56,29 +64,29 @@ class ActiveFocus extends Component {
     };
   }
 
-  async componentDidMount() {
-    // console.log("active focus mounted");
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({ position: position, loading: false });
-      },
-      error => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-  }
+  // async componentDidMount() {
+  //   // console.log("active focus mounted");
+  //   navigator.geolocation.getCurrentPosition(
+  //     position => {
+  //       this.setState({ position: position, loading: false });
+  //     },
+  //     error => this.setState({ error: error.message }),
+  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+  //   );
+  // }
 
-  onPressPop = () => {
-    if (this.state.joined) this.props.joinMove(this.props.data.id);
-    else this.props.leaveMove(this.props.data.id);
-
-    this.focus.exit();
-    setTimeout(() => {
-      this.props.closeCard();
-      // Navigation.pop(this.props.componentId);
-      Navigation.dismissOverlay(this.props.componentId);
-      // this.props.closeCard();
-    }, 50);
-  };
+  // onPressPop = () => {
+  //   if (this.state.joined) this.props.joinMove(this.props.data.id);
+  //   else this.props.leaveMove(this.props.data.id);
+  //
+  //   this.focus.exit();
+  //   setTimeout(() => {
+  //     this.props.closeCard();
+  //     // Navigation.pop(this.props.componentId);
+  //     Navigation.dismissOverlay(this.props.componentId);
+  //     // this.props.closeCard();
+  //   }, 50);
+  // };
 
   handleOnPress = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
@@ -92,9 +100,14 @@ class ActiveFocus extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MapCard loading={this.props.transitioning} style={{ marginVertical: 5 }} markers={data} />
+        <MapCard
+          active
+          loading={this.props.transitioning}
+          style={{ marginVertical: 5 }}
+          markers={data}
+        />
         <TouchableScale onPress={this.handleOnPress}>
-          <SuperEllipseMask radius={10}>
+          <SuperEllipseMask radius={BORDER_RADIUS}>
             <View
               style={[
                 styles.joinButton,
@@ -121,27 +134,29 @@ class ActiveFocus extends Component {
   };
 
   render() {
+    const { style = {} } = this.props;
     return (
-      <Focus
-        active
-        ref={item => (this.focus = item)}
-        // data={data}
-        renderHeader={this._renderHeader}
-        optionButton={"end"}
-        cardHeight={this.props.cardHeight}
-        statusBarHeight={this.props.statusBarHeight}
-        closeCard={this.props.closeCard}
-        onPressPop={this.onPressPop}
-        renderItem={this._renderItem}
-      >
-        {/* <ActiveMove
-          blur
-          index={this.props.index}
-          length={this.props.length}
-          move={this.props.data}
-          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        /> */}
-      </Focus>
+      <ScrollView style={style}>{this._renderHeader()}</ScrollView>
+      // <Focus
+      //   active
+      //   ref={item => (this.focus = item)}
+      //   // data={data}
+      //   renderHeader={this._renderHeader}
+      //   optionButton={"end"}
+      //   cardHeight={this.props.cardHeight}
+      //   statusBarHeight={this.props.statusBarHeight}
+      //   closeCard={this.props.closeCard}
+      //   onPressPop={this.onPressPop}
+      //   renderItem={this._renderItem}
+      // >
+      //   {/* <ActiveMove
+      //     blur
+      //     index={this.props.index}
+      //     length={this.props.length}
+      //     move={this.props.data}
+      //     onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
+      //   /> */}
+      // </Focus>
     );
   }
 }

@@ -192,32 +192,18 @@ class Home extends Component {
     this.setState({ vertScrolling: false });
   };
 
-  handleTransition = (source, onReturn, data, props) => {
-    // this.clearScreen();
-
+  handleTransition = props => {
     this.setState({ focused: true }, () =>
-      this.transition.beginTransition(source, onReturn, data, props)
+      this.onPressPresentOverlayTo("sesh.Transition", {
+        ...props,
+        returnScreen: this.returnScreen,
+        onPressPresentOverlayTo: this.onPressPresentOverlayTo
+      })
     );
   };
 
-  // clearScreen = () => {
-  //   this.setState({ focused: true }, () => {
-  //     console.log("focused");
-  //     if (this.state.barOpen) this.topBar.handleCloseBar();
-  //   });
-  //
-  //   // this.drawer.handleHideDrawer();
-  //   // this.bottomBar.handleHideBar();
-  // };
-
   returnScreen = () => {
     this.setState({ focused: false });
-    // this.setState({ focused: false }, () => {
-    //   if (this.state.barOpen) this.topBar.handleOpenBar();
-    // });
-
-    // this.drawer.handleShowDrawer();
-    // this.bottomBar.handleShowBar();
   };
 
   onPressPop = () => {
@@ -339,11 +325,11 @@ class Home extends Component {
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
 
-        <Transition
+        {/* <Transition
           ref={item => (this.transition = item)}
           onPressPresentOverlayTo={this.onPressPresentOverlayTo}
           returnScreen={this.returnScreen}
-        />
+        /> */}
 
         <Drawer
           ref={item => (this.drawer = item)}
@@ -371,5 +357,5 @@ const styles = StyleSheet.create({
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;

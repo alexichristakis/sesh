@@ -179,27 +179,17 @@ class Active extends Component {
     };
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if ()
-  // }
-
   transitionFrom = (source, onReturn, data) => {
     let joined = this.state.joinedMoves.includes(data.id);
-    // this.setState({ MoveComponent: MoveComponent });
-    // this.
-    // this.transition.openCard(source, onReturn, data, {
-    //   joined: joined,
-    //   joinMove: this.joinMove,
-    //   leaveMove: this.leaveMove,
-    //   onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
-    // });
 
-    // this.props.clearScreen();
-    this.props.handleTransition(source, onReturn, data, {
-      joined: joined,
+    this.props.handleTransition({
+      source,
+      onReturn,
+      data,
+      joined,
+      active: true,
       joinMove: this.joinMove,
-      leaveMove: this.leaveMove,
-      onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
+      leaveMove: this.leaveMove
     });
   };
 

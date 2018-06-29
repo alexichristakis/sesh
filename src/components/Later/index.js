@@ -86,8 +86,11 @@ class Later extends Component {
   }
 
   transitionFrom = (source, onReturn, data) => {
-    this.props.handleTransition(source, onReturn, data, {
-      onPressPresentOverlayTo: this.props.onPressPresentOverlayTo
+    this.props.handleTransition({
+      source,
+      onReturn,
+      data,
+      active: false
     });
   };
 

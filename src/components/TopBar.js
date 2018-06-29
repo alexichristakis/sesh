@@ -107,7 +107,8 @@ class TopBar extends Component {
     return (
       <View style={styles.container}>
         <Animated.View style={blurContainerAnimatedStyle}>
-          <BlurView blurType={"xlight"} style={styles.statusBar} />
+          {/* <BlurView blurType={"xlight"} style={styles.statusBar} /> */}
+          <View style={[styles.statusBar, { backgroundColor: Colors.activeBackground1 }]} />
         </Animated.View>
         <View style={{ top: 0 }}>
           <View style={styles.topBar}>

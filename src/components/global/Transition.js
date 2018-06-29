@@ -3,12 +3,14 @@ import { Animated, Easing, StyleSheet, View, Button, Image, Text } from "react-n
 import PropTypes from "prop-types";
 
 import Interactable from "react-native-interactable";
+import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
-import ActiveFocus from "../Active/ActiveFocus";
 import TouchableScale from "./TouchableScale";
+import ActiveFocus from "../Active/ActiveFocus";
 import ActiveMove from "../Active/ActiveMove";
+import LaterFocus from "../Later/LaterFocus";
 import LaterMove from "../Later/LaterMove";
 
 import {
@@ -39,54 +41,63 @@ class Transition extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+    this.beginTransition();
+    // this.beginTransition(this.props.source, this.props.onReturn, this.props.data, this.props.props);
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.transitioning !== nextState.transitioning) return true;
     else return false;
   }
 
-  beginTransition = (source, onReturn, data, props) => {
+  // beginTransition = (source, onReturn, data, props) => {
+  beginTransition = () => {
+    const { height, width, x, y, pageX, pageY } = this.props.source;
     this.setState(
       {
         transitioning: true,
-        onReturn: onReturn,
-        data: data,
         sourceDimension: {
-          height: source.height,
-          width: source.width,
-          x: source.x,
-          y: source.y,
-          pageX: source.pageX,
-          pageY: source.pageY
+          height: height,
+          width: width,
+          x: x,
+          y: y,
+          pageX: pageX,
+          pageY: pageY
         }
       },
-      () => this.openCard(source, onReturn, data, props)
+      () => {
+        setTimeout(() => {
+          this.interactable.snapTo({ index: 1 });
+          this.setState({ open: true });
+        }, 5);
+      }
     );
   };
 
-  openCard = (source, onReturn, data, props) => {
-    setTimeout(() => {
-      this.interactable.snapTo({ index: 1 });
-      this.setState({ open: true });
-    }, 5);
-  };
-
-  handleOnDrag = event => {
-    const { state, x, y } = event.nativeEvent;
-    // this.setState({ transitioning: true });
-    if (state === "end") {
-      if (y > 75) {
-        this.setState({ open: false, transitioning: true }, () => {
-          this.interactable.snapTo({ index: 0 });
-          this.props.returnScreen();
-        });
-      }
-    }
-  };
+  // handleOnDrag = event => {
+  //   const { state, x, y } = event.nativeEvent;
+  //   // this.setState({ transitioning: true });
+  //   if (state === "end") {
+  //     if (y > 75) {
+  //       this.setState({ open: false, transitioning: true }, () => {
+  //         this.interactable.snapTo({ index: 0 });
+  //         this.props.returnScreen();
+  //       });
+  //     }
+  //   }
+  // };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 0) {
-      this.state.onReturn().then(() => this.setState({ transitioning: false }));
+      this.props.onReturn().then(() =>
+        this.setState({ transitioning: false }, () => {
+          this.props.returnScreen();
+          Navigation.dismissOverlay(this.props.componentId);
+        })
+      );
     } else {
       this.setState({ transitioning: false });
     }
@@ -102,22 +113,42 @@ class Transition extends Component {
       })
     };
 
-    let focusStyle = {
+    let shadowOpacity = {
+      opacity: this.deltaY.interpolate({
+        inputRange: [SB_HEIGHT + CARD_GUTTER, SB_HEIGHT + CARD_GUTTER + 2, pageY],
+        outputRange: [1, 0, 0]
+      })
+    };
+
+    let focusContainerStyle = {
       ...FillAbsolute,
+      // paddingTop: height + CARD_GUTTER,
       transform: [
         {
           translateY: this.deltaY.interpolate({
             inputRange: [SB_HEIGHT + CARD_GUTTER, pageY],
-            outputRange: [height + SB_HEIGHT + CARD_GUTTER, SCREEN_HEIGHT]
+            // outputRange: [height + SB_HEIGHT + CARD_GUTTER, SCREEN_HEIGHT]
+            outputRange: [SB_HEIGHT, SCREEN_HEIGHT]
           })
         }
       ]
     };
 
-    const Move = (
+    let focusStyle = {
+      top: 20,
+      paddingTop: height - 20 + CARD_GUTTER,
+      paddingHorizontal: CARD_GUTTER
+    };
+
+    const Move = this.props.active ? (
       <ActiveMove
         onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        move={this.state.data}
+        move={this.props.data}
+      />
+    ) : (
+      <LaterMove
+        onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
+        move={this.props.data}
       />
     );
     if (this.state.transitioning || this.state.open) {
@@ -126,32 +157,61 @@ class Transition extends Component {
           <Animated.View style={[FillAbsolute, opacity]}>
             <BlurView blurType="dark" blurAmount={10} style={FillAbsolute} />
           </Animated.View>
-          <View pointerEvents={this.state.transitioning ? "none" : "auto"} style={{ flex: 1 }}>
-            <Interactable.View
-              animatedNativeDriver
-              ref={item => (this.interactable = item)}
-              style={styles.card}
-              verticalOnly={true}
-              snapPoints={[
-                { y: pageY, damping: 0.5, tension: 600 },
-                { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
-              ]}
-              initialPosition={{ y: pageY }}
-              animatedValueY={this.deltaY}
-              onDrag={this.handleOnDrag}
-              onSnap={this.handleOnSnap}
-            >
-              {Move}
-            </Interactable.View>
-            <Animated.View style={focusStyle}>
+
+          <Animated.View style={focusContainerStyle}>
+            {this.props.active && (
               <ActiveFocus
+                style={focusStyle}
                 transitioning={this.state.transitioning}
                 data={this.state.data}
-                closeCard={this.closeCard}
                 cardHeight={height}
               />
-            </Animated.View>
-          </View>
+            )}
+            {!this.props.active && (
+              <LaterFocus
+                style={focusStyle}
+                transitioning={this.state.transitioning}
+                data={this.state.data}
+                cardHeight={height}
+              />
+            )}
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: SB_HEIGHT + height + 30
+              },
+              shadowOpacity
+            ]}
+          >
+            <LinearGradient
+              style={{ flex: 1 }}
+              locations={[0.5, 1]}
+              colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+            />
+          </Animated.View>
+
+          <Interactable.View
+            animatedNativeDriver
+            ref={item => (this.interactable = item)}
+            style={styles.card}
+            verticalOnly={true}
+            snapPoints={[
+              { y: pageY, damping: 0.5, tension: 600 },
+              { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
+            ]}
+            initialPosition={{ y: pageY }}
+            animatedValueY={this.deltaY}
+            // onDrag={this.handleOnDrag}
+            onSnap={this.handleOnSnap}
+          >
+            {Move}
+          </Interactable.View>
         </View>
       );
     } else {
@@ -163,8 +223,10 @@ class Transition extends Component {
 const styles = StyleSheet.create({
   card: {
     position: "absolute",
-    left: CARD_GUTTER,
-    right: CARD_GUTTER
+    top: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: CARD_GUTTER
   },
   cover: {
     flex: 1,

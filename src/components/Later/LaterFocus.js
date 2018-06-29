@@ -103,7 +103,7 @@ class LaterFocus extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        <MapCard large markers={data} />
+        <MapCard large loading={this.props.transitioning} markers={data} />
       </View>
     );
   };
@@ -122,14 +122,14 @@ class LaterFocus extends Component {
         onPressPop={this.onPressPop}
         renderItem={this._renderItem}
       >
-        <LaterMove
+        {/* <LaterMove
           blur
           focused
           index={this.props.index}
           length={this.props.length}
           move={this.props.data}
           onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        />
+        /> */}
       </Focus>
     );
   }

@@ -123,15 +123,26 @@ class Group extends Component {
             <Text style={styles.time}>{TimeAgo(group.time)}</Text>
           </View>
         </View>
-        {!this.props.card && (
-          <TouchableScale onPress={this.presentOptionsOverlay(group)}>
-            <FeatherIcon
-              style={{ paddingRight: 5, paddingBottom: 1 }}
-              name={"settings"}
-              size={20}
-              color={Colors.gray}
-            />
-          </TouchableScale>
+        {!this.props.card &&
+          !this.props.selectable && (
+            <TouchableScale onPress={this.presentOptionsOverlay(group)}>
+              <FeatherIcon
+                style={{ paddingRight: 5, paddingBottom: 1 }}
+                name={"settings"}
+                size={20}
+                color={Colors.gray}
+              />
+            </TouchableScale>
+          )}
+        {this.props.selectable && (
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              backgroundColor: this.props.selected ? Colors.groups : Colors.gray
+            }}
+          />
         )}
       </View>
     );

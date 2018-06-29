@@ -21,6 +21,7 @@ class ColorButton extends Component {
   };
 
   render() {
+    const { style = {} } = this.props;
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -29,6 +30,7 @@ class ColorButton extends Component {
         onPress={this.props.onPress}
         style={[
           styles.button,
+          style,
           {
             borderColor: this.props.color,
             backgroundColor: this.state.pressed ? this.props.color : "transparent"
