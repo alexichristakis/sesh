@@ -73,11 +73,13 @@ class CreateMove extends Component {
     super(props);
 
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
+    this.buttonScale = new Animated.Value(0);
     this.state = {
+      open: false,
+      readyToSend: false,
       currentDate: new Date(),
       chosenDate: new Date(),
       selectedIndex: null,
-      open: false,
       loading: true,
       coords: {
         latitude: 0,
@@ -106,22 +108,57 @@ class CreateMove extends Component {
     if (index === 0) {
       this.setState({ open: false }, () => Navigation.dismissOverlay(this.props.componentId));
     } else {
-      this.setState({ open: true });
+      this.setState({ open: true }, () => this.checkButtonOpen());
     }
   };
 
   handleOnDrag = event => {
     const { y } = event.nativeEvent;
+    this.closeButton();
     Keyboard.dismiss();
     this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
   handleOnPressDismiss = () => {
     this.setState({ open: false }, () => {
+      this.closeButton();
       Keyboard.dismiss();
       this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     });
+  };
+
+  handleOnPressSelect = index => {
+    this.setState({ selectedIndex: index }, () => this.checkButtonOpen());
+  };
+
+  handleOnChangeText = text => {
+    this.setState({ text: text }, () => this.checkButtonOpen());
+  };
+
+  checkButtonOpen = () => {
+    const { selectedIndex, text } = this.state;
+    if (selectedIndex !== null && text !== "") {
+      this.openButton();
+    } else {
+      this.closeButton();
+    }
+  };
+
+  openButton = () => {
+    Animated.spring(this.buttonScale, {
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true
+    }).start();
+  };
+
+  closeButton = () => {
+    Animated.timing(this.buttonScale, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true
+    }).start();
   };
 
   handleOnRegionChange = region => {
@@ -158,11 +195,16 @@ class CreateMove extends Component {
       })
     };
 
-    let buttonOpacity = {
-      opacity: this.deltaY.interpolate({
-        inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
-        outputRange: [1, 0, 0]
-      })
+    let buttonAnimatedStyle = {
+      // opacity: this.deltaY.interpolate({
+      //   inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+      //   outputRange: [1, 0, 0]
+      // }),
+      transform: [
+        {
+          scale: this.buttonScale
+        }
+      ]
     };
 
     let animatedTranslate = {
@@ -215,7 +257,8 @@ class CreateMove extends Component {
           )}
           <GroupSelectionCard
             selectedIndex={this.state.selectedIndex}
-            onPressSelect={index => this.setState({ selectedIndex: index })}
+            // onPressSelect={index => this.setState({ selectedIndex: index })}
+            onPressSelect={this.handleOnPressSelect}
           />
         </Animated.ScrollView>
 
@@ -244,20 +287,19 @@ class CreateMove extends Component {
           </Animated.View>
 
           <TextEntryCard
-            onChangeText={text => this.setState({ text })}
+            // onChangeText={text => this.setState({ text })}
+            onChangeText={this.handleOnChangeText}
             onPressDismiss={this.handleOnPressDismiss}
           />
         </Interactable.View>
-        {this.state.selectedIndex !== null &&
-          this.state.text !== "" && (
-            <View style={styles.buttonContainer}>
-              <TouchableScale onPress={this.handleSendMove}>
-                <Animated.View style={[styles.sendButton, buttonOpacity]}>
-                  <Icon name={"ios-send"} color={"white"} size={36} />
-                </Animated.View>
-              </TouchableScale>
-            </View>
-          )}
+
+        <View style={styles.buttonContainer}>
+          <TouchableScale onPress={this.handleSendMove}>
+            <Animated.View style={[styles.sendButton, buttonAnimatedStyle]}>
+              <Icon name={"ios-send"} color={"white"} size={36} />
+            </Animated.View>
+          </TouchableScale>
+        </View>
       </View>
     );
   }

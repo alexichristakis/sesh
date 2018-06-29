@@ -114,6 +114,7 @@ class Drawer extends Component {
 
   toggleDrawer = () => {
     let newIndex = this.state.open ? 0 : 1;
+    ReactNativeHapticFeedback.trigger("impactLight");
     this.interactable.snapTo({ index: newIndex });
   };
 
