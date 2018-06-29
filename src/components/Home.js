@@ -330,15 +330,6 @@ class Home extends Component {
           hidden={this.state.focused}
           photo={this.state.photo}
         />
-
-        {/* <BottomBar
-          ref={item => (this.bottomBar = item)}
-          scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
-          scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
-          textColorTransform={textColorTransform}
-          indicatorAnimate={indicatorAnimate}
-          onPressPresentModalTo={this.onPressPresentModalTo}
-        /> */}
       </Background>
     );
   }

@@ -112,11 +112,13 @@ class CreateMove extends Component {
 
   handleOnDrag = event => {
     const { y } = event.nativeEvent;
+    Keyboard.dismiss();
     this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
   handleOnPressDismiss = () => {
     this.setState({ open: false }, () => {
+      Keyboard.dismiss();
       this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     });

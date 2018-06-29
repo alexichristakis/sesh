@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, View, TouchableOpacity, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Text,
+  Image
+} from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import MapView, { Marker } from "react-native-maps";
@@ -109,28 +117,30 @@ class LaterFocus extends Component {
   };
 
   render() {
+    const { style = {} } = this.props;
     return (
-      <Focus
-        later
-        ref={item => (this.focus = item)}
-        // data={data}
-        renderHeader={this._renderHeader}
-        optionButton={"ended"}
-        cardHeight={this.props.cardHeight}
-        statusBarHeight={this.props.statusBarHeight}
-        closeCard={this.props.closeCard}
-        onPressPop={this.onPressPop}
-        renderItem={this._renderItem}
-      >
-        {/* <LaterMove
-          blur
-          focused
-          index={this.props.index}
-          length={this.props.length}
-          move={this.props.data}
-          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        /> */}
-      </Focus>
+      <ScrollView style={style}>{this._renderHeader()}</ScrollView>
+      // <Focus
+      //   later
+      //   ref={item => (this.focus = item)}
+      //   // data={data}
+      //   renderHeader={this._renderHeader}
+      //   optionButton={"ended"}
+      //   cardHeight={this.props.cardHeight}
+      //   statusBarHeight={this.props.statusBarHeight}
+      //   closeCard={this.props.closeCard}
+      //   onPressPop={this.onPressPop}
+      //   renderItem={this._renderItem}
+      // >
+      //   {/* <LaterMove
+      //     blur
+      //     focused
+      //     index={this.props.index}
+      //     length={this.props.length}
+      //     move={this.props.data}
+      //     onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
+      //   /> */}
+      // </Focus>
     );
   }
 }

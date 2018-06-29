@@ -14,6 +14,7 @@ DatePicker = props => {
       <DatePickerIOS
         date={props.chosenDate}
         minimumDate={props.currentDate}
+        minuteInterval={10}
         onDateChange={props.onDateChange}
       />
     </SuperEllipseMask>

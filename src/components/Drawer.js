@@ -89,6 +89,7 @@ class Drawer extends Component {
   };
 
   presentNewActiveMove = () => {
+    ReactNativeHapticFeedback.trigger("impactLight");
     Navigation.showOverlay({
       component: {
         name: "sesh.CreateMove",
@@ -100,6 +101,7 @@ class Drawer extends Component {
   };
 
   presentNewLaterMove = () => {
+    ReactNativeHapticFeedback.trigger("impactLight");
     Navigation.showOverlay({
       component: {
         name: "sesh.CreateMove",
