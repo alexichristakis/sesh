@@ -325,12 +325,6 @@ class Home extends Component {
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
 
-        {/* <Transition
-          ref={item => (this.transition = item)}
-          onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-          returnScreen={this.returnScreen}
-        /> */}
-
         <Drawer
           ref={item => (this.drawer = item)}
           hidden={this.state.focused}

@@ -91,7 +91,10 @@ class Drawer extends Component {
   presentNewActiveMove = () => {
     Navigation.showOverlay({
       component: {
-        name: "sesh.CreateActiveMove"
+        name: "sesh.CreateMove",
+        passProps: {
+          active: true
+        }
       }
     });
   };
@@ -99,7 +102,10 @@ class Drawer extends Component {
   presentNewLaterMove = () => {
     Navigation.showOverlay({
       component: {
-        name: "sesh.CreateLaterMove"
+        name: "sesh.CreateMove",
+        passProps: {
+          active: false
+        }
       }
     });
   };
@@ -209,7 +215,7 @@ class Drawer extends Component {
               <TouchableScale onPress={this.toggleDrawer}>
                 <IonIcon name={"ios-navigate"} size={48} color={Colors.primary} />
               </TouchableScale>
-              <TouchableScale onPress={this.presentNewActiveMove}>
+              <TouchableScale onPress={this.presentNewLaterMove}>
                 <View style={styles.button}>
                   <View style={{ flexDirection: "row" }}>
                     <IonIcon name={"ios-time"} size={30} color={Colors.laterBackground1} />

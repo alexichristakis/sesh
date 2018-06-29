@@ -18,7 +18,7 @@ TextEntryCard = props => {
   return (
     <SuperEllipseMask radius={BORDER_RADIUS}>
       <View style={styles.card}>
-        <TextInput placeholder={"what's going on?"} />
+        <TextInput placeholder={"What's going on?"} onChangeText={props.onChangeText} />
         <TouchableOpacity onPress={props.onPressDismiss}>
           <Icon
             style={{ alignSelf: "center" }}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Keyboard, Animated, ScrollView, View, Text, TextInput } from "react-native";
 
+import moment from "moment";
 import Interactable from "react-native-interactable";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
@@ -8,6 +9,7 @@ import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import TextEntryCard from "./TextEntryCard";
+import DatePicker from "./DatePicker";
 import MapCard from "../global/MapCard";
 import TouchableScale from "../global/TouchableScale";
 import GroupSelectionCard from "./GroupSelectionCard";
@@ -66,15 +68,15 @@ const data = [
   }
 ];
 
-class CreateActiveMove extends Component {
+class CreateMove extends Component {
   constructor(props) {
     super(props);
 
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.state = {
+      currentDate: new Date(),
+      chosenDate: new Date(),
       selectedIndex: null,
-      scrollEnabled: true,
-      currentScrollPT: 0,
       open: false,
       loading: true,
       coords: {
@@ -96,7 +98,6 @@ class CreateActiveMove extends Component {
 
     setTimeout(() => {
       this.interactable.snapTo({ index: 1 });
-      // this.setState({ open: true });
     }, 5);
   }
 
@@ -109,15 +110,32 @@ class CreateActiveMove extends Component {
     }
   };
 
+  handleOnDrag = event => {
+    const { y } = event.nativeEvent;
+    this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
+  };
+
   handleOnPressDismiss = () => {
-    this.interactable.snapTo({ index: 0 });
-    this.setState({ open: false });
+    this.setState({ open: false }, () => {
+      this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
+      this.interactable.snapTo({ index: 0 });
+    });
   };
 
   handleOnRegionChange = region => {
-    // const { coordinate } = event.nativeEvent;
-    console.log(region);
-    // this.setState({ coordinate: coordinate });
+    const { latitude, longitude } = region;
+    this.setState({ coords: { latitude, longitude } });
+  };
+
+  handleSendMove = () => {
+    const move = {
+      groupID: this.state.selectedIndex,
+      location: this.state.coords,
+      description: this.state.text,
+      date: this.state.chosenDate
+    };
+
+    console.log(move);
   };
 
   render() {
@@ -169,11 +187,9 @@ class CreateActiveMove extends Component {
         </Animated.View>
 
         <Animated.ScrollView
+          ref={view => (this.scroll = view)}
           scrollEnabled={this.state.scrollEnabled}
           showsVerticalScrollIndicator={false}
-          // bounces={false}
-          // onScroll={this._onScroll}
-          // scrollEventThrottle={16}
           style={[
             animatedTranslate,
             { paddingTop: SB_HEIGHT === 40 ? 35 : 45, paddingHorizontal: CARD_GUTTER }
@@ -188,6 +204,13 @@ class CreateActiveMove extends Component {
             onRegionChangeComplete={this.handleOnRegionChange}
             loading={!this.state.open || this.state.loading}
           />
+          {!this.props.active && (
+            <DatePicker
+              currentDate={this.state.currentDate}
+              chosenDate={this.state.chosenDate}
+              onDateChange={date => this.setState({ chosenDate: date })}
+            />
+          )}
           <GroupSelectionCard
             selectedIndex={this.state.selectedIndex}
             onPressSelect={index => this.setState({ selectedIndex: index })}
@@ -197,22 +220,11 @@ class CreateActiveMove extends Component {
         <Interactable.View
           animatedNativeDriver
           ref={item => (this.interactable = item)}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            // bottom: 0,
-            padding: CARD_GUTTER
-          }}
+          style={styles.interactable}
           verticalOnly={true}
           snapPoints={[closed, open]}
           onSnap={this.handleOnSnap}
-          // onDrag={this.handleOnDrag}
-          // boundaries={{
-          //   bottom: 5,
-          //   haptics: true
-          // }}
+          onDrag={this.handleOnDrag}
           initialPosition={closed}
           animatedValueY={this.deltaY}
         >
@@ -229,21 +241,21 @@ class CreateActiveMove extends Component {
             />
           </Animated.View>
 
-          <TextEntryCard onPressDismiss={this.handleOnPressDismiss} />
-        </Interactable.View>
-        <TouchableScale style={{ backgroundColor: "red" }} onPress={() => console.log("sent it!")}>
-          <Animated.View style={[styles.sendButton, buttonOpacity]}>
-            <Icon name={"ios-send"} color={"white"} size={30} />
-          </Animated.View>
-        </TouchableScale>
-
-        {/* <Animated.View style={[FillAbsolute, opacity]} pointerEvents={"none"}>
-          <BlurView
-            blurType="dark"
-            blurAmount={10}
-            style={[FillAbsolute, { bottom: SCREEN_HEIGHT - SB_HEIGHT }]}
+          <TextEntryCard
+            onChangeText={text => this.setState({ text })}
+            onPressDismiss={this.handleOnPressDismiss}
           />
-        </Animated.View> */}
+        </Interactable.View>
+        {this.state.selectedIndex !== null &&
+          this.state.text !== "" && (
+            <View style={styles.buttonContainer}>
+              <TouchableScale onPress={this.handleSendMove}>
+                <Animated.View style={[styles.sendButton, buttonOpacity]}>
+                  <Icon name={"ios-send"} color={"white"} size={36} />
+                </Animated.View>
+              </TouchableScale>
+            </View>
+          )}
       </View>
     );
   }
@@ -255,19 +267,30 @@ const styles = StyleSheet.create({
     fontWeight: "300"
     // color: "white"
   },
-  sendButton: {
+  buttonContainer: {
+    alignSelf: "center",
     position: "absolute",
-    bottom: 50,
-    height: 50,
-    width: 50,
-    borderRadius: 25,
+    bottom: 50
+  },
+  sendButton: {
+    borderRadius: 30,
+    height: 60,
+    width: 60,
     backgroundColor: Colors.activeBackground1,
     borderWidth: 2,
     borderColor: "white",
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center"
+  },
+  interactable: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    // bottom: 0,
+    padding: CARD_GUTTER
   }
 });
 
-export default CreateActiveMove;
+export default CreateMove;
