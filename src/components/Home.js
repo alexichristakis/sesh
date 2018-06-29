@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  View,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Dimensions,
-  Platform
-} from "react-native";
+import { Animated, View, StatusBar, StyleSheet } from "react-native";
 
 import codePush from "react-native-code-push";
-import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
-import { BlurView } from "react-native-blur";
 // import RNFS from "react-native-fs";
 
 import Transition from "./global/Transition";
@@ -29,6 +19,12 @@ import { Colors, FillAbsolute } from "../lib/styles";
 
 /* import fetch functions */
 import {} from "../api";
+
+/* to replace with data from firestore */
+import GROUPS from "../mock-data/GROUPS";
+import MOVES from "../mock-data/MOVES";
+import FRIENDS from "../mock-data/FRIENDS";
+/*                                     */
 
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(0);
@@ -206,10 +202,6 @@ class Home extends Component {
     this.setState({ focused: false });
   };
 
-  onPressPop = () => {
-    Navigation.pop(this.props.componentId);
-  };
-
   onPressPushTo = (componentName, props, options) => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -282,8 +274,7 @@ class Home extends Component {
         <Animated.ScrollView
           horizontal
           pagingEnabled
-          // bounces={false}
-          ref={item => (this.scrollView = item)}
+          ref={ScrollView => (this.scrollView = ScrollView)}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
@@ -301,6 +292,7 @@ class Home extends Component {
               _onScrollBegin={this._onScrollBegin}
               _onScrollEnd={this._onScrollEnd}
               _vertOnScroll={this._vertOnScroll}
+              data={{ moves: MOVES, groups: GROUPS }}
             />
           </Page>
           <Page>
@@ -313,12 +305,13 @@ class Home extends Component {
               _onScrollBegin={this._onScrollBegin}
               _onScrollEnd={this._onScrollEnd}
               _vertOnScroll={this._vertOnScroll}
+              data={{ moves: MOVES, groups: GROUPS }}
             />
           </Page>
         </Animated.ScrollView>
 
         <TopBar
-          ref={item => (this.topBar = item)}
+          ref={TopBar => (this.topBar = TopBar)}
           indicatorAnimate={indicatorAnimate}
           barOpen={this.state.barOpen}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
@@ -326,9 +319,10 @@ class Home extends Component {
         />
 
         <Drawer
-          ref={item => (this.drawer = item)}
+          ref={Drawer => (this.drawer = Drawer)}
           hidden={this.state.focused}
           photo={this.state.photo}
+          data={{ groups: GROUPS }}
         />
       </Background>
     );

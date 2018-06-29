@@ -10,78 +10,12 @@ import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
 import Transition from "../global/Transition";
 
-const data = [
-  {
-    id: "alexi1",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "alexi2",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "alexi3",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "alexi4",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "alexi5",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "alexi6",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "alexi7",
-    name: "Alexi Christakis",
-    group: "9pack",
-    time: 1526598742850,
-    description: "suite dinner in pierson!",
-    location: "0.24mi",
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  }
-];
-
 class Later extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      MoveComponent: null
+      // MoveComponent: null
     };
   }
 
@@ -105,11 +39,12 @@ class Later extends Component {
   );
 
   render() {
+    const { moves } = this.props.data;
     return (
       <View style={{ flex: 1, backgroundColor: "transparent" }}>
         <VerticalList
           // ref={item => (this.list = item)}
-          data={data}
+          data={moves}
           renderItem={this._renderItem}
           shortened={this.props.shortened}
           onScroll={this.props._vertOnScroll}

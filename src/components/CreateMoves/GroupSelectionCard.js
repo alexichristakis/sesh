@@ -105,7 +105,7 @@ class GroupSelectionCard extends Component {
         <FlatList
           scrollEnabled={false}
           style={{ backgroundColor: "white" }}
-          data={DATA}
+          data={this.props.groups}
           renderItem={this._renderItem}
           ItemSeparatorComponent={this._renderSeparator}
           keyExtractor={this._keyExtractor}

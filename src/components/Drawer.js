@@ -94,7 +94,8 @@ class Drawer extends Component {
       component: {
         name: "sesh.CreateMove",
         passProps: {
-          active: true
+          active: true,
+          groups: this.props.data.groups
         }
       }
     });
@@ -106,7 +107,8 @@ class Drawer extends Component {
       component: {
         name: "sesh.CreateMove",
         passProps: {
-          active: false
+          active: false,
+          groups: this.props.data.groups
         }
       }
     });

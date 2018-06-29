@@ -32,51 +32,6 @@ import {
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
-const data = [
-  {
-    id: "1",
-    name: "9pack",
-    size: 9,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "2",
-    name: "Fence Club",
-    size: 105,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "3",
-    name: "Splash Bros",
-    size: 6,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "4",
-    name: "Frisbee",
-    size: 63,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "5",
-    name: "Fence Club",
-    size: 105,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "6",
-    name: "9pack",
-    size: 9,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  }
-];
-
 const yOffset = new Animated.Value(0);
 
 class CreateMove extends Component {
@@ -114,6 +69,12 @@ class CreateMove extends Component {
       this.interactable.snapTo({ index: 1 });
     }, 5);
   }
+
+  /* TODO:
+  shouldComponentUpdate() {
+
+  }
+  */
 
   handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
     useNativeDriver: true
@@ -281,6 +242,7 @@ class CreateMove extends Component {
             />
           )}
           <GroupSelectionCard
+            groups={this.props.groups}
             selectedIndex={this.state.selectedIndex}
             onPressSelect={this.handleOnPressSelect}
           />
