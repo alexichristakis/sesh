@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, Keyboard, Animated, ScrollView, View, Text, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Keyboard,
+  KeyboardAvoidingView,
+  Animated,
+  ScrollView,
+  View,
+  Text,
+  TextInput
+} from "react-native";
 
 import moment from "moment";
 import Interactable from "react-native-interactable";
@@ -68,10 +77,13 @@ const data = [
   }
 ];
 
+const yOffset = new Animated.Value(0);
+
 class CreateMove extends Component {
   constructor(props) {
     super(props);
 
+    // this.yOffset = new Animated.Value(0);
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.buttonScale = new Animated.Value(0);
     this.state = {
@@ -103,6 +115,10 @@ class CreateMove extends Component {
     }, 5);
   }
 
+  handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+    useNativeDriver: true
+  });
+
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 0) {
@@ -133,7 +149,7 @@ class CreateMove extends Component {
   };
 
   handleOnChangeText = text => {
-    this.setState({ text: text }, () => this.checkButtonOpen());
+    this.setState({ text }, () => this.checkButtonOpen());
   };
 
   checkButtonOpen = () => {
@@ -178,6 +194,7 @@ class CreateMove extends Component {
   };
 
   render() {
+    console.log("render create move");
     const closed = { y: SCREEN_HEIGHT, damping: 0.5, tension: 600 };
     const open = { y: SB_HEIGHT, damping: 0.5, tension: 600 };
 
@@ -189,9 +206,14 @@ class CreateMove extends Component {
     };
 
     let shadowOpacity = {
-      opacity: this.deltaY.interpolate({
-        inputRange: [SB_HEIGHT, SB_HEIGHT + 2, SCREEN_HEIGHT],
-        outputRange: [1, 0, 0]
+      // opacity: this.deltaY.interpolate({
+      //   inputRange: [SB_HEIGHT, SB_HEIGHT + 2, SCREEN_HEIGHT],
+      //   outputRange: [1, 0, 0]
+      // })
+      opacity: yOffset.interpolate({
+        inputRange: [0, 30],
+        outputRange: [0, 1],
+        extrapolate: "clamp"
       })
     };
 
@@ -232,6 +254,8 @@ class CreateMove extends Component {
 
         <Animated.ScrollView
           ref={view => (this.scroll = view)}
+          onScroll={this.handleOnScroll}
+          scrollEventThrottle={16}
           scrollEnabled={this.state.scrollEnabled}
           showsVerticalScrollIndicator={false}
           style={[
@@ -242,6 +266,7 @@ class CreateMove extends Component {
         >
           <MapCard
             draggable
+            active={this.props.active}
             height={300}
             initialRegion={region}
             style={{ marginVertical: CARD_GUTTER }}
@@ -257,7 +282,6 @@ class CreateMove extends Component {
           )}
           <GroupSelectionCard
             selectedIndex={this.state.selectedIndex}
-            // onPressSelect={index => this.setState({ selectedIndex: index })}
             onPressSelect={this.handleOnPressSelect}
           />
         </Animated.ScrollView>
@@ -275,31 +299,42 @@ class CreateMove extends Component {
         >
           <Animated.View
             style={[
-              { position: "absolute", top: -SB_HEIGHT, left: 0, right: 0, height: SB_HEIGHT + 70 },
+              { position: "absolute", top: -SB_HEIGHT, left: 0, right: 0, height: SB_HEIGHT + 75 },
               shadowOpacity
             ]}
           >
             <LinearGradient
               style={{ flex: 1 }}
-              locations={[0.5, 1]}
-              colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+              locations={[0.25, 0.5, 1]}
+              colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
             />
           </Animated.View>
 
           <TextEntryCard
-            // onChangeText={text => this.setState({ text })}
             onChangeText={this.handleOnChangeText}
             onPressDismiss={this.handleOnPressDismiss}
           />
         </Interactable.View>
 
-        <View style={styles.buttonContainer}>
+        <KeyboardAvoidingView behavior="position" enabled style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}> */}
           <TouchableScale onPress={this.handleSendMove}>
-            <Animated.View style={[styles.sendButton, buttonAnimatedStyle]}>
+            <Animated.View
+              style={[
+                styles.sendButton,
+                {
+                  backgroundColor: this.props.active
+                    ? Colors.activeBackground1
+                    : Colors.laterBackground1
+                },
+                buttonAnimatedStyle
+              ]}
+            >
               <Icon name={"ios-send"} color={"white"} size={36} />
             </Animated.View>
           </TouchableScale>
-        </View>
+          {/* </View> */}
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -314,13 +349,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: "center",
     position: "absolute",
-    bottom: 50
+    bottom: 20,
+    paddingBottom: 30
   },
   sendButton: {
     borderRadius: 30,
     height: 60,
     width: 60,
-    backgroundColor: Colors.activeBackground1,
+    // backgroundColor: Colors.activeBackground1,
     borderWidth: 2,
     borderColor: "white",
     alignSelf: "center",

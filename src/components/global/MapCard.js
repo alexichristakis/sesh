@@ -90,7 +90,7 @@ class MapCard extends Component {
           }}
           name={"ios-pin"}
           size={40}
-          color={Colors.activeBackground1}
+          color={this.props.active ? Colors.activeBackground1 : Colors.laterBackground1}
         />
       </View>
     );
