@@ -5,7 +5,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 
-DatePicker = props => {
+const DatePicker = props => {
   return (
     <SuperEllipseMask
       style={{ backgroundColor: "white", marginBottom: CARD_GUTTER }}

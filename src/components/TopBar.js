@@ -107,32 +107,21 @@ class TopBar extends Component {
     return (
       <View style={styles.container}>
         <Animated.View style={blurContainerAnimatedStyle}>
-          {/* <BlurView blurType={"xlight"} style={styles.statusBar} /> */}
           <View style={[styles.statusBar, { backgroundColor: Colors.activeBackground1 }]} />
         </Animated.View>
         <View style={{ top: 0 }}>
           <View style={styles.topBar}>
-            {/* <Animated.View style={[{ backgroundColor: "blue" }, ]}> */}
             <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(0)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
-                {/* <Text style={styles.text}>Now</Text> */}
                 <AwesomeIcon name={"bolt"} size={36} color={"white"} />
               </TouchableScale>
             </Animated.View>
-            {/* </Animated.View> */}
-            {/* <Animated.View style={indicatorAnimate(1)}> */}
             <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(1)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
-                {/* <Text style={styles.text}>Later</Text> */}
-                {/* <AwesomeIcon name={"clock-o"} size={18} color={"white"} /> */}
                 <IonIcon name={"ios-time"} size={36} color={"white"} />
               </TouchableScale>
             </Animated.View>
-            {/* </Animated.View> */}
           </View>
-          {/* <Animated.View style={[{ top: 0 }, animatedStyle]}>
-            <Animated.View style={[styles.indicator, indicatorAnimate()]} />
-          </Animated.View> */}
         </View>
       </View>
     );

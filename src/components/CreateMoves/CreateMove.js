@@ -10,7 +10,6 @@ import {
   TextInput
 } from "react-native";
 
-import moment from "moment";
 import Interactable from "react-native-interactable";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
@@ -43,6 +42,7 @@ class CreateMove extends Component {
     this.buttonScale = new Animated.Value(0);
     this.state = {
       open: false,
+      buttonVisible: false,
       readyToSend: false,
       currentDate: new Date(),
       chosenDate: new Date(),
@@ -70,11 +70,13 @@ class CreateMove extends Component {
     }, 5);
   }
 
-  /* TODO:
-  shouldComponentUpdate() {
-
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.open !== nextState.open) return true;
+    else if (this.state.chosenDate !== nextState.chosenDate) return true;
+    else if (this.state.selectedIndex !== nextState.selectedIndex) return true;
+    else if (this.state.buttonOpen !== nextState.buttonOpen) return true;
+    else return false;
   }
-  */
 
   handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
     useNativeDriver: true
@@ -123,19 +125,27 @@ class CreateMove extends Component {
   };
 
   openButton = () => {
-    Animated.spring(this.buttonScale, {
-      toValue: 1,
-      friction: 5,
-      useNativeDriver: true
-    }).start();
+    if (!this.state.buttonVisible) {
+      this.setState({ buttonVisible: true }, () =>
+        Animated.spring(this.buttonScale, {
+          toValue: 1,
+          friction: 5,
+          useNativeDriver: true
+        }).start()
+      );
+    }
   };
 
   closeButton = () => {
-    Animated.timing(this.buttonScale, {
-      toValue: 0,
-      duration: 150,
-      useNativeDriver: true
-    }).start();
+    if (this.state.buttonVisible) {
+      this.setState({ buttonVisible: false }, () =>
+        Animated.timing(this.buttonScale, {
+          toValue: 0,
+          duration: 150,
+          useNativeDriver: true
+        }).start()
+      );
+    }
   };
 
   handleOnRegionChange = region => {
@@ -155,7 +165,6 @@ class CreateMove extends Component {
   };
 
   render() {
-    console.log("render create move");
     const closed = { y: SCREEN_HEIGHT, damping: 0.5, tension: 600 };
     const open = { y: SB_HEIGHT, damping: 0.5, tension: 600 };
 
@@ -167,10 +176,6 @@ class CreateMove extends Component {
     };
 
     let shadowOpacity = {
-      // opacity: this.deltaY.interpolate({
-      //   inputRange: [SB_HEIGHT, SB_HEIGHT + 2, SCREEN_HEIGHT],
-      //   outputRange: [1, 0, 0]
-      // })
       opacity: yOffset.interpolate({
         inputRange: [0, 30],
         outputRange: [0, 1],
@@ -179,10 +184,6 @@ class CreateMove extends Component {
     };
 
     let buttonAnimatedStyle = {
-      // opacity: this.deltaY.interpolate({
-      //   inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
-      //   outputRange: [1, 0, 0]
-      // }),
       transform: [
         {
           scale: this.buttonScale
@@ -218,10 +219,11 @@ class CreateMove extends Component {
           onScroll={this.handleOnScroll}
           scrollEventThrottle={16}
           scrollEnabled={this.state.scrollEnabled}
+          keyboardDismissMode={"interactive"}
           showsVerticalScrollIndicator={false}
           style={[
             animatedTranslate,
-            { paddingTop: SB_HEIGHT === 40 ? 35 : 45, paddingHorizontal: CARD_GUTTER }
+            { paddingTop: SB_HEIGHT === 40 ? 33 : 43, paddingHorizontal: CARD_GUTTER }
           ]}
           contentContainerStyle={{ paddingBottom: 90 }}
         >
@@ -273,13 +275,18 @@ class CreateMove extends Component {
           </Animated.View>
 
           <TextEntryCard
+            active={this.props.active}
             onChangeText={this.handleOnChangeText}
             onPressDismiss={this.handleOnPressDismiss}
           />
         </Interactable.View>
 
-        <KeyboardAvoidingView behavior="position" enabled style={styles.buttonContainer}>
-          {/* <View style={styles.buttonContainer}> */}
+        <KeyboardAvoidingView
+          enabled
+          pointerEvents={this.state.buttonVisible ? "auto" : "none"}
+          behavior="position"
+          style={styles.buttonContainer}
+        >
           <TouchableScale onPress={this.handleSendMove}>
             <Animated.View
               style={[
@@ -295,7 +302,6 @@ class CreateMove extends Component {
               <Icon name={"ios-send"} color={"white"} size={36} />
             </Animated.View>
           </TouchableScale>
-          {/* </View> */}
         </KeyboardAvoidingView>
       </View>
     );

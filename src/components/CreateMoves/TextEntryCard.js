@@ -14,16 +14,30 @@ import {
 } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
 
-TextEntryCard = props => {
+const TextEntryCard = props => {
   return (
     <SuperEllipseMask radius={BORDER_RADIUS}>
       <View style={styles.card}>
-        <TextInput autoFocus placeholder={"What's going on?"} onChangeText={props.onChangeText} />
-        <TouchableOpacity onPress={props.onPressDismiss}>
+        <TextInput
+          autoFocus
+          allowFontScaling={false}
+          style={styles.text}
+          selectionColor={props.active ? Colors.activeBackground1 : Colors.laterBackground1}
+          placeholder={"What's going on?"}
+          onChangeText={props.onChangeText}
+          keyboardAppearance={"dark"}
+        />
+        <TouchableOpacity style={{ height: 12 }} onPress={props.onPressDismiss}>
           <Icon
-            style={{ alignSelf: "center" }}
+            style={{
+              position: "absolute",
+              top: -5,
+              bottom: -5,
+              transform: [{ scaleY: 0.5 }, { scaleX: 1.5 }],
+              alignSelf: "center"
+            }}
             name={"chevron-down"}
-            size={20}
+            size={28}
             color={Colors.mediumGray}
           />
         </TouchableOpacity>
@@ -36,7 +50,11 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
     paddingHorizontal: 15,
-    paddingTop: 20
+    paddingTop: 15,
+    paddingBottom: 5
+  },
+  text: {
+    fontSize: 18
   }
 });
 

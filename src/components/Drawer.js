@@ -36,8 +36,8 @@ class Drawer extends Component {
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.state = {
       hidden: false,
-      open: false
-      // dragging: false,
+      open: false,
+      transitioning: false
     };
   }
 
@@ -48,7 +48,8 @@ class Drawer extends Component {
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.hidden === nextState.hidden) return false;
+  //   if (this.state.transitioning !== nextState.transitioning) return false;
+  //   else if (this.state.hidden === nextState.hidden) return false;
   //   else return true;
   // }
 
@@ -76,8 +77,12 @@ class Drawer extends Component {
     if (index === 1) {
       this.setState({ open: true });
     } else {
-      this.setState({ open: false });
+      this.setState({ open: false, transitioning: false });
     }
+  };
+
+  handleOnDrag = event => {
+    this.setState({ transitioning: true });
   };
 
   presentGroupsModal = () => {
@@ -115,9 +120,11 @@ class Drawer extends Component {
   };
 
   toggleDrawer = () => {
-    let newIndex = this.state.open ? 0 : 1;
-    ReactNativeHapticFeedback.trigger("impactLight");
-    this.interactable.snapTo({ index: newIndex });
+    this.setState({ transitioning: true }, () => {
+      let newIndex = this.state.open ? 0 : 1;
+      ReactNativeHapticFeedback.trigger("impactLight");
+      this.interactable.snapTo({ index: newIndex });
+    });
   };
 
   render() {
@@ -134,10 +141,28 @@ class Drawer extends Component {
       ]
     };
 
+    let animatedScale = {
+      transform: [
+        {
+          scale: this.deltaY.interpolate({
+            inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+            outputRange: [0, 1, 1]
+          })
+        }
+      ]
+    };
+
     let animatedOpacity = {
       opacity: this.deltaY.interpolate({
         inputRange: [SB_HEIGHT, SCREEN_HEIGHT],
         outputRange: [0, 1]
+      })
+    };
+
+    let blurOpacity = {
+      opacity: this.deltaY.interpolate({
+        inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+        outputRange: [1, 0, 0]
       })
     };
 
@@ -185,12 +210,18 @@ class Drawer extends Component {
 
     return (
       <Animated.View style={[FillAbsolute, animatedTranslate]} pointerEvents={"box-none"}>
+        {(this.state.transitioning || this.state.open) && (
+          <Animated.View pointerEvents={"none"} style={[blurOpacity, FillAbsolute]}>
+            <BlurView blurType={"dark"} style={FillAbsolute} />
+          </Animated.View>
+        )}
         <Interactable.View
           animatedNativeDriver
           ref={view => (this.interactable = view)}
           verticalOnly={true}
           snapPoints={[closed, open]}
           onSnap={this.handleOnSnap}
+          onDrag={this.handleOnDrag}
           boundaries={{
             top: SB_HEIGHT - 10,
             bottom: SCREEN_HEIGHT - DRAWER_HEIGHT + 20,
@@ -209,24 +240,24 @@ class Drawer extends Component {
 
           <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>
             <View style={styles.actionButtonContainer}>
-              <TouchableScale onPress={this.presentNewActiveMove}>
-                <View style={styles.button}>
+              <TouchableScale disabled={this.state.open} onPress={this.presentNewActiveMove}>
+                <Animated.View style={[animatedScale, styles.button]}>
                   <View style={{ flexDirection: "row" }}>
                     <AwesomeIcon name={"bolt"} size={30} color={Colors.activeBackground1} />
                     <FeatherIcon name={"plus"} size={14} color={Colors.activeBackground1} />
                   </View>
-                </View>
+                </Animated.View>
               </TouchableScale>
               <TouchableScale onPress={this.toggleDrawer}>
                 <IonIcon name={"ios-navigate"} size={48} color={Colors.primary} />
               </TouchableScale>
-              <TouchableScale onPress={this.presentNewLaterMove}>
-                <View style={styles.button}>
+              <TouchableScale disabled={this.state.open} onPress={this.presentNewLaterMove}>
+                <Animated.View style={[animatedScale, styles.button]}>
                   <View style={{ flexDirection: "row" }}>
                     <IonIcon name={"ios-time"} size={30} color={Colors.laterBackground1} />
                     <FeatherIcon name={"plus"} size={14} color={Colors.laterBackground1} />
                   </View>
-                </View>
+                </Animated.View>
               </TouchableScale>
             </View>
             {OpenContent}
