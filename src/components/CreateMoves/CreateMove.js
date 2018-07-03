@@ -21,6 +21,7 @@ import DatePicker from "./DatePicker";
 import MapCard from "../global/MapCard";
 import TouchableScale from "../global/TouchableScale";
 import GroupSelectionCard from "./GroupSelectionCard";
+import SendButton from "./SendButton";
 
 import {
   SCREEN_WIDTH,
@@ -74,7 +75,7 @@ class CreateMove extends Component {
     if (this.state.open !== nextState.open) return true;
     else if (this.state.chosenDate !== nextState.chosenDate) return true;
     else if (this.state.selectedIndex !== nextState.selectedIndex) return true;
-    else if (this.state.buttonOpen !== nextState.buttonOpen) return true;
+    else if (this.state.buttonVisible !== nextState.buttonVisible) return true;
     else return false;
   }
 
@@ -91,21 +92,22 @@ class CreateMove extends Component {
     }
   };
 
+  /* TODO: somehow optimize performance here? */
   handleOnDrag = event => {
     const { y } = event.nativeEvent;
-    this.closeButton();
+    this.setState({ buttonVisible: false });
     Keyboard.dismiss();
     this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
   handleOnPressDismiss = () => {
-    this.setState({ open: false }, () => {
-      this.closeButton();
+    this.setState({ open: false, buttonVisible: false }, () => {
       Keyboard.dismiss();
       this.scroll.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     });
   };
+  /********************************************/
 
   handleOnPressSelect = index => {
     this.setState({ selectedIndex: index }, () => this.checkButtonOpen());
@@ -115,36 +117,16 @@ class CreateMove extends Component {
     this.setState({ text }, () => this.checkButtonOpen());
   };
 
+  handleOnChangeDate = date => {
+    this.setState({ chosenDate: date });
+  };
+
   checkButtonOpen = () => {
     const { selectedIndex, text } = this.state;
     if (selectedIndex !== null && text !== "") {
-      this.openButton();
+      this.setState({ buttonVisible: true });
     } else {
-      this.closeButton();
-    }
-  };
-
-  openButton = () => {
-    if (!this.state.buttonVisible) {
-      this.setState({ buttonVisible: true }, () =>
-        Animated.spring(this.buttonScale, {
-          toValue: 1,
-          friction: 5,
-          useNativeDriver: true
-        }).start()
-      );
-    }
-  };
-
-  closeButton = () => {
-    if (this.state.buttonVisible) {
-      this.setState({ buttonVisible: false }, () =>
-        Animated.timing(this.buttonScale, {
-          toValue: 0,
-          duration: 150,
-          useNativeDriver: true
-        }).start()
-      );
+      this.setState({ buttonVisible: false });
     }
   };
 
@@ -183,14 +165,6 @@ class CreateMove extends Component {
       })
     };
 
-    let buttonAnimatedStyle = {
-      transform: [
-        {
-          scale: this.buttonScale
-        }
-      ]
-    };
-
     let animatedTranslate = {
       transform: [
         {
@@ -211,8 +185,9 @@ class CreateMove extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Animated.View style={[FillAbsolute, opacity]}>
-          <BlurView blurType="dark" blurAmount={10} style={[FillAbsolute]} />
+          <BlurView blurType="dark" style={{ flex: 1 }} />
         </Animated.View>
+        {/* <Animated.View style={[FillAbsolute, opacity, { backgroundColor: "rgba(0,0,0,0.8)" }]} /> */}
 
         <Animated.ScrollView
           ref={view => (this.scroll = view)}
@@ -221,10 +196,7 @@ class CreateMove extends Component {
           scrollEnabled={this.state.scrollEnabled}
           keyboardDismissMode={"interactive"}
           showsVerticalScrollIndicator={false}
-          style={[
-            animatedTranslate,
-            { paddingTop: SB_HEIGHT === 40 ? 33 : 43, paddingHorizontal: CARD_GUTTER }
-          ]}
+          style={[styles.scroll, animatedTranslate]}
           contentContainerStyle={{ paddingBottom: 90 }}
         >
           <MapCard
@@ -240,7 +212,7 @@ class CreateMove extends Component {
             <DatePicker
               currentDate={this.state.currentDate}
               chosenDate={this.state.chosenDate}
-              onDateChange={date => this.setState({ chosenDate: date })}
+              onDateChange={this.handleOnChangeDate}
             />
           )}
           <GroupSelectionCard
@@ -261,12 +233,7 @@ class CreateMove extends Component {
           initialPosition={closed}
           animatedValueY={this.deltaY}
         >
-          <Animated.View
-            style={[
-              { position: "absolute", top: -SB_HEIGHT, left: 0, right: 0, height: SB_HEIGHT + 75 },
-              shadowOpacity
-            ]}
-          >
+          <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
             <LinearGradient
               style={{ flex: 1 }}
               locations={[0.25, 0.5, 1]}
@@ -281,55 +248,20 @@ class CreateMove extends Component {
           />
         </Interactable.View>
 
-        <KeyboardAvoidingView
-          enabled
-          pointerEvents={this.state.buttonVisible ? "auto" : "none"}
-          behavior="position"
-          style={styles.buttonContainer}
-        >
-          <TouchableScale onPress={this.handleSendMove}>
-            <Animated.View
-              style={[
-                styles.sendButton,
-                {
-                  backgroundColor: this.props.active
-                    ? Colors.activeBackground1
-                    : Colors.laterBackground1
-                },
-                buttonAnimatedStyle
-              ]}
-            >
-              <Icon name={"ios-send"} color={"white"} size={36} />
-            </Animated.View>
-          </TouchableScale>
-        </KeyboardAvoidingView>
+        <SendButton
+          active={this.props.active}
+          visible={this.state.buttonVisible}
+          onPress={this.handleSendMove}
+        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  name: {
-    fontSize: 20,
-    fontWeight: "300"
-    // color: "white"
-  },
-  buttonContainer: {
-    alignSelf: "center",
-    position: "absolute",
-    bottom: 20,
-    paddingBottom: 30
-  },
-  sendButton: {
-    borderRadius: 30,
-    height: 60,
-    width: 60,
-    // backgroundColor: Colors.activeBackground1,
-    borderWidth: 2,
-    borderColor: "white",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center"
+  scroll: {
+    paddingTop: SB_HEIGHT === 40 ? 33 : 43,
+    paddingHorizontal: CARD_GUTTER
   },
   interactable: {
     position: "absolute",
@@ -338,6 +270,13 @@ const styles = StyleSheet.create({
     right: 0,
     // bottom: 0,
     padding: CARD_GUTTER
+  },
+  shadowContainer: {
+    position: "absolute",
+    top: -SB_HEIGHT,
+    left: 0,
+    right: 0,
+    height: SB_HEIGHT + 75
   }
 });
 

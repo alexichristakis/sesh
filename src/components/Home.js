@@ -26,6 +26,16 @@ import MOVES from "../mock-data/MOVES";
 import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
+// /* FOR DEBUGGING */
+// import MessageQueue from "react-native/Libraries/BatchedBridge/MessageQueue.js";
+//
+// const spyFunction = msg => {
+//   if (msg.module != "JSTimers") console.log(msg);
+// };
+//
+// MessageQueue.spy(spyFunction);
+// /****************/
+
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(0);
 
@@ -263,7 +273,7 @@ class Home extends Component {
   };
 
   render() {
-    console.log("rendered home");
+    // console.log("rendered home");
     const groupsProps = {
       onPressPushTo: this.onPressPushTo
     };

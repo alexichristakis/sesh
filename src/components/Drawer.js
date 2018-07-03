@@ -145,8 +145,8 @@ class Drawer extends Component {
       transform: [
         {
           scale: this.deltaY.interpolate({
-            inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
-            outputRange: [0, 1, 1]
+            inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, (3 * SCREEN_HEIGHT) / 4, SCREEN_HEIGHT],
+            outputRange: [0, 0.8, 1, 1]
           })
         }
       ]
@@ -161,8 +161,8 @@ class Drawer extends Component {
 
     let blurOpacity = {
       opacity: this.deltaY.interpolate({
-        inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
-        outputRange: [1, 0, 0]
+        inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, (3 * SCREEN_HEIGHT) / 4, SCREEN_HEIGHT],
+        outputRange: [1, 0.2, 0, 0]
       })
     };
 
@@ -211,9 +211,10 @@ class Drawer extends Component {
     return (
       <Animated.View style={[FillAbsolute, animatedTranslate]} pointerEvents={"box-none"}>
         {(this.state.transitioning || this.state.open) && (
-          <Animated.View pointerEvents={"none"} style={[blurOpacity, FillAbsolute]}>
-            <BlurView blurType={"dark"} style={FillAbsolute} />
-          </Animated.View>
+          <Animated.View
+            pointerEvents={"none"}
+            style={[blurOpacity, FillAbsolute, { backgroundColor: "rgba(0,0,0,0.8)" }]}
+          />
         )}
         <Interactable.View
           animatedNativeDriver
