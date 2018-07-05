@@ -178,8 +178,8 @@ class CreateMove extends Component {
 
     let region = {
       ...this.state.coords,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
+      latitudeDelta: 0.0044,
+      longitudeDelta: 0.0044
     };
 
     return (
