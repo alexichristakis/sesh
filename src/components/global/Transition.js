@@ -3,6 +3,7 @@ import { Animated, Easing, StyleSheet, View, Button, Image, Text } from "react-n
 import PropTypes from "prop-types";
 
 import Interactable from "react-native-interactable";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
@@ -27,11 +28,9 @@ class Transition extends Component {
     super(props);
 
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
-
     this.state = {
-      transitioning: false,
       open: false,
-      onReturn: null,
+      joined: this.props.joined,
       sourceDimension: {
         height: 0,
         width: 0,
@@ -42,22 +41,14 @@ class Transition extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.beginTransition();
     // this.beginTransition(this.props.source, this.props.onReturn, this.props.data, this.props.props);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.transitioning !== nextState.transitioning) return true;
-    else return false;
-  }
-
-  // beginTransition = (source, onReturn, data, props) => {
   beginTransition = () => {
     const { height, width, x, y, pageX, pageY } = this.props.source;
     this.setState(
       {
-        transitioning: true,
         sourceDimension: {
           height: height,
           width: width,
@@ -70,7 +61,6 @@ class Transition extends Component {
       () => {
         setTimeout(() => {
           this.interactable.snapTo({ index: 1 });
-          this.setState({ open: true });
         }, 5);
       }
     );
@@ -92,15 +82,21 @@ class Transition extends Component {
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 0) {
-      this.props.onReturn().then(() =>
-        this.setState({ transitioning: false }, () => {
-          this.props.returnScreen();
-          Navigation.dismissOverlay(this.props.componentId);
-        })
-      );
+      this.props.onReturn().then(() => {
+        const moveId = this.props.data.id;
+        if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
+        else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
+        this.props.returnScreen();
+        Navigation.dismissOverlay(this.props.componentId);
+      });
     } else {
-      this.setState({ transitioning: false });
+      this.setState({ open: true });
     }
+  };
+
+  handleOnPress = () => {
+    ReactNativeHapticFeedback.trigger("impactLight");
+    this.setState({ joined: !this.state.joined });
   };
 
   render() {
@@ -144,79 +140,82 @@ class Transition extends Component {
       <ActiveMove
         onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
         move={this.props.data}
+        coords={this.props.coords}
       />
     ) : (
       <LaterMove
         onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
         move={this.props.data}
+        coords={this.props.coords}
       />
     );
-    if (this.state.transitioning || this.state.open) {
-      return (
-        <View style={FillAbsolute}>
-          <Animated.View style={[FillAbsolute, opacity]}>
-            <BlurView blurType="dark" blurAmount={10} style={FillAbsolute} />
-          </Animated.View>
 
-          <Animated.View style={focusContainerStyle}>
-            {this.props.active && (
-              <ActiveFocus
-                style={focusStyle}
-                transitioning={this.state.transitioning}
-                data={this.state.data}
-                cardHeight={height}
-              />
-            )}
-            {!this.props.active && (
-              <LaterFocus
-                style={focusStyle}
-                transitioning={this.state.transitioning}
-                data={this.state.data}
-                cardHeight={height}
-              />
-            )}
-          </Animated.View>
+    return (
+      <View style={FillAbsolute}>
+        <Animated.View style={[FillAbsolute, opacity]}>
+          <BlurView blurType="dark" blurAmount={10} style={FillAbsolute} />
+        </Animated.View>
 
-          <Animated.View
-            style={[
-              {
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: SB_HEIGHT + height + 30
-              },
-              shadowOpacity
-            ]}
-          >
-            <LinearGradient
-              style={{ flex: 1 }}
-              locations={[0.5, 1]}
-              colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+        <Animated.View style={focusContainerStyle}>
+          {this.props.active && (
+            <ActiveFocus
+              handleOnPress={this.handleOnPress}
+              joined={this.state.joined}
+              style={focusStyle}
+              open={this.state.open}
+              coords={this.props.data.location}
+              cardHeight={height}
             />
-          </Animated.View>
+          )}
+          {!this.props.active && (
+            <LaterFocus
+              // joined={this.state.joined}
+              // joinMove={this.props.joinMove}
+              style={focusStyle}
+              open={this.state.open}
+              data={this.state.data}
+              cardHeight={height}
+            />
+          )}
+        </Animated.View>
 
-          <Interactable.View
-            animatedNativeDriver
-            ref={item => (this.interactable = item)}
-            style={styles.card}
-            verticalOnly={true}
-            snapPoints={[
-              { y: pageY, damping: 0.5, tension: 600 },
-              { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
-            ]}
-            initialPosition={{ y: pageY }}
-            animatedValueY={this.deltaY}
-            // onDrag={this.handleOnDrag}
-            onSnap={this.handleOnSnap}
-          >
-            {Move}
-          </Interactable.View>
-        </View>
-      );
-    } else {
-      return <View />;
-    }
+        <Animated.View
+          style={[
+            {
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: SB_HEIGHT + height + 30
+            },
+            shadowOpacity
+          ]}
+        >
+          <LinearGradient
+            style={{ flex: 1 }}
+            locations={[0.5, 1]}
+            colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+          />
+        </Animated.View>
+
+        <Interactable.View
+          animatedNativeDriver
+          ref={item => (this.interactable = item)}
+          style={styles.card}
+          verticalOnly={true}
+          snapPoints={[
+            { y: pageY, damping: 0.5, tension: 600 },
+            { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
+          ]}
+          initialPosition={{ y: pageY }}
+          animatedValueY={this.deltaY}
+          // onDrag={this.handleOnDrag}
+          onSnap={this.handleOnSnap}
+        >
+          {Move}
+        </Interactable.View>
+      </View>
+    );
   }
 }
 

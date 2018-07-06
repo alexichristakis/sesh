@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, Easing, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
@@ -16,7 +16,7 @@ class CardWrapper extends Component {
   constructor(props) {
     super(props);
 
-    this.animatedOpacity = new Animated.Value(1);
+    this.animatedOpacity = new Animated.Value(0);
     this.state = {
       height: 0,
       width: 0,
@@ -25,6 +25,15 @@ class CardWrapper extends Component {
       x: 0,
       y: 0
     };
+  }
+
+  componentDidMount() {
+    Animated.timing(this.animatedOpacity, {
+      toValue: 1,
+      duration: 150 * this.props.index,
+      easing: Easing.in(Easing.ease),
+      useNativeDriver: true
+    }).start();
   }
 
   onLeave = () => {

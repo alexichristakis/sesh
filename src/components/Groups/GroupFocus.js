@@ -20,7 +20,6 @@ import { BlurView } from "react-native-blur";
 import { Colors, shadow } from "../../lib/styles";
 import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER } from "../../lib/constants";
 
-import Focus from "../global/Focus";
 import User from "../global/User";
 import MapCard from "../global/MapCard";
 import BackButton from "../global/BackButton";

@@ -5,8 +5,7 @@ import { Navigation } from "react-native-navigation";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
-import LinearGradient from "react-native-linear-gradient";
-import { BlurView } from "react-native-blur";
+import geolib from "geolib";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
@@ -14,72 +13,64 @@ import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 50;
 
-class ActiveMove extends Component {
-  render() {
-    const move = this.props.move;
+const ActiveMove = props => {
+  formatDistanceAway = () => {
+    const miles = geolib.getDistance(props.move.location, props.coords) * 0.000621;
+    return Math.round(100 * miles) / 100 + "mi";
+  };
 
-    const group = {
-      id: "1",
-      name: move.group,
-      size: 9,
-      time: 1526598742850,
-      photo: "https://graph.facebook.com/1825693684117541/picture"
-    };
+  const move = props.move;
 
-    return (
-      <SuperEllipseMask radius={BORDER_RADIUS}>
-        <View
-          style={[
-            styles.container,
-            { backgroundColor: this.props.blur ? Colors.whiteTrans : "white" }
-          ]}
-        >
-          {this.props.blur && <BlurView blurType={"light"} style={styles.blur} />}
-          <View style={styles.top}>
-            <Image
-              style={styles.image}
-              resizeMode="cover"
-              source={{ uri: move.photo, cache: "force-cache" }}
-              // source={{
-              //   uri: 'https://farm5.staticflickr.com/4374/36390435575_7e51b26c00_z.jpg',
-              //   cache: 'force-cache'
-              // }}
-            />
-            <View style={styles.header}>
-              <View style={{ flex: 2 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    console.log("pressed!");
-                    ReactNativeHapticFeedback.trigger("impactLight");
-                    this.props.onPressPresentOverlayTo("sesh.GroupFocus", {
-                      data: group
-                    });
-                  }}
-                >
-                  <Text style={styles.group}>{move.group}</Text>
-                </TouchableOpacity>
-                <View style={{ flexDirection: "row" }}>
-                  <Icon name={"corner-left-up"} size={14} color={Colors.active} />
-                  <Text style={styles.name}>{move.name}</Text>
-                </View>
+  const group = {
+    id: "1",
+    name: move.group,
+    size: 9,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  };
+
+  return (
+    <SuperEllipseMask radius={BORDER_RADIUS}>
+      <View style={styles.container}>
+        <View style={styles.top}>
+          <Image
+            style={styles.image}
+            resizeMode="cover"
+            source={{ uri: move.photo, cache: "force-cache" }}
+          />
+          <View style={styles.header}>
+            <View style={{ flex: 2 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  ReactNativeHapticFeedback.trigger("impactLight");
+                  props.onPressPresentOverlayTo("sesh.GroupFocus", {
+                    data: group
+                  });
+                }}
+              >
+                <Text style={styles.group}>{move.group}</Text>
+              </TouchableOpacity>
+              <View style={{ flexDirection: "row" }}>
+                <Icon name={"corner-left-up"} size={14} color={Colors.active} />
+                <Text style={styles.name}>{move.name}</Text>
               </View>
             </View>
           </View>
-          <View style={styles.mid}>
-            <Text style={styles.description}>{move.description}</Text>
-          </View>
-          <View style={styles.bottom}>
-            <Text style={styles.time}>{TimeAgo(move.time)}</Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Icon name={"compass"} size={14} color={Colors.gray} />
-              <Text style={styles.location}>{move.location}</Text>
-            </View>
+        </View>
+        <View style={styles.mid}>
+          <Text style={styles.description}>{move.description}</Text>
+        </View>
+        <View style={styles.bottom}>
+          <Text style={styles.time}>{TimeAgo(move.time)}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name={"compass"} size={14} color={Colors.gray} />
+            <Text style={styles.location}>{formatDistanceAway()}</Text>
           </View>
         </View>
-      </SuperEllipseMask>
-    );
-  }
-}
+      </View>
+    </SuperEllipseMask>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -87,8 +78,8 @@ const styles = StyleSheet.create({
     // borderRadius: 15,
     // paddingTop: 10,
     // paddingRight: 12,
-    overflow: "hidden"
-    // backgroundColor: "white",
+    overflow: "hidden",
+    backgroundColor: "white"
     // backgroundColor: "rgba(255,255,255,0.5)"
     // ...shadow,
   },

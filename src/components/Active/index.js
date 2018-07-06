@@ -9,6 +9,7 @@ import ActiveMove from "./ActiveMove";
 import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
 import Transition from "../global/Transition";
+import LoadingCircle from "../global/LoadingCircle";
 
 class Active extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class Active extends Component {
 
   transitionFrom = (source, onReturn, data) => {
     let joined = this.state.joinedMoves.includes(data.id);
+    console.log(joined);
 
     this.props.handleTransition({
       source,
@@ -38,21 +40,25 @@ class Active extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <CardWrapper data={item} transitionFrom={this.transitionFrom}>
-      <ActiveMove onPressPresentOverlayTo={this.props.onPressPresentOverlayTo} move={item} />
+    <CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
+      <ActiveMove
+        onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
+        move={item}
+        coords={this.props.data.coords}
+      />
     </CardWrapper>
   );
 
-  joinMove = move => {
-    if (!this.state.joinedMoves.includes(move)) {
-      this.setState({ joinedMoves: [...this.state.joinedMoves, move] });
-      // make api call
+  joinMove = moveId => {
+    if (!this.state.joinedMoves.includes(moveId)) {
+      this.setState({ joinedMoves: [...this.state.joinedMoves, moveId] });
+      // make api call to join move
     }
   };
 
-  leaveMove = move => {
-    if (this.state.joinedMoves.includes(move)) {
-      let index = this.state.joinedMoves.indexOf(move);
+  leaveMove = moveId => {
+    if (this.state.joinedMoves.includes(moveId)) {
+      let index = this.state.joinedMoves.indexOf(moveId);
       this.setState({
         joinedMoves: [
           ...this.state.joinedMoves.slice(0, index),
@@ -66,7 +72,7 @@ class Active extends Component {
   render() {
     const { moves } = this.props.data;
     return (
-      <View style={{ flex: 1, backgroundColor: "transparent" }}>
+      <View style={styles.container}>
         <VerticalList
           ref={item => (this.list = item)}
           data={moves}
@@ -80,5 +86,12 @@ class Active extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "transparent"
+  }
+});
 
 export default Active;

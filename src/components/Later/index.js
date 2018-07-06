@@ -33,8 +33,12 @@ class Later extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <CardWrapper data={item} transitionFrom={this.transitionFrom}>
-      <LaterMove move={item} />
+    <CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
+      <LaterMove
+        onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
+        move={item}
+        coords={this.props.data.coords}
+      />
     </CardWrapper>
   );
 

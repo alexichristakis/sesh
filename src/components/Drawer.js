@@ -191,7 +191,7 @@ class Drawer extends Component {
     const open = { y: SB_HEIGHT - 5 };
 
     return (
-      <Animated.View style={[FillAbsolute, animatedTranslate]} pointerEvents={"box-none"}>
+      <View style={FillAbsolute} pointerEvents={"box-none"}>
         {(this.state.transitioning || this.state.open) && (
           <Animated.View
             pointerEvents={"none"}
@@ -246,7 +246,7 @@ class Drawer extends Component {
             {OpenContent}
           </View>
         </Interactable.View>
-      </Animated.View>
+      </View>
     );
   }
 }

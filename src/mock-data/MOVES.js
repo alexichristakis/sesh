@@ -6,9 +6,10 @@ const moves = [
     time: 1526598742850,
     description:
       "suite dinner in pierson! bring anyone. dinner is really good tonight--Janvi's favorite chicken!!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -17,9 +18,10 @@ const moves = [
     group: "Fence Club",
     time: 1526599742850,
     description: "just a chill sesh",
-    // location: "380 Crown – 0.76mi",
-    location: "0.76mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/100004662791911/picture?type=large"
   },
   {
@@ -28,9 +30,10 @@ const moves = [
     group: "Splash Bros",
     time: 1526598742850,
     description: "splish splash 11 pac",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -39,9 +42,10 @@ const moves = [
     group: "Pierson Fam",
     time: 1526598742850,
     description: "lunch anyone?",
-    // location: "Morse College – 0.44mi",
-    location: "0.44mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/100000731179223/picture?type=large"
   },
   {
@@ -50,9 +54,10 @@ const moves = [
     group: "9pack",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1182281483/picture?type=large"
   },
   {
@@ -61,9 +66,10 @@ const moves = [
     group: "9pack",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -72,9 +78,10 @@ const moves = [
     group: "9pack",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -84,9 +91,10 @@ const moves = [
     time: 1526598742850,
     description:
       "suite dinner in pierson! bring anyone. dinner is really good tonight--Janvi's favorite chicken!!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -95,9 +103,10 @@ const moves = [
     group: "Fence Club",
     time: 1526599742850,
     description: "just a chill sesh",
-    // location: "380 Crown – 0.76mi",
-    location: "0.76mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/100004662791911/picture?type=large"
   },
   {
@@ -106,9 +115,10 @@ const moves = [
     group: "Splash Bros",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -117,9 +127,10 @@ const moves = [
     group: "Pierson Fam",
     time: 1526598742850,
     description: "lunch anyone?",
-    // location: "Morse College – 0.44mi",
-    location: "0.44mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/100000731179223/picture?type=large"
   },
   {
@@ -128,9 +139,10 @@ const moves = [
     group: "9pack",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1182281483/picture?type=large"
   },
   {
@@ -139,9 +151,10 @@ const moves = [
     group: "9pack",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
   {
@@ -150,9 +163,10 @@ const moves = [
     group: "9pack",
     time: 1526598742850,
     description: "suite dinner in pierson!",
-    // location: "Pierson College – 0.24mi",
-    location: "0.24mi",
-
+    location: {
+      latitude: 47.675598,
+      longitude: -122.263837
+    },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   }
 ];

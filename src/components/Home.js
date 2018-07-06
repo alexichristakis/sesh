@@ -3,9 +3,11 @@ import { Animated, View, StatusBar, StyleSheet } from "react-native";
 
 import codePush from "react-native-code-push";
 import { Navigation } from "react-native-navigation";
+
 // import RNFS from "react-native-fs";
 
 import Transition from "./global/Transition";
+import LoadingCircle from "./global/LoadingCircle";
 import Background from "./Background";
 import Drawer from "./Drawer";
 import TopBar from "./TopBar";
@@ -25,16 +27,6 @@ import GROUPS from "../mock-data/GROUPS";
 import MOVES from "../mock-data/MOVES";
 import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
-
-// /* FOR DEBUGGING */
-// import MessageQueue from "react-native/Libraries/BatchedBridge/MessageQueue.js";
-//
-// const spyFunction = msg => {
-//   if (msg.module != "JSTimers") console.log(msg);
-// };
-//
-// MessageQueue.spy(spyFunction);
-// /****************/
 
 xOffset = new Animated.Value(0);
 yOffset = new Animated.Value(0);
@@ -102,7 +94,6 @@ function backgroundTransform(index: number) {
   switch (index) {
     case 0:
       return {
-        ...FillAbsolute,
         opacity: xOffset.interpolate({
           inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [1, 0.8, 1, 0]
@@ -111,7 +102,6 @@ function backgroundTransform(index: number) {
       break;
     case 1:
       return {
-        ...FillAbsolute,
         opacity: xOffset.interpolate({
           inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
           outputRange: [0, 0.8, 1, 1]
@@ -133,6 +123,7 @@ class Home extends Component {
 
       user: this.props.user,
       photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
+      coords: { latitude: null, longitude: null },
 
       friends: [],
       groups: [],
@@ -152,11 +143,20 @@ class Home extends Component {
     // 	this.setState({ photo: "data:image/png;base64," + res, loading: false });
     // });
     // console.log(res);
+
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({ coords: position.coords, loading: false });
+      },
+      error => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.barOpen !== nextState.barOpen) return true;
     else if (this.state.focused !== nextState.focused) return true;
+    else if (this.state.loading !== nextState.loading) return true;
     else return false;
     // if (this.state.barOpen === nextState.barOpen) return false;
     // else if (nextState.vertScrolling) return true;
@@ -202,6 +202,7 @@ class Home extends Component {
     this.setState({ focused: true }, () =>
       this.onPressPresentOverlayTo("sesh.Transition", {
         ...props,
+        coords: this.state.coords,
         returnScreen: this.returnScreen,
         onPressPresentOverlayTo: this.onPressPresentOverlayTo
       })
@@ -278,47 +279,53 @@ class Home extends Component {
       onPressPushTo: this.onPressPushTo
     };
 
+    let feed = (
+      <Animated.ScrollView
+        horizontal
+        pagingEnabled
+        ref={ScrollView => (this.scrollView = ScrollView)}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={this._horizOnScroll}
+        onMomentumScrollEnd={this._onHorizScrollEnd}
+        style={styles.scroll}
+      >
+        <Page>
+          <Active
+            shortened={!this.state.barOpen}
+            profilePic={this.state.photo}
+            handleTransition={this.handleTransition}
+            onPressPushTo={this.onPressPushTo}
+            onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+            _onScrollBegin={this._onScrollBegin}
+            _onScrollEnd={this._onScrollEnd}
+            _vertOnScroll={this._vertOnScroll}
+            data={{ moves: MOVES, groups: GROUPS, coords: this.state.coords }}
+          />
+        </Page>
+        <Page>
+          <Later
+            shortened={!this.state.barOpen}
+            profilePic={this.state.photo}
+            handleTransition={this.handleTransition}
+            onPressPushTo={this.onPressPushTo}
+            onPressPresentOverlayTo={this.onPressPresentOverlayTo}
+            _onScrollBegin={this._onScrollBegin}
+            _onScrollEnd={this._onScrollEnd}
+            _vertOnScroll={this._vertOnScroll}
+            data={{ moves: MOVES, groups: GROUPS, coords: this.state.coords }}
+          />
+        </Page>
+      </Animated.ScrollView>
+    );
+
     return (
-      <Background backgroundTransform={backgroundTransform}>
+      <Background loading={this.state.loading} backgroundTransform={backgroundTransform}>
         <StatusBar barStyle="light-content" />
-        <Animated.ScrollView
-          horizontal
-          pagingEnabled
-          ref={ScrollView => (this.scrollView = ScrollView)}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={16}
-          onScroll={this._horizOnScroll}
-          onMomentumScrollEnd={this._onHorizScrollEnd}
-          style={styles.scroll}
-        >
-          <Page>
-            <Active
-              shortened={!this.state.barOpen}
-              profilePic={this.state.photo}
-              handleTransition={this.handleTransition}
-              onPressPushTo={this.onPressPushTo}
-              onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-              _onScrollBegin={this._onScrollBegin}
-              _onScrollEnd={this._onScrollEnd}
-              _vertOnScroll={this._vertOnScroll}
-              data={{ moves: MOVES, groups: GROUPS }}
-            />
-          </Page>
-          <Page>
-            <Later
-              shortened={!this.state.barOpen}
-              profilePic={this.state.photo}
-              handleTransition={this.handleTransition}
-              onPressPushTo={this.onPressPushTo}
-              onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-              _onScrollBegin={this._onScrollBegin}
-              _onScrollEnd={this._onScrollEnd}
-              _vertOnScroll={this._vertOnScroll}
-              data={{ moves: MOVES, groups: GROUPS }}
-            />
-          </Page>
-        </Animated.ScrollView>
+
+        {this.state.loading && <LoadingCircle style={styles.loading} size={30} />}
+        {!this.state.loading && feed}
 
         <TopBar
           indicatorAnimate={indicatorAnimate}
@@ -329,7 +336,6 @@ class Home extends Component {
 
         <Drawer
           componentId={this.props.componentId}
-          // hidden={this.state.focused}
           photo={this.state.photo}
           data={{ groups: GROUPS }}
         />
@@ -342,8 +348,12 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     flexDirection: "row"
+  },
+  loading: {
+    alignSelf: "center",
+    marginTop: 150
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;

@@ -17,7 +17,6 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 import TouchableScale from "../global/TouchableScale";
-import Focus from "../global/Focus";
 import MapCard from "../global/MapCard";
 import User from "../global/User";
 import LaterMove from "./LaterMove";
@@ -111,7 +110,7 @@ class LaterFocus extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        <MapCard large loading={this.props.transitioning} markers={data} />
+        <MapCard large loading={!this.props.open} markers={data} />
       </View>
     );
   };
