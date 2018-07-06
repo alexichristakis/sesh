@@ -32,19 +32,11 @@ class Drawer extends Component {
   constructor(props) {
     super(props);
 
-    this.animated = new Animated.Value(0);
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.state = {
-      hidden: false,
       open: false,
       transitioning: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // console.log("next props: ", nextProps.hidden);
-    if (nextProps.hidden) this.setState({ hidden: true }, this.handleHideDrawer());
-    else if (!nextProps.hidden) this.setState({ hidden: false }, this.handleShowDrawer());
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -52,25 +44,6 @@ class Drawer extends Component {
   //   else if (this.state.hidden === nextState.hidden) return false;
   //   else return true;
   // }
-
-  handleHideDrawer = () => {
-    Animated.timing(this.animated, {
-      toValue: 1,
-      delay: 50,
-      duration: 100,
-      easing: Easing.in(Easing.quad),
-      useNativeDriver: true
-    }).start();
-  };
-
-  handleShowDrawer = () => {
-    Animated.timing(this.animated, {
-      toValue: 0,
-      duration: 100,
-      easing: Easing.out(Easing.quad),
-      useNativeDriver: true
-    }).start();
-  };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
@@ -95,12 +68,32 @@ class Drawer extends Component {
 
   presentNewActiveMove = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    Navigation.showOverlay({
+    // Navigation.showOverlay({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: true,
+    //       groups: this.props.data.groups
+    //     }
+    //   }
+    // });
+    Navigation.showModal({
       component: {
         name: "sesh.CreateMove",
         passProps: {
           active: true,
           groups: this.props.data.groups
+        },
+        options: {
+          modalPresentationStyle: "overCurrentContext",
+          animations: {
+            showModal: {
+              enable: false
+            },
+            dismissModal: {
+              enable: false
+            }
+          }
         }
       }
     });
@@ -129,17 +122,6 @@ class Drawer extends Component {
 
   render() {
     const { onPressPresentModalTo } = this.props;
-
-    let animatedTranslate = {
-      transform: [
-        {
-          translateY: this.animated.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, DRAWER_HEIGHT]
-          })
-        }
-      ]
-    };
 
     let animatedScale = {
       transform: [

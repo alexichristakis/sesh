@@ -183,7 +183,7 @@ class CreateMove extends Component {
     };
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: "transparent" }}>
         <Animated.View style={[FillAbsolute, opacity]}>
           <BlurView blurType="dark" style={{ flex: 1 }} />
         </Animated.View>

@@ -36,11 +36,11 @@ import FRIENDS from "../mock-data/FRIENDS";
 // MessageQueue.spy(spyFunction);
 // /****************/
 
-const xOffset = new Animated.Value(0);
-const yOffset = new Animated.Value(0);
+xOffset = new Animated.Value(0);
+yOffset = new Animated.Value(0);
 
-const activeOffset = new Animated.Value(0);
-const laterOffset = new Animated.Value(0);
+activeOffset = new Animated.Value(0);
+laterOffset = new Animated.Value(0);
 
 function Page(props: { children?: ReactElement<*> }) {
   return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
@@ -321,7 +321,6 @@ class Home extends Component {
         </Animated.ScrollView>
 
         <TopBar
-          ref={TopBar => (this.topBar = TopBar)}
           indicatorAnimate={indicatorAnimate}
           barOpen={this.state.barOpen}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
@@ -329,8 +328,8 @@ class Home extends Component {
         />
 
         <Drawer
-          ref={Drawer => (this.drawer = Drawer)}
-          hidden={this.state.focused}
+          componentId={this.props.componentId}
+          // hidden={this.state.focused}
           photo={this.state.photo}
           data={{ groups: GROUPS }}
         />
