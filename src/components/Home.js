@@ -383,5 +383,5 @@ const styles = StyleSheet.create({
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;

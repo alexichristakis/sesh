@@ -73,7 +73,7 @@ const TopBar = props => {
     extrapolate: "clamp"
   });
 
-  let animatedLoading = {
+  let progressiveLoading = {
     opacity: yOffset.interpolate({
       inputRange: [-50, -4],
       outputRange: [1, 0]
@@ -96,12 +96,13 @@ const TopBar = props => {
     ]
   };
 
-  let animatedRefresh = {
+  let refresh = {
+    opacity: refreshing ? 1 : 0,
     transform: [
       {
         translateY: yOffset.interpolate({
           inputRange: [-150, -4],
-          outputRange: [75, 50]
+          outputRange: [120, 50]
           // extrapolate: "clamp"
         })
       },
@@ -131,16 +132,16 @@ const TopBar = props => {
               </TouchableScale>
             </Animated.View>
           </Animated.View>
-          <Animated.View style={[styles.loading, animatedLoading]}>
+          <Animated.View style={[styles.loading, progressiveLoading]}>
             <ControlledLoadingCircle progress={progress} size={20} />
           </Animated.View>
         </View>
       )}
-      {props.refreshing && (
-        <Animated.View style={[styles.loading, animatedRefresh]}>
-          <LoadingCircle size={20} />
-        </Animated.View>
-      )}
+      {/* {props.refreshing && ( */}
+      <Animated.View style={[styles.loading, refresh]}>
+        <LoadingCircle size={20} />
+      </Animated.View>
+      {/* )} */}
     </View>
   );
 };
