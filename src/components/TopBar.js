@@ -8,15 +8,40 @@ import TouchableScale from "./global/TouchableScale";
 import ControlledLoadingCircle from "./global/ControlledLoadingCircle";
 import LoadingCircle from "./global/LoadingCircle";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../lib/constants";
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  SB_HEIGHT,
+  IS_X,
+  TRANSITION_DURATION
+} from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
 
 const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
 
 const TopBar = props => {
-  const { yOffest, scrollToStart, scrollToEnd, indicatorAnimate, refreshing } = props;
-  const initialOffset = SB_HEIGHT === 40 ? -4 : 0;
+  const { yOffset, scrollToStart, scrollToEnd, indicatorAnimate, refreshing } = props;
+  const initialOffset = IS_X ? -4 : 0;
+
+  const animatedProgress = new Animated.Value(0);
+  if (props.refreshing) {
+    Animated.loop(
+      Animated.timing(animatedProgress, {
+        toValue: 1,
+        duration: 1500,
+        useNativeDriver: true
+      })
+    ).start();
+  }
+
+  let progress = props.refreshing
+    ? animatedProgress
+    : yOffset.interpolate({
+        inputRange: [-200, -150, -100, initialOffset],
+        outputRange: [1, 0.8, 0.2, 0],
+        extrapolate: "clamp"
+      });
 
   let animatedStyle = {
     opacity: yOffset.interpolate({
@@ -41,18 +66,14 @@ const TopBar = props => {
     ]
   };
 
-  let progress = yOffset.interpolate({
-    inputRange: [-200, -150, -100, initialOffset],
-    outputRange: [1, 0.8, 0.2, 0],
-    extrapolate: "clamp"
-  });
-
-  const iPhoneXOffset = SB_HEIGHT === 40 ? 18 : 0;
-  let progressiveLoading = {
-    opacity: yOffset.interpolate({
-      inputRange: [-50, initialOffset],
-      outputRange: [1, 0]
-    }),
+  const iPhoneXOffset = IS_X ? 18 : 0;
+  let animatedLoading = {
+    opacity: props.refreshing
+      ? 1
+      : yOffset.interpolate({
+          inputRange: [-50, initialOffset],
+          outputRange: [1, 0]
+        }),
     transform: [
       {
         translateY: yOffset.interpolate({
@@ -64,56 +85,50 @@ const TopBar = props => {
       {
         scale: yOffset.interpolate({
           inputRange: [-150, initialOffset],
-          outputRange: [1, 0.2],
-          extrapolate: "clamp"
+          outputRange: [1.2, props.refreshing ? 1 : 0.2]
         })
       }
     ]
   };
 
-  let refresh = {
-    opacity: refreshing ? 1 : 0,
-    transform: [
-      {
-        translateY: yOffset.interpolate({
-          inputRange: [-150, initialOffset],
-          outputRange: [102 + iPhoneXOffset, 32 + iPhoneXOffset]
-          // extrapolate: "clamp"
-        })
-      },
-      {
-        scale: yOffset.interpolate({
-          inputRange: [-150, initialOffset],
-          outputRange: [1, 0.8],
-          extrapolate: "clamp"
-        })
-      }
-    ]
-  };
+  // let refresh = {
+  //   // opacity: refreshing ? 1 : 0,
+  //   transform: [
+  //     {
+  //       translateY: yOffset.interpolate({
+  //         inputRange: [-150, initialOffset],
+  //         outputRange: [102 + iPhoneXOffset, 32 + iPhoneXOffset]
+  //         // extrapolate: "clamp"
+  //       })
+  //     },
+  //     {
+  //       scale: yOffset.interpolate({
+  //         inputRange: [-150, initialOffset],
+  //         outputRange: [1, 0.8],
+  //         extrapolate: "clamp"
+  //       })
+  //     }
+  //   ]
+  // };
 
   return (
     <View style={styles.container}>
       {!props.refreshing && (
-        <View>
-          <Animated.View style={[styles.topBar, animatedStyle]}>
-            <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
-              <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
-                <AwesomeIcon name={"bolt"} size={36} color={"white"} />
-              </TouchableScale>
-            </Animated.View>
-            <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
-              <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
-                <IonIcon name={"ios-time"} size={36} color={"white"} />
-              </TouchableScale>
-            </Animated.View>
+        <Animated.View style={[styles.topBar, animatedStyle]}>
+          <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
+            <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
+              <AwesomeIcon name={"bolt"} size={36} color={"white"} />
+            </TouchableScale>
           </Animated.View>
-          <Animated.View style={[styles.loading, progressiveLoading]}>
-            <ControlledLoadingCircle progress={progress} size={20} />
+          <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
+            <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
+              <IonIcon name={"ios-time"} size={36} color={"white"} />
+            </TouchableScale>
           </Animated.View>
-        </View>
+        </Animated.View>
       )}
-      <Animated.View style={[styles.loading, refresh]}>
-        <LoadingCircle size={20} />
+      <Animated.View style={[styles.loading, animatedLoading]}>
+        <ControlledLoadingCircle progress={progress} size={18} />
       </Animated.View>
     </View>
   );
@@ -153,6 +168,8 @@ const styles = StyleSheet.create({
     // width: 50
   },
   loading: {
+    position: "absolute",
+    top: IS_X ? SB_HEIGHT - 10 : SB_HEIGHT + 10,
     alignSelf: "center"
   },
   refreshing: {

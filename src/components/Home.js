@@ -28,93 +28,22 @@ import MOVES from "../mock-data/MOVES";
 import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
-xOffset = new Animated.Value(0);
-
 const initialVertScroll = SB_HEIGHT === 40 ? -4 : 0;
-yOffset = new Animated.Value(initialVertScroll);
-activeOffset = new Animated.Value(initialVertScroll);
-laterOffset = new Animated.Value(initialVertScroll);
+const xOffset = new Animated.Value(0);
+const yOffset = new Animated.Value(initialVertScroll);
 
 function Page(props: { children?: ReactElement<*> }) {
   return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
 }
 
-function indicatorAnimate(index: number) {
-  switch (index) {
-    case 0:
-      return {
-        transform: [
-          {
-            scale: xOffset.interpolate({
-              inputRange: [0, SCREEN_WIDTH],
-              outputRange: [1, 0.5]
-            })
-          }
-        ]
-      };
-      break;
-    case 1:
-      return {
-        transform: [
-          {
-            scale: xOffset.interpolate({
-              inputRange: [0, SCREEN_WIDTH],
-              outputRange: [0.5, 1]
-            })
-          }
-        ]
-      };
-      break;
-  }
-}
-
-// function textColorTransform(index: number) {
-//   switch (index) {
-//     case 0:
-//       return {
-//         color: xOffset.interpolate({
-//           inputRange: [0, SCREEN_WIDTH],
-//           outputRange: [Colors.active, Colors.gray],
-//           extrapolate: "clamp"
-//         })
-//       };
-//       break;
-//     case 1:
-//       return {
-//         color: xOffset.interpolate({
-//           inputRange: [0, SCREEN_WIDTH],
-//           outputRange: [Colors.gray, Colors.later],
-//           extrapolate: "clamp"
-//         })
-//       };
-//       break;
-//   }
-// }
-
-function backgroundTransform(index: number) {
-  switch (index) {
-    case 0:
-      return {
-        opacity: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
-          outputRange: [1, 0.8, 1, 0]
-        })
-      };
-      break;
-    case 1:
-      return {
-        opacity: xOffset.interpolate({
-          inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
-          outputRange: [0, 0.8, 1, 1]
-        })
-      };
-      break;
-  }
-}
-
 class Home extends Component {
   constructor(props) {
     super(props);
+
+    // this.xOffset = new Animated.Value(0);
+    // this.yOffset = new Animated.Value(initialVertScroll);
+    this.activeOffset = new Animated.Value(initialVertScroll);
+    this.laterOffset = new Animated.Value(initialVertScroll);
 
     yOffset.addListener(this.handleRefresh);
     this.state = {
@@ -134,6 +63,35 @@ class Home extends Component {
       moves: []
     };
   }
+
+  // constructor(props) {
+  //   super(props);
+  //
+  //   // this.xOffset = new Animated.Value(0);
+  //   // // this.yOffset = new Animated.Value(initialVertScroll);
+  //   // this.
+  //   // this.
+  //
+  //   yOffset.addListener(this.handleRefresh);
+  //   // xOffset.addListener(value => {});
+  //
+  //   this.state = {
+  //     loading: true,
+  //     refreshing: false,
+  //
+  //     barOpen: true,
+  //     focused: false,
+  //     vertScrolling: false,
+  //
+  //     user: this.props.user,
+  //     photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
+  //     coords: { latitude: null, longitude: null },
+  //
+  //     friends: [],
+  //     groups: [],
+  //     moves: []
+  //   };
+  // }
 
   async componentDidMount() {
     // fetch that data
@@ -179,30 +137,16 @@ class Home extends Component {
   });
 
   _onHorizScrollEnd = () => {
+    console.log(xOffset);
     if (xOffset._value === 0) {
-      laterOffset = yOffset;
+      this.laterOffset = yOffset;
       // do some logic to fix the top bar scroll?
     } else {
-      activeOffset = yOffset;
+      console.log("page 2");
+      this.activeOffset = yOffset;
       // do some logic to fix the top bar scroll?
     }
   };
-
-  // _vertOnScroll = event => {
-  //   const currentOffset = event.nativeEvent.contentOffset.y;
-  //   const diff = currentOffset - (yOffset || 0);
-  //
-  //   if (this.state.vertScrolling) {
-  //     if (diff <= 0) {
-  //       this.setState({ barOpen: true });
-  //     } else {
-  //       this.setState({ barOpen: false });
-  //     }
-  //   }
-  //   yOffset = currentOffset;
-  //   if (xOffset._value === 0) activeOffset = yOffset;
-  //   else laterOffset = yOffset;
-  // };
 
   _onScrollBegin = () => {
     this.setState({ vertScrolling: true });
@@ -210,6 +154,56 @@ class Home extends Component {
 
   _onScrollEnd = () => {
     this.setState({ vertScrolling: false });
+  };
+
+  indicatorAnimate = (index: number) => {
+    switch (index) {
+      case 0:
+        return {
+          transform: [
+            {
+              scale: xOffset.interpolate({
+                inputRange: [0, SCREEN_WIDTH],
+                outputRange: [1, 0.5]
+              })
+            }
+          ]
+        };
+        break;
+      case 1:
+        return {
+          transform: [
+            {
+              scale: xOffset.interpolate({
+                inputRange: [0, SCREEN_WIDTH],
+                outputRange: [0.5, 1]
+              })
+            }
+          ]
+        };
+        break;
+    }
+  };
+
+  backgroundTransform = (index: number) => {
+    switch (index) {
+      case 0:
+        return {
+          opacity: xOffset.interpolate({
+            inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
+            outputRange: [1, 0.8, 1, 0]
+          })
+        };
+        break;
+      case 1:
+        return {
+          opacity: xOffset.interpolate({
+            inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
+            outputRange: [0, 0.8, 1, 1]
+          })
+        };
+        break;
+    }
   };
 
   handleTransition = props => {
@@ -290,10 +284,12 @@ class Home extends Component {
   handleRefresh = event => {
     const { value } = event;
     if (value <= -150 && !this.state.refreshing) {
+      // console.log(xOffset);
       this.setState({ refreshing: true }, () => {
         ReactNativeHapticFeedback.trigger("impactHeavy");
         setTimeout(() => {
           this.setState({ refreshing: false });
+          // console.log(xOffset);
         }, 2000);
       });
     }
@@ -350,7 +346,7 @@ class Home extends Component {
     return (
       <Background
         loading={this.state.loading || this.state.refreshing}
-        backgroundTransform={backgroundTransform}
+        backgroundTransform={this.backgroundTransform}
       >
         <StatusBar barStyle="light-content" />
 
@@ -360,7 +356,7 @@ class Home extends Component {
         <TopBar
           yOffset={yOffset}
           refreshing={this.state.refreshing}
-          indicatorAnimate={indicatorAnimate}
+          indicatorAnimate={this.indicatorAnimate}
           barOpen={this.state.barOpen}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}

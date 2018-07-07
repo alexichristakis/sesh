@@ -7,7 +7,6 @@ export default class LoadingCircle extends Component {
   // const LoadingCircle = props => {
   // animation.play();
   componentDidMount() {
-    console.log("mounted");
     this.animation.play();
   }
 
