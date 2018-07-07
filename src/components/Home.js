@@ -29,10 +29,11 @@ import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
 xOffset = new Animated.Value(0);
-yOffset = new Animated.Value(SB_HEIGHT === 40 ? -4 : 0);
 
-activeOffset = new Animated.Value(0);
-laterOffset = new Animated.Value(0);
+const initialVertScroll = SB_HEIGHT === 40 ? -4 : 0;
+yOffset = new Animated.Value(initialVertScroll);
+activeOffset = new Animated.Value(initialVertScroll);
+laterOffset = new Animated.Value(initialVertScroll);
 
 function Page(props: { children?: ReactElement<*> }) {
   return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
@@ -178,8 +179,13 @@ class Home extends Component {
   });
 
   _onHorizScrollEnd = () => {
-    // if (xOffset._value === 0) yOffset = activeOffset;
-    // else yOffset = laterOffset;
+    if (xOffset._value === 0) {
+      laterOffset = yOffset;
+      // do some logic to fix the top bar scroll?
+    } else {
+      activeOffset = yOffset;
+      // do some logic to fix the top bar scroll?
+    }
   };
 
   // _vertOnScroll = event => {
@@ -283,19 +289,13 @@ class Home extends Component {
 
   handleRefresh = event => {
     const { value } = event;
-
-    if (value <= -150) {
-      console.log("refresh!!");
-
-      // this.setState({ refreshing: true });
-      if (!this.state.refreshing) {
-        this.setState({ refreshing: true }, () => {
-          ReactNativeHapticFeedback.trigger("impactHeavy");
-          setTimeout(() => {
-            this.setState({ refreshing: false });
-          }, 2000);
-        });
-      }
+    if (value <= -150 && !this.state.refreshing) {
+      this.setState({ refreshing: true }, () => {
+        ReactNativeHapticFeedback.trigger("impactHeavy");
+        setTimeout(() => {
+          this.setState({ refreshing: false });
+        }, 2000);
+      });
     }
   };
 
@@ -368,7 +368,6 @@ class Home extends Component {
 
         <Drawer
           loading={this.state.loading}
-          // userLocation={this.state.coords}
           photo={this.state.photo}
           data={{ moves: MOVES, groups: GROUPS, userLocation: this.state.coords }}
         />
@@ -388,5 +387,5 @@ const styles = StyleSheet.create({
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;

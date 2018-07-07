@@ -184,17 +184,15 @@ class Focus extends Component {
               open={this.state.open}
               userLocation={this.props.coords}
               moveLocation={this.props.data.location}
-              cardHeight={height}
             />
           )}
           {!this.props.active && (
             <LaterFocus
-              // joined={this.state.joined}
-              // joinMove={this.props.joinMove}
-              style={focusStyle}
+              handleOnPress={this.handleOnPress}
+              joined={this.state.joined}
               open={this.state.open}
-              data={this.state.data}
-              cardHeight={height}
+              userLocation={this.props.coords}
+              moveLocation={this.props.data.location}
             />
           )}
         </Animated.ScrollView>

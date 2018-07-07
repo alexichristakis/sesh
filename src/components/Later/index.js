@@ -44,9 +44,8 @@ class Later extends Component {
   render() {
     const { moves } = this.props.data;
     return (
-      <View style={{ flex: 1, backgroundColor: "transparent" }}>
+      <View style={styles.container}>
         <VerticalList
-          // ref={item => (this.list = item)}
           data={moves}
           renderItem={this._renderItem}
           shortened={this.props.shortened}
@@ -58,5 +57,12 @@ class Later extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "transparent"
+  }
+});
 
 export default Later;

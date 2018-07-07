@@ -1,157 +1,70 @@
-import React, { Component } from "react";
+import React from "react";
+import { StyleSheet, ScrollView, View, Text } from "react-native";
+
+import SuperEllipseMask from "react-native-super-ellipse-mask";
+
 import {
-  StyleSheet,
-  Animated,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Text,
-  Image
-} from "react-native";
-
-import { Navigation } from "react-native-navigation";
-import MapView, { Marker } from "react-native-maps";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  SB_HEIGHT,
+  BORDER_RADIUS,
+  CARD_GUTTER
+} from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 import TouchableScale from "../global/TouchableScale";
 import MapCard from "../global/MapCard";
 import User from "../global/User";
-import LaterMove from "./LaterMove";
 
-const data = [
-  {
-    key: "1",
-    coords: {
-      latitude: 47.675598,
-      longitude: -122.263837
-    },
-    title: "9pack",
-    description: "dinner in pierson college"
-  },
-  {
-    key: "2",
-    coords: {
-      latitude: 47.679239,
-      longitude: -122.267227
-    },
-    title: "Fence Club",
-    description: "sesh"
-  },
-  {
-    key: "3",
-    coords: {
-      latitude: 47.663461,
-      longitude: -122.284221
-    },
-    title: "Splash Bros",
-    description: "splashing around"
-  }
-];
-
-class LaterFocus extends Component {
-  constructor(props) {
-    super(props);
-
-    this.animated = new Animated.Value(1);
-
-    this.state = {
-      joined: this.props.joined,
-      loading: true,
-      position: null
-    };
-  }
-
-  async componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({ position: position, loading: false });
-      },
-      error => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-  }
-
-  onPressPop = () => {
-    this.focus.exit();
-    setTimeout(() => {
-      this.props.closeCard();
-      Navigation.dismissOverlay(this.props.componentId);
-    }, 100);
-  };
-
-  handlePressIn = () => {
-    Animated.spring(this.animated, {
-      toValue: 0.9,
-      useNativeDriver: true
-    }).start();
-  };
-
-  handlePressOut = () => {
-    Animated.spring(this.animated, {
-      toValue: 1,
-      friction: 3,
-      tension: 40,
-      useNativeDriver: true
-    }).start();
-  };
-
-  handleOnPress = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    this.setState({ joined: !this.state.joined });
-  };
-
+const LaterFocus = props => {
   _renderItem = ({ item }) => <User data={item} />;
 
-  _renderHeader = () => {
-    let headerTopPadding = SB_HEIGHT === 20 ? 30 : 5;
+  const buttonStyle = [
+    styles.joinButton,
+    {
+      backgroundColor: props.joined ? Colors.later : "white"
+    }
+  ];
 
-    return (
-      <View style={{ flex: 1, paddingTop: headerTopPadding }}>
-        <MapCard large loading={!this.props.open} markers={data} />
-      </View>
-    );
-  };
+  const textStyle = [
+    styles.joinText,
+    {
+      color: props.joined ? "white" : Colors.later
+    }
+  ];
 
-  render() {
-    const { style = {} } = this.props;
-    return (
-      <ScrollView style={style}>{this._renderHeader()}</ScrollView>
-      // <Focus
-      //   later
-      //   ref={item => (this.focus = item)}
-      //   // data={data}
-      //   renderHeader={this._renderHeader}
-      //   optionButton={"ended"}
-      //   cardHeight={this.props.cardHeight}
-      //   statusBarHeight={this.props.statusBarHeight}
-      //   closeCard={this.props.closeCard}
-      //   onPressPop={this.onPressPop}
-      //   renderItem={this._renderItem}
-      // >
-      //   {/* <LaterMove
-      //     blur
-      //     focused
-      //     index={this.props.index}
-      //     length={this.props.length}
-      //     move={this.props.data}
-      //     onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-      //   /> */}
-      // </Focus>
-    );
-  }
-}
+  const { style, moveLocation, userLocation, open, joined, handleOnPress } = props;
+  return (
+    <View style={style}>
+      <MapCard
+        later
+        loading={!open}
+        style={styles.mapCard}
+        userLocation={userLocation}
+        markers={[{ coords: moveLocation, key: "location" }]}
+      />
+      <TouchableScale onPress={handleOnPress}>
+        <SuperEllipseMask radius={BORDER_RADIUS}>
+          <View style={buttonStyle}>
+            <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
+          </View>
+        </SuperEllipseMask>
+      </TouchableScale>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
+  mapCard: {
+    marginVertical: CARD_GUTTER
+  },
   joinButton: {
-    marginVertical: 20,
+    flex: 1,
+    // marginVertical: 20,
     padding: 15,
-    borderRadius: 15,
+    // borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white"
+    justifyContent: "center"
     // ...shadow,
   },
   joinText: {

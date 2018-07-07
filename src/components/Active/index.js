@@ -77,8 +77,6 @@ class Active extends Component {
           data={moves}
           renderItem={this._renderItem}
           shortened={this.props.shortened}
-          // refreshing={this.props.refreshing}
-          // handleRefresh={this.props.handleRefresh}
           _vertOnScroll={this.props._vertOnScroll}
           _onScrollBegin={this.props._onScrollBegin}
           _onScrollEnd={this.props._onScrollEnd}

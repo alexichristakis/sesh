@@ -241,7 +241,8 @@ class Drawer extends Component {
           <Animated.View style={[styles.indicator, animatedOpacity]} />
 
           <SuperEllipseMask style={styles.blurContainer} radius={{ topRight: 20, topLeft: 20 }}>
-            <BlurView blurType={"xlight"} blurAmount={15} style={styles.blur} />
+            <BlurView blurType={"light"} blurAmount={30} style={styles.blur} />
+            {/* <View style={styles.blur} /> */}
           </SuperEllipseMask>
 
           <View style={styles.background} />

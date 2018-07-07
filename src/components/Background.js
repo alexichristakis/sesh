@@ -13,13 +13,13 @@ const Background = props => {
       Animated.sequence([
         Animated.timing(opacity, {
           toValue: 1,
-          duration: 500,
+          duration: 400,
           easing: Easing.ease,
           useNativeDriver: true
         }),
         Animated.timing(opacity, {
           toValue: 0,
-          duration: 500,
+          duration: 400,
           easing: Easing.ease,
           useNativeDriver: true
         })

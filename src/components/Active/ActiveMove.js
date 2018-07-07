@@ -30,42 +30,40 @@ const ActiveMove = props => {
   };
 
   return (
-    <SuperEllipseMask radius={BORDER_RADIUS}>
-      <View style={styles.container}>
-        <View style={styles.top}>
-          <Image
-            style={styles.image}
-            resizeMode="cover"
-            source={{ uri: move.photo, cache: "force-cache" }}
-          />
-          <View style={styles.header}>
-            <View style={{ flex: 2 }}>
-              <TouchableOpacity
-                onPress={() => {
-                  ReactNativeHapticFeedback.trigger("impactLight");
-                  props.onPressPresentOverlayTo("sesh.GroupFocus", {
-                    data: group
-                  });
-                }}
-              >
-                <Text style={styles.group}>{move.group}</Text>
-              </TouchableOpacity>
-              <View style={{ flexDirection: "row" }}>
-                <Icon name={"corner-left-up"} size={14} color={Colors.active} />
-                <Text style={styles.name}>{move.name}</Text>
-              </View>
+    <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
+      <View style={styles.top}>
+        <Image
+          style={styles.image}
+          resizeMode="cover"
+          source={{ uri: move.photo, cache: "force-cache" }}
+        />
+        <View style={styles.header}>
+          <View style={{ flex: 2 }}>
+            <TouchableOpacity
+              onPress={() => {
+                ReactNativeHapticFeedback.trigger("impactLight");
+                props.onPressPresentOverlayTo("sesh.GroupFocus", {
+                  data: group
+                });
+              }}
+            >
+              <Text style={styles.group}>{move.group}</Text>
+            </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <Icon name={"corner-left-up"} size={14} color={Colors.active} />
+              <Text style={styles.name}>{move.name}</Text>
             </View>
           </View>
         </View>
-        <View style={styles.mid}>
-          <Text style={styles.description}>{move.description}</Text>
-        </View>
-        <View style={styles.bottom}>
-          <Text style={styles.time}>{TimeAgo(move.time)}</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon name={"compass"} size={14} color={Colors.gray} />
-            <Text style={styles.location}>{formatDistanceAway()}</Text>
-          </View>
+      </View>
+      <View style={styles.mid}>
+        <Text style={styles.description}>{move.description}</Text>
+      </View>
+      <View style={styles.bottom}>
+        <Text style={styles.time}>{TimeAgo(move.time)}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon name={"compass"} size={14} color={Colors.gray} />
+          <Text style={styles.location}>{formatDistanceAway()}</Text>
         </View>
       </View>
     </SuperEllipseMask>

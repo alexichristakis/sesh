@@ -1,14 +1,8 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
-// import RNFS from "react-native-fs";
-import LinearGradient from "react-native-linear-gradient";
-import SuperEllipseMask from "react-native-super-ellipse-mask";
-import { BlurView, VibrancyView } from "react-native-blur";
-import FeatherIcon from "react-native-vector-icons/Feather";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import IonIcon from "react-native-vector-icons/Ionicons";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import TouchableScale from "./global/TouchableScale";
 import ControlledLoadingCircle from "./global/ControlledLoadingCircle";
@@ -21,27 +15,6 @@ const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
 
 const TopBar = props => {
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.state = {
-  //     open: true,
-  //     refreshing: false
-  //   };
-  //
-  //   this.animated = new Animated.Value(1);
-  // }
-
-  hapticModal = (page, props) => () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    props.onPressPresentModalTo(page, props);
-  };
-
-  hapticOverlay = (page, props) => () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    props.onPressPresentOverlayTo(page, props);
-  };
-
   const { yOffest, scrollToStart, scrollToEnd, indicatorAnimate, refreshing } = props;
   const initialOffset = SB_HEIGHT === 40 ? -4 : 0;
 

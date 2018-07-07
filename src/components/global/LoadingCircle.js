@@ -15,7 +15,9 @@ export default class LoadingCircle extends Component {
     const wrapperSize = this.props.size || 20;
     const animationSize = wrapperSize * 3;
 
-    const animationSource = require("../../assets/animations/spinner.json");
+    let animationSource = require("../../assets/animations/spinner.json");
+    if (this.props.active) animationSource = require("../../assets/animations/active_spinner.json");
+    if (this.props.later) animationSource = require("../../assets/animations/later_spinner.json");
 
     return (
       <View
