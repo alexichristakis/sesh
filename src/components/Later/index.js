@@ -50,7 +50,7 @@ class Later extends Component {
           data={moves}
           renderItem={this._renderItem}
           shortened={this.props.shortened}
-          onScroll={this.props._vertOnScroll}
+          _vertOnScroll={this.props._vertOnScroll}
           _onScrollBegin={this.props._onScrollBegin}
           _onScrollEnd={this.props._onScrollEnd}
         />

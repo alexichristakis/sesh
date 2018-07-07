@@ -28,7 +28,7 @@ import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
 xOffset = new Animated.Value(0);
-yOffset = new Animated.Value(0);
+yOffset = new Animated.Value(-4);
 
 activeOffset = new Animated.Value(0);
 laterOffset = new Animated.Value(0);
@@ -114,8 +114,11 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
+    yOffset.addListener(this.handleRefresh);
     this.state = {
       loading: true,
+      refreshing: false,
+
       barOpen: true,
       focused: false,
       vertScrolling: false,
@@ -156,6 +159,7 @@ class Home extends Component {
     if (this.state.barOpen !== nextState.barOpen) return true;
     else if (this.state.focused !== nextState.focused) return true;
     else if (this.state.loading !== nextState.loading) return true;
+    else if (this.state.refreshing !== nextState.refreshing) return true;
     else return false;
     // if (this.state.barOpen === nextState.barOpen) return false;
     // else if (nextState.vertScrolling) return true;
@@ -168,26 +172,30 @@ class Home extends Component {
     useNativeDriver: true
   });
 
+  _vertOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+    useNativeDriver: true
+  });
+
   _onHorizScrollEnd = () => {
-    if (xOffset._value === 0) yOffset = activeOffset;
-    else yOffset = laterOffset;
+    // if (xOffset._value === 0) yOffset = activeOffset;
+    // else yOffset = laterOffset;
   };
 
-  _vertOnScroll = event => {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    const diff = currentOffset - (yOffset || 0);
-
-    if (this.state.vertScrolling) {
-      if (diff <= 0) {
-        this.setState({ barOpen: true });
-      } else {
-        this.setState({ barOpen: false });
-      }
-    }
-    yOffset = currentOffset;
-    if (xOffset._value === 0) activeOffset = yOffset;
-    else laterOffset = yOffset;
-  };
+  // _vertOnScroll = event => {
+  //   const currentOffset = event.nativeEvent.contentOffset.y;
+  //   const diff = currentOffset - (yOffset || 0);
+  //
+  //   if (this.state.vertScrolling) {
+  //     if (diff <= 0) {
+  //       this.setState({ barOpen: true });
+  //     } else {
+  //       this.setState({ barOpen: false });
+  //     }
+  //   }
+  //   yOffset = currentOffset;
+  //   if (xOffset._value === 0) activeOffset = yOffset;
+  //   else laterOffset = yOffset;
+  // };
 
   _onScrollBegin = () => {
     this.setState({ vertScrolling: true });
@@ -272,8 +280,21 @@ class Home extends Component {
     });
   };
 
+  handleRefresh = event => {
+    const { value } = event;
+
+    if (value <= -150) {
+      console.log("refresh!!");
+      // this.setState({ refreshing: true });
+      this.setState({ refreshing: true }, () =>
+        setTimeout(() => {
+          this.setState({ refreshing: false });
+        }, 2000)
+      );
+    }
+  };
+
   render() {
-    // console.log("rendered home");
     const groupsProps = {
       onPressPushTo: this.onPressPushTo
     };
@@ -292,6 +313,8 @@ class Home extends Component {
       >
         <Page>
           <Active
+            handleRefresh={this.handleRefresh}
+            refreshing={this.state.loading}
             shortened={!this.state.barOpen}
             profilePic={this.state.photo}
             handleTransition={this.handleTransition}
@@ -320,13 +343,18 @@ class Home extends Component {
     );
 
     return (
-      <Background loading={this.state.loading} backgroundTransform={backgroundTransform}>
+      <Background
+        loading={this.state.loading || this.state.refreshing}
+        backgroundTransform={backgroundTransform}
+      >
         <StatusBar barStyle="light-content" />
 
-        {this.state.loading && <LoadingCircle style={styles.loading} size={30} />}
+        {this.state.loading && <LoadingCircle style={styles.loading} size={20} />}
         {!this.state.loading && feed}
 
         <TopBar
+          yOffset={yOffset}
+          refreshing={this.state.refreshing}
           indicatorAnimate={indicatorAnimate}
           barOpen={this.state.barOpen}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}

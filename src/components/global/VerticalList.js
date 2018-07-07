@@ -91,11 +91,14 @@ class VerticalList extends Component {
         renderItem={this.props.renderItem}
         // ItemSeparatorComponent={this.renderSeparator}
         scrollEventThrottle={16}
-        onScroll={this.props.onScroll}
+        onScroll={this.props._vertOnScroll}
         onScrollBeginDrag={this.props._onScrollBegin}
         onScrollEndDrag={this.props._onScrollEnd}
         keyExtractor={this._keyExtractor}
         showsVerticalScrollIndicator={false}
+        // refreshing={this.props.refreshing}
+        // onRefresh={this.props.handleRefresh}
+        // RefreshControl={}
         ListHeaderComponent={this.props.renderHeader}
       />
     );
@@ -107,13 +110,13 @@ const styles = StyleSheet.create({
     flex: 1
   },
   list: {
-    flex: 1,
+    // flex: 1,
     paddingTop: SB_HEIGHT === 40 ? 51 : 56,
     position: "absolute",
-    top: 0,
+    top: SB_HEIGHT,
     left: 0,
     right: 0,
-    bottom: -80,
+    bottom: 0,
 
     // paddingBottom: 70,
     // marginBottom: 35,

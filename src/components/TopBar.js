@@ -11,6 +11,8 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import TouchableScale from "./global/TouchableScale";
+import ControlledLoadingCircle from "./global/ControlledLoadingCircle";
+import LoadingCircle from "./global/LoadingCircle";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
@@ -18,115 +20,130 @@ import { Colors, shadow } from "../lib/styles";
 const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
 
-class TopBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: true
-    };
-
-    this.animated = new Animated.Value(1);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.state.open && !nextProps.barOpen) this.handleCloseBar();
-    else if (!this.state.open && nextProps.barOpen) this.handleOpenBar();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.open && nextState.open) return false;
-    else if (!this.state.open && !nextState.open) return false;
-    else return true;
-  }
-
-  handleCloseBar = () => {
-    this.setState(
-      { open: false },
-      Animated.timing(this.animated, {
-        toValue: 0,
-        duration: TRANSITION_DURATION,
-        easing: Easing.in(Easing.quad),
-        useNativeDriver: true
-      }).start()
-    );
-  };
-
-  handleOpenBar = () => {
-    this.setState(
-      { open: true },
-      Animated.timing(this.animated, {
-        toValue: 1,
-        duration: TRANSITION_DURATION,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true
-      }).start()
-    );
-  };
+const TopBar = props => {
+  // constructor(props) {
+  //   super(props);
+  //
+  //   this.state = {
+  //     open: true,
+  //     refreshing: false
+  //   };
+  //
+  //   this.animated = new Animated.Value(1);
+  // }
 
   hapticModal = (page, props) => () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    this.props.onPressPresentModalTo(page, props);
+    props.onPressPresentModalTo(page, props);
   };
 
   hapticOverlay = (page, props) => () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    this.props.onPressPresentOverlayTo(page, props);
+    props.onPressPresentOverlayTo(page, props);
   };
 
-  render() {
-    const { scrollToStart, scrollToEnd, indicatorAnimate } = this.props;
+  const { yOffest, scrollToStart, scrollToEnd, indicatorAnimate, refreshing } = props;
 
-    const { colorTransform } = this.props;
+  let animatedStyle = {
+    opacity: yOffset.interpolate({
+      inputRange: [-150, -100, -4, BAR_HEIGHT],
+      outputRange: [0, 0.8, 1, 0]
+    }),
+    transform: [
+      {
+        translateY: yOffset.interpolate({
+          inputRange: [-150, -4, BAR_HEIGHT],
+          outputRange: [50, 0, -ICON_DIMENSION]
+          // extrapolate: "clamp"
+        })
+      },
+      {
+        scale: yOffset.interpolate({
+          inputRange: [-150, -4, BAR_HEIGHT],
+          outputRange: [1.5, 1, 0.3],
+          extrapolate: "clamp"
+        })
+      }
+    ]
+  };
 
-    let animatedStyle = {
-      opacity: this.animated,
-      transform: [
-        {
-          translateY: this.animated.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, ICON_DIMENSION]
-          })
-        },
-        {
-          scale: this.animated.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0.3, 1]
-          })
-        }
-      ]
-    };
+  let progress = yOffset.interpolate({
+    inputRange: [-200, -150, -100, -4],
+    outputRange: [1, 0.8, 0.2, 0],
+    extrapolate: "clamp"
+  });
 
-    let blurContainerAnimatedStyle = {
-      opacity: this.animated.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0]
-      })
-    };
+  let animatedLoading = {
+    opacity: yOffset.interpolate({
+      inputRange: [-50, -4],
+      outputRange: [1, 0]
+    }),
+    transform: [
+      {
+        translateY: yOffset.interpolate({
+          inputRange: [-150, -4],
+          outputRange: [75, 25]
+          // extrapolate: "clamp"
+        })
+      },
+      {
+        scale: yOffset.interpolate({
+          inputRange: [-150, -4],
+          outputRange: [1, 0.2],
+          extrapolate: "clamp"
+        })
+      }
+    ]
+  };
 
-    return (
-      <View style={styles.container}>
-        <Animated.View style={blurContainerAnimatedStyle}>
-          <View style={[styles.statusBar, { backgroundColor: Colors.activeBackground1 }]} />
-        </Animated.View>
-        <View style={{ top: 0 }}>
-          <View style={styles.topBar}>
-            <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(0)]}>
+  let animatedRefresh = {
+    transform: [
+      {
+        translateY: yOffset.interpolate({
+          inputRange: [-150, -4],
+          outputRange: [75, 50]
+          // extrapolate: "clamp"
+        })
+      },
+      {
+        scale: yOffset.interpolate({
+          inputRange: [-150, -4],
+          outputRange: [1, 0.8],
+          extrapolate: "clamp"
+        })
+      }
+    ]
+  };
+
+  return (
+    <View style={styles.container}>
+      {!props.refreshing && (
+        <View>
+          <Animated.View style={[styles.topBar, animatedStyle]}>
+            <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
                 <AwesomeIcon name={"bolt"} size={36} color={"white"} />
               </TouchableScale>
             </Animated.View>
-            <Animated.View style={[styles.textContainer, animatedStyle, indicatorAnimate(1)]}>
+            <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
               <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
                 <IonIcon name={"ios-time"} size={36} color={"white"} />
               </TouchableScale>
             </Animated.View>
-          </View>
+          </Animated.View>
+          <Animated.View style={[styles.loading, animatedLoading]}>
+            <ControlledLoadingCircle progress={progress} size={20} />
+          </Animated.View>
         </View>
-      </View>
-    );
-  }
-}
+      )}
+      {props.refreshing && (
+        <Animated.View style={[styles.loading, animatedRefresh]}>
+          <LoadingCircle size={20} />
+        </Animated.View>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -160,6 +177,13 @@ const styles = StyleSheet.create({
     // backgroundColor: "red"
     // height: 50,
     // width: 50
+  },
+  loading: {
+    alignSelf: "center"
+  },
+  refreshing: {
+    alignSelf: "center",
+    paddingTop: 50
   },
   text: {
     flex: 1,

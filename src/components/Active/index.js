@@ -39,7 +39,7 @@ class Active extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
+    <CardWrapper active index={index} data={item} transitionFrom={this.transitionFrom}>
       <ActiveMove
         onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
         move={item}
@@ -77,7 +77,9 @@ class Active extends Component {
           data={moves}
           renderItem={this._renderItem}
           shortened={this.props.shortened}
-          onScroll={this.props._vertOnScroll}
+          // refreshing={this.props.refreshing}
+          // handleRefresh={this.props.handleRefresh}
+          _vertOnScroll={this.props._vertOnScroll}
           _onScrollBegin={this.props._onScrollBegin}
           _onScrollEnd={this.props._onScrollEnd}
         />
