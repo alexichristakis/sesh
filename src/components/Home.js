@@ -6,7 +6,6 @@ import { Navigation } from "react-native-navigation";
 
 // import RNFS from "react-native-fs";
 
-import Transition from "./global/Transition";
 import LoadingCircle from "./global/LoadingCircle";
 import Background from "./Background";
 import Drawer from "./Drawer";
@@ -200,7 +199,7 @@ class Home extends Component {
 
   handleTransition = props => {
     this.setState({ focused: true }, () =>
-      this.onPressPresentOverlayTo("sesh.Transition", {
+      this.onPressPresentOverlayTo("sesh.Focus", {
         ...props,
         coords: this.state.coords,
         returnScreen: this.returnScreen,
@@ -335,9 +334,10 @@ class Home extends Component {
         />
 
         <Drawer
-          componentId={this.props.componentId}
+          loading={this.state.loading}
+          // userLocation={this.state.coords}
           photo={this.state.photo}
-          data={{ groups: GROUPS }}
+          data={{ moves: MOVES, groups: GROUPS, userLocation: this.state.coords }}
         />
       </Background>
     );

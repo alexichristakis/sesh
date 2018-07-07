@@ -45,6 +45,25 @@ class Drawer extends Component {
   //   else return true;
   // }
 
+  generateMarkers = () => {
+    const { moves } = this.props.data;
+    const time = new Date().getTime();
+
+    let markers = [];
+    moves.forEach(move => {
+      const active = move.time - time < 0;
+      markers.push({
+        coords: move.location,
+        key: move.id,
+        active: active,
+        group: move.group,
+        description: move.description
+      });
+    });
+
+    return markers;
+  };
+
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 1) {
@@ -68,35 +87,35 @@ class Drawer extends Component {
 
   presentNewActiveMove = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    // Navigation.showOverlay({
-    //   component: {
-    //     name: "sesh.CreateMove",
-    //     passProps: {
-    //       active: true,
-    //       groups: this.props.data.groups
-    //     }
-    //   }
-    // });
-    Navigation.showModal({
+    Navigation.showOverlay({
       component: {
         name: "sesh.CreateMove",
         passProps: {
           active: true,
           groups: this.props.data.groups
-        },
-        options: {
-          modalPresentationStyle: "overCurrentContext",
-          animations: {
-            showModal: {
-              enable: false
-            },
-            dismissModal: {
-              enable: false
-            }
-          }
         }
       }
     });
+    // Navigation.showModal({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: true,
+    //       groups: this.props.data.groups
+    //     },
+    //     options: {
+    //       modalPresentationStyle: "overCurrentContext",
+    //       animations: {
+    //         showModal: {
+    //           enable: false
+    //         },
+    //         dismissModal: {
+    //           enable: false
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
   };
 
   presentNewLaterMove = () => {
@@ -151,7 +170,13 @@ class Drawer extends Component {
     let OpenContent = (
       <View>
         {/* <View style={{ backgroundColor: "blue", width: SCREEN_WIDTH, height: 300 }} /> */}
-        <MapCard fullBleed height={SCREEN_HEIGHT - SB_HEIGHT - 75} loading={!this.state.open} />
+        <MapCard
+          fullBleed
+          height={SCREEN_HEIGHT - SB_HEIGHT - 75}
+          markers={this.generateMarkers()}
+          loading={!this.state.open}
+          userLocation={this.props.data.userLocation}
+        />
         <Image source={{ uri: this.props.photo }} style={styles.photo} />
         {/* <View
           style={{

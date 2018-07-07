@@ -8,7 +8,6 @@ import { Colors } from "../../lib/styles";
 import ActiveMove from "./ActiveMove";
 import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
-import Transition from "../global/Transition";
 import LoadingCircle from "../global/LoadingCircle";
 
 class Active extends Component {

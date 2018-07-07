@@ -17,7 +17,6 @@ import TouchableScale from "../global/TouchableScale";
 import BackButton from "../global/BackButton";
 import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
-import Transition from "../global/Transition";
 
 const DATA = [
   {

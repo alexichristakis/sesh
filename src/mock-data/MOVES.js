@@ -7,8 +7,8 @@ const moves = [
     description:
       "suite dinner in pierson! bring anyone. dinner is really good tonight--Janvi's favorite chicken!!",
     location: {
-      latitude: 47.675598,
-      longitude: -122.263837
+      latitude: 47.875598,
+      longitude: -122.223837
     },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
@@ -31,8 +31,8 @@ const moves = [
     time: 1526598742850,
     description: "splish splash 11 pac",
     location: {
-      latitude: 47.675598,
-      longitude: -122.263837
+      latitude: 47.695598,
+      longitude: -122.203837
     },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
   },
@@ -43,8 +43,8 @@ const moves = [
     time: 1526598742850,
     description: "lunch anyone?",
     location: {
-      latitude: 47.675598,
-      longitude: -122.263837
+      latitude: 47.255598,
+      longitude: -122.043837
     },
     photo: "https://graph.facebook.com/100000731179223/picture?type=large"
   },
@@ -55,8 +55,8 @@ const moves = [
     time: 1526598742850,
     description: "suite dinner in pierson!",
     location: {
-      latitude: 47.675598,
-      longitude: -122.263837
+      latitude: 47.673598,
+      longitude: -122.063837
     },
     photo: "https://graph.facebook.com/1182281483/picture?type=large"
   },

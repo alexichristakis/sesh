@@ -33,10 +33,16 @@ const ActiveFocus = props => {
     }
   ];
 
-  const { style, coords, open, joined, handleOnPress } = props;
+  const { style, moveLocation, userLocation, open, joined, handleOnPress } = props;
   return (
-    <ScrollView style={style}>
-      <MapCard active loading={!open} style={styles.mapCard} markers={[coords]} />
+    <View style={style}>
+      <MapCard
+        active
+        loading={!open}
+        style={styles.mapCard}
+        userLocation={userLocation}
+        markers={[{ coords: moveLocation, key: "location" }]}
+      />
       <TouchableScale onPress={handleOnPress}>
         <SuperEllipseMask radius={BORDER_RADIUS}>
           <View style={buttonStyle}>
@@ -44,7 +50,7 @@ const ActiveFocus = props => {
           </View>
         </SuperEllipseMask>
       </TouchableScale>
-    </ScrollView>
+    </View>
   );
 };
 

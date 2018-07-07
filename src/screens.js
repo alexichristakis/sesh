@@ -21,7 +21,7 @@ import Settings from "./components/Groups/Settings";
 
 // import Focus from "./components/"
 
-import Transition from "./components/global/Transition";
+import Focus from "./components/global/Focus";
 
 import ActiveFocus from "./components/Active/ActiveFocus";
 import LaterFocus from "./components/Later/LaterFocus";
@@ -44,7 +44,7 @@ function registerScreens() {
   Navigation.registerComponent("sesh.SignIn", () => SignIn);
 
   Navigation.registerComponent("sesh.Home", () => Home);
-  Navigation.registerComponent("sesh.Transition", () => Transition);
+  Navigation.registerComponent("sesh.Focus", () => Focus);
   Navigation.registerComponent("sesh.Profile", () => Profile);
   Navigation.registerComponent("sesh.AddFriend", () => AddFriend);
 

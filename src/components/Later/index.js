@@ -8,7 +8,6 @@ import { Colors } from "../../lib/styles";
 import LaterMove from "./LaterMove";
 import VerticalList from "../global/VerticalList";
 import CardWrapper from "../global/CardWrapper";
-import Transition from "../global/Transition";
 
 class Later extends Component {
   constructor(props) {
@@ -55,14 +54,6 @@ class Later extends Component {
           _onScrollBegin={this.props._onScrollBegin}
           _onScrollEnd={this.props._onScrollEnd}
         />
-        {/* <Transition
-          ref={item => (this.transition = item)}
-          destinationPage={"sesh.LaterFocus"}
-          transitionFinished={this.transitionFinished}
-          returnScreen={this.props.returnScreen}
-          onPressPushTo={this.props.onPressPresentOverlayTo}
-          MoveComponent={this.state.MoveComponent}
-        /> */}
       </View>
     );
   }

@@ -23,7 +23,9 @@ import {
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
-class Transition extends Component {
+const yOffset = new Animated.Value(0);
+
+class Focus extends Component {
   constructor(props) {
     super(props);
 
@@ -94,6 +96,10 @@ class Transition extends Component {
     }
   };
 
+  handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+    useNativeDriver: true
+  });
+
   handleOnPress = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
     this.setState({ joined: !this.state.joined });
@@ -110,14 +116,22 @@ class Transition extends Component {
     };
 
     let shadowOpacity = {
-      opacity: this.deltaY.interpolate({
-        inputRange: [SB_HEIGHT + CARD_GUTTER, SB_HEIGHT + CARD_GUTTER + 2, pageY],
-        outputRange: [1, 0, 0]
+      // opacity: this.deltaY.interpolate({
+      //   inputRange: [SB_HEIGHT + CARD_GUTTER, SB_HEIGHT + CARD_GUTTER + 2, pageY],
+      //   outputRange: [1, 0, 0]
+      // })
+      opacity: yOffset.interpolate({
+        inputRange: [0, 30],
+        outputRange: [0, 1],
+        extrapolate: "clamp"
       })
     };
 
     let focusContainerStyle = {
       ...FillAbsolute,
+      top: 20,
+      paddingTop: height - 20 + CARD_GUTTER,
+      paddingHorizontal: CARD_GUTTER,
       // paddingTop: height + CARD_GUTTER,
       transform: [
         {
@@ -131,6 +145,7 @@ class Transition extends Component {
     };
 
     let focusStyle = {
+      flex: 1,
       top: 20,
       paddingTop: height - 20 + CARD_GUTTER,
       paddingHorizontal: CARD_GUTTER
@@ -156,14 +171,19 @@ class Transition extends Component {
           <BlurView blurType="dark" blurAmount={10} style={FillAbsolute} />
         </Animated.View>
 
-        <Animated.View style={focusContainerStyle}>
+        <Animated.ScrollView
+          style={focusContainerStyle}
+          onScroll={this.handleOnScroll}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+        >
           {this.props.active && (
             <ActiveFocus
               handleOnPress={this.handleOnPress}
               joined={this.state.joined}
-              style={focusStyle}
               open={this.state.open}
-              coords={this.props.data.location}
+              userLocation={this.props.coords}
+              moveLocation={this.props.data.location}
               cardHeight={height}
             />
           )}
@@ -177,16 +197,16 @@ class Transition extends Component {
               cardHeight={height}
             />
           )}
-        </Animated.View>
+        </Animated.ScrollView>
 
         <Animated.View
           style={[
             {
               position: "absolute",
-              top: 0,
+              top: SB_HEIGHT + height / 2,
               left: 0,
               right: 0,
-              height: SB_HEIGHT + height + 30
+              height: height / 2 + 15
             },
             shadowOpacity
           ]}
@@ -233,4 +253,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Transition;
+export default Focus;
