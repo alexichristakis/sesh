@@ -43,24 +43,25 @@ const TopBar = props => {
   };
 
   const { yOffest, scrollToStart, scrollToEnd, indicatorAnimate, refreshing } = props;
+  const initialOffset = SB_HEIGHT === 40 ? -4 : 0;
 
   let animatedStyle = {
     opacity: yOffset.interpolate({
-      inputRange: [-150, -100, -4, BAR_HEIGHT],
+      inputRange: [-150, -100, initialOffset, BAR_HEIGHT],
       outputRange: [0, 0.8, 1, 0]
     }),
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, -4, BAR_HEIGHT],
+          inputRange: [-150, initialOffset, BAR_HEIGHT],
           outputRange: [50, 0, -ICON_DIMENSION]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, -4, BAR_HEIGHT],
-          outputRange: [1.5, 1, 0.3],
+          inputRange: [-150, initialOffset, BAR_HEIGHT],
+          outputRange: [1.5, 1, 0.8],
           extrapolate: "clamp"
         })
       }
@@ -68,27 +69,28 @@ const TopBar = props => {
   };
 
   let progress = yOffset.interpolate({
-    inputRange: [-200, -150, -100, -4],
+    inputRange: [-200, -150, -100, initialOffset],
     outputRange: [1, 0.8, 0.2, 0],
     extrapolate: "clamp"
   });
 
+  const iPhoneXOffset = SB_HEIGHT === 40 ? 18 : 0;
   let progressiveLoading = {
     opacity: yOffset.interpolate({
-      inputRange: [-50, -4],
+      inputRange: [-50, initialOffset],
       outputRange: [1, 0]
     }),
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, -4],
-          outputRange: [75, 25]
+          inputRange: [-150, initialOffset],
+          outputRange: [57 + iPhoneXOffset, 7 + iPhoneXOffset]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, -4],
+          inputRange: [-150, initialOffset],
           outputRange: [1, 0.2],
           extrapolate: "clamp"
         })
@@ -101,14 +103,14 @@ const TopBar = props => {
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, -4],
-          outputRange: [120, 50]
+          inputRange: [-150, initialOffset],
+          outputRange: [102 + iPhoneXOffset, 32 + iPhoneXOffset]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, -4],
+          inputRange: [-150, initialOffset],
           outputRange: [1, 0.8],
           extrapolate: "clamp"
         })
@@ -137,11 +139,9 @@ const TopBar = props => {
           </Animated.View>
         </View>
       )}
-      {/* {props.refreshing && ( */}
       <Animated.View style={[styles.loading, refresh]}>
         <LoadingCircle size={20} />
       </Animated.View>
-      {/* )} */}
     </View>
   );
 };

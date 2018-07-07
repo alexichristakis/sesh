@@ -97,7 +97,7 @@ const MapCard = props => {
     <SuperEllipseMask style={style} radius={props.fullBleed ? 0 : BORDER_RADIUS}>
       <View style={{ height: height, backgroundColor: "#F9F5ED" }}>
         {props.loading && (
-          <LoadingCircle style={{ marginTop: height / 2 - 10, alignSelf: "center" }} size={30} />
+          <LoadingCircle style={{ marginTop: height / 2 - 10, alignSelf: "center" }} size={20} />
         )}
         {!props.loading && map}
       </View>

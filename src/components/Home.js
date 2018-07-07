@@ -3,6 +3,7 @@ import { Animated, View, StatusBar, StyleSheet } from "react-native";
 
 import codePush from "react-native-code-push";
 import { Navigation } from "react-native-navigation";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 // import RNFS from "react-native-fs";
 
@@ -28,7 +29,7 @@ import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
 xOffset = new Animated.Value(0);
-yOffset = new Animated.Value(-4);
+yOffset = new Animated.Value(SB_HEIGHT === 40 ? -4 : 0);
 
 activeOffset = new Animated.Value(0);
 laterOffset = new Animated.Value(0);
@@ -285,12 +286,16 @@ class Home extends Component {
 
     if (value <= -150) {
       console.log("refresh!!");
+
       // this.setState({ refreshing: true });
-      this.setState({ refreshing: true }, () =>
-        setTimeout(() => {
-          this.setState({ refreshing: false });
-        }, 2000)
-      );
+      if (!this.state.refreshing) {
+        this.setState({ refreshing: true }, () => {
+          ReactNativeHapticFeedback.trigger("impactHeavy");
+          setTimeout(() => {
+            this.setState({ refreshing: false });
+          }, 2000);
+        });
+      }
     }
   };
 
