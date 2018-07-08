@@ -41,7 +41,7 @@ const ActiveFocus = props => {
         loading={!open}
         style={styles.mapCard}
         userLocation={userLocation}
-        markers={[{ coords: moveLocation, key: "location" }]}
+        markers={[{ coords: moveLocation, active: true, key: "location" }]}
       />
       <TouchableScale onPress={handleOnPress}>
         <SuperEllipseMask radius={BORDER_RADIUS}>

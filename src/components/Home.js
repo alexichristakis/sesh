@@ -11,8 +11,6 @@ import LoadingCircle from "./global/LoadingCircle";
 import Background from "./Background";
 import Drawer from "./Drawer";
 import TopBar from "./TopBar";
-import BottomBar from "./BottomBar";
-import Groups from "./Groups";
 import Active from "./Active";
 import Later from "./Later";
 

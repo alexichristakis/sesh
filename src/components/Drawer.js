@@ -47,17 +47,18 @@ class Drawer extends Component {
 
   generateMarkers = () => {
     const { moves } = this.props.data;
-    const time = new Date().getTime();
+    const currentTime = new Date().getTime();
 
     let markers = [];
     moves.forEach(move => {
-      const active = move.time - time < 0;
+      const { time, location, id, group, description } = move;
+      const active = time - currentTime < 0;
       markers.push({
-        coords: move.location,
-        key: move.id,
+        coords: location,
+        key: id,
         active: active,
-        group: move.group,
-        description: move.description
+        group: group,
+        description: description
       });
     });
 

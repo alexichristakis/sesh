@@ -13,7 +13,7 @@ import AddFriend from "./components/AddFriend";
 import Groups from "./components/Groups";
 import CreateGroup from "./components/Groups/CreateGroup";
 import AddToGroup from "./components/Groups/AddToGroup";
-import CreateMove from "./components/CreateMoves/CreateMove";
+import CreateMove from "./components/CreateMove";
 
 import Settings from "./components/Groups/Settings";
 // import Friends from "./components/Friends";
