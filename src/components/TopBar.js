@@ -21,6 +21,7 @@ const ICON_DIMENSION = 50;
 
 const TopBar = props => {
   const { yOffset, xOffset, scrollToStart, scrollToEnd, refreshing } = props;
+  // console.log(scrollToEnd);
 
   const indicatorAnimate = (index: number) => {
     switch (index) {
@@ -126,12 +127,12 @@ const TopBar = props => {
       {!props.refreshing && (
         <Animated.View style={[styles.topBar, animatedStyle]}>
           <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
-            <TouchableOpacity style={styles.fillCenter} onPress={scrollToStart}>
+            <TouchableOpacity onPress={scrollToStart}>
               <AwesomeIcon name={"bolt"} size={36} color={"white"} />
             </TouchableOpacity>
           </Animated.View>
           <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
-            <TouchableOpacity style={styles.fillCenter} onPress={scrollToEnd}>
+            <TouchableOpacity onPress={scrollToEnd}>
               <IonIcon name={"ios-time"} size={36} color={"white"} />
             </TouchableOpacity>
           </Animated.View>

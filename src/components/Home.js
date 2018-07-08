@@ -220,7 +220,9 @@ class Home extends Component {
       onPressPushTo: this.onPressPushTo
     };
 
-    let feed = (
+    const Loading = <LoadingCircle style={styles.loading} size={20} />;
+
+    const Feed = (
       <Animated.ScrollView
         horizontal
         pagingEnabled
@@ -264,11 +266,7 @@ class Home extends Component {
     );
 
     return (
-      <Background
-        loading={this.state.loading || this.state.refreshing}
-        xOffset={xOffset}
-        // backgroundTransform={this.backgroundTransform}
-      >
+      <Background loading={this.state.loading || this.state.refreshing} xOffset={xOffset}>
         <StatusBar barStyle="light-content" />
         <TopBar
           yOffset={yOffset}
@@ -279,8 +277,7 @@ class Home extends Component {
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
 
-        {this.state.loading && <LoadingCircle style={styles.loading} size={20} />}
-        {!this.state.loading && feed}
+        {this.state.loading ? Loading : Feed}
 
         <Drawer
           loading={this.state.loading}
@@ -303,5 +300,5 @@ const styles = StyleSheet.create({
   }
 });
 
-Home = codePush(Home);
+// Home = codePush(Home);
 export default Home;

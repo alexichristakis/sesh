@@ -7,10 +7,7 @@ import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 
 const DatePicker = props => {
   return (
-    <SuperEllipseMask
-      style={{ backgroundColor: "white", marginBottom: CARD_GUTTER }}
-      radius={BORDER_RADIUS}
-    >
+    <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
       <DatePickerIOS
         date={props.chosenDate}
         minimumDate={props.currentDate}
@@ -20,5 +17,9 @@ const DatePicker = props => {
     </SuperEllipseMask>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { backgroundColor: "white", marginBottom: CARD_GUTTER }
+});
 
 export default DatePicker;

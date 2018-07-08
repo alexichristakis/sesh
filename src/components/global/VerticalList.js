@@ -61,6 +61,13 @@ class VerticalList extends Component {
     );
   };
 
+  renderHeader = () => (
+    <View
+      pointerEvents={"none"}
+      style={{ height: SB_HEIGHT === 40 ? 51 : 56, width: SCREEN_WIDTH }}
+    />
+  );
+
   render() {
     // console.log("vertical list rendered");
     // console.log("VerticalList props: ", this.props);
@@ -94,7 +101,7 @@ class VerticalList extends Component {
         onScrollEndDrag={this.props._onScrollEnd}
         keyExtractor={this._keyExtractor}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={this.props.renderHeader}
+        ListHeaderComponent={this.renderHeader}
       />
     );
   }
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
   },
   list: {
     // flex: 1,
-    paddingTop: SB_HEIGHT === 40 ? 51 : 56,
+    // paddingTop: SB_HEIGHT === 40 ? 51 : 56,
     position: "absolute",
     top: SB_HEIGHT,
     left: 0,

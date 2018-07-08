@@ -179,6 +179,17 @@ class CreateMove extends Component {
       ]
     };
 
+    let animatedScroll = {
+      transform: [
+        {
+          translateY: yOffset.interpolate({
+            inputRange: [-SCREEN_HEIGHT - 500, 0, 5],
+            outputRange: [SCREEN_HEIGHT, 0, 0]
+          })
+        }
+      ]
+    };
+
     let region = {
       ...this.state.coords,
       latitudeDelta: 0.0044,
@@ -228,7 +239,7 @@ class CreateMove extends Component {
         <Interactable.View
           animatedNativeDriver
           ref={item => (this.interactable = item)}
-          style={styles.interactable}
+          style={[styles.interactable, animatedScroll]}
           verticalOnly={true}
           snapPoints={[closed, open]}
           onSnap={this.handleOnSnap}

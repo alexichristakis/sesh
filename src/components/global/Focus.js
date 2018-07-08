@@ -33,7 +33,7 @@ class Focus extends Component {
     super(props);
 
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
-    yOffset.addListener(this.handleCheckIfSnap);
+    yOffset.addListener(() => {});
     this.state = {
       open: false,
       joined: this.props.joined,
@@ -47,8 +47,8 @@ class Focus extends Component {
   }
 
   componentDidMount() {
+    // this.vertScrollView.props.onResponderRelease(this.handleVertScrollRelease);
     this.beginTransition();
-    // this.beginTransition(this.props.source, this.props.onReturn, this.props.data, this.props.props);
   }
 
   componentWillUnmount() {
@@ -78,24 +78,28 @@ class Focus extends Component {
 
   handleOnDrag = event => {
     const { state, x, y } = event.nativeEvent;
-    if (state === "start") this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-    // this.setState({ transitioning: true });
-    // if (state === "end") {
-    //   if (y > 75) {
-    //     this.setState({ open: false, transitioning: true }, () => {
-    //       this.interactable.snapTo({ index: 0 });
-    //       this.props.returnScreen();
-    //     });
-    //   }
-    // }
+    if (state === "start") this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
-  handleCheckIfSnap = event => {
-    const { value } = event;
-    if (value < -100) {
+  handleVertScrollRelease = event => {
+    const { changedTouches, locationY, pageY } = event.nativeEvent;
+    if (yOffset._value < -100) {
+      this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     }
   };
+
+  // handleCheckIfSnap = event => {
+  //   const { value } = event;
+  //   if (value < -100) {
+  //     console.log("break");
+  //     // this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+  //     this.vertScrollView.setNativeProps({ pointerEvents: "none" });
+  //     // this.vertScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+  //     // this.vertScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+  //     // this.interactable.snapTo({ index: 0 });
+  //   }
+  // };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
@@ -185,6 +189,17 @@ class Focus extends Component {
       ]
     };
 
+    let gradientContainerStyle = [
+      {
+        position: "absolute",
+        top: SB_HEIGHT + height / 2,
+        left: 0,
+        right: 0,
+        height: height / 2 + 15
+      },
+      shadowOpacity
+    ];
+
     const Move = this.props.active ? (
       <ActiveMove
         onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
@@ -199,52 +214,44 @@ class Focus extends Component {
       />
     );
 
+    const FocusContent = this.props.active ? (
+      <ActiveFocus
+        handleOnPress={this.handleOnPress}
+        joined={this.state.joined}
+        open={this.state.open}
+        userLocation={this.props.coords}
+        moveLocation={this.props.data.location}
+      />
+    ) : (
+      <LaterFocus
+        handleOnPress={this.handleOnPress}
+        joined={this.state.joined}
+        open={this.state.open}
+        userLocation={this.props.coords}
+        moveLocation={this.props.data.location}
+      />
+    );
+
     return (
-      <View style={FillAbsolute}>
+      <View style={styles.flex}>
         <Animated.View style={[FillAbsolute, opacity]}>
           <BlurView blurType="dark" blurAmount={10} style={FillAbsolute} />
         </Animated.View>
 
         <Animated.ScrollView
+          ref={ScrollView => (this.vertScrollView = ScrollView)}
+          onResponderRelease={this.handleVertScrollRelease}
           style={focusContainerStyle}
           onScroll={this.vertOnScroll}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
         >
-          {this.props.active && (
-            <ActiveFocus
-              handleOnPress={this.handleOnPress}
-              joined={this.state.joined}
-              open={this.state.open}
-              userLocation={this.props.coords}
-              moveLocation={this.props.data.location}
-            />
-          )}
-          {!this.props.active && (
-            <LaterFocus
-              handleOnPress={this.handleOnPress}
-              joined={this.state.joined}
-              open={this.state.open}
-              userLocation={this.props.coords}
-              moveLocation={this.props.data.location}
-            />
-          )}
+          {FocusContent}
         </Animated.ScrollView>
 
-        <Animated.View
-          style={[
-            {
-              position: "absolute",
-              top: SB_HEIGHT + height / 2,
-              left: 0,
-              right: 0,
-              height: height / 2 + 15
-            },
-            shadowOpacity
-          ]}
-        >
+        <Animated.View style={gradientContainerStyle}>
           <LinearGradient
-            style={{ flex: 1 }}
+            style={styles.flex}
             locations={[0.5, 1]}
             colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
           />
@@ -254,7 +261,7 @@ class Focus extends Component {
           animatedNativeDriver
           verticalOnly
           ref={Interactable => (this.interactable = Interactable)}
-          style={styles.card}
+          style={[styles.card, animatedScroll]}
           snapPoints={[
             { y: pageY, damping: 0.5, tension: 600 },
             { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
@@ -267,13 +274,13 @@ class Focus extends Component {
           <Animated.ScrollView
             horizontal
             pagingEnabled
-            ref={ScrollView => (this.scrollView = ScrollView)}
+            ref={ScrollView => (this.horizScrollView = ScrollView)}
             showsHorizontalScrollIndicator={false}
             onScroll={this.horizOnScroll}
             scrollEventThrottle={16}
-            style={[styles.moveContainer, animatedScroll]}
+            style={styles.scroll}
           >
-            <View style={{ width: SCREEN_WIDTH, paddingHorizontal: CARD_GUTTER }}>{Move}</View>
+            <View style={styles.moveContainer}>{Move}</View>
             <Animated.View style={buttonAnimatedStyle}>
               <SuperEllipseMask radius={BORDER_RADIUS}>
                 <TouchableScale
@@ -299,13 +306,20 @@ class Focus extends Component {
 }
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  },
+  moveContainer: {
+    width: SCREEN_WIDTH,
+    paddingHorizontal: CARD_GUTTER
+  },
   card: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0
   },
-  moveContainer: {
+  scroll: {
     width: SCREEN_WIDTH
   },
   endMoveButton: {
