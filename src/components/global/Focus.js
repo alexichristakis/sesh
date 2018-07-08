@@ -33,6 +33,7 @@ class Focus extends Component {
     super(props);
 
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
+    yOffset.addListener(this.handleCheckIfSnap);
     this.state = {
       open: false,
       joined: this.props.joined,
@@ -48,6 +49,10 @@ class Focus extends Component {
   componentDidMount() {
     this.beginTransition();
     // this.beginTransition(this.props.source, this.props.onReturn, this.props.data, this.props.props);
+  }
+
+  componentWillUnmount() {
+    yOffset.removeAllListeners();
   }
 
   beginTransition = () => {
@@ -83,6 +88,13 @@ class Focus extends Component {
     //     });
     //   }
     // }
+  };
+
+  handleCheckIfSnap = event => {
+    const { value } = event;
+    if (value < -100) {
+      this.interactable.snapTo({ index: 0 });
+    }
   };
 
   handleOnSnap = event => {
@@ -145,6 +157,17 @@ class Focus extends Component {
             inputRange,
             outputRange:
               openOffset < pageY ? [SB_HEIGHT, SCREEN_HEIGHT] : [SCREEN_HEIGHT, SB_HEIGHT]
+          })
+        }
+      ]
+    };
+
+    let animatedScroll = {
+      transform: [
+        {
+          translateY: yOffset.interpolate({
+            inputRange: [-10, -5, 0, 5],
+            outputRange: [(10 * pageY) / SCREEN_HEIGHT, (5 * pageY) / SCREEN_HEIGHT, 0, 0]
           })
         }
       ]
@@ -248,7 +271,7 @@ class Focus extends Component {
             showsHorizontalScrollIndicator={false}
             onScroll={this.horizOnScroll}
             scrollEventThrottle={16}
-            style={{ width: SCREEN_WIDTH }}
+            style={[styles.moveContainer, animatedScroll]}
           >
             <View style={{ width: SCREEN_WIDTH, paddingHorizontal: CARD_GUTTER }}>{Move}</View>
             <Animated.View style={buttonAnimatedStyle}>
@@ -281,6 +304,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0
+  },
+  moveContainer: {
+    width: SCREEN_WIDTH
   },
   endMoveButton: {
     backgroundColor: Colors.red,

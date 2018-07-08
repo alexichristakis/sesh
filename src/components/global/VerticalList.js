@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
-import PropTypes from "prop-types";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
@@ -89,16 +88,12 @@ class VerticalList extends Component {
         contentContainerStyle={styles.content}
         data={this.props.data}
         renderItem={this.props.renderItem}
-        // ItemSeparatorComponent={this.renderSeparator}
         scrollEventThrottle={16}
         onScroll={this.props._vertOnScroll}
         onScrollBeginDrag={this.props._onScrollBegin}
         onScrollEndDrag={this.props._onScrollEnd}
         keyExtractor={this._keyExtractor}
         showsVerticalScrollIndicator={false}
-        // refreshing={this.props.refreshing}
-        // onRefresh={this.props.handleRefresh}
-        // RefreshControl={}
         ListHeaderComponent={this.props.renderHeader}
       />
     );
@@ -150,13 +145,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mediumGray
   }
 });
-
-VerticalList.propTypes = {
-  data: PropTypes.array.isRequired,
-  renderItem: PropTypes.func.isRequired,
-  onScroll: PropTypes.func,
-  onScrollBeginDrag: PropTypes.func,
-  onScrollEndDrag: PropTypes.func
-};
 
 export default VerticalList;

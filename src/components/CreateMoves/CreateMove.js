@@ -38,9 +38,10 @@ class CreateMove extends Component {
   constructor(props) {
     super(props);
 
-    // this.yOffset = new Animated.Value(0);
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.buttonScale = new Animated.Value(0);
+
+    yOffset.addListener(this.handleCheckIfSnap);
     this.state = {
       open: false,
       buttonVisible: false,
@@ -71,6 +72,10 @@ class CreateMove extends Component {
     }, 5);
   }
 
+  componentWillUnmount() {
+    yOffset.removeAllListeners();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.open !== nextState.open) return true;
     else if (this.state.chosenDate !== nextState.chosenDate) return true;
@@ -82,6 +87,13 @@ class CreateMove extends Component {
   handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
     useNativeDriver: true
   });
+
+  handleCheckIfSnap = event => {
+    const { value } = event;
+    if (value < -100) {
+      this.interactable.snapTo({ index: 0 });
+    }
+  };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
@@ -184,10 +196,10 @@ class CreateMove extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: "transparent" }}>
-        <Animated.View style={[FillAbsolute, opacity]}>
+        {/* <Animated.View style={[FillAbsolute, opacity]}>
           <BlurView blurType="dark" style={{ flex: 1 }} />
-        </Animated.View>
-        {/* <Animated.View style={[FillAbsolute, opacity, { backgroundColor: "rgba(0,0,0,0.8)" }]} /> */}
+        </Animated.View> */}
+        <Animated.View style={[FillAbsolute, opacity, { backgroundColor: "rgba(0,0,0,0.8)" }]} />
 
         <Animated.ScrollView
           ref={view => (this.scroll = view)}
