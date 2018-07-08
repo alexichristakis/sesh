@@ -19,12 +19,10 @@ class Active extends Component {
     };
   }
 
-  transitionFrom = (source, onReturn, data) => {
+  transitionFrom = (dimensions, onReturn, data) => {
     let joined = this.state.joinedMoves.includes(data.id);
-    console.log(joined);
-
     this.props.handleTransition({
-      source,
+      ...dimensions,
       onReturn,
       data,
       joined,
@@ -32,10 +30,6 @@ class Active extends Component {
       joinMove: this.joinMove,
       leaveMove: this.leaveMove
     });
-  };
-
-  transitionFinished = (source, sharedData) => {
-    // this.setState({ source: {}, sharedData: {}, onReturn: null, MoveComponent: null });
   };
 
   _renderItem = ({ item, index }) => (
@@ -71,17 +65,14 @@ class Active extends Component {
   render() {
     const { moves } = this.props.data;
     return (
-      <View style={styles.container}>
-        <VerticalList
-          ref={item => (this.list = item)}
-          data={moves}
-          renderItem={this._renderItem}
-          shortened={this.props.shortened}
-          _vertOnScroll={this.props._vertOnScroll}
-          _onScrollBegin={this.props._onScrollBegin}
-          _onScrollEnd={this.props._onScrollEnd}
-        />
-      </View>
+      <VerticalList
+        data={moves}
+        renderItem={this._renderItem}
+        shortened={this.props.shortened}
+        _vertOnScroll={this.props._vertOnScroll}
+        _onScrollBegin={this.props._onScrollBegin}
+        _onScrollEnd={this.props._onScrollEnd}
+      />
     );
   }
 }

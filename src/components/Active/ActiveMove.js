@@ -14,6 +14,8 @@ import { BORDER_RADIUS } from "../../lib/constants";
 const ICON_SIZE = 50;
 
 const ActiveMove = props => {
+  const { photo, group, name, description, time } = props.move;
+
   formatDistanceAway = () => {
     const miles = geolib.getDistance(props.move.location, props.coords) * 0.000621;
     return Math.round(100 * miles) / 100 + "mi";
@@ -21,12 +23,12 @@ const ActiveMove = props => {
 
   const handleGroupOnPress = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    props.onPressPresentOverlayTo("sesh.GroupFocus", {
+    props.onPressPresentOverlayTo("sesh.Focus", {
+      groups: true,
       data: group
     });
   };
 
-  const { photo, group, name, description, time } = props.move;
   return (
     <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
       <View style={styles.top}>

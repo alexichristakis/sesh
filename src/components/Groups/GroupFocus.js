@@ -205,26 +205,37 @@ class GroupFocus extends Component {
     };
 
     return (
-      <Animated.View style={containerAnimatedStyle}>
-        <StatusBar barStyle="light-content" />
-        <BlurView blurType="dark" blurAmount={10} style={styles.blur}>
-          <Animated.ScrollView style={translateAnimatedStyle}>
-            <Group card updateName={this.updateGroupName} data={this.props.data} />
-            <FlatList
-              style={{ marginBottom: 10 }}
-              data={this.state.renderedData}
-              keyExtractor={this._keyExtractor}
-              ListHeaderComponent={this._renderHeader}
-              ListFooterComponent={this._renderFooter}
-              ItemSeparatorComponent={this._renderSeparator}
-              renderItem={this._renderItem}
-            />
-            {!this.state.loading && <MapCard markers={markers} />}
-            {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
-          </Animated.ScrollView>
-        </BlurView>
-        <BackButton onPressPop={this.dismiss} />
-      </Animated.View>
+      // <View style={{ flex: 1, borderRadius: 15, backgroundColor: "white" }}>
+      <FlatList
+        style={{ marginVertical: CARD_GUTTER }}
+        data={this.state.renderedData}
+        keyExtractor={this._keyExtractor}
+        ListHeaderComponent={this._renderHeader}
+        ListFooterComponent={this._renderFooter}
+        ItemSeparatorComponent={this._renderSeparator}
+        renderItem={this._renderItem}
+      />
+      //{/* </View> */}
+      // <Animated.View style={containerAnimatedStyle}>
+      //   <StatusBar barStyle="light-content" />
+      //   <BlurView blurType="dark" blurAmount={10} style={styles.blur}>
+      //     <Animated.ScrollView style={translateAnimatedStyle}>
+      //       <Group card updateName={this.updateGroupName} data={this.props.data} />
+      //       <FlatList
+      //         style={{ marginBottom: 10 }}
+      //         data={this.state.renderedData}
+      //         keyExtractor={this._keyExtractor}
+      //         ListHeaderComponent={this._renderHeader}
+      //         ListFooterComponent={this._renderFooter}
+      //         ItemSeparatorComponent={this._renderSeparator}
+      //         renderItem={this._renderItem}
+      //       />
+      //       {!this.state.loading && <MapCard markers={markers} />}
+      //       {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
+      //     </Animated.ScrollView>
+      //   </BlurView>
+      //   <BackButton onPressPop={this.dismiss} />
+      // </Animated.View>
     );
   }
 }

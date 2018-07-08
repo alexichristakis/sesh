@@ -32,14 +32,15 @@ class Focus extends Component {
     super(props);
     const { height = 50, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
 
-    this.yOffset = new Animated.Value(0);
-    this.xOffset = new Animated.Value(0);
+    // yOffset = new Animated.Value(0);
+    // this.xOffset = new Animated.Value(0);
 
     // yOffset.addListener(() => {});
     this.deltaY = new Animated.Value(pageY);
 
     this.state = {
       open: false,
+      yOffset: new Animated.Value(0),
       joined: this.props.joined,
       sourceDimension: {
         height,
@@ -53,12 +54,12 @@ class Focus extends Component {
   }
 
   componentDidMount() {
-    this.yOffset.addListener(() => {});
+    yOffset.addListener(() => {});
     this.beginTransition();
   }
 
   componentWillUnmount() {
-    this.yOffset.removeAllListeners();
+    yOffset.removeAllListeners();
   }
 
   beginTransition = () => {
@@ -73,8 +74,9 @@ class Focus extends Component {
   };
 
   handleVertScrollRelease = event => {
+    console.log(yOffset);
     const { changedTouches, locationY, pageY } = event.nativeEvent;
-    if (this.yOffset._value < -50) {
+    if (yOffset._value < -50) {
       this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     }
@@ -99,15 +101,13 @@ class Focus extends Component {
     }
   };
 
-  vertOnScroll = () =>
-    Animated.event([{ nativeEvent: { contentOffset: { y: this.yOffset } } }], {
-      useNativeDriver: true
-    });
+  vertOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+    useNativeDriver: true
+  });
 
-  horizOnScroll = () =>
-    Animated.event([{ nativeEvent: { contentOffset: { x: this.xOffset } } }], {
-      useNativeDriver: true
-    });
+  horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
+    useNativeDriver: true
+  });
 
   handleOnPress = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
@@ -118,7 +118,6 @@ class Focus extends Component {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
-    const closedOffset = this.props.groups ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
     const inputRange = openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
 
     let opacity = {
@@ -129,7 +128,7 @@ class Focus extends Component {
     };
 
     let shadowOpacity = {
-      opacity: this.yOffset.interpolate({
+      opacity: yOffset.interpolate({
         inputRange: [0, 30],
         outputRange: [0, 1],
         extrapolate: "clamp"
@@ -145,7 +144,8 @@ class Focus extends Component {
         {
           translateY: this.deltaY.interpolate({
             inputRange,
-            outputRange: openOffset < pageY ? [SB_HEIGHT, closedOffset] : [SCREEN_HEIGHT, SB_HEIGHT]
+            outputRange:
+              openOffset < pageY ? [SB_HEIGHT, SCREEN_HEIGHT] : [SCREEN_HEIGHT, SB_HEIGHT]
           })
         }
       ]
@@ -154,8 +154,8 @@ class Focus extends Component {
     let animatedScroll = {
       transform: [
         {
-          translateY: this.yOffset.interpolate({
-            inputRange: [-closedOffset, 0, 5],
+          translateY: yOffset.interpolate({
+            inputRange: [-SCREEN_HEIGHT, 0, 5],
             outputRange: [pageY, 0, 0]
           })
         }
@@ -236,7 +236,7 @@ class Focus extends Component {
           ref={ScrollView => (this.vertScrollView = ScrollView)}
           onResponderRelease={this.handleVertScrollRelease}
           style={focusContainerStyle}
-          onScroll={this.vertOnScroll()}
+          onScroll={this.vertOnScroll}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
         >
@@ -270,7 +270,7 @@ class Focus extends Component {
             pagingEnabled
             ref={ScrollView => (this.horizScrollView = ScrollView)}
             showsHorizontalScrollIndicator={false}
-            onScroll={this.horizOnScroll()}
+            onScroll={this.horizOnScroll}
             scrollEventThrottle={16}
             style={styles.scroll}
           >
