@@ -31,23 +31,26 @@ const xOffset = new Animated.Value(0);
 class Focus extends Component {
   constructor(props) {
     super(props);
+    const { height, width, x, y, pageX, pageY } = this.props.source;
 
-    this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     yOffset.addListener(() => {});
+    this.deltaY = new Animated.Value(pageY);
+
     this.state = {
       open: false,
       joined: this.props.joined,
       sourceDimension: {
-        height: 0,
-        width: 0,
-        pageX: 0,
-        pageY: SCREEN_HEIGHT
+        height,
+        width,
+        x,
+        y,
+        pageX,
+        pageY
       }
     };
   }
 
   componentDidMount() {
-    // this.vertScrollView.props.onResponderRelease(this.handleVertScrollRelease);
     this.beginTransition();
   }
 
@@ -56,24 +59,9 @@ class Focus extends Component {
   }
 
   beginTransition = () => {
-    const { height, width, x, y, pageX, pageY } = this.props.source;
-    this.setState(
-      {
-        sourceDimension: {
-          height: height,
-          width: width,
-          x: x,
-          y: y,
-          pageX: pageX,
-          pageY: pageY
-        }
-      },
-      () => {
-        setTimeout(() => {
-          this.interactable.snapTo({ index: 1 });
-        }, 5);
-      }
-    );
+    setTimeout(() => {
+      this.interactable.snapTo({ index: 1 });
+    }, 5);
   };
 
   handleOnDrag = event => {
@@ -88,18 +76,6 @@ class Focus extends Component {
       this.interactable.snapTo({ index: 0 });
     }
   };
-
-  // handleCheckIfSnap = event => {
-  //   const { value } = event;
-  //   if (value < -100) {
-  //     console.log("break");
-  //     // this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-  //     this.vertScrollView.setNativeProps({ pointerEvents: "none" });
-  //     // this.vertScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-  //     // this.vertScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-  //     // this.interactable.snapTo({ index: 0 });
-  //   }
-  // };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
