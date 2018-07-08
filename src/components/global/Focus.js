@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import Interactable from "react-native-interactable";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
@@ -18,12 +19,14 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
+  BORDER_RADIUS,
   TRANSITION_DURATION,
   CARD_GUTTER
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
 const yOffset = new Animated.Value(0);
+const xOffset = new Animated.Value(0);
 
 class Focus extends Component {
   constructor(props) {
@@ -68,18 +71,19 @@ class Focus extends Component {
     );
   };
 
-  // handleOnDrag = event => {
-  //   const { state, x, y } = event.nativeEvent;
-  //   // this.setState({ transitioning: true });
-  //   if (state === "end") {
-  //     if (y > 75) {
-  //       this.setState({ open: false, transitioning: true }, () => {
-  //         this.interactable.snapTo({ index: 0 });
-  //         this.props.returnScreen();
-  //       });
-  //     }
-  //   }
-  // };
+  handleOnDrag = event => {
+    const { state, x, y } = event.nativeEvent;
+    if (state === "start") this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+    // this.setState({ transitioning: true });
+    // if (state === "end") {
+    //   if (y > 75) {
+    //     this.setState({ open: false, transitioning: true }, () => {
+    //       this.interactable.snapTo({ index: 0 });
+    //       this.props.returnScreen();
+    //     });
+    //   }
+    // }
+  };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
@@ -96,7 +100,11 @@ class Focus extends Component {
     }
   };
 
-  handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+  vertOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+    useNativeDriver: true
+  });
+
+  horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
     useNativeDriver: true
   });
 
@@ -108,18 +116,17 @@ class Focus extends Component {
   render() {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
 
+    const openOffset = SB_HEIGHT + CARD_GUTTER;
+    const inputRange = openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
+
     let opacity = {
       opacity: this.deltaY.interpolate({
-        inputRange: [SB_HEIGHT + CARD_GUTTER, pageY],
-        outputRange: [1, 0]
+        inputRange,
+        outputRange: openOffset < pageY ? [1, 0] : [0, 1]
       })
     };
 
     let shadowOpacity = {
-      // opacity: this.deltaY.interpolate({
-      //   inputRange: [SB_HEIGHT + CARD_GUTTER, SB_HEIGHT + CARD_GUTTER + 2, pageY],
-      //   outputRange: [1, 0, 0]
-      // })
       opacity: yOffset.interpolate({
         inputRange: [0, 30],
         outputRange: [0, 1],
@@ -132,23 +139,27 @@ class Focus extends Component {
       top: 20,
       paddingTop: height - 20 + CARD_GUTTER,
       paddingHorizontal: CARD_GUTTER,
-      // paddingTop: height + CARD_GUTTER,
       transform: [
         {
           translateY: this.deltaY.interpolate({
-            inputRange: [SB_HEIGHT + CARD_GUTTER, pageY],
-            // outputRange: [height + SB_HEIGHT + CARD_GUTTER, SCREEN_HEIGHT]
-            outputRange: [SB_HEIGHT, SCREEN_HEIGHT]
+            inputRange,
+            outputRange:
+              openOffset < pageY ? [SB_HEIGHT, SCREEN_HEIGHT] : [SCREEN_HEIGHT, SB_HEIGHT]
           })
         }
       ]
     };
 
-    let focusStyle = {
-      flex: 1,
-      top: 20,
-      paddingTop: height - 20 + CARD_GUTTER,
-      paddingHorizontal: CARD_GUTTER
+    let buttonAnimatedStyle = {
+      transform: [
+        {
+          scale: xOffset.interpolate({
+            inputRange: [0, SCREEN_WIDTH / 2],
+            outputRange: [0, 1],
+            extrapolate: "clamp"
+          })
+        }
+      ]
     };
 
     const Move = this.props.active ? (
@@ -173,7 +184,7 @@ class Focus extends Component {
 
         <Animated.ScrollView
           style={focusContainerStyle}
-          onScroll={this.handleOnScroll}
+          onScroll={this.vertOnScroll}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
         >
@@ -218,19 +229,46 @@ class Focus extends Component {
 
         <Interactable.View
           animatedNativeDriver
-          ref={item => (this.interactable = item)}
+          verticalOnly
+          ref={Interactable => (this.interactable = Interactable)}
           style={styles.card}
-          verticalOnly={true}
           snapPoints={[
             { y: pageY, damping: 0.5, tension: 600 },
             { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
           ]}
           initialPosition={{ y: pageY }}
           animatedValueY={this.deltaY}
-          // onDrag={this.handleOnDrag}
+          onDrag={this.handleOnDrag}
           onSnap={this.handleOnSnap}
         >
-          {Move}
+          <Animated.ScrollView
+            horizontal
+            pagingEnabled
+            ref={ScrollView => (this.scrollView = ScrollView)}
+            showsHorizontalScrollIndicator={false}
+            onScroll={this.horizOnScroll}
+            scrollEventThrottle={16}
+            style={{ width: SCREEN_WIDTH }}
+          >
+            <View style={{ width: SCREEN_WIDTH, paddingHorizontal: CARD_GUTTER }}>{Move}</View>
+            <Animated.View style={buttonAnimatedStyle}>
+              <SuperEllipseMask radius={BORDER_RADIUS}>
+                <TouchableScale
+                  style={[
+                    styles.endMoveButton,
+                    {
+                      width: SCREEN_WIDTH / 2,
+                      height: height,
+                      paddingRight: CARD_GUTTER
+                    }
+                  ]}
+                  onPress={() => console.log("yo")}
+                >
+                  <Text style={styles.text}>End Move</Text>
+                </TouchableScale>
+              </SuperEllipseMask>
+            </Animated.View>
+          </Animated.ScrollView>
         </Interactable.View>
       </View>
     );
@@ -242,8 +280,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    right: 0,
-    paddingHorizontal: CARD_GUTTER
+    right: 0
+  },
+  endMoveButton: {
+    backgroundColor: Colors.red,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15
+  },
+  text: {
+    color: "white",
+    fontSize: 18
   },
   cover: {
     flex: 1,

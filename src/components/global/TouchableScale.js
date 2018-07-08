@@ -1,23 +1,19 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { Animated, TouchableOpacity } from "react-native";
 
-class TouchableScale extends Component {
-  constructor(props) {
-    super(props);
-
-    this.animated = new Animated.Value(1);
-  }
+const TouchableScale = props => {
+  const animated = new Animated.Value(1);
+  const { animatedStyle = {} } = props;
 
   handlePressIn = () => {
-    Animated.spring(this.animated, {
+    Animated.spring(animated, {
       toValue: 0.95,
       useNativeDriver: true
     }).start();
   };
 
   handlePressOut = () => {
-    Animated.spring(this.animated, {
+    Animated.spring(animated, {
       toValue: 1,
       friction: 3,
       tension: 40,
@@ -25,36 +21,30 @@ class TouchableScale extends Component {
     }).start();
   };
 
-  render() {
-    let containerAnimatedStyle = {
-      transform: [
-        {
-          scale: this.animated
-        }
-      ]
-    };
+  const containerAnimatedStyle = {
+    transform: [
+      {
+        scale: animated
+      }
+    ]
+  };
 
-    return (
-      <Animated.View
-        pointerEvents={this.props.disabled ? "none" : "auto"}
-        style={containerAnimatedStyle}
+  return (
+    <Animated.View
+      pointerEvents={props.disabled ? "none" : "auto"}
+      style={[animatedStyle, containerAnimatedStyle]}
+    >
+      <TouchableOpacity
+        style={props.style}
+        activeOpacity={1}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onPress={props.onPress}
       >
-        <TouchableOpacity
-          style={this.props.style}
-          activeOpacity={1}
-          onPressIn={this.handlePressIn}
-          onPressOut={this.handlePressOut}
-          onPress={this.props.onPress}
-        >
-          {this.props.children}
-        </TouchableOpacity>
-      </Animated.View>
-    );
-  }
-}
-
-TouchableScale.propTypes = {
-  onPress: PropTypes.func.isRequired
+        {props.children}
+      </TouchableOpacity>
+    </Animated.View>
+  );
 };
 
 export default TouchableScale;

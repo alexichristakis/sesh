@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet } from "react-native";
+import { Animated, Easing, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
-import { Navigation } from "react-native-navigation";
-import { BlurView } from "react-native-blur";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import TouchableScale from "./TouchableScale";
@@ -36,6 +34,10 @@ class CardWrapper extends Component {
     }).start();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   onLeave = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
@@ -57,7 +59,7 @@ class CardWrapper extends Component {
   handleOnPress = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
     this.onLeave();
-    this.view.getNode().measure((x, y, width, height, pageX, pageY) => {
+    this.view.measure((x, y, width, height, pageX, pageY) => {
       this.setState({ pageX: pageX, pageY: pageY }, () => {
         const dimensions = {
           height: this.state.height,
@@ -73,12 +75,8 @@ class CardWrapper extends Component {
   };
 
   measureCard = e => {
-    this.setState({
-      height: e.nativeEvent.layout.height,
-      width: e.nativeEvent.layout.width,
-      x: e.nativeEvent.layout.x,
-      y: e.nativeEvent.layout.y
-    });
+    const { height, width, x, y } = e.nativeEvent.layout;
+    this.setState({ height, width, x, y });
   };
 
   render() {
@@ -87,13 +85,11 @@ class CardWrapper extends Component {
     };
 
     return (
-      <Animated.View
-        ref={view => (this.view = view)}
-        style={[styles.container, opacity]}
-        onLayout={this.measureCard}
-      >
-        <TouchableScale onPress={this.handleOnPress}>{this.props.children}</TouchableScale>
-      </Animated.View>
+      <View ref={view => (this.view = view)} style={styles.container} onLayout={this.measureCard}>
+        <TouchableScale animatedStyle={opacity} onPress={this.handleOnPress}>
+          {this.props.children}
+        </TouchableScale>
+      </View>
     );
   }
 }

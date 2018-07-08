@@ -4,7 +4,6 @@ import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } fro
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import IonIcon from "react-native-vector-icons/Ionicons";
 
-import TouchableScale from "./global/TouchableScale";
 import ControlledLoadingCircle from "./global/ControlledLoadingCircle";
 import LoadingCircle from "./global/LoadingCircle";
 
@@ -51,15 +50,15 @@ const TopBar = props => {
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, initialOffset, BAR_HEIGHT],
-          outputRange: [50, 0, -ICON_DIMENSION]
+          inputRange: [-150, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5, BAR_HEIGHT + 10],
+          outputRange: [50, 0, -ICON_DIMENSION + 20, -ICON_DIMENSION, -ICON_DIMENSION]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, initialOffset, BAR_HEIGHT],
-          outputRange: [1.5, 1, 0.8],
+          inputRange: [-150, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5],
+          outputRange: [1.5, 1, 0.8, 0.8],
           extrapolate: "clamp"
         })
       }
@@ -72,58 +71,39 @@ const TopBar = props => {
       ? 1
       : yOffset.interpolate({
           inputRange: [-50, initialOffset],
-          outputRange: [1, 0]
+          outputRange: [1, 0],
+          extrapolate: "clamp"
         }),
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, initialOffset],
-          outputRange: [57 + iPhoneXOffset, 7 + iPhoneXOffset]
+          inputRange: [-150, initialOffset, 0, 5],
+          outputRange: [57 + iPhoneXOffset, 7 + iPhoneXOffset, 0, 0]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, initialOffset],
-          outputRange: [1.2, props.refreshing ? 1 : 0.2]
+          inputRange: [-150, initialOffset, 0, 5],
+          outputRange: [1.2, props.refreshing ? 1 : 0.2, 0, 0]
         })
       }
     ]
   };
-
-  // let refresh = {
-  //   // opacity: refreshing ? 1 : 0,
-  //   transform: [
-  //     {
-  //       translateY: yOffset.interpolate({
-  //         inputRange: [-150, initialOffset],
-  //         outputRange: [102 + iPhoneXOffset, 32 + iPhoneXOffset]
-  //         // extrapolate: "clamp"
-  //       })
-  //     },
-  //     {
-  //       scale: yOffset.interpolate({
-  //         inputRange: [-150, initialOffset],
-  //         outputRange: [1, 0.8],
-  //         extrapolate: "clamp"
-  //       })
-  //     }
-  //   ]
-  // };
 
   return (
     <View style={styles.container}>
       {!props.refreshing && (
         <Animated.View style={[styles.topBar, animatedStyle]}>
           <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
-            <TouchableScale style={styles.fillCenter} onPress={scrollToStart}>
+            <TouchableOpacity style={styles.fillCenter} onPress={scrollToStart}>
               <AwesomeIcon name={"bolt"} size={36} color={"white"} />
-            </TouchableScale>
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
-            <TouchableScale style={styles.fillCenter} onPress={scrollToEnd}>
+            <TouchableOpacity style={styles.fillCenter} onPress={scrollToEnd}>
               <IonIcon name={"ios-time"} size={36} color={"white"} />
-            </TouchableScale>
+            </TouchableOpacity>
           </Animated.View>
         </Animated.View>
       )}
