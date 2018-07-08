@@ -3,11 +3,35 @@ import { Animated, Easing, View } from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
 
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
 import { Colors, FillAbsolute } from "../lib/styles";
 
 const opacity = new Animated.Value(0);
 
 const Background = props => {
+  const { xOffset, loading } = props;
+
+  const backgroundTransform = (index: number) => {
+    switch (index) {
+      case 0:
+        return {
+          opacity: xOffset.interpolate({
+            inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
+            outputRange: [1, 0.8, 1, 0]
+          })
+        };
+        break;
+      case 1:
+        return {
+          opacity: xOffset.interpolate({
+            inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
+            outputRange: [0, 0.8, 1, 1]
+          })
+        };
+        break;
+    }
+  };
+
   if (props.loading) {
     Animated.loop(
       Animated.sequence([
@@ -32,8 +56,8 @@ const Background = props => {
     opacity: opacity.interpolate({ inputRange: [0, 1], outputRange: [1, 0] })
   };
 
-  const backgroundStyle1 = props.loading ? loadingStyle1 : props.backgroundTransform(0);
-  const backgroundStyle2 = props.loading ? loadingStyle2 : props.backgroundTransform(1);
+  const backgroundStyle1 = loading ? loadingStyle1 : backgroundTransform(0);
+  const backgroundStyle2 = loading ? loadingStyle2 : backgroundTransform(1);
 
   return (
     <View style={{ flex: 1 }}>

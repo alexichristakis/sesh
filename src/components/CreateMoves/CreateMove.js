@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Keyboard,
-  KeyboardAvoidingView,
-  Animated,
-  ScrollView,
-  View,
-  Text,
-  TextInput
-} from "react-native";
+import { StyleSheet, Keyboard, Animated, View } from "react-native";
 
 import Interactable from "react-native-interactable";
 import { Navigation } from "react-native-navigation";

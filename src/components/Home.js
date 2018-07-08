@@ -64,35 +64,6 @@ class Home extends Component {
     };
   }
 
-  // constructor(props) {
-  //   super(props);
-  //
-  //   // this.xOffset = new Animated.Value(0);
-  //   // // this.yOffset = new Animated.Value(initialVertScroll);
-  //   // this.
-  //   // this.
-  //
-  //   yOffset.addListener(this.handleRefresh);
-  //   // xOffset.addListener(value => {});
-  //
-  //   this.state = {
-  //     loading: true,
-  //     refreshing: false,
-  //
-  //     barOpen: true,
-  //     focused: false,
-  //     vertScrolling: false,
-  //
-  //     user: this.props.user,
-  //     photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-  //     coords: { latitude: null, longitude: null },
-  //
-  //     friends: [],
-  //     groups: [],
-  //     moves: []
-  //   };
-  // }
-
   async componentDidMount() {
     // fetch that data
     const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
@@ -115,17 +86,16 @@ class Home extends Component {
     );
   }
 
+  componentWillUnmount() {
+    yOffset.removeAllListeners();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.barOpen !== nextState.barOpen) return true;
     else if (this.state.focused !== nextState.focused) return true;
     else if (this.state.loading !== nextState.loading) return true;
     else if (this.state.refreshing !== nextState.refreshing) return true;
     else return false;
-    // if (this.state.barOpen === nextState.barOpen) return false;
-    // else if (nextState.vertScrolling) return true;
-    // else if (!this.state.vertScrolling) return false;
-    // else if (this.state.focused !== nextState.focused) return true;
-    // else return false;
   }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
@@ -154,56 +124,6 @@ class Home extends Component {
 
   _onScrollEnd = () => {
     this.setState({ vertScrolling: false });
-  };
-
-  indicatorAnimate = (index: number) => {
-    switch (index) {
-      case 0:
-        return {
-          transform: [
-            {
-              scale: xOffset.interpolate({
-                inputRange: [0, SCREEN_WIDTH],
-                outputRange: [1, 0.5]
-              })
-            }
-          ]
-        };
-        break;
-      case 1:
-        return {
-          transform: [
-            {
-              scale: xOffset.interpolate({
-                inputRange: [0, SCREEN_WIDTH],
-                outputRange: [0.5, 1]
-              })
-            }
-          ]
-        };
-        break;
-    }
-  };
-
-  backgroundTransform = (index: number) => {
-    switch (index) {
-      case 0:
-        return {
-          opacity: xOffset.interpolate({
-            inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
-            outputRange: [1, 0.8, 1, 0]
-          })
-        };
-        break;
-      case 1:
-        return {
-          opacity: xOffset.interpolate({
-            inputRange: [0, SCREEN_WIDTH / 2, (3 * SCREEN_WIDTH) / 4, SCREEN_WIDTH],
-            outputRange: [0, 0.8, 1, 1]
-          })
-        };
-        break;
-    }
   };
 
   handleTransition = props => {
@@ -346,21 +266,21 @@ class Home extends Component {
     return (
       <Background
         loading={this.state.loading || this.state.refreshing}
-        backgroundTransform={this.backgroundTransform}
+        xOffset={xOffset}
+        // backgroundTransform={this.backgroundTransform}
       >
         <StatusBar barStyle="light-content" />
-
-        {this.state.loading && <LoadingCircle style={styles.loading} size={20} />}
-        {!this.state.loading && feed}
-
         <TopBar
           yOffset={yOffset}
+          xOffset={xOffset}
           refreshing={this.state.refreshing}
-          indicatorAnimate={this.indicatorAnimate}
           barOpen={this.state.barOpen}
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
+
+        {this.state.loading && <LoadingCircle style={styles.loading} size={20} />}
+        {!this.state.loading && feed}
 
         <Drawer
           loading={this.state.loading}

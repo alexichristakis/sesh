@@ -20,7 +20,37 @@ const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
 
 const TopBar = props => {
-  const { yOffset, scrollToStart, scrollToEnd, indicatorAnimate, refreshing } = props;
+  const { yOffset, xOffset, scrollToStart, scrollToEnd, refreshing } = props;
+
+  const indicatorAnimate = (index: number) => {
+    switch (index) {
+      case 0:
+        return {
+          transform: [
+            {
+              scale: xOffset.interpolate({
+                inputRange: [0, SCREEN_WIDTH],
+                outputRange: [1, 0.5]
+              })
+            }
+          ]
+        };
+        break;
+      case 1:
+        return {
+          transform: [
+            {
+              scale: xOffset.interpolate({
+                inputRange: [0, SCREEN_WIDTH],
+                outputRange: [0.5, 1]
+              })
+            }
+          ]
+        };
+        break;
+    }
+  };
+
   const initialOffset = IS_X ? -4 : 0;
 
   const animatedProgress = new Animated.Value(0);
