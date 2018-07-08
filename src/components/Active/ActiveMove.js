@@ -19,48 +19,35 @@ const ActiveMove = props => {
     return Math.round(100 * miles) / 100 + "mi";
   };
 
-  const move = props.move;
-
-  const group = {
-    id: "1",
-    name: move.group,
-    size: 9,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
+  const handleGroupOnPress = () => {
+    ReactNativeHapticFeedback.trigger("impactLight");
+    props.onPressPresentOverlayTo("sesh.GroupFocus", {
+      data: group
+    });
   };
 
+  const { photo, group, name, description, time } = props.move;
   return (
     <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
       <View style={styles.top}>
         <Image
           style={styles.image}
           resizeMode="cover"
-          source={{ uri: move.photo, cache: "force-cache" }}
+          source={{ uri: photo, cache: "force-cache" }}
         />
         <View style={styles.header}>
-          <View style={{ flex: 2 }}>
-            <TouchableOpacity
-              onPress={() => {
-                ReactNativeHapticFeedback.trigger("impactLight");
-                props.onPressPresentOverlayTo("sesh.GroupFocus", {
-                  data: group
-                });
-              }}
-            >
-              <Text style={styles.group}>{move.group}</Text>
-            </TouchableOpacity>
-            <View style={{ flexDirection: "row" }}>
-              <Icon name={"corner-left-up"} size={14} color={Colors.active} />
-              <Text style={styles.name}>{move.name}</Text>
-            </View>
+          <TouchableOpacity onPress={handleGroupOnPress}>
+            <Text style={styles.group}>{group}</Text>
+          </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            <Icon name={"corner-left-up"} size={14} color={Colors.active} />
+            <Text style={styles.name}>{name}</Text>
           </View>
         </View>
       </View>
-      <View style={styles.mid}>
-        <Text style={styles.description}>{move.description}</Text>
-      </View>
+      <Text style={styles.description}>{description}</Text>
       <View style={styles.bottom}>
-        <Text style={styles.time}>{TimeAgo(move.time)}</Text>
+        <Text style={styles.time}>{TimeAgo(time)}</Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Icon name={"compass"} size={14} color={Colors.gray} />
           <Text style={styles.location}>{formatDistanceAway()}</Text>
@@ -73,29 +60,7 @@ const ActiveMove = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // borderRadius: 15,
-    // paddingTop: 10,
-    // paddingRight: 12,
-    overflow: "hidden",
     backgroundColor: "white"
-    // backgroundColor: "rgba(255,255,255,0.5)"
-    // ...shadow,
-  },
-  background: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "white"
-    // opacity: 0.2
-  },
-  blur: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
   },
   top: {
     padding: 10,
@@ -110,51 +75,30 @@ const styles = StyleSheet.create({
     width: ICON_SIZE
   },
   header: {
-    flex: 1,
-    flexDirection: "row",
+    flex: 2,
     alignSelf: "center",
     marginLeft: 10,
     marginBottom: 3
-  },
-  from: {
-    fontSize: 14,
-    marginLeft: 3,
-    color: Colors.gray
   },
   name: {
     paddingTop: 2,
     paddingLeft: 3,
     fontSize: 14,
-    // fontWeight: "bold",
     color: Colors.gray
   },
   group: {
     fontSize: 24,
     fontWeight: "300"
-    // fontWeight: "800"
-    // color: Colors.active,
   },
   time: {
-    // flex: 1,
     textAlign: "right",
-    // paddingTop: 4,
     fontSize: 14,
-    // alignSelf: "center",
-    // color: Colors.active,
     color: Colors.gray
-    // fontWeight: "800"
-    // fontWeight: "300",
-  },
-  mid: {
-    flex: 2,
-    // marginVertical: 10,
-    paddingHorizontal: 10
-    // marginBottom: 5
   },
   description: {
+    flex: 2,
+    paddingHorizontal: 10,
     fontSize: 14
-    // fontWeight: "200"
-    // fontWeight: "800"
   },
   bottom: {
     flex: 1,
@@ -163,16 +107,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-    // backgroundColor: Colors.gray
-    // bacl
-    // alignSelf: "flex-end"
   },
   location: {
     paddingTop: 1,
     marginLeft: 2,
     fontSize: 14,
-    // fontWeight: "200",
-    // fontWeight: "800",
     color: Colors.gray
   }
 });

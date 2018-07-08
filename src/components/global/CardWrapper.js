@@ -61,21 +61,15 @@ class CardWrapper extends Component {
     this.onLeave();
     this.view.measure((x, y, width, height, pageX, pageY) => {
       this.setState({ pageX: pageX, pageY: pageY }, () => {
-        const dimensions = {
-          height: this.state.height,
-          width: this.state.width,
-          x: this.state.x,
-          y: this.state.y,
-          pageX: this.state.pageX,
-          pageY: this.state.pageY
-        };
+        const { height, width, x, y } = this.state;
+        const dimensions = { height, width, x, y, pageX, pageY };
         this.props.transitionFrom(dimensions, this.onReturn, this.props.data);
       });
     });
   };
 
-  measureCard = e => {
-    const { height, width, x, y } = e.nativeEvent.layout;
+  measureCard = event => {
+    const { height, width, x, y } = event.nativeEvent.layout;
     this.setState({ height, width, x, y });
   };
 

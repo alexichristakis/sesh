@@ -12,6 +12,7 @@ import {
   SCREEN_HEIGHT,
   SB_HEIGHT,
   IS_X,
+  REFRESH_OFFSET,
   TRANSITION_DURATION
 } from "../lib/constants";
 import { Colors, shadow } from "../lib/styles";
@@ -21,7 +22,6 @@ const ICON_DIMENSION = 50;
 
 const TopBar = props => {
   const { yOffset, xOffset, scrollToStart, scrollToEnd, refreshing } = props;
-  // console.log(scrollToEnd);
 
   const indicatorAnimate = (index: number) => {
     switch (index) {
@@ -68,27 +68,27 @@ const TopBar = props => {
   let progress = props.refreshing
     ? animatedProgress
     : yOffset.interpolate({
-        inputRange: [-200, -150, -100, initialOffset],
+        inputRange: [REFRESH_OFFSET, -125, -100, initialOffset],
         outputRange: [1, 0.8, 0.2, 0],
         extrapolate: "clamp"
       });
 
   let animatedStyle = {
     opacity: yOffset.interpolate({
-      inputRange: [-150, -100, initialOffset, BAR_HEIGHT],
+      inputRange: [REFRESH_OFFSET, -100, initialOffset, BAR_HEIGHT],
       outputRange: [0, 0.8, 1, 0]
     }),
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5, BAR_HEIGHT + 10],
+          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5, BAR_HEIGHT + 10],
           outputRange: [50, 0, -ICON_DIMENSION + 20, -ICON_DIMENSION, -ICON_DIMENSION]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5],
+          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5],
           outputRange: [1.5, 1, 0.8, 0.8],
           extrapolate: "clamp"
         })
@@ -108,14 +108,14 @@ const TopBar = props => {
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [-150, initialOffset, 0, 5],
+          inputRange: [REFRESH_OFFSET, initialOffset, 0, 5],
           outputRange: [57 + iPhoneXOffset, 7 + iPhoneXOffset, 0, 0]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [-150, initialOffset, 0, 5],
+          inputRange: [REFRESH_OFFSET, initialOffset, 0, 5],
           outputRange: [1.2, props.refreshing ? 1 : 0.2, 0, 0]
         })
       }

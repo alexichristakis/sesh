@@ -2,8 +2,8 @@ import React from "react";
 import { Animated, TouchableOpacity } from "react-native";
 
 const TouchableScale = props => {
+  const { animatedStyle = {}, style = {}, disabled, onPress, children } = props;
   const animated = new Animated.Value(1);
-  const { animatedStyle = {} } = props;
 
   handlePressIn = () => {
     Animated.spring(animated, {
@@ -31,17 +31,17 @@ const TouchableScale = props => {
 
   return (
     <Animated.View
-      pointerEvents={props.disabled ? "none" : "auto"}
+      pointerEvents={disabled ? "none" : "auto"}
       style={[animatedStyle, containerAnimatedStyle]}
     >
       <TouchableOpacity
-        style={props.style}
+        style={style}
         activeOpacity={1}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        onPress={props.onPress}
+        onPress={onPress}
       >
-        {props.children}
+        {children}
       </TouchableOpacity>
     </Animated.View>
   );

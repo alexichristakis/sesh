@@ -12,6 +12,8 @@ const CARD_GUTTER = 4;
 
 const BORDER_RADIUS = 15;
 
+const REFRESH_OFFSET = -150;
+
 module.exports = {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
@@ -19,5 +21,6 @@ module.exports = {
   IS_X,
   TRANSITION_DURATION,
   CARD_GUTTER,
-  BORDER_RADIUS
+  BORDER_RADIUS,
+  REFRESH_OFFSET
 };

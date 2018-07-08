@@ -71,7 +71,7 @@ class Focus extends Component {
 
   handleVertScrollRelease = event => {
     const { changedTouches, locationY, pageY } = event.nativeEvent;
-    if (yOffset._value < -100) {
+    if (yOffset._value < -50) {
       this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     }
@@ -146,8 +146,8 @@ class Focus extends Component {
       transform: [
         {
           translateY: yOffset.interpolate({
-            inputRange: [-10, -5, 0, 5],
-            outputRange: [(10 * pageY) / SCREEN_HEIGHT, (5 * pageY) / SCREEN_HEIGHT, 0, 0]
+            inputRange: [-SCREEN_HEIGHT, 0, 5],
+            outputRange: [pageY, 0, 0]
           })
         }
       ]
@@ -256,7 +256,9 @@ class Focus extends Component {
             scrollEventThrottle={16}
             style={styles.scroll}
           >
-            <View style={styles.moveContainer}>{Move}</View>
+            <View shouldRasterizeIOS style={styles.moveContainer}>
+              {Move}
+            </View>
             <Animated.View style={buttonAnimatedStyle}>
               <SuperEllipseMask radius={BORDER_RADIUS}>
                 <TouchableScale

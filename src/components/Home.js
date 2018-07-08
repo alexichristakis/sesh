@@ -16,7 +16,7 @@ import Groups from "./Groups";
 import Active from "./Active";
 import Later from "./Later";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
+import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../lib/constants";
 import { Colors, FillAbsolute } from "../lib/styles";
 
 /* import fetch functions */
@@ -28,7 +28,7 @@ import MOVES from "../mock-data/MOVES";
 import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
-const initialVertScroll = SB_HEIGHT === 40 ? -4 : 0;
+const initialVertScroll = IS_X ? -4 : 0;
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(initialVertScroll);
 
@@ -40,11 +40,10 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    // this.xOffset = new Animated.Value(0);
-    // this.yOffset = new Animated.Value(initialVertScroll);
     this.activeOffset = new Animated.Value(initialVertScroll);
     this.laterOffset = new Animated.Value(initialVertScroll);
 
+    xOffset.addListener(() => {});
     yOffset.addListener(this.handleRefresh);
     this.state = {
       loading: true,
@@ -107,12 +106,10 @@ class Home extends Component {
   });
 
   _onHorizScrollEnd = () => {
-    console.log(xOffset);
     if (xOffset._value === 0) {
       this.laterOffset = yOffset;
       // do some logic to fix the top bar scroll?
     } else {
-      console.log("page 2");
       this.activeOffset = yOffset;
       // do some logic to fix the top bar scroll?
     }
@@ -203,13 +200,11 @@ class Home extends Component {
 
   handleRefresh = event => {
     const { value } = event;
-    if (value <= -150 && !this.state.refreshing) {
-      // console.log(xOffset);
+    if (value <= REFRESH_OFFSET && !this.state.refreshing) {
       this.setState({ refreshing: true }, () => {
         ReactNativeHapticFeedback.trigger("impactHeavy");
         setTimeout(() => {
           this.setState({ refreshing: false });
-          // console.log(xOffset);
         }, 2000);
       });
     }
@@ -300,5 +295,5 @@ const styles = StyleSheet.create({
   }
 });
 
-// Home = codePush(Home);
+Home = codePush(Home);
 export default Home;
