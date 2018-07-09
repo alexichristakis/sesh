@@ -89,7 +89,8 @@ class CreateMove extends Component {
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 0) {
-      this.setState({ open: false }, () => Navigation.dismissOverlay(this.props.componentId));
+      // this.setState({ open: false }, () => Navigation.dismissOverlay(this.props.componentId));
+      this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
     } else {
       this.setState({ open: true }, () => this.checkButtonOpen());
     }

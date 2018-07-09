@@ -1,98 +1,139 @@
 import React, { Component } from "react";
 import { StyleSheet, Easing, Animated, TouchableOpacity, View, Text, Image } from "react-native";
 
+import Interactable from "react-native-interactable";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import Icon from "react-native-vector-icons/Feather";
 import { Navigation } from "react-native-navigation";
 import { BlurView, VibrancyView } from "react-native-blur";
 
 import ColorButton from "../global/ColorButton";
 
-import { Colors } from "../../lib/styles";
-import { SB_HEIGHT } from "../../lib/constants";
+import { Colors, FillAbsolute } from "../../lib/styles";
+import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 
 class Settings extends Component {
   constructor(props) {
     super(props);
 
-    this.entry = new Animated.Value(0);
+    this.deltaY = new Animated.Value(SCREEN_HEIGHT);
   }
 
   componentDidMount() {
-    Animated.timing(this.entry, {
-      toValue: 1,
-      duration: 100,
-      easing: Easing.ease,
-      useNativeDriver: true
-    }).start();
+    setTimeout(() => {
+      this.interactable.snapTo({ index: 1 });
+    }, 5);
   }
 
   dismiss = () => {
-    Animated.timing(this.entry, {
-      toValue: 0,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: true
-    }).start(() => Navigation.dismissOverlay(this.props.componentId));
+    this.interactable.snapTo({ index: 0 });
   };
 
-  quickDismiss = () => {
-    Animated.timing(this.entry, {
-      toValue: 0,
-      duration: 100,
-      easing: Easing.ease,
-      useNativeDriver: true
-    }).start(() => Navigation.dismissOverlay(this.props.componentId));
+  handleOnSnap = event => {
+    const { index } = event.nativeEvent;
+    if (index === 0) {
+      // Navigation.dismissOverlay(this.props.componentId);
+      Navigation.dismissModal(this.props.componentId);
+    }
+  };
+
+  handleOnPressEditName = () => {
+    Navigation.showModal({
+      component: {
+        name: "sesh.EditName",
+        passProps: { name: this.props.name, id: this.props.id }
+      }
+    });
+  };
+
+  handleOnPressAddMember = () => {
+    Navigation.showModal({
+      component: {
+        name: "sesh.AddMember",
+        passProps: { name: this.props.name, id: this.props.id }
+      }
+    });
   };
 
   render() {
-    let translate = {
-      transform: [
-        {
-          translateY: this.entry.interpolate({
-            inputRange: [0, 1],
-            outputRange: [500, 0]
-          })
-        }
-      ]
-    };
-
-    let textStyle = {
-      fontSize: 16
+    let animatedOpacity = {
+      opacity: this.deltaY.interpolate({
+        inputRange: [SCREEN_HEIGHT / 2 - 100, SCREEN_HEIGHT],
+        outputRange: [1, 0]
+      })
     };
 
     return (
-      <Animated.View style={[styles.background, { opacity: this.entry }]}>
-        <Animated.View style={[styles.container, translate]}>
-          <Text
-            style={{ alignSelf: "center", color: Colors.primary, fontSize: 20, marginBottom: 10 }}
-          >
-            {this.props.name}
-          </Text>
-          <ColorButton textStyle={textStyle} title={"edit name"} color={Colors.primary} />
-          <ColorButton textStyle={textStyle} title={"add members"} color={Colors.primary} />
-          <ColorButton textStyle={textStyle} title={"leave group"} color={Colors.primary} />
-          <TouchableOpacity style={{ alignSelf: "center", paddingTop: 10 }} onPress={this.dismiss}>
-            <Text style={{ color: Colors.primary, fontSize: 16 }}>cancel</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </Animated.View>
+      <View style={styles.container}>
+        <Animated.View style={[styles.background, animatedOpacity]} />
+        <Interactable.View
+          animatedNativeDriver
+          verticalOnly
+          ref={Interactable => (this.interactable = Interactable)}
+          snapPoints={[
+            { y: SCREEN_HEIGHT, damping: 0.5, tension: 600 },
+            { y: SCREEN_HEIGHT / 2 - 100, damping: 0.5, tension: 600 }
+          ]}
+          onSnap={this.handleOnSnap}
+          initialPosition={{ y: SCREEN_HEIGHT }}
+          animatedValueY={this.deltaY}
+        >
+          <SuperEllipseMask style={styles.interactable} radius={20}>
+            <Text style={styles.name}>{this.props.name}</Text>
+            <ColorButton
+              textStyle={styles.textStyle}
+              title={"edit name"}
+              color={Colors.primary}
+              onPress={this.handleOnPressEditName}
+            />
+            <ColorButton
+              textStyle={styles.textStyle}
+              title={"add members"}
+              color={Colors.primary}
+              onPress={this.handleOnPressAddMember}
+            />
+            <ColorButton
+              textStyle={styles.textStyle}
+              title={"leave group"}
+              color={Colors.primary}
+              onPress={() => console.log("leave group")}
+            />
+            <TouchableOpacity
+              style={{ alignSelf: "center", paddingTop: 10 }}
+              onPress={this.dismiss}
+            >
+              <Text style={{ color: Colors.primary, fontSize: 16 }}>cancel</Text>
+            </TouchableOpacity>
+          </SuperEllipseMask>
+        </Interactable.View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  background: {
+  container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    paddingHorizontal: 50
+  },
+  background: {
+    ...FillAbsolute,
     backgroundColor: "rgba(130,130,130,0.4)"
   },
-  container: {
+  interactable: {
     // alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 20,
     padding: 20
+  },
+  name: {
+    alignSelf: "center",
+    color: Colors.primary,
+    fontSize: 20,
+    marginBottom: 10
+  },
+  textStyle: {
+    fontSize: 14
   }
 });
 

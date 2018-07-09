@@ -29,6 +29,9 @@ import GroupFocus from "./components/Groups/GroupFocus";
 
 // import Transition from "./components/Active";
 
+import EditName from "./components/Groups/EditName";
+import AddMember from "./components/Groups/AddMember";
+
 function sceneCreator(sceneComp, store) {
   return () => {
     class SceneWrapper extends React.Component {
@@ -58,6 +61,9 @@ function registerScreens() {
   Navigation.registerComponent("sesh.ActiveFocus", () => ActiveFocus);
   Navigation.registerComponent("sesh.LaterFocus", () => LaterFocus);
   Navigation.registerComponent("sesh.GroupFocus", () => GroupFocus);
+
+  Navigation.registerComponent("sesh.EditName", () => EditName);
+  Navigation.registerComponent("sesh.AddMember", () => AddMember);
 }
 
 module.exports = {

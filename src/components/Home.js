@@ -14,6 +14,7 @@ import TopBar from "./TopBar";
 import Active from "./Active";
 import Later from "./Later";
 
+import { TransparentModalTo } from "../lib/functions";
 import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../lib/constants";
 import { Colors, FillAbsolute } from "../lib/styles";
 
@@ -122,13 +123,20 @@ class Home extends Component {
   };
 
   handleTransition = props => {
-    this.setState({ focused: true }, () =>
-      this.onPressPresentOverlayTo("sesh.Focus", {
-        ...props,
-        coords: this.state.coords,
-        returnScreen: this.returnScreen,
-        onPressPresentOverlayTo: this.onPressPresentOverlayTo
-      })
+    this.setState(
+      { focused: true },
+      () =>
+        TransparentModalTo("sesh.Focus", {
+          ...props,
+          coords: this.state.coords,
+          returnScreen: this.returnScreen
+        })
+      // this.onPressPresentOverlayTo("sesh.Focus", {
+      //   ...props,
+      //   coords: this.state.coords,
+      //   returnScreen: this.returnScreen,
+      //   onPressPresentOverlayTo: this.onPressPresentOverlayTo
+      // })
     );
   };
 

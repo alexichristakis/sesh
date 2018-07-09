@@ -12,78 +12,43 @@ import {
 import PropTypes from "prop-types";
 
 import { Navigation } from "react-native-navigation";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
+
 // import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { TimeAgo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 35;
 
-class User extends Component {
-  constructor(props) {
-    super(props);
+const User = props => {
+  const user = props.data;
 
-    this.animated = new Animated.Value(1);
-  }
-
-  handlePressIn = () => {
-    Animated.spring(this.animated, {
-      toValue: 0.95,
-      useNativeDriver: true
-    }).start();
+  let borderRadius = {
+    topLeft: props.index === 0 ? BORDER_RADIUS : 0,
+    topRight: props.index === 0 ? BORDER_RADIUS : 0
   };
 
-  handlePressOut = () => {
-    Animated.spring(this.animated, {
-      toValue: 1,
-      friction: 3,
-      tension: 40,
-      useNativeDriver: true
-    }).start();
-  };
-
-  render() {
-    const user = this.props.data;
-
-    const maxIndex = this.props.length - 1;
-    let containerAdditionalStyle = {
-      borderTopLeftRadius: this.props.index === 0 ? 10 : 0,
-      borderTopRightRadius: this.props.index === 0 ? 10 : 0,
-      // borderBottomLeftRadius: this.props.index === maxIndex ? 15 : 0,
-      // borderBottomRightRadius: this.props.index === maxIndex ? 15 : 0,
-      transform: [
-        {
-          scale: this.animated
-        }
-      ]
-    };
-
-    return (
-      <Animated.View
-        ref={item => (this.view = item)}
-        style={[styles.container, containerAdditionalStyle]}
+  return (
+    <SuperEllipseMask radius={borderRadius}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          console.log(props.index);
+        }}
       >
-        <TouchableOpacity
-          // activeOpacity={0.8}
-          style={{ flex: 1, flexDirection: "row" }}
-          // onPressIn={this.handlePressIn}
-          // onPressOut={this.handlePressOut}
-          onPress={() => {
-            // ReactNativeHapticFeedback.trigger("impactLight");
-            console.log(this.props.index);
-          }}
-        >
-          <Image style={styles.image} source={{ uri: user.photo }} />
-          <Text style={styles.name}>{user.name}</Text>
-        </TouchableOpacity>
-      </Animated.View>
-    );
-  }
-}
+        <Image style={styles.image} source={{ uri: user.photo }} />
+        <Text style={styles.name}>{user.name}</Text>
+      </TouchableOpacity>
+    </SuperEllipseMask>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.whiteTrans,
+    backgroundColor: "white",
+    flexDirection: "row",
     overflow: "hidden",
     justifyContent: "center",
     padding: 5
@@ -96,6 +61,7 @@ const styles = StyleSheet.create({
     height: ICON_SIZE,
     width: ICON_SIZE
   },
+  row: { flexDirection: "row" },
   name: {
     flex: 1,
     marginLeft: 10,

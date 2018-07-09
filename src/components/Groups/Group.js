@@ -1,173 +1,82 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TextInput, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 
-import { BlurView, VibrancyView } from "react-native-blur";
+import { Navigation } from "react-native-navigation";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 // import RNFS from "react-native-fs";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TouchableScale from "../global/TouchableScale";
 
-import { TimeAgo } from "../../lib/functions";
+import { TransparentModalTo } from "../../lib/functions";
 import { Colors, shadow, cardShadow } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE1 = 35;
 const ICON_SIZE2 = 30;
 
-class Group extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // photo: RNFS.DocumentDirectoryPath + "/profile_pic.png",
-      photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-      editing: false,
-      loading: true,
-      groupName: this.props.data.name,
-      newName: ""
-    };
-  }
-
-  componentDidMount() {
-    // const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-    // RNFS.readFile(path, "base64").then(res => {
-    // 	this.setState({ photo: "data:image/png;base64," + res, loading: false });
-    // });
-  }
-
-  onChangeText = text => {
-    this.setState({ newName: text });
-  };
-
-  onFocus = () => {
-    this.setState({ editing: true });
-  };
-
-  onEndEditing = () => {
-    this.setState({ editing: false });
-    const currentName = this.state.groupName;
-    const newName = this.state.newName;
-    if (newName.length > 0 && newName !== currentName) {
-      this.setState({ groupName: newName, newName: "" });
-      this.props.updateName(this.props.data.id, newName);
-    }
-  };
-
+const Group = props => {
   presentOptionsOverlay = item => () => {
-    console.log("transition!");
-    Navigation.presentOverlay({
-      component: {
-        name: "sesh.Settings",
-        passProps: { name: item.name, data: item }
-      }
-    });
+    // console.log("transition!");
+    // Navigation.showOverlay({
+    //   component: {
+    //     name: "sesh.Settings",
+    //     passProps: { name: item.name, data: item }
+    //   }
+    // });
+    TransparentModalTo("sesh.Settings", { name: item.name, data: item });
   };
 
-  render() {
-    const group = this.props.data;
+  const group = props.data;
 
-    let cardStyle = {
-      backgroundColor: Colors.whiteTrans,
-      borderRadius: 10,
-      overflow: "hidden"
-    };
-
-    return (
-      <View style={[styles.container, this.props.card ? cardStyle : {}]}>
-        {/* {this.props.card && <View style={styles.background} />} */}
-        {/* {this.props.card && <BlurView blurType={"xlight"} style={styles.blur} />} */}
-        {this.props.card && (
-          <View style={styles.pictures}>
-            <Image style={styles.image1} source={{ uri: this.state.photo }} />
-            <Image style={styles.image2} source={{ uri: this.state.photo }} />
-            <Image style={styles.image3} source={{ uri: this.state.photo }} />
-          </View>
-        )}
-        <View style={styles.mid}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {!this.props.editName && <Text style={styles.name}>{group.name}</Text>}
-            {this.props.editName && (
-              <TextInput
-                ref={item => (this.input = item)}
-                style={styles.name}
-                onFocus={this.onFocus}
-                onEndEditing={this.onEndEditing}
-                onChangeText={text => this.onChangeText(text)}
-                placeholder={this.state.groupName}
-                placeholderTextColor={this.state.editing ? Colors.gray : "black"}
-              />
-            )}
-            {this.props.editName && (
-              <FeatherIcon
-                style={{ paddingLeft: 5 }}
-                name={"edit-2"}
-                size={12}
-                color={Colors.groups}
-              />
-            )}
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.size}>{group.size}</Text>
-            <FeatherIcon
-              style={{ paddingLeft: 5, paddingBottom: 1 }}
-              name={"users"}
-              size={14}
-              color={Colors.groups}
-            />
-            <EntypoIcon
-              style={{ paddingTop: 2 }}
-              name={"dot-single"}
-              size={14}
-              color={Colors.gray}
-            />
-            <Text style={styles.time}>{TimeAgo(group.time)}</Text>
-          </View>
-        </View>
-        {!this.props.card &&
-          !this.props.selectable && (
-            <TouchableScale onPress={this.presentOptionsOverlay(group)}>
-              <FeatherIcon
-                style={{ paddingRight: 5, paddingBottom: 1 }}
-                name={"settings"}
-                size={20}
-                color={Colors.gray}
-              />
-            </TouchableScale>
-          )}
-        {this.props.selectable && (
-          <View
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              backgroundColor: this.props.selected ? Colors.groups : Colors.gray
-            }}
+  return (
+    <SuperEllipseMask style={styles.container} radius={props.card ? BORDER_RADIUS : 0}>
+      <View style={styles.mid}>
+        <Text allowFontScaling={props.card ? false : true} style={styles.name}>
+          {group.name}
+        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={styles.size}>{group.size}</Text>
+          <FeatherIcon
+            style={{ paddingLeft: 5, paddingBottom: 1 }}
+            name={"users"}
+            size={14}
+            color={Colors.groups}
           />
-        )}
+          {/* <EntypoIcon style={{ paddingTop: 2 }} name={"dot-single"} size={14} color={Colors.gray} /> */}
+        </View>
       </View>
-    );
-  }
-}
+      {!props.selectable && (
+        <TouchableOpacity onPress={presentOptionsOverlay(group)}>
+          <FeatherIcon
+            style={{ paddingRight: 5, paddingBottom: 1 }}
+            name={"settings"}
+            size={20}
+            color={Colors.gray}
+          />
+        </TouchableOpacity>
+      )}
+      {props.selectable && (
+        <View
+          style={{
+            width: 22,
+            height: 22,
+            borderRadius: 5,
+            backgroundColor: props.selected ? Colors.groups : "white",
+            borderColor: props.selected ? Colors.groups : Colors.gray,
+            borderWidth: 0.5
+          }}
+        />
+      )}
+    </SuperEllipseMask>
+  );
+};
 
 const styles = StyleSheet.create({
-  background: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "white"
-    // opacity: 0.2
-  },
-  blur: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  },
   container: {
     // flex: 1,
+    backgroundColor: "white",
     flexDirection: "row",
     alignItems: "center",
     // backgroundColor: "transparent",
@@ -179,21 +88,6 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingRight: 12
     // ...shadow
-  },
-  blur: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  blank: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "white"
   },
   pictures: {
     flexDirection: "row",

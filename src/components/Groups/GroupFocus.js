@@ -14,11 +14,12 @@ import {
 
 import Icon from "react-native-vector-icons/Feather";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
 import { Colors, shadow } from "../../lib/styles";
-import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER } from "../../lib/constants";
+import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
 import User from "../global/User";
 import MapCard from "../global/MapCard";
@@ -160,9 +161,9 @@ class GroupFocus extends Component {
     <User length={this.state.data.length} index={index} data={item} />
   );
 
-  _renderHeader = () => {
-    return <View style={styles.header} />;
-  };
+  // _renderHeader = () => {
+  //   return <View style={styles.header} />;
+  // };
 
   _renderSeparator = () => (
     <View style={styles.separatorContainer}>
@@ -172,10 +173,12 @@ class GroupFocus extends Component {
 
   _renderFooter = () => {
     return (
-      <TouchableOpacity style={styles.footerContainer} onPress={this.onPressToggleLength}>
-        <View style={styles.footerSeparator} />
-        <Text style={styles.showMore}>{this.state.listOpen ? "show less" : "show more"}</Text>
-      </TouchableOpacity>
+      <SuperEllipseMask radius={{ bottomRight: BORDER_RADIUS, bottomLeft: BORDER_RADIUS }}>
+        <TouchableOpacity style={styles.footerContainer} onPress={this.onPressToggleLength}>
+          <View style={styles.footerSeparator} />
+          <Text style={styles.showMore}>{this.state.listOpen ? "show less" : "show more"}</Text>
+        </TouchableOpacity>
+      </SuperEllipseMask>
     );
   };
 
@@ -185,57 +188,16 @@ class GroupFocus extends Component {
   };
 
   render() {
-    let translateAnimatedStyle = {
-      transform: [
-        {
-          translateY: this.entry.interpolate({
-            inputRange: [0, 1],
-            outputRange: [500, 0]
-          })
-        }
-      ]
-    };
-
-    let containerAnimatedStyle = {
-      flex: 1,
-      opacity: this.entry.interpolate({
-        inputRange: [0, 0.5, 1],
-        outputRange: [0, 0.9, 1]
-      })
-    };
-
     return (
-      // <View style={{ flex: 1, borderRadius: 15, backgroundColor: "white" }}>
       <FlatList
         style={{ marginVertical: CARD_GUTTER }}
         data={this.state.renderedData}
         keyExtractor={this._keyExtractor}
-        ListHeaderComponent={this._renderHeader}
+        // ListHeaderComponent={this._renderHeader}
         ListFooterComponent={this._renderFooter}
         ItemSeparatorComponent={this._renderSeparator}
         renderItem={this._renderItem}
       />
-      //{/* </View> */}
-      // <Animated.View style={containerAnimatedStyle}>
-      //   <StatusBar barStyle="light-content" />
-      //   <BlurView blurType="dark" blurAmount={10} style={styles.blur}>
-      //     <Animated.ScrollView style={translateAnimatedStyle}>
-      //       <Group card updateName={this.updateGroupName} data={this.props.data} />
-      //       <FlatList
-      //         style={{ marginBottom: 10 }}
-      //         data={this.state.renderedData}
-      //         keyExtractor={this._keyExtractor}
-      //         ListHeaderComponent={this._renderHeader}
-      //         ListFooterComponent={this._renderFooter}
-      //         ItemSeparatorComponent={this._renderSeparator}
-      //         renderItem={this._renderItem}
-      //       />
-      //       {!this.state.loading && <MapCard markers={markers} />}
-      //       {this.state.loading && <View style={{ height: 200, width: 335, borderRadius: 15 }} />}
-      //     </Animated.ScrollView>
-      //   </BlurView>
-      //   <BackButton onPressPop={this.dismiss} />
-      // </Animated.View>
     );
   }
 }
@@ -260,7 +222,7 @@ const styles = StyleSheet.create({
     // width: SCREEN_WIDTH - 80,
     // marginLeft: 80,
     height: 1,
-    backgroundColor: "rgba(255,255,255,0.8)"
+    backgroundColor: "white"
   },
   separator: {
     width: SCREEN_WIDTH - 50,
@@ -270,12 +232,10 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
+    backgroundColor: "white",
     paddingVertical: 10,
     alignItems: "center",
-    justifyContent: "center",
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    backgroundColor: "rgba(255,255,255,0.8)"
+    justifyContent: "center"
   },
   footerSeparator: {
     position: "absolute",

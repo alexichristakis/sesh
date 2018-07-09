@@ -30,7 +30,7 @@ import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 class Focus extends Component {
   constructor(props) {
     super(props);
-    const { height = 50, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
+    const { height = 65, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
 
     this.yOffset = new Animated.Value(0);
     this.xOffset = new Animated.Value(0);
@@ -89,10 +89,12 @@ class Focus extends Component {
           if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
           else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
           this.props.returnScreen();
-          Navigation.dismissOverlay(this.props.componentId);
+          // Navigation.dismissOverlay(this.props.componentId);
+          Navigation.dismissModal(this.props.componentId);
         });
       } else {
-        Navigation.dismissOverlay(this.props.componentId);
+        // Navigation.dismissOverlay(this.props.componentId);
+        Navigation.dismissModal(this.props.componentId);
       }
     } else {
       this.setState({ open: true });
@@ -155,8 +157,9 @@ class Focus extends Component {
       transform: [
         {
           translateY: this.yOffset.interpolate({
-            inputRange: [-closedOffset, 0, 5],
-            outputRange: [pageY, 0, 0]
+            inputRange: [-closedOffset / 2, 0, 5],
+            outputRange: [pageY / 2, 0, 0],
+            extrapolate: "clamp"
           })
         }
       ]

@@ -15,6 +15,7 @@ import TouchableScale from "./global/TouchableScale";
 import MapCard from "./global/MapCard";
 import ColorButton from "./global/ColorButton";
 
+import { TransparentModalTo } from "../lib/functions";
 import { Colors, FillAbsolute, heavyShadow } from "../lib/styles";
 import {
   SCREEN_WIDTH,
@@ -87,16 +88,21 @@ class Drawer extends Component {
   };
 
   presentNewActiveMove = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    Navigation.showOverlay({
-      component: {
-        name: "sesh.CreateMove",
-        passProps: {
-          active: true,
-          groups: this.props.data.groups
-        }
-      }
+    // ReactNativeHapticFeedback.trigger("impactLight");
+    TransparentModalTo("sesh.CreateMove", {
+      active: true,
+      groups: this.props.data.groups
     });
+
+    // Navigation.showOverlay({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: true,
+    //       groups: this.props.data.groups
+    //     }
+    //   }
+    // });
     // Navigation.showModal({
     //   component: {
     //     name: "sesh.CreateMove",

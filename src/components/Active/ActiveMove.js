@@ -6,8 +6,9 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import geolib from "geolib";
+import moment from "moment";
 
-import { TimeAgo } from "../../lib/functions";
+import { TransparentModalTo } from "../../lib/functions";
 import { Colors, shadow } from "../../lib/styles";
 import { BORDER_RADIUS } from "../../lib/constants";
 
@@ -22,10 +23,14 @@ const ActiveMove = props => {
   };
 
   const handleGroupOnPress = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    props.onPressPresentOverlayTo("sesh.Focus", {
+    // ReactNativeHapticFeedback.trigger("impactLight");
+    // props.onPressPresentOverlayTo("sesh.Focus", {
+    //   groups: true,
+    //   data: { name: group, size: 12 }
+    // });
+    TransparentModalTo("sesh.Focus", {
       groups: true,
-      data: group
+      data: { name: group, size: 12 }
     });
   };
 
@@ -49,7 +54,7 @@ const ActiveMove = props => {
       </View>
       <Text style={styles.description}>{description}</Text>
       <View style={styles.bottom}>
-        <Text style={styles.time}>{TimeAgo(time)}</Text>
+        <Text style={styles.time}>{moment(time).fromNow()}</Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Icon name={"compass"} size={14} color={Colors.gray} />
           <Text style={styles.location}>{formatDistanceAway()}</Text>
