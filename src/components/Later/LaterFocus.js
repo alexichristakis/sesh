@@ -44,10 +44,8 @@ const LaterFocus = props => {
         markers={[{ coords: moveLocation, key: "location" }]}
       />
       <TouchableScale onPress={handleOnPress}>
-        <SuperEllipseMask radius={BORDER_RADIUS}>
-          <View style={buttonStyle}>
+        <SuperEllipseMask style={buttonStyle} radius={BORDER_RADIUS}>
             <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
-          </View>
         </SuperEllipseMask>
       </TouchableScale>
     </View>

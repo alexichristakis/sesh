@@ -1,22 +1,21 @@
 import { Dimensions, Platform } from "react-native";
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
+const { width, height } = Dimensions.get("window");
 
-const SB_HEIGHT = Platform.OS === "ios" && SCREEN_HEIGHT === 812 ? 40 : 20;
+const SB_HEIGHT = Platform.OS === "ios" && height === 812 ? 40 : 20;
 const IS_X = SB_HEIGHT === 40;
 
 const TRANSITION_DURATION = 200;
 
-const CARD_GUTTER = 4;
+const CARD_GUTTER = 5;
 
-const BORDER_RADIUS = 15;
+const BORDER_RADIUS = 12;
 
-const REFRESH_OFFSET = -150;
+const REFRESH_OFFSET = -125;
 
 module.exports = {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
+  SCREEN_WIDTH: width,
+  SCREEN_HEIGHT: height,
   SB_HEIGHT,
   IS_X,
   TRANSITION_DURATION,

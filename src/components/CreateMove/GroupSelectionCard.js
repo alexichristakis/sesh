@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   separator: {
     width: SCREEN_WIDTH - 15,
     marginLeft: 15,
-    height: 1.5,
+    height: 1,
     backgroundColor: Colors.mediumGray
   }
 });

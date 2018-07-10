@@ -27,7 +27,7 @@ import MOVES from "../mock-data/MOVES";
 import FRIENDS from "../mock-data/FRIENDS";
 /*                                     */
 
-const initialVertScroll = IS_X ? -4 : 0;
+const initialVertScroll = IS_X ? -44 : -20;
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(initialVertScroll);
 
@@ -269,6 +269,9 @@ class Home extends Component {
     return (
       <Background loading={this.state.loading || this.state.refreshing} xOffset={xOffset}>
         <StatusBar barStyle="light-content" />
+
+        {this.state.loading ? Loading : Feed}
+
         <TopBar
           yOffset={yOffset}
           xOffset={xOffset}
@@ -277,9 +280,6 @@ class Home extends Component {
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
-
-        {this.state.loading ? Loading : Feed}
-
         <Drawer
           loading={this.state.loading}
           photo={this.state.photo}

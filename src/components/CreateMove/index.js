@@ -32,7 +32,8 @@ class CreateMove extends Component {
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.buttonScale = new Animated.Value(0);
 
-    yOffset.addListener(this.handleCheckIfSnap);
+    // yOffset.addListener(this.handleCheckIfSnap);
+    yOffset.addListener(() => {});
     this.state = {
       open: false,
       buttonVisible: false,
@@ -79,9 +80,11 @@ class CreateMove extends Component {
     useNativeDriver: true
   });
 
-  handleCheckIfSnap = event => {
-    const { value } = event;
-    if (value < -100) {
+  handleVertScrollRelease = event => {
+    const { changedTouches, locationY, pageY } = event.nativeEvent;
+    if (yOffset._value < -50) {
+      this.setState({ buttonVisible: false });
+      Keyboard.dismiss();
       this.interactable.snapTo({ index: 0 });
     }
   };
@@ -91,6 +94,7 @@ class CreateMove extends Component {
     if (index === 0) {
       // this.setState({ open: false }, () => Navigation.dismissOverlay(this.props.componentId));
       this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
+      Navigation.dismissOverlay(this.props.componentId);
     } else {
       this.setState({ open: true }, () => this.checkButtonOpen());
     }
@@ -206,13 +210,14 @@ class CreateMove extends Component {
 
         <Animated.ScrollView
           ref={view => (this.scroll = view)}
+          onResponderRelease={this.handleVertScrollRelease}
           onScroll={this.handleOnScroll}
           scrollEventThrottle={16}
           scrollEnabled={this.state.scrollEnabled}
           keyboardDismissMode={"interactive"}
           showsVerticalScrollIndicator={false}
           style={[styles.scroll, animatedTranslate]}
-          contentContainerStyle={{ paddingBottom: 90 }}
+          contentContainerStyle={styles.scrollContent}
         >
           <MapCard
             draggable
@@ -237,25 +242,25 @@ class CreateMove extends Component {
           />
         </Animated.ScrollView>
 
+        <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
+          <LinearGradient
+            style={{ flex: 1 }}
+            locations={[0.25, 0.5, 1]}
+            colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+          />
+        </Animated.View>
+
         <Interactable.View
           animatedNativeDriver
+          verticalOnly
           ref={item => (this.interactable = item)}
           style={[styles.interactable, animatedScroll]}
-          verticalOnly={true}
           snapPoints={[closed, open]}
           onSnap={this.handleOnSnap}
           onDrag={this.handleOnDrag}
           initialPosition={closed}
           animatedValueY={this.deltaY}
         >
-          <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
-            <LinearGradient
-              style={{ flex: 1 }}
-              locations={[0.25, 0.5, 1]}
-              colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
-            />
-          </Animated.View>
-
           <TextEntryCard
             active={this.props.active}
             onChangeText={this.handleOnChangeText}
@@ -278,6 +283,9 @@ const styles = StyleSheet.create({
     paddingTop: SB_HEIGHT === 40 ? 33 : 43,
     paddingHorizontal: CARD_GUTTER
   },
+  scrollContent: {
+    paddingBottom: 90
+  },
   interactable: {
     position: "absolute",
     top: 0,
@@ -288,7 +296,7 @@ const styles = StyleSheet.create({
   },
   shadowContainer: {
     position: "absolute",
-    top: -SB_HEIGHT,
+    top: 0,
     left: 0,
     right: 0,
     height: SB_HEIGHT + 75

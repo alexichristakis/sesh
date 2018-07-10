@@ -3,6 +3,7 @@ import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } fro
 
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import IonIcon from "react-native-vector-icons/Ionicons";
+import LinearGradient from "react-native-linear-gradient";
 
 import ControlledLoadingCircle from "./global/ControlledLoadingCircle";
 import LoadingCircle from "./global/LoadingCircle";
@@ -22,6 +23,7 @@ const ICON_DIMENSION = 50;
 
 const TopBar = props => {
   const { yOffset, xOffset, scrollToStart, scrollToEnd, refreshing } = props;
+  console.log(yOffset);
 
   const indicatorAnimate = (index: number) => {
     switch (index) {
@@ -52,7 +54,8 @@ const TopBar = props => {
     }
   };
 
-  const initialOffset = IS_X ? -4 : 0;
+  const initialOffset = IS_X ? -44 : -20;
+  // const initialOffset = -10;
 
   const animatedProgress = new Animated.Value(0);
   if (props.refreshing) {
@@ -68,7 +71,7 @@ const TopBar = props => {
   let progress = props.refreshing
     ? animatedProgress
     : yOffset.interpolate({
-        inputRange: [REFRESH_OFFSET, -125, -100, initialOffset],
+        inputRange: [REFRESH_OFFSET, (3 * REFRESH_OFFSET) / 4, REFRESH_OFFSET / 2, initialOffset],
         outputRange: [1, 0.8, 0.2, 0],
         extrapolate: "clamp"
       });
@@ -76,13 +79,13 @@ const TopBar = props => {
   let animatedStyle = {
     opacity: yOffset.interpolate({
       inputRange: [REFRESH_OFFSET, -100, initialOffset, BAR_HEIGHT],
-      outputRange: [0, 0.8, 1, 0]
+      outputRange: [0, 0.8, 1, 1]
     }),
     transform: [
       {
         translateY: yOffset.interpolate({
           inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5, BAR_HEIGHT + 10],
-          outputRange: [50, 0, -ICON_DIMENSION + 20, -ICON_DIMENSION, -ICON_DIMENSION]
+          outputRange: [40, 0, -ICON_DIMENSION / 6, -ICON_DIMENSION / 6, -ICON_DIMENSION / 6]
           // extrapolate: "clamp"
         })
       },
@@ -109,31 +112,58 @@ const TopBar = props => {
       {
         translateY: yOffset.interpolate({
           inputRange: [REFRESH_OFFSET, initialOffset, 0, 5],
-          outputRange: [57 + iPhoneXOffset, 7 + iPhoneXOffset, 0, 0]
+          outputRange: [47 + iPhoneXOffset, 7 + iPhoneXOffset, 0, 0]
           // extrapolate: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [REFRESH_OFFSET, initialOffset, 0, 5],
-          outputRange: [1.2, props.refreshing ? 1 : 0.2, 0, 0]
+          inputRange: [1.5 * REFRESH_OFFSET, REFRESH_OFFSET, initialOffset, 0, 5],
+          outputRange: [1.4, 1.2, props.refreshing ? 1 : 0.2, 0, 0],
+          extrapolate: "clamp"
         })
       }
     ]
   };
 
+  let shadowOpacity = {
+    opacity: yOffset.interpolate({
+      inputRange: [0, 30],
+      outputRange: [0, 1],
+      extrapolate: "clamp"
+    })
+  };
+
+  let gradientContainerStyle = [
+    {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      height: 80
+    },
+    shadowOpacity
+  ];
+
   return (
     <View style={styles.container}>
+      <Animated.View style={gradientContainerStyle}>
+        <LinearGradient
+          style={styles.flex}
+          locations={[0.25, 0.5, 0.75, 1]}
+          colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+        />
+      </Animated.View>
       {!props.refreshing && (
         <Animated.View style={[styles.topBar, animatedStyle]}>
           <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
             <TouchableOpacity onPress={scrollToStart}>
-              <AwesomeIcon name={"bolt"} size={36} color={"white"} />
+              <AwesomeIcon name={"bolt"} size={40} color={"white"} />
             </TouchableOpacity>
           </Animated.View>
           <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
             <TouchableOpacity onPress={scrollToEnd}>
-              <IonIcon name={"ios-time"} size={36} color={"white"} />
+              <IonIcon name={"ios-time"} size={40} color={"white"} />
             </TouchableOpacity>
           </Animated.View>
         </Animated.View>
@@ -186,6 +216,9 @@ const styles = StyleSheet.create({
   refreshing: {
     alignSelf: "center",
     paddingTop: 50
+  },
+  flex: {
+    flex: 1
   },
   text: {
     flex: 1,

@@ -4,13 +4,13 @@ const moves = [
     name: "Alexi Christakis",
     group: "9pack",
     time: 1526598742850,
-    description:
-      "suite dinner in pierson! bring anyone. dinner is really good tonight--Janvi's favorite chicken!!",
+    description: "suite dinner in pierson! bring anyone. p good tonight",
     location: {
       latitude: 47.875598,
       longitude: -122.223837
     },
     photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
+    // photo: "https://graph.facebook.com/1779355238751386/picture?width=300&height=300"
   },
   {
     id: "alexi2",
@@ -53,7 +53,7 @@ const moves = [
     name: "Max Golden",
     group: "9pack",
     time: 1526598742850,
-    description: "suite dinner in pierson!",
+    description: "yo ping pong tourney",
     location: {
       latitude: 47.673598,
       longitude: -122.063837
@@ -65,7 +65,7 @@ const moves = [
     name: "Alexi Christakis",
     group: "9pack",
     time: 1526598742850,
-    description: "suite dinner in pierson!",
+    description: "just throwing a frisbee in the courtyard",
     location: {
       latitude: 47.675598,
       longitude: -122.263837
@@ -77,7 +77,7 @@ const moves = [
     name: "Alexi Christakis",
     group: "9pack",
     time: 1526598742850,
-    description: "suite dinner in pierson!",
+    description: "pool 🦈",
     location: {
       latitude: 47.675598,
       longitude: -122.263837
@@ -89,8 +89,7 @@ const moves = [
     name: "Alexi Christakis",
     group: "9pack",
     time: 1526598742850,
-    description:
-      "suite dinner in pierson! bring anyone. dinner is really good tonight--Janvi's favorite chicken!!",
+    description: "juicebox!!!",
     location: {
       latitude: 47.675598,
       longitude: -122.263837
@@ -102,7 +101,7 @@ const moves = [
     name: "Everest Fang",
     group: "Fence Club",
     time: 1526599742850,
-    description: "just a chill sesh",
+    description: "freestyle sesh",
     location: {
       latitude: 47.675598,
       longitude: -122.263837
@@ -114,7 +113,7 @@ const moves = [
     name: "Alexi Christakis",
     group: "Splash Bros",
     time: 1526598742850,
-    description: "suite dinner in pierson!",
+    description: "splish splash",
     location: {
       latitude: 47.675598,
       longitude: -122.263837
@@ -150,7 +149,7 @@ const moves = [
     name: "Alexi Christakis",
     group: "9pack",
     time: 1526598742850,
-    description: "suite dinner in pierson!",
+    description: "listening party--bring some tunes",
     location: {
       latitude: 47.675598,
       longitude: -122.263837

@@ -64,11 +64,8 @@ export const LeaveGroup = group => {};
 export const UserAuthenticated = () => {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        resolve(user);
-      } else {
-        resolve(false);
-      }
+      if (user) resolve(user);
+      else resolve(false);
     });
   });
 };
@@ -79,7 +76,6 @@ export const FacebookLogin = async cancelLogin => {
 
     if (result.isCancelled) {
       cancelLogin();
-      console.log("canceled facebook"); // Handle this however fits the flow of your app
     } else {
       console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
 
@@ -109,15 +105,15 @@ export const FacebookLogin = async cancelLogin => {
 
 const NewUser = user => {
   return new Promise(resolve => {
-    let email = user.user._user.email;
-    let first_name = user.additionalUserInfo.profile.first_name;
-    let last_name = user.additionalUserInfo.profile.last_name;
-    let display_name = user.additionalUserInfo.profile.name;
-    let id = user.additionalUserInfo.profile.id;
-    let profile_pic = "https://graph.facebook.com/" + id + "/picture?type=large";
-    let uid = user.user._user.uid;
+    const email = user.user._user.email;
+    const first_name = user.additionalUserInfo.profile.first_name;
+    const last_name = user.additionalUserInfo.profile.last_name;
+    const display_name = user.additionalUserInfo.profile.name;
+    const id = user.additionalUserInfo.profile.id;
+    const profile_pic = "https://graph.facebook.com/" + id + "/picture?type=large";
+    const uid = user.user._user.uid;
 
-    let user = {
+    const user = {
       email,
       first_name,
       last_name,
@@ -127,7 +123,7 @@ const NewUser = user => {
       profile_pic
     };
 
-    /* set in RNFS */
+    /* set in RNFS? */
 
     firestore
       .collection("users")

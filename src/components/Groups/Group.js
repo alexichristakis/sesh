@@ -86,39 +86,13 @@ const styles = StyleSheet.create({
     // borderColor: Colors.primary,
     overflow: "hidden",
     padding: 10,
-    paddingRight: 12
+    paddingRight: 20
     // ...shadow
   },
   pictures: {
     flexDirection: "row",
     flex: 1,
     marginRight: 12
-  },
-  image1: {
-    position: "absolute",
-    alignSelf: "center",
-    backgroundColor: Colors.gray,
-    borderRadius: ICON_SIZE2 / 2,
-    height: ICON_SIZE2,
-    width: ICON_SIZE2
-  },
-  image2: {
-    position: "absolute",
-    marginLeft: ICON_SIZE2,
-    alignSelf: "center",
-    backgroundColor: Colors.gray,
-    borderRadius: ICON_SIZE2 / 2,
-    height: ICON_SIZE2,
-    width: ICON_SIZE2
-  },
-  image3: {
-    position: "absolute",
-    marginLeft: ICON_SIZE2 / 2,
-    alignSelf: "center",
-    backgroundColor: Colors.gray,
-    borderRadius: ICON_SIZE1 / 2,
-    height: ICON_SIZE1,
-    width: ICON_SIZE1
   },
   mid: {
     flex: 5,

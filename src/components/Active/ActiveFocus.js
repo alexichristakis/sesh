@@ -44,10 +44,8 @@ const ActiveFocus = props => {
         markers={[{ coords: moveLocation, active: true, key: "location" }]}
       />
       <TouchableScale onPress={handleOnPress}>
-        <SuperEllipseMask radius={BORDER_RADIUS}>
-          <View style={buttonStyle}>
-            <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
-          </View>
+        <SuperEllipseMask style={buttonStyle} radius={BORDER_RADIUS}>
+          <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
         </SuperEllipseMask>
       </TouchableScale>
     </View>
@@ -60,16 +58,11 @@ const styles = StyleSheet.create({
   },
   joinButton: {
     flex: 1,
-    // marginVertical: 20,
     padding: 15,
-    // borderRadius: 10,
     alignItems: "center",
     justifyContent: "center"
-    // ...shadow,
   },
   joinText: {
-    // flex: 1,
-    // color: Colors.active,
     fontSize: 18
   }
 });

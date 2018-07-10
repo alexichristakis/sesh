@@ -73,6 +73,7 @@ class Focus extends Component {
   };
 
   handleVertScrollRelease = event => {
+    console.log(event.nativeEvent);
     const { changedTouches, locationY, pageY } = event.nativeEvent;
     if (this.yOffset._value < -50) {
       this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });

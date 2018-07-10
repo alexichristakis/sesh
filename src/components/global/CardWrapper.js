@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
-import PropTypes from "prop-types";
-
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import TouchableScale from "./TouchableScale";
 
-import { TimeAgo } from "../../lib/functions";
-import { Colors, shadow, cardShadow } from "../../lib/styles";
 import { CARD_GUTTER } from "../../lib/constants";
 
 class CardWrapper extends Component {
@@ -41,7 +36,8 @@ class CardWrapper extends Component {
   onLeave = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      duration: 200,
+      delay: 50,
+      duration: 25,
       useNativeDriver: true
     }).start();
   };
@@ -57,7 +53,6 @@ class CardWrapper extends Component {
   };
 
   handleOnPress = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
     this.onLeave();
     this.view.measure((x, y, width, height, pageX, pageY) => {
       this.setState({ pageX: pageX, pageY: pageY }, () => {

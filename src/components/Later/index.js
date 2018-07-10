@@ -18,9 +18,9 @@ class Later extends Component {
     };
   }
 
-  transitionFrom = (source, onReturn, data) => {
+  transitionFrom = (dimensions, onReturn, data) => {
     this.props.handleTransition({
-      source,
+      ...dimensions,
       onReturn,
       data,
       active: false

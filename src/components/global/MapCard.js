@@ -7,7 +7,13 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import LoadingCircle from "./LoadingCircle";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  SB_HEIGHT,
+  CARD_GUTTER,
+  BORDER_RADIUS
+} from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
 const MapCard = props => {

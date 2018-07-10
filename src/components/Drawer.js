@@ -93,6 +93,24 @@ class Drawer extends Component {
       active: true,
       groups: this.props.data.groups
     });
+    // Navigation.showOverlay({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: true,
+    //       groups: this.props.data.groups
+    //     }
+    //   }
+    // });
+    // Navigation.showModal({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: true,
+    //       groups: this.props.data.groups
+    //     }
+    //   }
+    // });
 
     // Navigation.showOverlay({
     //   component: {
@@ -126,16 +144,29 @@ class Drawer extends Component {
   };
 
   presentNewLaterMove = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    Navigation.showOverlay({
-      component: {
-        name: "sesh.CreateMove",
-        passProps: {
-          active: false,
-          groups: this.props.data.groups
-        }
-      }
+    TransparentModalTo("sesh.CreateMove", {
+      active: false,
+      groups: this.props.data.groups
     });
+    // Navigation.showModal({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: false,
+    //       groups: this.props.data.groups
+    //     }
+    //   }
+    // })
+    // ReactNativeHapticFeedback.trigger("impactLight");
+    // Navigation.showOverlay({
+    //   component: {
+    //     name: "sesh.CreateMove",
+    //     passProps: {
+    //       active: false,
+    //       groups: this.props.data.groups
+    //     }
+    //   }
+    // });
   };
 
   toggleDrawer = () => {
@@ -258,10 +289,8 @@ class Drawer extends Component {
             <View style={styles.actionButtonContainer}>
               <TouchableScale disabled={this.state.open} onPress={this.presentNewActiveMove}>
                 <Animated.View style={[animatedScale, styles.button]}>
-                  <View style={{ flexDirection: "row" }}>
-                    <AwesomeIcon name={"bolt"} size={30} color={Colors.activeBackground1} />
-                    <FeatherIcon name={"plus"} size={14} color={Colors.activeBackground1} />
-                  </View>
+                  <AwesomeIcon name={"bolt"} size={30} color={Colors.activeBackground1} />
+                  <FeatherIcon name={"plus"} size={14} color={Colors.activeBackground1} />
                 </Animated.View>
               </TouchableScale>
               <TouchableScale onPress={this.toggleDrawer}>
@@ -269,10 +298,8 @@ class Drawer extends Component {
               </TouchableScale>
               <TouchableScale disabled={this.state.open} onPress={this.presentNewLaterMove}>
                 <Animated.View style={[animatedScale, styles.button]}>
-                  <View style={{ flexDirection: "row" }}>
-                    <IonIcon name={"ios-time"} size={30} color={Colors.laterBackground1} />
-                    <FeatherIcon name={"plus"} size={14} color={Colors.laterBackground1} />
-                  </View>
+                  <IonIcon name={"ios-time"} size={30} color={Colors.laterBackground1} />
+                  <FeatherIcon name={"plus"} size={14} color={Colors.laterBackground1} />
                 </Animated.View>
               </TouchableScale>
             </View>
@@ -366,9 +393,11 @@ const styles = StyleSheet.create({
     paddingTop: SB_HEIGHT === 20 ? 10 : 0
   },
   button: {
+    flexDirection: "row",
     height: BUTTON_SIZE,
     width: BUTTON_SIZE,
     borderRadius: BUTTON_SIZE / 2,
+    // backgroundColor: Colors.activeBackground1,
     justifyContent: "center",
     alignItems: "center"
   },

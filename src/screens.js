@@ -16,18 +16,7 @@ import AddToGroup from "./components/Groups/AddToGroup";
 import CreateMove from "./components/CreateMove";
 
 import Settings from "./components/Groups/Settings";
-// import Friends from "./components/Friends";
-// import Feed from "./components/Feed";
-
-// import Focus from "./components/"
-
 import Focus from "./components/global/Focus";
-
-import ActiveFocus from "./components/Active/ActiveFocus";
-import LaterFocus from "./components/Later/LaterFocus";
-import GroupFocus from "./components/Groups/GroupFocus";
-
-// import Transition from "./components/Active";
 
 import EditName from "./components/Groups/EditName";
 import AddMember from "./components/Groups/AddMember";
@@ -57,10 +46,6 @@ function registerScreens() {
   Navigation.registerComponent("sesh.Settings", () => Settings);
 
   Navigation.registerComponent("sesh.CreateMove", () => CreateMove);
-
-  Navigation.registerComponent("sesh.ActiveFocus", () => ActiveFocus);
-  Navigation.registerComponent("sesh.LaterFocus", () => LaterFocus);
-  Navigation.registerComponent("sesh.GroupFocus", () => GroupFocus);
 
   Navigation.registerComponent("sesh.EditName", () => EditName);
   Navigation.registerComponent("sesh.AddMember", () => AddMember);

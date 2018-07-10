@@ -11,7 +11,8 @@ const primary = "#2b49ff";
 const secondary = "#FF2C55";
 const tertiary = "#5856d6";
 
-const groups = "#FF9500";
+// const groups = "#FF9500";
+const groups = "rgba(255,124,0,1)";
 const groupsHeader1 = "#FFBB5C";
 const groupsHeader2 = "#FF9500";
 // const active = "#5856d6";
@@ -97,8 +98,8 @@ const buttonShadow = {
 };
 
 const cardShadow = {
-  shadowRadius: 30,
-  shadowOpacity: 0.13,
+  shadowRadius: 10,
+  shadowOpacity: 0.08,
   shadowOffset: {
     height: 0,
     width: 0
