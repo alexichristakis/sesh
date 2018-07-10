@@ -23,7 +23,8 @@ const ICON_DIMENSION = 50;
 
 const TopBar = props => {
   const { yOffset, xOffset, scrollToStart, scrollToEnd, refreshing } = props;
-  console.log(yOffset);
+  const initialOffset = IS_X ? -44 : -20;
+  const animatedProgress = new Animated.Value(0);
 
   const indicatorAnimate = (index: number) => {
     switch (index) {
@@ -54,10 +55,6 @@ const TopBar = props => {
     }
   };
 
-  const initialOffset = IS_X ? -44 : -20;
-  // const initialOffset = -10;
-
-  const animatedProgress = new Animated.Value(0);
   if (props.refreshing) {
     Animated.loop(
       Animated.timing(animatedProgress, {
@@ -134,20 +131,9 @@ const TopBar = props => {
     })
   };
 
-  let gradientContainerStyle = [
-    {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      height: 80
-    },
-    shadowOpacity
-  ];
-
   return (
     <View style={styles.container}>
-      <Animated.View style={gradientContainerStyle}>
+      <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
         <LinearGradient
           style={styles.flex}
           locations={[0.25, 0.5, 0.75, 1]}
@@ -182,6 +168,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
     // backgroundColor: "blue"
+  },
+  shadowContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 90
   },
   statusBar: {
     position: "absolute",

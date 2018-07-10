@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     // top: 0,
     // height: DRAWER_HEIGHT - 10,
     // width: SCREEN_WIDTH,
-    backgroundColor: "rgba(230,230,230,0.8)"
+    backgroundColor: "rgba(230,230,230,0.9)"
     // height: SCREEN_WIDTH * 16,
     // width: SCREEN_WIDTH * 16
   },

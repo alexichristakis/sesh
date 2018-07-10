@@ -1,79 +1,48 @@
-import React, { Component } from "react";
-import { Animated, Image, View } from "react-native";
+import React from "react";
+import { StyleSheet, Animated, Image, View } from "react-native";
 import { BlurView } from "react-native-blur";
-import PropTypes from "prop-types";
 
-class ProgressiveImage extends Component {
-	constructor(props) {
-		super(props);
+import { FillAbsolute } from "../../lib/styles";
 
-		this.state = {
-			thumbnailOpacity: new Animated.Value(0),
-			imageOpacity: new Animated.Value(1),
-		};
-	}
+const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
+  const thumbnailOpacity = new Animated.Value(0);
+  const blurOpacity = new Animated.Value(1);
 
-	onLoad = () => {
-		Animated.parallel([
-			Animated.timing(this.state.thumbnailOpacity, {
-				toValue: 0,
-				duration: 1000,
-			}).start(),
-			Animated.timing(this.state.imageOpacity, {
-				toValue: 0,
-				duration: 1000,
-			}).start(),
-		]);
-	};
+  onLoad = () => {
+    Animated.timing(blurOpacity, {
+      toValue: 0,
+      duration: 250
+    }).start();
+  };
 
-	onThumbnailLoad = () => {
-		Animated.timing(this.state.thumbnailOpacity, {
-			toValue: 1,
-			duration: 500,
-		}).start();
-	};
+  onThumbnailLoad = () => {
+    Animated.timing(thumbnailOpacity, {
+      toValue: 1,
+      duration: 50
+    }).start();
+  };
 
-	render() {
-		return (
-			<View style={styles.container}>
-				<Animated.Image
-					resizeMode="cover"
-					style={[{ flex: 1 }, this.props.style]}
-					source={this.props.source}
-					onLoad={this.onLoad}
-				/>
-				<Animated.View style={[styles.blur, { opacity: this.state.imageOpacity }]}>
-					<Animated.Image
-						resizeMode="cover"
-						style={[{ opacity: this.state.thumbnailOpacity, flex: 1 }, this.props.style]}
-						source={this.props.thumbnail}
-						onLoad={this.onThumbnailLoad}
-					/>
-					<BlurView blurType="dark" style={styles.blur} blurAmount={10} />
-				</Animated.View>
-			</View>
-		);
-	}
-}
-
-const styles = {
-	container: {
-		flex: 1,
-		backgroundColor: "white",
-	},
-	blur: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		bottom: 0,
-		right: 0,
-	},
+  return (
+    <View style={styles.container}>
+      <Image resizeMode="cover" style={style} source={{ uri: source }} onLoad={onLoad} />
+      <Animated.View style={[FillAbsolute, { opacity: blurOpacity }]}>
+        <Animated.Image
+          resizeMode="cover"
+          style={[{ opacity: thumbnailOpacity }, style]}
+          source={{ uri: thumbnail }}
+          onLoad={onThumbnailLoad}
+        />
+        <BlurView blurType="dark" style={FillAbsolute} blurAmount={8} />
+      </Animated.View>
+    </View>
+  );
 };
 
-ProgressiveImage.propTypes = {
-	style: PropTypes.object.isRequired,
-	source: PropTypes.object.isRequired,
-	thumbnail: PropTypes.object.isRequired,
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    overflow: "hidden"
+  }
+});
 
 export default ProgressiveImage;

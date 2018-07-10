@@ -11,7 +11,7 @@ const CARD_GUTTER = 5;
 
 const BORDER_RADIUS = 12;
 
-const REFRESH_OFFSET = -125;
+const REFRESH_OFFSET = -150;
 
 module.exports = {
   SCREEN_WIDTH: width,

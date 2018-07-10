@@ -10,14 +10,17 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import geolib from "geolib";
 import moment from "moment";
 
-import { TransparentModalTo } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
-import { BORDER_RADIUS } from "../../lib/constants";
+import ProgressiveImage from "../global/ProgressiveImage";
 
-const ICON_SIZE = 110;
+import { TransparentModalTo, GetPhotoURL, GetThumbnailURL } from "../../lib/functions";
+import { Colors, shadow } from "../../lib/styles";
+import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
+
+// const ICON_SIZE = 110;
+const ICON_SIZE = (SCREEN_WIDTH - 2 * CARD_GUTTER) / 3;
 
 const ActiveMove = props => {
-  const { photo, group, name, description, time } = props.move;
+  const { photo, group, name, description, time, user_fb_id } = props.move;
 
   formatDistanceAway = () => {
     const miles = geolib.getDistance(props.move.location, props.coords) * 0.000621;
@@ -27,11 +30,6 @@ const ActiveMove = props => {
   };
 
   const handleGroupOnPress = () => {
-    // ReactNativeHapticFeedback.trigger("impactLight");
-    // props.onPressPresentOverlayTo("sesh.Focus", {
-    //   groups: true,
-    //   data: { name: group, size: 12 }
-    // });
     TransparentModalTo("sesh.Focus", {
       groups: true,
       data: { name: group, size: 12 }
@@ -40,7 +38,15 @@ const ActiveMove = props => {
 
   return (
     <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
-      <Image style={styles.image} source={{ uri: photo, cache: "force-cache" }} />
+      <ProgressiveImage
+        style={styles.image}
+        source={GetPhotoURL(user_fb_id, ICON_SIZE, ICON_SIZE)}
+        thumbnail={GetThumbnailURL(user_fb_id)}
+      />
+      {/* <Image
+        style={styles.image}
+        source={{ uri: FormatPhotoURL(user_fb_id, ICON_SIZE, ICON_SIZE), cache: "force-cache" }}
+      /> */}
       <View style={styles.contentContainer}>
         <View style={{ flex: 1 }}>
           <TouchableOpacity
@@ -118,12 +124,12 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   image: {
-    flex: 1,
+    // flex: 1,
     alignSelf: "center",
     backgroundColor: Colors.gray,
     // borderRadius: ICON_SIZE / 2,
-    height: ICON_SIZE
-    // width: ICON_SIZE
+    height: ICON_SIZE,
+    width: ICON_SIZE
     // margin: 10
   },
   contentContainer: {
