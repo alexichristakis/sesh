@@ -34,11 +34,7 @@ class Active extends Component {
 
   _renderItem = ({ item, index }) => (
     <CardWrapper active index={index} data={item} transitionFrom={this.transitionFrom}>
-      <ActiveMove
-        onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        move={item}
-        coords={this.props.data.coords}
-      />
+      <ActiveMove move={item} coords={this.props.data.coords} />
     </CardWrapper>
   );
 

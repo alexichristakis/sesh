@@ -19,11 +19,11 @@ import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 // const ICON_SIZE = 110;
 const ICON_SIZE = (SCREEN_WIDTH - 2 * CARD_GUTTER) / 3;
 
-const ActiveMove = props => {
-  const { photo, group, name, description, time, user_fb_id } = props.move;
+const ActiveMove = ({ coords, move }) => {
+  const { photo, group, name, description, location, time, user_fb_id } = move;
 
   formatDistanceAway = () => {
-    const miles = geolib.getDistance(props.move.location, props.coords) * 0.000621;
+    const miles = geolib.getDistance(location, coords) * 0.000621;
     const suffix = "mi";
     if (miles > 1) return Math.round(miles) + suffix;
     else return Math.round(100 * miles) / 100 + suffix;
@@ -43,10 +43,6 @@ const ActiveMove = props => {
         source={GetPhotoURL(user_fb_id, ICON_SIZE, ICON_SIZE)}
         thumbnail={GetThumbnailURL(user_fb_id)}
       />
-      {/* <Image
-        style={styles.image}
-        source={{ uri: FormatPhotoURL(user_fb_id, ICON_SIZE, ICON_SIZE), cache: "force-cache" }}
-      /> */}
       <View style={styles.contentContainer}>
         <View style={{ flex: 1 }}>
           <TouchableOpacity
@@ -72,12 +68,7 @@ const ActiveMove = props => {
         </View>
         <View style={styles.bottom}>
           <View style={{ flexDirection: "row" }}>
-            <Icon
-              style={{ paddingTop: 1, paddingRight: 2 }}
-              name={"compass"}
-              size={14}
-              color={Colors.gray}
-            />
+            <Icon style={{ paddingRight: 2 }} name={"compass"} size={14} color={Colors.gray} />
             <Text style={styles.location}>{formatDistanceAway()}</Text>
           </View>
           <Text style={styles.time}>{moment(time).fromNow()}</Text>

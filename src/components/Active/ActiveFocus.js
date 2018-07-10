@@ -33,9 +33,9 @@ const ActiveFocus = props => {
     }
   ];
 
-  const { style, moveLocation, userLocation, open, joined, handleOnPress } = props;
+  const { moveLocation, userLocation, open, joined, handleOnPress } = props;
   return (
-    <View style={style}>
+    <View>
       <MapCard
         active
         loading={!open}
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     marginVertical: CARD_GUTTER
   },
   joinButton: {
-    flex: 1,
     padding: 15,
     alignItems: "center",
     justifyContent: "center"

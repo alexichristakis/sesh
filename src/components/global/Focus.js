@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Button, Image, Text } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  View,
+  Button,
+  Image,
+  Text,
+  TouchableOpacity
+} from "react-native";
 import PropTypes from "prop-types";
 
 import Interactable from "react-native-interactable";
@@ -72,12 +81,15 @@ class Focus extends Component {
     if (state === "start") this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
+  handleClose = () => {
+    this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+    this.interactable.snapTo({ index: 0 });
+  };
+
   handleVertScrollRelease = event => {
-    console.log(event.nativeEvent);
     const { changedTouches, locationY, pageY } = event.nativeEvent;
     if (this.yOffset._value < -50) {
-      this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-      this.interactable.snapTo({ index: 0 });
+      this.handleClose();
     }
   };
 
@@ -123,6 +135,12 @@ class Focus extends Component {
     const openOffset = SB_HEIGHT + CARD_GUTTER;
     const closedOffset = this.props.groups ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
     const inputRange = openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
+
+    const springConfig = { damping: 0.5, tension: 600 };
+    const interactableSnapPoints = [
+      { y: pageY, ...springConfig },
+      { y: SB_HEIGHT + CARD_GUTTER, ...springConfig }
+    ];
 
     let opacity = {
       opacity: this.deltaY.interpolate({
@@ -243,8 +261,10 @@ class Focus extends Component {
           onScroll={this.vertOnScroll()}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.flex}
         >
           {FocusContent}
+          <TouchableOpacity style={styles.flex} onPress={this.handleClose} />
         </Animated.ScrollView>
 
         <Animated.View style={gradientContainerStyle}>
@@ -260,10 +280,7 @@ class Focus extends Component {
           verticalOnly
           ref={Interactable => (this.interactable = Interactable)}
           style={[styles.card, animatedScroll]}
-          snapPoints={[
-            { y: pageY, damping: 0.5, tension: 600 },
-            { y: SB_HEIGHT + CARD_GUTTER, damping: 0.5, tension: 600 }
-          ]}
+          snapPoints={interactableSnapPoints}
           initialPosition={{ y: pageY }}
           animatedValueY={this.deltaY}
           onDrag={this.handleOnDrag}

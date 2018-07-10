@@ -8,7 +8,7 @@ const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
   const thumbnailOpacity = new Animated.Value(0);
   const blurOpacity = new Animated.Value(1);
 
-  onLoad = () => {
+  onMainLoad = () => {
     Animated.timing(blurOpacity, {
       toValue: 0,
       duration: 250
@@ -24,7 +24,7 @@ const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
 
   return (
     <View style={styles.container}>
-      <Image resizeMode="cover" style={style} source={{ uri: source }} onLoad={onLoad} />
+      <Image resizeMode="cover" style={style} source={{ uri: source }} onLoad={onMainLoad} />
       <Animated.View style={[FillAbsolute, { opacity: blurOpacity }]}>
         <Animated.Image
           resizeMode="cover"
