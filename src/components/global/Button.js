@@ -6,7 +6,7 @@ import { View, Text, Image, TouchableWithoutFeedback, Animated } from "react-nat
 import PropTypes from "prop-types";
 import LoadingCircle from "./LoadingCircle";
 import Checkmark from "./Checkmark";
-import { buttonShadow, Colors } from "../../lib/styles";
+import { buttonShadow, Colors } from "~/lib/styles";
 
 class Button extends Component {
 	constructor(props) {

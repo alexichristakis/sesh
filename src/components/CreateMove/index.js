@@ -18,10 +18,11 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
+  IS_X,
   TRANSITION_DURATION,
   CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+} from "~/lib/constants";
+import { Colors, shadow, FillAbsolute } from "~/lib/styles";
 
 const yOffset = new Animated.Value(0);
 
@@ -83,24 +84,22 @@ class CreateMove extends Component {
   handleVertScrollRelease = event => {
     const { changedTouches, locationY, pageY } = event.nativeEvent;
     if (yOffset._value < -50) {
-      this.setState({ buttonVisible: false });
-      Keyboard.dismiss();
-      this.interactable.snapTo({ index: 0 });
+      this.setState({ buttonVisible: false }, () => {
+        Keyboard.dismiss();
+        this.interactable.snapTo({ index: 0 });
+      });
     }
   };
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 0) {
-      // this.setState({ open: false }, () => Navigation.dismissOverlay(this.props.componentId));
       this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
-      Navigation.dismissOverlay(this.props.componentId);
     } else {
       this.setState({ open: true }, () => this.checkButtonOpen());
     }
   };
 
-  /* TODO: somehow optimize performance here? */
   handleOnDrag = event => {
     const { y } = event.nativeEvent;
     this.setState({ buttonVisible: false });
@@ -115,7 +114,6 @@ class CreateMove extends Component {
       this.interactable.snapTo({ index: 0 });
     });
   };
-  /********************************************/
 
   handleOnPressSelect = index => {
     this.setState({ selectedIndex: index }, () => this.checkButtonOpen());
@@ -202,11 +200,11 @@ class CreateMove extends Component {
     };
 
     return (
-      <View style={{ flex: 1, backgroundColor: "transparent" }}>
-        {/* <Animated.View style={[FillAbsolute, opacity]}>
-          <BlurView blurType="dark" style={{ flex: 1 }} />
-        </Animated.View> */}
-        <Animated.View style={[FillAbsolute, opacity, { backgroundColor: "rgba(0,0,0,0.8)" }]} />
+      <View style={styles.container}>
+        <Animated.View style={[FillAbsolute, opacity]}>
+          <BlurView blurType="dark" style={styles.flex} />
+        </Animated.View>
+        {/* <Animated.View style={[FillAbsolute, opacity, { backgroundColor: "rgba(0,0,0,0.8)" }]} /> */}
 
         <Animated.ScrollView
           ref={view => (this.scroll = view)}
@@ -279,8 +277,15 @@ class CreateMove extends Component {
 }
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "transparent"
+  },
   scroll: {
-    paddingTop: SB_HEIGHT === 40 ? 33 : 43,
+    paddingTop: IS_X ? 33 : 43,
     paddingHorizontal: CARD_GUTTER
   },
   scrollContent: {
@@ -291,7 +296,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    // bottom: 0,
     padding: CARD_GUTTER
   },
   shadowContainer: {

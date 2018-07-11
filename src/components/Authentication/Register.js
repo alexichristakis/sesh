@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import { Navigation } from "react-native-navigation";
 
 import { FacebookLogin } from "../../api";
-import { Colors } from "../../lib/styles";
+import { Colors } from "~/lib/styles";
 
 import Button from "../global/Button";
 import Waves from "../global/Waves";

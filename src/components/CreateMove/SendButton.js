@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import TouchableScale from "../global/TouchableScale";
 
-import { Colors } from "../../lib/styles";
+import { Colors } from "~/lib/styles";
 
 const buttonScale = new Animated.Value(0);
 

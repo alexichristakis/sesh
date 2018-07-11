@@ -11,8 +11,8 @@ import {
   ANIMATION_DURATION,
   CARD_GUTTER,
   BORDER_RADIUS
-} from "../../lib/constants";
-import { Colors } from "../../lib/styles";
+} from "~/lib/constants";
+import { Colors } from "~/lib/styles";
 
 const TextEntryCard = props => {
   return (

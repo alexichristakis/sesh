@@ -2,22 +2,22 @@ import React from "react";
 import { View } from "react-native";
 import LottieView from "lottie-react-native";
 
-const ControlledLoadingCircle = props => {
-  const wrapperSize = props.size || 20;
+import Spinner from "../../assets/animations/spinner.json";
+
+const ControlledLoadingCircle = ({ progress, size = 20, style = {} }) => {
+  const wrapperSize = size;
   const animationSize = 3 * wrapperSize;
 
-  const animationSource = require("../../assets/animations/spinner.json");
-
-  const wrapperStyle = [
+  let wrapperStyle = [
     {
       position: "relative",
       height: wrapperSize,
       width: wrapperSize
     },
-    props.style || {}
+    style
   ];
 
-  const lottieContainerStyle = {
+  let lottieContainerStyle = {
     position: "absolute",
     left: wrapperSize * -1,
     top: wrapperSize * -1,
@@ -25,7 +25,7 @@ const ControlledLoadingCircle = props => {
     width: animationSize
   };
 
-  const lottieStyle = {
+  let lottieStyle = {
     height: animationSize,
     width: animationSize
   };
@@ -33,7 +33,7 @@ const ControlledLoadingCircle = props => {
   return (
     <View style={wrapperStyle}>
       <View style={lottieContainerStyle}>
-        <LottieView source={animationSource} style={lottieStyle} progress={props.progress} />
+        <LottieView source={Spinner} style={lottieStyle} progress={progress} />
       </View>
     </View>
   );

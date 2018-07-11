@@ -13,8 +13,8 @@ import {
   SB_HEIGHT,
   CARD_GUTTER,
   BORDER_RADIUS
-} from "../../lib/constants";
-import { Colors, shadow } from "../../lib/styles";
+} from "~/lib/constants";
+import { Colors, shadow } from "~/lib/styles";
 
 const MapCard = props => {
   const { markers = [], userLocation, style, height = 200 } = props;

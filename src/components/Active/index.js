@@ -3,7 +3,7 @@ import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native
 
 import LinearGradient from "react-native-linear-gradient";
 
-import { Colors } from "../../lib/styles";
+import { Colors } from "~/lib/styles";
 
 import ActiveMove from "./ActiveMove";
 import VerticalList from "../global/VerticalList";

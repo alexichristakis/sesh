@@ -7,7 +7,7 @@ const IS_X = SB_HEIGHT === 40;
 
 const TRANSITION_DURATION = 200;
 
-const CARD_GUTTER = 5;
+const CARD_GUTTER = 4;
 
 const BORDER_RADIUS = 12;
 

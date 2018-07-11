@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  View,
-  Button,
-  Image,
-  Text,
-  TouchableOpacity
-} from "react-native";
-import PropTypes from "prop-types";
+import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import Interactable from "react-native-interactable";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -33,8 +23,8 @@ import {
   BORDER_RADIUS,
   TRANSITION_DURATION,
   CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+} from "~/lib/constants";
+import { Colors, shadow, FillAbsolute } from "~/lib/styles";
 
 class Focus extends Component {
   constructor(props) {
@@ -44,7 +34,6 @@ class Focus extends Component {
     this.yOffset = new Animated.Value(0);
     this.xOffset = new Animated.Value(0);
 
-    // yOffset.addListener(() => {});
     this.deltaY = new Animated.Value(pageY);
 
     this.state = {
@@ -78,11 +67,12 @@ class Focus extends Component {
 
   handleOnDrag = event => {
     const { state, x, y } = event.nativeEvent;
-    if (state === "start") this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+    if (state === "start" && !this.props.groups)
+      this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
   handleClose = () => {
-    this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+    if (!this.props.groups) this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
     this.interactable.snapTo({ index: 0 });
   };
 
@@ -102,11 +92,9 @@ class Focus extends Component {
           if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
           else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
           this.props.returnScreen();
-          // Navigation.dismissOverlay(this.props.componentId);
           Navigation.dismissModal(this.props.componentId);
         });
       } else {
-        // Navigation.dismissOverlay(this.props.componentId);
         Navigation.dismissModal(this.props.componentId);
       }
     } else {
@@ -124,7 +112,7 @@ class Focus extends Component {
       useNativeDriver: true
     });
 
-  handleOnPress = () => {
+  handleOnPressJoin = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
     this.setState({ joined: !this.state.joined });
   };
@@ -207,6 +195,15 @@ class Focus extends Component {
       shadowOpacity
     ];
 
+    let endMoveComputedStyle = [
+      styles.endMoveButton,
+      {
+        width: SCREEN_WIDTH / 2,
+        height: height,
+        paddingRight: CARD_GUTTER
+      }
+    ];
+
     const { data } = this.props;
     const Card = !this.props.groups ? (
       this.props.active ? (
@@ -229,7 +226,7 @@ class Focus extends Component {
     const FocusContent = !this.props.groups ? (
       this.props.active ? (
         <ActiveFocus
-          handleOnPress={this.handleOnPress}
+          handleOnPress={this.handleOnPressJoin}
           joined={this.state.joined}
           open={this.state.open}
           userLocation={this.props.coords}
@@ -237,7 +234,7 @@ class Focus extends Component {
         />
       ) : (
         <LaterFocus
-          handleOnPress={this.handleOnPress}
+          handleOnPress={this.handleOnPressJoin}
           joined={this.state.joined}
           open={this.state.open}
           userLocation={this.props.coords}
@@ -264,7 +261,11 @@ class Focus extends Component {
           contentContainerStyle={styles.flex}
         >
           {FocusContent}
-          <TouchableOpacity style={styles.flex} onPress={this.handleClose} />
+          <TouchableOpacity
+            // style={[styles.flex, { backgroundColor: "red" }]}
+            style={styles.flex}
+            onPress={this.handleClose}
+          />
         </Animated.ScrollView>
 
         <Animated.View style={gradientContainerStyle}>
@@ -286,36 +287,29 @@ class Focus extends Component {
           onDrag={this.handleOnDrag}
           onSnap={this.handleOnSnap}
         >
-          <Animated.ScrollView
-            horizontal
-            pagingEnabled
-            ref={ScrollView => (this.horizScrollView = ScrollView)}
-            showsHorizontalScrollIndicator={false}
-            onScroll={this.horizOnScroll()}
-            scrollEventThrottle={16}
-            style={styles.scroll}
-          >
-            <View shouldRasterizeIOS style={styles.moveContainer}>
-              {Card}
-            </View>
-            <Animated.View style={buttonAnimatedStyle}>
-              <SuperEllipseMask radius={BORDER_RADIUS}>
-                <TouchableScale
-                  style={[
-                    styles.endMoveButton,
-                    {
-                      width: SCREEN_WIDTH / 2,
-                      height: height,
-                      paddingRight: CARD_GUTTER
-                    }
-                  ]}
-                  onPress={() => console.log("yo")}
-                >
-                  <Text style={styles.text}>End Move</Text>
-                </TouchableScale>
-              </SuperEllipseMask>
-            </Animated.View>
-          </Animated.ScrollView>
+          {this.props.groups && <View style={styles.moveContainer}>{Card}</View>}
+          {!this.props.groups && (
+            <Animated.ScrollView
+              horizontal
+              pagingEnabled
+              ref={ScrollView => (this.horizScrollView = ScrollView)}
+              showsHorizontalScrollIndicator={false}
+              onScroll={this.horizOnScroll()}
+              scrollEventThrottle={16}
+              style={styles.scroll}
+            >
+              <View shouldRasterizeIOS style={styles.moveContainer}>
+                {Card}
+              </View>
+              <Animated.View style={buttonAnimatedStyle}>
+                <SuperEllipseMask radius={BORDER_RADIUS}>
+                  <TouchableScale style={endMoveComputedStyle} onPress={() => console.log("yo")}>
+                    <Text style={styles.text}>End Move</Text>
+                  </TouchableScale>
+                </SuperEllipseMask>
+              </Animated.View>
+            </Animated.ScrollView>
+          )}
         </Interactable.View>
       </View>
     );

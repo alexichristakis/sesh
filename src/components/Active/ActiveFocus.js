@@ -3,30 +3,30 @@ import { StyleSheet, ScrollView, View, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
+import TouchableScale from "../global/TouchableScale";
+import MapCard from "../global/MapCard";
+import User from "../global/User";
+
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
   BORDER_RADIUS,
   CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, shadow } from "../../lib/styles";
-
-import TouchableScale from "../global/TouchableScale";
-import MapCard from "../global/MapCard";
-import User from "../global/User";
+} from "~/lib/constants";
+import { Colors, shadow } from "~/lib/styles";
 
 const ActiveFocus = props => {
   _renderItem = ({ item }) => <User data={item} />;
 
-  const buttonStyle = [
+  let buttonStyle = [
     styles.joinButton,
     {
       backgroundColor: props.joined ? Colors.active : "white"
     }
   ];
 
-  const textStyle = [
+  let textStyle = [
     styles.joinText,
     {
       color: props.joined ? "white" : Colors.active

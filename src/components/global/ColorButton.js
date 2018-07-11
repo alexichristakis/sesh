@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
-import { Colors } from "../../lib/styles";
+import { Colors } from "~/lib/styles";
 
 class ColorButton extends Component {
   constructor(props) {

@@ -12,9 +12,9 @@ import moment from "moment";
 
 import ProgressiveImage from "../global/ProgressiveImage";
 
-import { TransparentModalTo, GetPhotoURL, GetThumbnailURL } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
-import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
+import { TransparentModalTo, GetPhotoURL, GetThumbnailURL } from "~/lib/functions";
+import { Colors, shadow } from "~/lib/styles";
+import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "~/lib/constants";
 
 // const ICON_SIZE = 110;
 const ICON_SIZE = (SCREEN_WIDTH - 2 * CARD_GUTTER) / 3;

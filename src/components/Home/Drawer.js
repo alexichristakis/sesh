@@ -11,23 +11,23 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import IonIcon from "react-native-vector-icons/Ionicons";
 
-import TouchableScale from "./global/TouchableScale";
-import MapCard from "./global/MapCard";
-import ColorButton from "./global/ColorButton";
+import TouchableScale from "../global/TouchableScale";
+import MapCard from "../global/MapCard";
+import ColorButton from "../global/ColorButton";
 
-import { TransparentModalTo } from "../lib/functions";
-import { Colors, FillAbsolute, heavyShadow } from "../lib/styles";
+import { TransparentModalTo } from "~/lib/functions";
+import { Colors, FillAbsolute, heavyShadow } from "~/lib/styles";
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
   ANIMATION_DURATION,
   CARD_GUTTER
-} from "../lib/constants";
+} from "~/lib/constants";
 
 const BUTTON_SIZE = 40;
 const ICON_SIZE = 60;
-const DRAWER_HEIGHT = 90;
+const DRAWER_HEIGHT = 100;
 
 class Drawer extends Component {
   constructor(props) {
@@ -178,8 +178,6 @@ class Drawer extends Component {
   };
 
   render() {
-    const { onPressPresentModalTo } = this.props;
-
     let animatedScale = {
       transform: [
         {
@@ -278,28 +276,61 @@ class Drawer extends Component {
         >
           <Animated.View style={[styles.indicator, animatedOpacity]} />
 
-          <SuperEllipseMask style={styles.blurContainer} radius={{ topRight: 20, topLeft: 20 }}>
+          {/* <SuperEllipseMask style={styles.blurContainer} radius={{ topRight: 20, topLeft: 20 }}>
             <BlurView blurType={"light"} blurAmount={30} style={styles.blur} />
-            {/* <View style={styles.blur} /> */}
-          </SuperEllipseMask>
-
+          </SuperEllipseMask> */}
+          {/* <View
+            style={[
+              styles.blurContainer,
+              {
+                backgroundColor: Colors.lightGray,
+                borderColor: "#414141",
+                borderTopWidth: 0.25
+              }
+            ]}
+          /> */}
+          {/* <LinearGradient
+            style={styles.blurContainer}
+            locations={[0.25, 0.5, 0.75, 1]}
+            colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0.6)", "rgba(0,0,0,0.7)"]}
+          /> */}
           <View style={styles.background} />
 
           <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>
             <View style={styles.actionButtonContainer}>
-              <TouchableScale disabled={this.state.open} onPress={this.presentNewActiveMove}>
-                <Animated.View style={[animatedScale, styles.button]}>
-                  <AwesomeIcon name={"bolt"} size={30} color={Colors.activeBackground1} />
-                  <FeatherIcon name={"plus"} size={14} color={Colors.activeBackground1} />
+              <TouchableScale
+                style={{ marginLeft: 50 }}
+                disabled={this.state.open}
+                onPress={this.presentNewActiveMove}
+              >
+                <Animated.View
+                  style={[
+                    animatedScale,
+                    styles.button,
+                    { backgroundColor: Colors.activeBackground1 }
+                  ]}
+                >
+                  <AwesomeIcon name={"bolt"} size={30} color={Colors.lightGray} />
+                  <FeatherIcon name={"plus"} size={14} color={Colors.lightGray} />
                 </Animated.View>
               </TouchableScale>
               <TouchableScale onPress={this.toggleDrawer}>
-                <IonIcon name={"ios-navigate"} size={48} color={Colors.primary} />
+                <IonIcon name={"ios-navigate"} size={48} color={Colors.lightGray} />
               </TouchableScale>
-              <TouchableScale disabled={this.state.open} onPress={this.presentNewLaterMove}>
-                <Animated.View style={[animatedScale, styles.button]}>
-                  <IonIcon name={"ios-time"} size={30} color={Colors.laterBackground1} />
-                  <FeatherIcon name={"plus"} size={14} color={Colors.laterBackground1} />
+              <TouchableScale
+                style={{ marginRight: 50 }}
+                disabled={this.state.open}
+                onPress={this.presentNewLaterMove}
+              >
+                <Animated.View
+                  style={[
+                    animatedScale,
+                    styles.button,
+                    { backgroundColor: Colors.activeBackground1 }
+                  ]}
+                >
+                  <IonIcon name={"ios-time"} size={30} color={Colors.lightGray} />
+                  <FeatherIcon name={"plus"} size={14} color={Colors.lightGray} />
                 </Animated.View>
               </TouchableScale>
             </View>

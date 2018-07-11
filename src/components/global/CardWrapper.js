@@ -3,7 +3,7 @@ import { Animated, Easing, StyleSheet, View } from "react-native";
 
 import TouchableScale from "./TouchableScale";
 
-import { CARD_GUTTER } from "../../lib/constants";
+import { CARD_GUTTER } from "~/lib/constants";
 
 class CardWrapper extends Component {
   constructor(props) {

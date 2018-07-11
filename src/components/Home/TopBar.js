@@ -5,8 +5,8 @@ import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
-import ControlledLoadingCircle from "./global/ControlledLoadingCircle";
-import LoadingCircle from "./global/LoadingCircle";
+import ControlledLoadingCircle from "../global/ControlledLoadingCircle";
+import LoadingCircle from "../global/LoadingCircle";
 
 import {
   SCREEN_WIDTH,
@@ -15,8 +15,8 @@ import {
   IS_X,
   REFRESH_OFFSET,
   TRANSITION_DURATION
-} from "../lib/constants";
-import { Colors, shadow } from "../lib/styles";
+} from "~/lib/constants";
+import { Colors, shadow } from "~/lib/styles";
 
 const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;

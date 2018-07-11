@@ -8,7 +8,7 @@ import { BlurView, VibrancyView } from "react-native-blur";
 import TouchableScale from "./global/TouchableScale";
 import BackButton from "./global/BackButton";
 
-import { SB_HEIGHT } from "../lib/constants";
+import { SB_HEIGHT } from "~/lib/constants";
 
 import { FacebookLogout } from "../api";
 

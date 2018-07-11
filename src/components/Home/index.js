@@ -7,24 +7,24 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 // import RNFS from "react-native-fs";
 
-import LoadingCircle from "./global/LoadingCircle";
+import LoadingCircle from "../global/LoadingCircle";
 import Background from "./Background";
 import Drawer from "./Drawer";
 import TopBar from "./TopBar";
-import Active from "./Active";
-import Later from "./Later";
+import Active from "../Active";
+import Later from "../Later";
 
-import { TransparentModalTo } from "../lib/functions";
-import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../lib/constants";
-import { Colors, FillAbsolute } from "../lib/styles";
+import { TransparentModalTo } from "~/lib/functions";
+import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "~/lib/constants";
+import { Colors, FillAbsolute } from "~/lib/styles";
 
 /* import fetch functions */
-import {} from "../api";
+import {} from "~/api";
 
 /* to replace with data from firestore */
-import GROUPS from "../mock-data/GROUPS";
-import MOVES from "../mock-data/MOVES";
-import FRIENDS from "../mock-data/FRIENDS";
+import GROUPS from "../../mock-data/GROUPS";
+import MOVES from "../../mock-data/MOVES";
+import FRIENDS from "../../mock-data/FRIENDS";
 /*                                     */
 
 const initialVertScroll = IS_X ? -44 : -20;

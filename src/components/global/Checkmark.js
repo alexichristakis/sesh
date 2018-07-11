@@ -3,7 +3,7 @@ import { View } from "react-native";
 import LottieView from "lottie-react-native";
 import PropTypes from "prop-types";
 
-import { Colors } from "../../lib/styles";
+import { Colors } from "~/lib/styles";
 
 export default class Checkmark extends Component {
   componentDidMount() {

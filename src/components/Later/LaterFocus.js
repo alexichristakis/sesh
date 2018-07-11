@@ -9,8 +9,8 @@ import {
   SB_HEIGHT,
   BORDER_RADIUS,
   CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, shadow } from "../../lib/styles";
+} from "~/lib/constants";
+import { Colors, shadow } from "~/lib/styles";
 
 import TouchableScale from "../global/TouchableScale";
 import MapCard from "../global/MapCard";
