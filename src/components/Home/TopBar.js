@@ -15,8 +15,8 @@ import {
   IS_X,
   REFRESH_OFFSET,
   TRANSITION_DURATION
-} from "~/lib/constants";
-import { Colors, shadow } from "~/lib/styles";
+} from "../../lib/constants";
+import { Colors, shadow } from "../../lib/styles";
 
 const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
@@ -136,8 +136,10 @@ const TopBar = props => {
       <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
         <LinearGradient
           style={styles.flex}
-          locations={[0.25, 0.5, 0.75, 1]}
-          colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+          // locations={[0.25, 0.5, 0.75, 1]}
+          // colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+          locations={[0.25, 1]}
+          colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0)"]}
         />
       </Animated.View>
       {!props.refreshing && (

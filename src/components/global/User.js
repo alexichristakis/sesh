@@ -16,9 +16,9 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 // import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
-import { TimeAgo } from "~/lib/functions";
-import { Colors, shadow } from "~/lib/styles";
-import { BORDER_RADIUS } from "~/lib/constants";
+import { TimeAgo } from "../../lib/functions";
+import { Colors, shadow } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 35;
 

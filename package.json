@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "babel-jest": "23.2.0",
-    "babel-plugin-root-import": "^6.1.0",
     "babel-preset-react-native": "^5.0.1",
     "jest": "23.3.0",
     "react-test-renderer": "16.4.1"

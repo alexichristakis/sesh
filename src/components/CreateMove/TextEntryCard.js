@@ -4,8 +4,8 @@ import { StyleSheet, TouchableOpacity, View, TextInput, Text } from "react-nativ
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import Icon from "react-native-vector-icons/Feather";
 
-import { BORDER_RADIUS } from "~/lib/constants";
-import { Colors } from "~/lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
+import { Colors } from "../../lib/styles";
 
 const TextEntryCard = props => {
   return (

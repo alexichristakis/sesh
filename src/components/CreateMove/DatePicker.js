@@ -3,7 +3,7 @@ import { StyleSheet, DatePickerIOS } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
-import { BORDER_RADIUS, CARD_GUTTER } from "~/lib/constants";
+import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 
 const DatePicker = props => {
   return (

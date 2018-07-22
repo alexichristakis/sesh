@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "~/lib/constants";
-import { Colors } from "~/lib/styles";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, TRANSITION_DURATION } from "../../lib/constants";
+import { Colors } from "../../lib/styles";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#979797"
   },
   content: {
-    paddingBottom: 100
+    paddingBottom: 110
   },
   separatorContainer: {
     width: SCREEN_WIDTH,

@@ -9,8 +9,8 @@ import { BlurView, VibrancyView } from "react-native-blur";
 
 import ColorButton from "../global/ColorButton";
 
-import { Colors, FillAbsolute } from "~/lib/styles";
-import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "~/lib/constants";
+import { Colors, FillAbsolute } from "../../lib/styles";
+import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 
 class Settings extends Component {
   constructor(props) {

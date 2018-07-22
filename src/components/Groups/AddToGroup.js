@@ -7,9 +7,9 @@ import { Navigation } from "react-native-navigation";
 import BackButton from "../global/BackButton";
 import SearchResult from "../global/SearchResult";
 
-import query from "~/lib/query";
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "~/lib/constants";
-import { Colors, shadow } from "~/lib/styles";
+import query from "../../lib/query";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { Colors, shadow } from "../../lib/styles";
 
 const friends = [
 	{

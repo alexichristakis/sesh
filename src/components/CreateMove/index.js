@@ -21,8 +21,8 @@ import {
   IS_X,
   TRANSITION_DURATION,
   CARD_GUTTER
-} from "~/lib/constants";
-import { Colors, shadow, FillAbsolute } from "~/lib/styles";
+} from "../../lib/constants";
+import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
 const yOffset = new Animated.Value(0);
 

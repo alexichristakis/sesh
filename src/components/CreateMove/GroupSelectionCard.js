@@ -5,8 +5,8 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import Group from "../Groups/Group";
 
-import { SCREEN_WIDTH, BORDER_RADIUS } from "~/lib/constants";
-import { Colors, shadow, FillAbsolute } from "~/lib/styles";
+import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
+import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
 const GroupSelectionCard = props => {
   _renderItem = ({ item, index }) => (

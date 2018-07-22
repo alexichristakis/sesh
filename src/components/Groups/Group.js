@@ -9,9 +9,9 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TouchableScale from "../global/TouchableScale";
 
-import { TransparentModalTo } from "~/lib/functions";
-import { Colors, shadow, cardShadow } from "~/lib/styles";
-import { BORDER_RADIUS } from "~/lib/constants";
+import { TransparentModalTo } from "../../lib/functions";
+import { Colors, shadow, cardShadow } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE1 = 35;
 const ICON_SIZE2 = 30;

@@ -9,7 +9,7 @@ import { BlurView } from "react-native-blur";
 
 import TouchableScale from "./TouchableScale";
 
-import { Colors, shadow } from "~/lib/styles";
+import { Colors, shadow } from "../../lib/styles";
 
 class BackButton extends Component {
   haptic = func => {

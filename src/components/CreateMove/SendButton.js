@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import TouchableScale from "../global/TouchableScale";
 
-import { Colors } from "~/lib/styles";
+import { Colors } from "../../lib/styles";
 
 const buttonScale = new Animated.Value(0);
 
@@ -49,7 +49,7 @@ const SendButton = props => {
             buttonAnimatedStyle
           ]}
         >
-          <Icon name={"ios-send"} color={"white"} size={36} />
+          <Icon name={"ios-send"} color={"white"} size={40} />
         </Animated.View>
       </TouchableScale>
     </KeyboardAvoidingView>
@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   sendButton: {
-    borderRadius: 30,
-    height: 60,
-    width: 60,
+    borderRadius: 35,
+    height: 70,
+    width: 70,
     // backgroundColor: Colors.activeBackground1,
     borderWidth: 2,
     borderColor: "white",

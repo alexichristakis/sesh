@@ -23,8 +23,8 @@ import {
   BORDER_RADIUS,
   TRANSITION_DURATION,
   CARD_GUTTER
-} from "~/lib/constants";
-import { Colors, shadow, FillAbsolute } from "~/lib/styles";
+} from "../../lib/constants";
+import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
 class Focus extends Component {
   constructor(props) {
@@ -67,8 +67,8 @@ class Focus extends Component {
 
   handleOnDrag = event => {
     const { state, x, y } = event.nativeEvent;
-    if (state === "start" && !this.props.groups)
-      this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+    // if (state === "start" && !this.props.groups)
+    //   this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
   };
 
   handleClose = () => {
@@ -161,6 +161,8 @@ class Focus extends Component {
     };
 
     let animatedScroll = {
+      // bottom: SCREEN_HEIGHT - height - CARD_GUTTER,
+      // bottom: 0,
       transform: [
         {
           translateY: this.yOffset.interpolate({
@@ -271,8 +273,8 @@ class Focus extends Component {
         <Animated.View style={gradientContainerStyle}>
           <LinearGradient
             style={styles.flex}
-            locations={[0.5, 1]}
-            colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+            locations={[0, 0.5, 1]}
+            colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
           />
         </Animated.View>
 
@@ -287,29 +289,32 @@ class Focus extends Component {
           onDrag={this.handleOnDrag}
           onSnap={this.handleOnSnap}
         >
-          {this.props.groups && <View style={styles.moveContainer}>{Card}</View>}
-          {!this.props.groups && (
-            <Animated.ScrollView
-              horizontal
-              pagingEnabled
-              ref={ScrollView => (this.horizScrollView = ScrollView)}
-              showsHorizontalScrollIndicator={false}
-              onScroll={this.horizOnScroll()}
-              scrollEventThrottle={16}
-              style={styles.scroll}
-            >
-              <View shouldRasterizeIOS style={styles.moveContainer}>
-                {Card}
-              </View>
-              <Animated.View style={buttonAnimatedStyle}>
-                <SuperEllipseMask radius={BORDER_RADIUS}>
-                  <TouchableScale style={endMoveComputedStyle} onPress={() => console.log("yo")}>
-                    <Text style={styles.text}>End Move</Text>
-                  </TouchableScale>
-                </SuperEllipseMask>
-              </Animated.View>
-            </Animated.ScrollView>
-          )}
+          {/* {this.props.groups && <View style={styles.moveContainer}>{Card}</View>} */}
+          {/* <View shouldRasterizeIOS style={styles.moveContainer}>
+            {Card}
+          </View> */}
+          {/* {!this.props.groups && ( */}
+          <Animated.ScrollView
+            horizontal
+            pagingEnabled
+            ref={ScrollView => (this.horizScrollView = ScrollView)}
+            showsHorizontalScrollIndicator={false}
+            onScroll={this.horizOnScroll()}
+            scrollEventThrottle={16}
+            style={styles.scroll}
+          >
+            <View shouldRasterizeIOS style={styles.moveContainer}>
+              {Card}
+            </View>
+            <Animated.View style={buttonAnimatedStyle}>
+              <SuperEllipseMask radius={BORDER_RADIUS}>
+                <TouchableScale style={endMoveComputedStyle} onPress={() => console.log("yo")}>
+                  <Text style={styles.text}>End Move</Text>
+                </TouchableScale>
+              </SuperEllipseMask>
+            </Animated.View>
+          </Animated.ScrollView>
+          {/* )} */}
         </Interactable.View>
       </View>
     );
@@ -326,6 +331,7 @@ const styles = StyleSheet.create({
   },
   card: {
     position: "absolute",
+    // backgroundColor: "red",
     top: 0,
     left: 0,
     right: 0

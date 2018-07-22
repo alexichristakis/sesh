@@ -17,8 +17,8 @@ import Icon from "react-native-vector-icons/Feather";
 
 import Checkmark from "./Checkmark";
 
-import { TimeAgo } from "~/lib/functions";
-import { Colors, shadow } from "~/lib/styles";
+import { TimeAgo } from "../../lib/functions";
+import { Colors, shadow } from "../../lib/styles";
 
 const ICON_SIZE = 35;
 

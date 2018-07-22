@@ -7,59 +7,19 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import LoadingCircle from "./LoadingCircle";
 
+import { GenerateInitialRegion } from "../../lib/functions";
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
   CARD_GUTTER,
   BORDER_RADIUS
-} from "~/lib/constants";
-import { Colors, shadow } from "~/lib/styles";
+} from "../../lib/constants";
+import { Colors, shadow } from "../../lib/styles";
 
 const MapCard = props => {
   const { markers = [], userLocation, style, height = 200 } = props;
-
-  generateInitialRegion = () => {
-    let region;
-    if (markers.length === 0) {
-      region = {
-        latitude: userLocation.latitude,
-        longitude: userLocation.longitude,
-        latitudeDelta: 0.0044,
-        longitudeDelta: 0.0044
-      };
-    } else {
-      let maxLatitude = userLocation.latitude;
-      let minLatitude = userLocation.latitude;
-      let maxLongitude = userLocation.longitude;
-      let minLongitude = userLocation.longitude;
-
-      markers.forEach(marker => {
-        const { latitude, longitude } = marker.coords;
-        maxLatitude = Math.max(latitude, maxLatitude);
-        minLatitude = Math.min(latitude, minLatitude);
-        maxLongitude = Math.max(longitude, maxLongitude);
-        minLongitude = Math.min(longitude, minLongitude);
-      });
-
-      const latitude = (maxLatitude + minLatitude) / 2;
-      const longitude = (maxLongitude + minLongitude) / 2;
-      const delta = Math.max(
-        Math.abs(maxLatitude - minLatitude),
-        Math.abs(maxLongitude - minLongitude)
-      );
-
-      region = {
-        latitude,
-        longitude,
-        latitudeDelta: delta,
-        longitudeDelta: delta
-      };
-    }
-
-    return region;
-  };
-  const { initialRegion = generateInitialRegion() } = props;
+  const { initialRegion = GenerateInitialRegion(markers, userLocation) } = props;
 
   let map = !props.draggable ? (
     <MapView showsUserLocation style={styles.mapView} initialRegion={initialRegion}>

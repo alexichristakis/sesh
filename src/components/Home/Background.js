@@ -3,8 +3,8 @@ import { Animated, Easing, View } from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "~/lib/constants";
-import { Colors, FillAbsolute } from "~/lib/styles";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { Colors, FillAbsolute } from "../../lib/styles";
 
 const opacity = new Animated.Value(0);
 

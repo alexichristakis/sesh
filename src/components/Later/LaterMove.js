@@ -10,9 +10,9 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import geolib from "geolib";
 import moment from "moment";
 
-import { TransparentModalTo } from "~/lib/functions";
-import { Colors, shadow } from "~/lib/styles";
-import { BORDER_RADIUS } from "~/lib/constants";
+import { TransparentModalTo } from "../../lib/functions";
+import { Colors, shadow } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 110;
 

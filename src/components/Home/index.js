@@ -14,12 +14,12 @@ import TopBar from "./TopBar";
 import Active from "../Active";
 import Later from "../Later";
 
-import { TransparentModalTo } from "~/lib/functions";
-import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "~/lib/constants";
-import { Colors, FillAbsolute } from "~/lib/styles";
+import { TransparentModalTo } from "../../lib/functions";
+import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../../lib/constants";
+import { Colors, FillAbsolute } from "../../lib/styles";
 
 /* import fetch functions */
-import {} from "~/api";
+import {} from "../../api";
 
 /* to replace with data from firestore */
 import GROUPS from "../../mock-data/GROUPS";
@@ -104,7 +104,9 @@ class Home extends Component {
     useNativeDriver: true
   });
 
-  _onHorizScrollEnd = () => {
+  _onHorizScrollEnd = ({ nativeEvent }) => {
+    const { x, y } = nativeEvent.contentOffset;
+    console.log(event.nativeEvent);
     if (xOffset._value === 0) {
       this.laterOffset = yOffset;
       // do some logic to fix the top bar scroll?

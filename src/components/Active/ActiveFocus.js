@@ -13,8 +13,8 @@ import {
   SB_HEIGHT,
   BORDER_RADIUS,
   CARD_GUTTER
-} from "~/lib/constants";
-import { Colors, shadow } from "~/lib/styles";
+} from "../../lib/constants";
+import { Colors, shadow } from "../../lib/styles";
 
 const ActiveFocus = props => {
   _renderItem = ({ item }) => <User data={item} />;

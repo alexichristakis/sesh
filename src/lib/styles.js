@@ -1,3 +1,5 @@
+import { CARD_GUTTER } from "./constants";
+
 const activeBackground1 = "rgba(74,226,255,1)";
 const activeBackground2 = "rgba(59,188,255,1)";
 
@@ -38,68 +40,8 @@ const mediumGray = "rgb(212,214,216)";
 const gray = "#979797";
 
 const shadow = {
-  shadowRadius: 0.75,
-  shadowOpacity: 0.1,
-  shadowOffset: {
-    height: 0,
-    width: 0
-  },
-  shadowColor: "#000000"
-};
-
-const iconShadow = {
-  shadowRadius: 20,
-  shadowOpacity: 0.5,
-  shadowOffset: {
-    height: 0,
-    width: 0
-  },
-  shadowColor: "#000000"
-};
-
-const lightShadow = {
-  shadowRadius: 5,
-  shadowOpacity: 0.15,
-  shadowOffset: {
-    height: -1,
-    width: 0
-  },
-  shadowColor: "#000000"
-};
-
-const shadowBottom = {
-  shadowRadius: 3,
-  shadowOpacity: 0.1,
-  shadowOffset: {
-    height: 4,
-    width: 0
-  },
-  shadowColor: "#000000"
-};
-
-const heavyShadow = {
-  shadowRadius: 8,
-  shadowOpacity: 1,
-  shadowOffset: {
-    height: 2,
-    width: 0
-  },
-  shadowColor: "#000000"
-};
-
-const buttonShadow = {
-  shadowRadius: 3,
-  shadowOpacity: 0.15,
-  shadowOffset: {
-    height: -1,
-    width: 0
-  },
-  shadowColor: "#000000"
-};
-
-const cardShadow = {
   shadowRadius: 10,
-  shadowOpacity: 0.08,
+  shadowOpacity: 0.2,
   shadowOffset: {
     height: 0,
     width: 0
@@ -113,6 +55,11 @@ const FillAbsolute = {
   bottom: 0,
   left: 0,
   right: 0
+};
+
+const CardMargins = {
+  marginHorizontal: CARD_GUTTER,
+  marginBottom: CARD_GUTTER
 };
 
 const colors = {
@@ -141,11 +88,5 @@ const colors = {
 module.exports = {
   Colors: colors,
   shadow,
-  FillAbsolute,
-  cardShadow,
-  iconShadow,
-  shadowBottom,
-  lightShadow,
-  heavyShadow,
-  buttonShadow
+  FillAbsolute
 };

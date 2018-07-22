@@ -18,8 +18,8 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
-import { Colors, shadow } from "~/lib/styles";
-import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "~/lib/constants";
+import { Colors, shadow } from "../../lib/styles";
+import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
 import User from "../global/User";
 import MapCard from "../global/MapCard";

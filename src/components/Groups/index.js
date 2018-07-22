@@ -8,8 +8,8 @@ import { BlurView, VibrancyView } from "react-native-blur";
 import Icon from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 
-import { SCREEN_WIDTH, SB_HEIGHT } from "~/lib/constants";
-import { Colors } from "~/lib/styles";
+import { SCREEN_WIDTH, SB_HEIGHT } from "../../lib/constants";
+import { Colors } from "../../lib/styles";
 
 import Group from "./Group";
 // import Background from "../global/Background";

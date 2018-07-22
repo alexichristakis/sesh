@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Animated, Image, View } from "react-native";
 import { BlurView } from "react-native-blur";
 
-import { FillAbsolute } from "~/lib/styles";
+import { FillAbsolute } from "../../lib/styles";
 
 const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
   const thumbnailOpacity = new Animated.Value(0);
