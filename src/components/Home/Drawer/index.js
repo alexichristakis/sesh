@@ -49,14 +49,14 @@ class Drawer extends Component {
   };
 
   render() {
+    const { groups, moves, coords } = this.props.data;
+
     let blurOpacity = {
       opacity: this.deltaY.interpolate({
         inputRange: [SB_HEIGHT, SCREEN_HEIGHT / 2, (3 * SCREEN_HEIGHT) / 4, SCREEN_HEIGHT],
         outputRange: [1, 0.2, 0, 0]
       })
     };
-
-    const { groups, moves, userLocation } = this.props.data;
 
     const closed = { y: SCREEN_HEIGHT - DRAWER_HEIGHT + 10 };
     const open = { y: -DRAWER_HEIGHT + SB_HEIGHT + 15 };
@@ -96,7 +96,7 @@ class Drawer extends Component {
             open={this.state.open}
             moves={moves}
             photo={this.props.photo}
-            userLocation={userLocation}
+            userLocation={coords}
           />
         </Interactable.View>
       </View>

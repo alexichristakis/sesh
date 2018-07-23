@@ -106,7 +106,6 @@ class Home extends Component {
 
   _onHorizScrollEnd = ({ nativeEvent }) => {
     const { x, y } = nativeEvent.contentOffset;
-    console.log(event.nativeEvent);
     if (xOffset._value === 0) {
       this.laterOffset = yOffset;
       // do some logic to fix the top bar scroll?
@@ -116,78 +115,18 @@ class Home extends Component {
     }
   };
 
-  _onScrollBegin = () => {
-    this.setState({ vertScrolling: true });
-  };
-
-  _onScrollEnd = () => {
-    this.setState({ vertScrolling: false });
-  };
-
   handleTransition = props => {
-    this.setState(
-      { focused: true },
-      () =>
-        TransparentModalTo("sesh.Focus", {
-          ...props,
-          coords: this.state.coords,
-          returnScreen: this.returnScreen
-        })
-      // this.onPressPresentOverlayTo("sesh.Focus", {
-      //   ...props,
-      //   coords: this.state.coords,
-      //   returnScreen: this.returnScreen,
-      //   onPressPresentOverlayTo: this.onPressPresentOverlayTo
-      // })
+    this.setState({ focused: true }, () =>
+      TransparentModalTo("sesh.Focus", {
+        ...props,
+        coords: this.state.coords,
+        returnScreen: this.returnScreen
+      })
     );
   };
 
   returnScreen = () => {
     this.setState({ focused: false });
-  };
-
-  onPressPushTo = (componentName, props, options) => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: componentName,
-        passProps: props,
-        options: {
-          animations: {
-            push: {
-              enable: false
-            },
-            pop: {
-              enable: false
-            }
-          },
-          ...options
-        }
-      }
-    });
-  };
-
-  onPressPresentModalTo = (componentName, props, options) => {
-    Navigation.showModal({
-      component: {
-        name: componentName,
-        passProps: props,
-        options: options
-      }
-    });
-  };
-
-  onPressPresentOverlayTo = (componentName, props, options) => {
-    Navigation.showOverlay({
-      component: {
-        name: componentName,
-        passProps: props,
-        options: {
-          overlay: {
-            interceptTouchOutside: true
-          }
-        }
-      }
-    });
   };
 
   onPressPresentModalToStack = (componentName, props, options) => {
@@ -209,8 +148,8 @@ class Home extends Component {
   handleRefresh = event => {
     const { value } = event;
     if (value <= REFRESH_OFFSET && !this.state.refreshing) {
+      ReactNativeHapticFeedback.trigger("impactHeavy");
       this.setState({ refreshing: true }, () => {
-        ReactNativeHapticFeedback.trigger("impactHeavy");
         setTimeout(() => {
           this.setState({ refreshing: false });
         }, 2000);
@@ -219,9 +158,7 @@ class Home extends Component {
   };
 
   render() {
-    const groupsProps = {
-      onPressPushTo: this.onPressPushTo
-    };
+    const data = { moves: MOVES, groups: GROUPS, coords: this.state.coords };
 
     const Loading = <LoadingCircle style={styles.loading} size={20} />;
 
@@ -239,30 +176,18 @@ class Home extends Component {
       >
         <Page>
           <Active
-            handleRefresh={this.handleRefresh}
-            refreshing={this.state.loading}
             shortened={!this.state.barOpen}
-            profilePic={this.state.photo}
             handleTransition={this.handleTransition}
-            onPressPushTo={this.onPressPushTo}
-            onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-            _onScrollBegin={this._onScrollBegin}
-            _onScrollEnd={this._onScrollEnd}
             _vertOnScroll={this._vertOnScroll}
-            data={{ moves: MOVES, groups: GROUPS, coords: this.state.coords }}
+            data={data}
           />
         </Page>
         <Page>
           <Later
             shortened={!this.state.barOpen}
-            profilePic={this.state.photo}
             handleTransition={this.handleTransition}
-            onPressPushTo={this.onPressPushTo}
-            onPressPresentOverlayTo={this.onPressPresentOverlayTo}
-            _onScrollBegin={this._onScrollBegin}
-            _onScrollEnd={this._onScrollEnd}
             _vertOnScroll={this._vertOnScroll}
-            data={{ moves: MOVES, groups: GROUPS, coords: this.state.coords }}
+            data={data}
           />
         </Page>
       </Animated.ScrollView>
@@ -282,11 +207,7 @@ class Home extends Component {
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
-        <Drawer
-          loading={this.state.loading}
-          photo={this.state.photo}
-          data={{ moves: MOVES, groups: GROUPS, userLocation: this.state.coords }}
-        />
+        <Drawer loading={this.state.loading} photo={this.state.photo} data={data} />
       </Background>
     );
   }
