@@ -16,26 +16,25 @@ import TouchableScale from "../global/TouchableScale";
 import MapCard from "../global/MapCard";
 import User from "../global/User";
 
-const LaterFocus = props => {
+const LaterFocus = ({ moveLocation, userLocation, open, joined, handleOnPress }) => {
   _renderItem = ({ item }) => <User data={item} />;
 
   const buttonStyle = [
     styles.joinButton,
     {
-      backgroundColor: props.joined ? Colors.later : "white"
+      backgroundColor: joined ? Colors.later : "white"
     }
   ];
 
   const textStyle = [
     styles.joinText,
     {
-      color: props.joined ? "white" : Colors.later
+      color: joined ? "white" : Colors.later
     }
   ];
 
-  const { style, moveLocation, userLocation, open, joined, handleOnPress } = props;
   return (
-    <View style={style}>
+    <>
       <MapCard
         later
         loading={!open}
@@ -48,7 +47,7 @@ const LaterFocus = props => {
           <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
         </SuperEllipseMask>
       </TouchableScale>
-    </View>
+    </>
   );
 };
 
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     marginVertical: CARD_GUTTER
   },
   joinButton: {
-    flex: 1,
+    // flex: 1,
     // marginVertical: 20,
     padding: 15,
     // borderRadius: 10,

@@ -17,7 +17,8 @@ import { Colors, shadow } from "../../lib/styles";
 import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
 // const ICON_SIZE = 110;
-const ICON_SIZE = (SCREEN_WIDTH - 2 * CARD_GUTTER) / 3;
+const ICON_SIZE = Math.round((SCREEN_WIDTH - 2 * CARD_GUTTER) / 3);
+// const ICON_SIZE = 122;
 
 const ActiveMove = ({ coords, move }) => {
   const { photo, group, name, description, location, time, user_fb_id } = move;
@@ -75,38 +76,12 @@ const ActiveMove = ({ coords, move }) => {
         </View>
       </View>
     </SuperEllipseMask>
-    // <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
-    //   <View style={styles.top}>
-    //     <Image
-    //       style={styles.image}
-    //       resizeMode="cover"
-    //       source={{ uri: photo, cache: "force-cache" }}
-    //     />
-    //     <View style={styles.header}>
-    //       <TouchableOpacity onPress={handleGroupOnPress}>
-    //         <Text style={styles.group}>{group}</Text>
-    //       </TouchableOpacity>
-    //       <View style={{ flexDirection: "row" }}>
-    //         <Icon name={"corner-left-up"} size={14} color={Colors.active} />
-    //         <Text style={styles.name}>{name}</Text>
-    //       </View>
-    //     </View>
-    //   </View>
-    //   <Text style={styles.description}>{description}</Text>
-    //   <View style={styles.bottom}>
-    //     <Text style={styles.time}>{moment(time).fromNow()}</Text>
-    //     <View style={{ flexDirection: "row", alignItems: "center" }}>
-    //       <Icon name={"compass"} size={14} color={Colors.gray} />
-    //       <Text style={styles.location}>{formatDistanceAway()}</Text>
-    //     </View>
-    //   </View>
-    // </SuperEllipseMask>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     flexDirection: "row",
     backgroundColor: "white"
   },

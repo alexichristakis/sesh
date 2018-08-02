@@ -26,6 +26,10 @@ export const GetMoves = fromGroups => {
   // go through each group, download active moves
 };
 
+export const GetJoinedUsers = move => {
+  // get the users who have rsvped to a certain move
+};
+
 // store locally?
 export const GetGroups = () => {};
 
@@ -97,10 +101,8 @@ export const FacebookLogin = async cancelLogin => {
       // login with credential
       const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
 
-      if (currentUser.additionalUserInfo.isNewUser) {
-        // store in Firestore
-        await NewUser(currentUser);
-      }
+      if (currentUser.additionalUserInfo.isNewUser) await NewUser(currentUser);
+
       return currentUser;
     }
   } catch (e) {

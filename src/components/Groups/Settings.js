@@ -65,7 +65,9 @@ class Settings extends Component {
 
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.background, animatedOpacity]} />
+        <TouchableOpacity style={FillAbsolute} activeOpacity={0.9} onPress={this.dismiss}>
+          <Animated.View style={[styles.background, animatedOpacity]} />
+        </TouchableOpacity>
         <Interactable.View
           animatedNativeDriver
           verticalOnly

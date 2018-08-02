@@ -47,7 +47,7 @@ const Groups = props => {
       <View style={styles.headerContainer}>
         <Text style={styles.header}>My Groups:</Text>
         <TouchableOpacity>
-          <Icon name={"plus"} size={30} color={Colors.groups} />
+          <Icon name={"plus"} size={30} color={"white"} />
         </TouchableOpacity>
       </View>
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 20,
-    color: Colors.groups,
+    color: "white",
     fontWeight: "bold"
   },
   separator: {

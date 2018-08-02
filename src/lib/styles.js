@@ -1,9 +1,11 @@
 import { CARD_GUTTER } from "./constants";
 
-const activeBackground1 = "rgba(74,226,255,1)";
+// const activeBackground1 = "rgba(74,226,255,1)";
+const activeBackground1 = "rgba(55,223,255,1)";
 const activeBackground2 = "rgba(59,188,255,1)";
 
-const laterBackground1 = "rgba(137,89,255,1)";
+// const laterBackground1 = "rgba(137,89,255,1)";
+const laterBackground1 = "rgba(172,65,255,1)";
 const laterBackground2 = "rgba(134,60,255,1)";
 
 const whiteTrans = "rgba(255,255,255,0.8)";

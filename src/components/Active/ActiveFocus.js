@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
@@ -16,26 +16,25 @@ import {
 } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
-const ActiveFocus = props => {
+const ActiveFocus = ({ moveLocation, userLocation, open, joined, handleOnPress }) => {
   _renderItem = ({ item }) => <User data={item} />;
 
   let buttonStyle = [
     styles.joinButton,
     {
-      backgroundColor: props.joined ? Colors.active : "white"
+      backgroundColor: joined ? Colors.active : "white"
     }
   ];
 
   let textStyle = [
     styles.joinText,
     {
-      color: props.joined ? "white" : Colors.active
+      color: joined ? "white" : Colors.active
     }
   ];
 
-  const { moveLocation, userLocation, open, joined, handleOnPress } = props;
   return (
-    <Fragment>
+    <>
       <MapCard
         active
         loading={!open}
@@ -48,7 +47,8 @@ const ActiveFocus = props => {
           <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
         </SuperEllipseMask>
       </TouchableScale>
-    </Fragment>
+      {/* <FlatList /> */}
+    </>
   );
 };
 

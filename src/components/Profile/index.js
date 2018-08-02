@@ -6,7 +6,7 @@ import { Navigation } from "react-native-navigation";
 import Header from "./Header";
 import Groups from "../Groups";
 
-import { SCREEN_WIDTH, IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
+import { SCREEN_WIDTH, SB_HEIGHT, IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
 class Profile extends Component {
@@ -40,10 +40,18 @@ class Profile extends Component {
 
   render() {
     const { user, data } = this.props;
+
+    const animatedScrollStyle = {
+      opacity: this.yOffset.interpolate({
+        inputRange: [-100, -SB_HEIGHT, 50],
+        outputRange: [0.7, 1, 1]
+      })
+    };
+
     return (
       <View style={styles.container}>
         <Animated.ScrollView
-          style={styles.scroll}
+          style={[styles.scroll, animatedScrollStyle]}
           contentContainerStyle={{ paddingBottom: 150 }}
           onScroll={this._onScroll()}
           onResponderRelease={this.handleScrollRelease}
@@ -60,7 +68,7 @@ class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.activeBackground1
+    backgroundColor: Colors.groupsHeader1
   },
   scroll: {
     flex: 1,
