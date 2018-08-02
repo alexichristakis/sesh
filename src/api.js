@@ -4,6 +4,11 @@ import firebase from "react-native-firebase";
 let firestore = firebase.firestore();
 let storage = firebase.storage();
 
+//////////////* MISC. *//////////////
+export const DownloadPhoto = url => {
+  return new Promise(resolve => {});
+};
+
 //////////////* SETUP *//////////////
 // export const SetupRNFS = () => {
 // 	let path = RNFS.DocumentDirectoryPath;

@@ -4,9 +4,9 @@ import { StyleSheet, Animated, View, Text, Image, Button } from "react-native";
 import { Navigation } from "react-native-navigation";
 
 import Header from "./Header";
-import Groups from "./Groups";
+import Groups from "../Groups";
 
-import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../../lib/constants";
+import { SCREEN_WIDTH, IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
 class Profile extends Component {
@@ -33,7 +33,7 @@ class Profile extends Component {
 
   handleScrollRelease = event => {
     const { changedTouches, locationY, pageY } = event.nativeEvent;
-    if (this.yOffset._value < -50) {
+    if (this.yOffset._value < -75) {
       Navigation.dismissModal(this.props.componentId);
     }
   };
@@ -59,12 +59,13 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-    // backgroundColor: Colors.gray
+    flex: 1,
+    backgroundColor: Colors.activeBackground1
   },
   scroll: {
     flex: 1,
-    paddingTop: 150
+    paddingTop: 150,
+    paddingHorizontal: CARD_GUTTER
   }
 });
 

@@ -49,7 +49,7 @@ const Group = props => {
         <TouchableOpacity onPress={presentOptionsOverlay(group)}>
           <FeatherIcon
             style={{ paddingRight: 5, paddingBottom: 1 }}
-            name={"settings"}
+            name={"more-horizontal"}
             size={20}
             color={Colors.gray}
           />
