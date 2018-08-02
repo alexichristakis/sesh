@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Animated, View } from "react-native";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
-import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import AwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import TouchableScale from "../../global/TouchableScale";
 
@@ -37,11 +37,16 @@ const ActionButtonContainer = props => {
     });
   };
 
-  let animatedScale = {
+  let secondary = {
+    opacity: deltaY.interpolate({
+      inputRange: [0, SCREEN_HEIGHT / 2, 0.75 * SCREEN_HEIGHT, SCREEN_HEIGHT],
+      outputRange: [0, 0.8, 1, 1],
+      extrapolate: "clamp"
+    }),
     transform: [
       {
         scale: deltaY.interpolate({
-          inputRange: [0, SCREEN_HEIGHT / 2, (3 * SCREEN_HEIGHT) / 4, SCREEN_HEIGHT],
+          inputRange: [0, SCREEN_HEIGHT / 2, 0.75 * SCREEN_HEIGHT, SCREEN_HEIGHT],
           outputRange: [0, 0.8, 1, 1],
           extrapolate: "clamp"
         })
@@ -49,19 +54,29 @@ const ActionButtonContainer = props => {
     ]
   };
 
-  let animatedOpacity = {
+  let primary = {
     opacity: deltaY.interpolate({
       inputRange: [0, SB_HEIGHT, SCREEN_HEIGHT],
       outputRange: [0, 1, 1],
       extrapolate: "clamp"
-    })
+    }),
+    transform: [
+      {
+        scale: deltaY.interpolate({
+          inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+          outputRange: [0, 1, 1],
+          extrapolate: "clamp"
+        })
+      }
+    ]
   };
 
   return (
     <View style={styles.actionButtonContainer}>
       <TouchableScale disabled={open} onPress={presentNewActiveMove}>
-        <Animated.View style={[animatedScale, styles.button]}>
-          <AwesomeIcon name={"bolt"} size={30} color={Colors.darkerGray} />
+        <Animated.View style={[secondary, styles.button]}>
+          <AwesomeIcon name={"bolt"} size={20} color={Colors.darkerGray} />
+          {/* <FeatherIcon name={'zap'} size={30} color={Colors.darkerGray} /> */}
           {/* <FeatherIcon
             style={styles.plus}
             name={"plus"}
@@ -71,13 +86,14 @@ const ActionButtonContainer = props => {
         </Animated.View>
       </TouchableScale>
       <TouchableScale onPress={toggleDrawer}>
-        <Animated.View style={[animatedOpacity, styles.mainButton]}>
+        <Animated.View style={[primary, styles.mainButton]}>
           <FeatherIcon name={"navigation"} size={30} color={Colors.darkerGray} />
         </Animated.View>
       </TouchableScale>
       <TouchableScale disabled={open} onPress={presentNewLaterMove}>
-        <Animated.View style={[animatedScale, styles.button]}>
+        <Animated.View style={[secondary, styles.button]}>
           <IonIcon name={"ios-time"} size={30} color={Colors.darkerGray} />
+          {/* <IonIcon name={"ios-time-outline"} size={30} color={Colors.darkerGray} /> */}
           {/* <FeatherIcon
             style={styles.plus}
             name={"plus"}
@@ -99,6 +115,10 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: DRAWER_HEIGHT - 10,
     paddingTop: SB_HEIGHT === 20 ? 10 : 0
+  },
+  plus: {
+    alignSelf: "flex-start",
+    paddingTop: 10
   },
   mainButton: {
     flexDirection: "row",

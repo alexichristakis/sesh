@@ -63,7 +63,6 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    // fetch that data
     const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
     this.setState({ photo: url });
     // const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";

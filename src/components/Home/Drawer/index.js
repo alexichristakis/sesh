@@ -21,12 +21,6 @@ class Drawer extends Component {
     };
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.transitioning !== nextState.transitioning) return false;
-  //   else if (this.state.hidden === nextState.hidden) return false;
-  //   else return true;
-  // }
-
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
     if (index === 1) {

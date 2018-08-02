@@ -14,25 +14,27 @@ Navigation.events().registerAppLaunchedListener(async () => {
 
   /* get user object if authenticated */
   let user = await UserAuthenticated();
+
+  const Register = {
+    component: {
+      name: "sesh.Register"
+    }
+  };
+
+  const Home = {
+    component: {
+      name: "sesh.Home",
+      passProps: {
+        user: user._user
+      }
+    }
+  };
+
   if (user) {
     Navigation.setRoot({
       root: {
         stack: {
-          children: [
-            {
-              component: {
-                name: "sesh.Register"
-              }
-            },
-            {
-              component: {
-                name: "sesh.Home",
-                passProps: {
-                  user: user._user
-                }
-              }
-            }
-          ]
+          children: [Register, Home]
         }
       }
     });
@@ -40,13 +42,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
     Navigation.setRoot({
       root: {
         stack: {
-          children: [
-            {
-              component: {
-                name: "sesh.Register"
-              }
-            }
-          ]
+          children: [Register]
         }
       }
     });

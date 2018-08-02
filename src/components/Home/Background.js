@@ -8,9 +8,7 @@ import { Colors, FillAbsolute } from "../../lib/styles";
 
 const opacity = new Animated.Value(0);
 
-const Background = props => {
-  const { xOffset, loading } = props;
-
+const Background = ({ xOffset, loading, children }) => {
   const backgroundTransform = (index: number) => {
     switch (index) {
       case 0:
@@ -32,7 +30,7 @@ const Background = props => {
     }
   };
 
-  if (props.loading) {
+  if (loading) {
     Animated.loop(
       Animated.sequence([
         Animated.timing(opacity, {
@@ -75,7 +73,7 @@ const Background = props => {
           colors={[Colors.laterBackground1, Colors.laterBackground2]}
         />
       </Animated.View>
-      {props.children}
+      {children}
     </View>
   );
 };

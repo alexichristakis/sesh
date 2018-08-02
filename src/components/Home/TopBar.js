@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
-import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import AwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -21,8 +21,7 @@ import { Colors, shadow } from "../../lib/styles";
 const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
 
-const TopBar = props => {
-  const { yOffset, xOffset, scrollToStart, scrollToEnd, refreshing } = props;
+const TopBar = ({ yOffset, xOffset, scrollToStart, scrollToEnd, refreshing }) => {
   const initialOffset = IS_X ? -44 : -20;
   const animatedProgress = new Animated.Value(0);
 
@@ -55,7 +54,7 @@ const TopBar = props => {
     }
   };
 
-  if (props.refreshing) {
+  if (refreshing) {
     Animated.loop(
       Animated.timing(animatedProgress, {
         toValue: 1,
@@ -65,7 +64,7 @@ const TopBar = props => {
     ).start();
   }
 
-  let progress = props.refreshing
+  let progress = refreshing
     ? animatedProgress
     : yOffset.interpolate({
         inputRange: [REFRESH_OFFSET, (3 * REFRESH_OFFSET) / 4, REFRESH_OFFSET / 2, initialOffset],
@@ -98,7 +97,7 @@ const TopBar = props => {
 
   const iPhoneXOffset = IS_X ? 18 : 0;
   let animatedLoading = {
-    opacity: props.refreshing
+    opacity: refreshing
       ? 1
       : yOffset.interpolate({
           inputRange: [-50, initialOffset],
@@ -116,7 +115,7 @@ const TopBar = props => {
       {
         scale: yOffset.interpolate({
           inputRange: [1.5 * REFRESH_OFFSET, REFRESH_OFFSET, initialOffset, 0, 5],
-          outputRange: [1.4, 1.2, props.refreshing ? 1 : 0.2, 0, 0],
+          outputRange: [1.4, 1.2, refreshing ? 1 : 0.2, 0, 0],
           extrapolate: "clamp"
         })
       }
@@ -142,7 +141,7 @@ const TopBar = props => {
           colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0)"]}
         />
       </Animated.View>
-      {!props.refreshing && (
+      {!refreshing && (
         <Animated.View style={[styles.topBar, animatedStyle]}>
           <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
             <TouchableOpacity onPress={scrollToStart}>

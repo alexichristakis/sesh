@@ -12,6 +12,7 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
+  IS_X,
   ANIMATION_DURATION,
   CARD_GUTTER,
   DRAWER_HEIGHT
@@ -22,9 +23,7 @@ const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 const BUTTON_SIZE = 40;
 const ICON_SIZE = 60;
 
-const OpenContent = props => {
-  const { moves, deltaY, photo, userLocation, open, toggleDrawer } = props;
-
+const OpenContent = ({ moves, deltaY, photo, userLocation, open, toggleDrawer }) => {
   let animatedOpacity = {
     opacity: deltaY.interpolate({
       inputRange: [0, SB_HEIGHT, SCREEN_HEIGHT],
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
   photo: {
     position: "absolute",
     right: 2 * CARD_GUTTER,
-    bottom: SB_HEIGHT === 40 ? 30 : 2 * CARD_GUTTER,
+    bottom: IS_X ? 30 : 2 * CARD_GUTTER + 10,
     height: ICON_SIZE,
     width: ICON_SIZE,
     borderRadius: ICON_SIZE / 2,

@@ -15,20 +15,20 @@ PODS:
   - BoringSSL/Interface (10.0.5)
   - BVLinearGradient (2.4.0):
     - React
-  - CodePush (5.4.0):
+  - CodePush (5.3.5):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
     - SSZipArchive (~> 2.1)
   - DoubleConversion (1.1.5)
-  - FBSDKCoreKit (4.34.0):
+  - FBSDKCoreKit (4.35.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.34.0):
+  - FBSDKLoginKit (4.35.0):
     - FBSDKCoreKit
-  - FBSDKPlacesKit (4.34.0):
+  - FBSDKPlacesKit (4.35.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.34.0):
-    - FBSDKCoreKit (~> 4.34.0)
+  - FBSDKShareKit (4.35.0):
+    - FBSDKCoreKit (~> 4.35.0)
   - Firebase/Auth (5.4.1):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.2)
@@ -100,7 +100,7 @@ PODS:
   - gRPC/Main (1.13.0):
     - gRPC-Core (= 1.13.0)
     - gRPC-RxLibrary (= 1.13.0)
-  - GTMSessionFetcher/Core (1.1.15)
+  - GTMSessionFetcher/Core (1.2.0)
   - Interactable (0.1.10):
     - React
   - JWT (3.0.0-beta.9):
@@ -267,10 +267,10 @@ SPEC CHECKSUMS:
   BVLinearGradient: 4b3f3bdf1ac1a52a5ef5e65c9585d793a7c3f825
   CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
   DoubleConversion: a9706f16e388b53ff12cca34473428ee29746a26
-  FBSDKCoreKit: 0ff57f093b85c8c9d5aba697d3edf68a8960ce78
-  FBSDKLoginKit: 8c78f57a145afb756e4755e69195ebe08a42466e
-  FBSDKPlacesKit: 02d6c6bea697976f14351e0d40598725c6c73fd2
-  FBSDKShareKit: 511d1dfc71204c0a8d69e6c5e3c964dcf0d4f3d9
+  FBSDKCoreKit: 1a5b2e3ceb5ca827a53c54aa5f4a3480efff80d2
+  FBSDKLoginKit: 00a3d65d1226852f9d76dcddff01981e5e6d9c38
+  FBSDKPlacesKit: 58bf53000e61c74ee40a3b40e7f485c5192b7104
+  FBSDKShareKit: 2ddbd7e6432023fff957af62e23a3671b84319f7
   Firebase: 355bd535bfdacaa82a7fe8d9784115edefd6fc03
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 096e457cdd4274412a66c4a35874787e411f5a03
@@ -285,7 +285,7 @@ SPEC CHECKSUMS:
   gRPC-Core: a56b086a8ef5ced6f6ba5be5bc0a63fca185015a
   gRPC-ProtoRPC: 842797fbe05dfcf891afb4a5048e5ccf5f06ef86
   gRPC-RxLibrary: fa6852f98d6ec0b73c0ec2f6406c26943099d501
-  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   Interactable: 45e5d4d1bb2d196f08b011010c6913469ccf4d0a
   JWT: 8ace44791ddd338cfeff39d03b8397af53f5d63e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
