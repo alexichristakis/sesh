@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Easing, Animated, View } from "react-native";
 
+import { Navigation } from "react-native-navigation";
 import Interactable from "react-native-interactable";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
@@ -42,8 +43,18 @@ class Drawer extends Component {
     });
   };
 
+  showProfileScreen = () => {
+    Navigation.showModal({
+      component: {
+        name: "sesh.Profile",
+        passProps: { user: this.props.user, data: this.props.data }
+      }
+    });
+  };
+
   render() {
-    const { groups, moves, coords } = this.props.data;
+    const { user, data } = this.props;
+    const { groups, moves, coords } = data;
 
     let blurOpacity = {
       opacity: this.deltaY.interpolate({
@@ -87,9 +98,10 @@ class Drawer extends Component {
           <OpenContent
             deltaY={this.deltaY}
             toggleDrawer={this.toggleDrawer}
+            showProfileScreen={this.showProfileScreen}
             open={this.state.open}
             moves={moves}
-            photo={this.props.photo}
+            user={user}
             userLocation={coords}
           />
         </Interactable.View>

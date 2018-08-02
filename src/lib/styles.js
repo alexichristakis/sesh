@@ -41,7 +41,7 @@ const gray = "#979797";
 
 const shadow = {
   shadowRadius: 10,
-  shadowOpacity: 0.19,
+  shadowOpacity: 0.25,
   shadowOffset: {
     height: 0,
     width: 0

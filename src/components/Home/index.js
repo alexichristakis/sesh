@@ -52,8 +52,11 @@ class Home extends Component {
       focused: false,
       vertScrolling: false,
 
-      user: this.props.user,
-      photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
+      user: {
+        ...this.props.user,
+        photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
+      },
+
       coords: { latitude: null, longitude: null },
 
       friends: [],
@@ -157,6 +160,7 @@ class Home extends Component {
   };
 
   render() {
+    const { user, refreshing, coords, loading } = this.state;
     const data = { moves: MOVES, groups: GROUPS, coords: this.state.coords };
 
     const Loading = <LoadingCircle style={styles.loading} size={20} />;
@@ -193,10 +197,10 @@ class Home extends Component {
     );
 
     return (
-      <Background loading={this.state.loading || this.state.refreshing} xOffset={xOffset}>
+      <Background loading={loading || refreshing} xOffset={xOffset}>
         <StatusBar barStyle="light-content" />
 
-        {this.state.loading ? Loading : Feed}
+        {loading ? Loading : Feed}
 
         <TopBar
           yOffset={yOffset}
@@ -206,7 +210,7 @@ class Home extends Component {
           scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
           scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
         />
-        <Drawer loading={this.state.loading} photo={this.state.photo} data={data} />
+        <Drawer loading={loading} user={user} data={data} />
       </Background>
     );
   }

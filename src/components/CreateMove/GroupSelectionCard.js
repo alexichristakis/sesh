@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, FlatList, View, TouchableOpacity } from "react-native";
+import { StyleSheet, FlatList, View, TouchableHighlight } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
@@ -10,9 +10,14 @@ import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
 const GroupSelectionCard = props => {
   _renderItem = ({ item, index }) => (
-    <TouchableOpacity onPress={() => props.onPressSelect(index)}>
+    <TouchableHighlight
+      style={{ backgroundColor: "white" }}
+      activeOpacity={0.8}
+      underlayColor={Colors.mediumGray}
+      onPress={() => props.onPressSelect(index)}
+    >
       <Group selectable data={item} selected={props.selectedIndex === index} />
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 
   _renderSeparator = () => <View style={styles.separator} />;

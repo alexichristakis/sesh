@@ -23,7 +23,15 @@ const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 const BUTTON_SIZE = 40;
 const ICON_SIZE = 60;
 
-const OpenContent = ({ moves, deltaY, photo, userLocation, open, toggleDrawer }) => {
+const OpenContent = ({
+  moves,
+  deltaY,
+  user,
+  userLocation,
+  open,
+  toggleDrawer,
+  showProfileScreen
+}) => {
   let animatedOpacity = {
     opacity: deltaY.interpolate({
       inputRange: [0, SB_HEIGHT, SCREEN_HEIGHT],
@@ -42,7 +50,9 @@ const OpenContent = ({ moves, deltaY, photo, userLocation, open, toggleDrawer })
         userLocation={userLocation}
       />
       <View style={styles.bottomBuffer} />
-      <Image source={{ uri: photo }} style={styles.photo} />
+      <TouchableOpacity style={styles.profileButton} onPress={showProfileScreen}>
+        <Image source={{ uri: user.photo }} style={styles.photo} />
+      </TouchableOpacity>
       <AnimatedTouchable style={[styles.buttonContainer, animatedOpacity]} onPress={toggleDrawer}>
         <VibrancyView blurAmount={20} blurType="dark" style={styles.vibrancy}>
           <FeatherIcon style={styles.icon} name={"chevron-down"} size={28} color={"white"} />
@@ -53,10 +63,12 @@ const OpenContent = ({ moves, deltaY, photo, userLocation, open, toggleDrawer })
 };
 
 const styles = StyleSheet.create({
-  photo: {
+  profileButton: {
     position: "absolute",
     right: 2 * CARD_GUTTER,
-    bottom: IS_X ? 30 : 2 * CARD_GUTTER + 10,
+    bottom: IS_X ? 30 : 2 * CARD_GUTTER + 10
+  },
+  photo: {
     height: ICON_SIZE,
     width: ICON_SIZE,
     borderRadius: ICON_SIZE / 2,

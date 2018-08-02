@@ -18,20 +18,18 @@ const ICON_SIZE2 = 30;
 
 const Group = props => {
   presentOptionsOverlay = item => () => {
-    // console.log("transition!");
-    // Navigation.showOverlay({
-    //   component: {
-    //     name: "sesh.Settings",
-    //     passProps: { name: item.name, data: item }
-    //   }
-    // });
     TransparentModalTo("sesh.Settings", { name: item.name, data: item });
   };
 
   const group = props.data;
 
+  const containerStyle = {
+    ...styles.container,
+    backgroundColor: props.card ? "white" : "transparent"
+  };
+
   return (
-    <SuperEllipseMask style={styles.container} radius={props.card ? BORDER_RADIUS : 0}>
+    <SuperEllipseMask style={containerStyle} radius={props.card ? BORDER_RADIUS : 0}>
       <View style={styles.mid}>
         <Text allowFontScaling={props.card ? false : true} style={styles.name}>
           {group.name}
@@ -76,7 +74,7 @@ const Group = props => {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     flexDirection: "row",
     alignItems: "center",
     // backgroundColor: "transparent",

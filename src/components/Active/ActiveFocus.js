@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
@@ -35,7 +35,7 @@ const ActiveFocus = props => {
 
   const { moveLocation, userLocation, open, joined, handleOnPress } = props;
   return (
-    <View>
+    <Fragment>
       <MapCard
         active
         loading={!open}
@@ -48,7 +48,7 @@ const ActiveFocus = props => {
           <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
         </SuperEllipseMask>
       </TouchableScale>
-    </View>
+    </Fragment>
   );
 };
 

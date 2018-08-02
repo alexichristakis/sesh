@@ -75,7 +75,7 @@ const ActionButtonContainer = props => {
     <View style={styles.actionButtonContainer}>
       <TouchableScale disabled={open} onPress={presentNewActiveMove}>
         <Animated.View style={[secondary, styles.button]}>
-          <AwesomeIcon name={"bolt"} size={20} color={Colors.darkerGray} />
+          <AwesomeIcon name={"bolt"} size={30} color={Colors.darkerGray} />
           {/* <FeatherIcon name={'zap'} size={30} color={Colors.darkerGray} /> */}
           {/* <FeatherIcon
             style={styles.plus}
