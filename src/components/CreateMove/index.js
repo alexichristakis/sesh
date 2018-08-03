@@ -24,6 +24,8 @@ import {
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
+import { SendMove } from "../../api";
+
 const yOffset = new Animated.Value(0);
 
 class CreateMove extends Component {
@@ -95,8 +97,25 @@ class CreateMove extends Component {
     const { index } = event.nativeEvent;
     if (index === 0) {
       this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
-    } else {
+    } else if (index === 1) {
       this.setState({ open: true }, () => this.checkButtonOpen());
+    } else {
+      const { selectedIndex, coords, text, chosenDate } = this.state;
+      const { groups, user } = this.props;
+      const { id } = groups[selectedIndex];
+
+      const move = {
+        groupID: id,
+        location: coords,
+        description: text,
+        date: chosenDate
+      };
+
+      /* send move*/
+      console.log(move);
+      console.log(user);
+
+      this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
     }
   };
 
@@ -141,25 +160,22 @@ class CreateMove extends Component {
     this.setState({ coords: { latitude, longitude } });
   };
 
-  handleSendMove = () => {
-    const move = {
-      groupID: this.state.selectedIndex,
-      location: this.state.coords,
-      description: this.state.text,
-      date: this.state.chosenDate
-    };
-
-    console.log(move);
+  handleOnPressSend = () => {
+    this.setState({ buttonVisible: false }, () => {
+      this.interactable.snapTo({ index: 2 });
+    });
   };
 
   render() {
-    const closed = { y: SCREEN_HEIGHT, damping: 0.5, tension: 600 };
-    const open = { y: SB_HEIGHT, damping: 0.5, tension: 600 };
+    const springConfig = { damping: 0.5, tension: 600 };
+    const closed = { y: SCREEN_HEIGHT, ...springConfig };
+    const open = { y: SB_HEIGHT, ...springConfig };
+    const sent = { y: -510, ...springConfig };
 
     let opacity = {
       opacity: this.deltaY.interpolate({
-        inputRange: [SB_HEIGHT, SCREEN_HEIGHT],
-        outputRange: [1, 0]
+        inputRange: [-510, SB_HEIGHT, SCREEN_HEIGHT],
+        outputRange: [0, 1, 0]
       })
     };
 
@@ -240,25 +256,32 @@ class CreateMove extends Component {
           />
         </Animated.ScrollView>
 
-        <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
+        {/* <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
           <LinearGradient
             style={{ flex: 1 }}
             locations={[0.25, 0.5, 1]}
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
           />
-        </Animated.View>
+        </Animated.View> */}
 
         <Interactable.View
           animatedNativeDriver
           verticalOnly
           ref={item => (this.interactable = item)}
           style={[styles.interactable, animatedScroll]}
-          snapPoints={[closed, open]}
+          snapPoints={[closed, open, sent]}
           onSnap={this.handleOnSnap}
           onDrag={this.handleOnDrag}
           initialPosition={closed}
           animatedValueY={this.deltaY}
         >
+          <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
+            <LinearGradient
+              style={{ flex: 1 }}
+              locations={[0.25, 0.5, 1]}
+              colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+            />
+          </Animated.View>
           <TextEntryCard
             active={this.props.active}
             onChangeText={this.handleOnChangeText}
@@ -269,7 +292,7 @@ class CreateMove extends Component {
         <SendButton
           active={this.props.active}
           visible={this.state.buttonVisible}
-          onPress={this.handleSendMove}
+          onPress={this.handleOnPressSend}
         />
       </View>
     );
@@ -303,7 +326,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: SB_HEIGHT + 75
+    height: 75
   }
 });
 

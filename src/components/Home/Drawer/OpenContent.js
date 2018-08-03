@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Animated, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Animated, Image, TouchableOpacity } from "react-native";
 
-import { BlurView, VibrancyView } from "react-native-blur";
+import { VibrancyView } from "react-native-blur";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import MapCard from "../../global/MapCard";
@@ -42,10 +42,7 @@ const OpenContent = ({
   };
 
   return (
-    <SuperEllipseMask
-      style={{ height: SCREEN_HEIGHT, backgroundColor: "#F9F5ED" }}
-      radius={{ topRight: 20, topLeft: 20 }}
-    >
+    <SuperEllipseMask style={styles.container} radius={{ topRight: 20, topLeft: 20 }}>
       <MapCard
         fullBleed
         height={SCREEN_HEIGHT - SB_HEIGHT - 5}
@@ -66,6 +63,10 @@ const OpenContent = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: SCREEN_HEIGHT,
+    backgroundColor: "#F9F5ED"
+  },
   profileButton: {
     position: "absolute",
     right: 2 * CARD_GUTTER,

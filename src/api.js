@@ -49,7 +49,9 @@ export const GetUser = () => {
 ///* SET *///
 // note: firebase.firestore.GeoPoint(latitude, longitude)
 /* MOVES */
-export const SendMove = move => {};
+export const SendMove = move => {
+  /* firestore.collection("moves").doc() */
+};
 
 export const JoinMove = move => {};
 
@@ -73,8 +75,10 @@ export const LeaveGroup = group => {};
 export const UserAuthenticated = () => {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
-      if (user) resolve(user);
-      else resolve(false);
+      if (user) {
+        /* TODO: download full user object from firebase */
+        resolve(user);
+      } else resolve(false);
     });
   });
 };

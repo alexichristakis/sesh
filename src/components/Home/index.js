@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Animated, View, StatusBar, StyleSheet } from "react-native";
 
 import codePush from "react-native-code-push";
-import { Navigation } from "react-native-navigation";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 // import RNFS from "react-native-fs";
@@ -31,6 +30,16 @@ const initialVertScroll = IS_X ? -44 : -20;
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(initialVertScroll);
 
+/* const user = {
+  email,
+  first_name,
+  last_name,
+  display_name,
+  id,
+  uid,
+  profile_pic
+}; */
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -55,9 +64,9 @@ class Home extends Component {
 
       coords: { latitude: null, longitude: null },
 
-      friends: [],
-      groups: [],
-      moves: []
+      friends: FRIENDS,
+      groups: GROUPS,
+      moves: MOVES
     };
   }
 
@@ -83,6 +92,7 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
+    xOffset.removeAllListeners();
     yOffset.removeAllListeners();
   }
 
@@ -113,34 +123,18 @@ class Home extends Component {
     }
   };
 
+  /* horiz scroll control */
+  _scrollToStart = () => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+  _scrollToEnd = () => this.scrollView.getNode().scrollToEnd();
+
   handleTransition = props => {
     this.setState({ focused: true }, () =>
       TransparentModalTo("sesh.Focus", {
         ...props,
         coords: this.state.coords,
-        returnScreen: this.returnScreen
+        returnScreen: () => this.setState({ focused: false })
       })
     );
-  };
-
-  returnScreen = () => {
-    this.setState({ focused: false });
-  };
-
-  onPressPresentModalToStack = (componentName, props, options) => {
-    Navigation.showModal({
-      stack: {
-        children: [
-          {
-            component: {
-              name: componentName,
-              passProps: props,
-              options: options
-            }
-          }
-        ]
-      }
-    });
   };
 
   handleRefresh = event => {
@@ -156,8 +150,8 @@ class Home extends Component {
   };
 
   render() {
-    const { user, refreshing, coords, loading } = this.state;
-    const data = { moves: MOVES, groups: GROUPS, coords: this.state.coords };
+    const { friends, groups, moves, user, refreshing, coords, loading } = this.state;
+    const data = { friends, groups, moves, coords };
 
     const Loading = <LoadingCircle style={styles.loading} size={20} />;
 
@@ -197,10 +191,10 @@ class Home extends Component {
         <TopBar
           yOffset={yOffset}
           xOffset={xOffset}
-          refreshing={this.state.refreshing}
+          refreshing={refreshing}
           barOpen={this.state.barOpen}
-          scrollToStart={() => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true })}
-          scrollToEnd={() => this.scrollView.getNode().scrollToEnd()}
+          scrollToStart={this._scrollToStart}
+          scrollToEnd={this._scrollToEnd}
         />
         <Drawer loading={loading} user={user} data={data} />
       </Background>

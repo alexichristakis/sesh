@@ -20,20 +20,20 @@ import {
 const BUTTON_SIZE = 40;
 const ICON_SIZE = 60;
 
-const ActionButtonContainer = props => {
-  const { groups, open, toggleDrawer, deltaY } = props;
-
+const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => {
   presentNewActiveMove = () => {
     TransparentModalTo("sesh.CreateMove", {
       active: true,
-      groups: groups
+      groups,
+      user
     });
   };
 
   presentNewLaterMove = () => {
     TransparentModalTo("sesh.CreateMove", {
       active: false,
-      groups: groups
+      groups,
+      user
     });
   };
 

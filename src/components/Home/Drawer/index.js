@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Easing, Animated, View } from "react-native";
+import { StyleSheet, Easing, Animated, View } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import Interactable from "react-native-interactable";
@@ -73,10 +73,7 @@ class Drawer extends Component {
     return (
       <View style={FillAbsolute} pointerEvents={"box-none"}>
         {(this.state.transitioning || this.state.open) && (
-          <Animated.View
-            pointerEvents={"none"}
-            style={[blurOpacity, FillAbsolute, { backgroundColor: "rgba(0,0,0,0.8)" }]}
-          />
+          <Animated.View pointerEvents={"none"} style={[blurOpacity, styles.shadow]} />
         )}
         <Interactable.View
           animatedNativeDriver
@@ -97,6 +94,7 @@ class Drawer extends Component {
             deltaY={this.deltaY}
             toggleDrawer={this.toggleDrawer}
             groups={groups}
+            user={user}
             open={this.state.open}
           />
           <OpenContent
@@ -113,5 +111,12 @@ class Drawer extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    ...FillAbsolute,
+    backgroundColor: "rgba(0,0,0,0.8)"
+  }
+});
 
 export default Drawer;
