@@ -31,10 +31,6 @@ const initialVertScroll = IS_X ? -44 : -20;
 const xOffset = new Animated.Value(0);
 const yOffset = new Animated.Value(initialVertScroll);
 
-function Page(props: { children?: ReactElement<*> }) {
-  return <View style={{ flex: 1, width: SCREEN_WIDTH }}>{props.children}</View>;
-}
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -177,22 +173,18 @@ class Home extends Component {
         onMomentumScrollEnd={this._onHorizScrollEnd}
         style={styles.scroll}
       >
-        <Page>
-          <Active
-            shortened={!this.state.barOpen}
-            handleTransition={this.handleTransition}
-            _vertOnScroll={this._vertOnScroll}
-            data={data}
-          />
-        </Page>
-        <Page>
-          <Later
-            shortened={!this.state.barOpen}
-            handleTransition={this.handleTransition}
-            _vertOnScroll={this._vertOnScroll}
-            data={data}
-          />
-        </Page>
+        <Active
+          shortened={!this.state.barOpen}
+          handleTransition={this.handleTransition}
+          _vertOnScroll={this._vertOnScroll}
+          data={data}
+        />
+        <Later
+          shortened={!this.state.barOpen}
+          handleTransition={this.handleTransition}
+          _vertOnScroll={this._vertOnScroll}
+          data={data}
+        />
       </Animated.ScrollView>
     );
 

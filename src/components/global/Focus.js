@@ -26,6 +26,51 @@ import {
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
+const DATA = [
+  {
+    id: "1",
+    name: "Alexi Christakis",
+    size: 9,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    id: "2",
+    name: "William Oles",
+    size: 105,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    id: "3",
+    name: "Michelle Li",
+    size: 6,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    id: "4",
+    name: "Janvi Trivedi",
+    size: 63,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    id: "5",
+    name: "Max Golden",
+    size: 105,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    id: "6",
+    name: "Laszlo Gendler",
+    size: 9,
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  }
+];
+
 class Focus extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +83,7 @@ class Focus extends Component {
 
     this.state = {
       open: false,
+      loading: true,
       joined: this.props.joined,
       sourceDimension: {
         height,
@@ -53,6 +99,10 @@ class Focus extends Component {
   componentDidMount() {
     this.yOffset.addListener(() => {});
     this.beginTransition();
+    /* fetch users who have joined move */
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 500);
   }
 
   componentWillUnmount() {
@@ -228,8 +278,10 @@ class Focus extends Component {
     const FocusContent = !this.props.groups ? (
       this.props.active ? (
         <ActiveFocus
+          loading={this.state.loading}
           handleOnPress={this.handleOnPressJoin}
           joined={this.state.joined}
+          users={DATA}
           open={this.state.open}
           userLocation={this.props.coords}
           moveLocation={this.props.data.location}

@@ -16,9 +16,7 @@ import { TransparentModalTo, GetPhotoURL, GetThumbnailURL } from "../../lib/func
 import { Colors, shadow } from "../../lib/styles";
 import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
-// const ICON_SIZE = 110;
 const ICON_SIZE = Math.round((SCREEN_WIDTH - 2 * CARD_GUTTER) / 3);
-// const ICON_SIZE = 122;
 
 const LaterMove = ({ coords, move }) => {
   const { photo, group, name, description, location, time, user_fb_id } = move;
@@ -45,28 +43,21 @@ const LaterMove = ({ coords, move }) => {
         thumbnail={GetThumbnailURL(user_fb_id)}
       />
       <View style={styles.contentContainer}>
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            style={{ flexDirection: "row", paddingBottom: 5 }}
-            onPress={handleGroupOnPress}
-          >
-            <Text allowFontScaling={false} style={styles.group}>
-              {name}
-            </Text>
-            {/* <Icon name={"corner-down-right"} size={20} color={Colors.active} /> */}
-            <Icon style={{ paddingTop: 3 }} name={"chevron-right"} size={14} color={Colors.later} />
-            {/* <IonIcon name={"ios-play"} size={} color={Colors.active} /> */}
-            <Text allowFontScaling={false} style={styles.group}>
-              {group}
-            </Text>
-          </TouchableOpacity>
-          <Text style={styles.description}>{description}</Text>
-        </View>
+        <TouchableOpacity style={styles.groupButton} onPress={handleGroupOnPress}>
+          <Text allowFontScaling={false} style={styles.group}>
+            {name}
+          </Text>
+          <Icon style={{ paddingTop: 3 }} name={"chevron-right"} size={14} color={Colors.later} />
+          <Text allowFontScaling={false} style={styles.group}>
+            {group}
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.description}>{description}</Text>
         <View style={styles.bottom}>
-          <View style={{ flexDirection: "row" }}>
-            <Icon style={{ paddingRight: 2 }} name={"compass"} size={14} color={Colors.gray} />
-            <Text style={styles.location}>{formatDistanceAway()}</Text>
-          </View>
+          <Text style={styles.location}>
+            <Icon name={"compass"} size={12} color={Colors.gray} />
+            {" " + formatDistanceAway()}
+          </Text>
           <Text style={styles.time}>{moment(time).fromNow()}</Text>
         </View>
       </View>
@@ -83,6 +74,10 @@ const styles = StyleSheet.create({
   top: {
     flex: 2,
     flexDirection: "row"
+  },
+  groupButton: {
+    flexDirection: "row",
+    paddingBottom: 5
   },
   image: {
     // flex: 1,
@@ -132,6 +127,7 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 14,
+    textAlignVertical: "center",
     color: Colors.gray
   }
 });

@@ -70,8 +70,8 @@ const Header = ({ user, offset }) => {
       <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
         <LinearGradient
           style={styles.flex}
-          locations={[0, 0.25, 1]}
-          colors={["rgba(0,0,0,1)", "rgba(0,0,0,0.8)", "rgba(0,0,0,0)"]}
+          locations={[0.25, 1]}
+          colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0)"]}
         />
       </Animated.View>
       <Animated.View style={animatedUserInfo}>

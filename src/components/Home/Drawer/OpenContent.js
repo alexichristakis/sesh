@@ -12,6 +12,7 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SB_HEIGHT,
+  BAR_HEIGHT,
   IS_X,
   ANIMATION_DURATION,
   CARD_GUTTER,
@@ -41,7 +42,10 @@ const OpenContent = ({
   };
 
   return (
-    <SuperEllipseMask radius={{ topRight: 20, topLeft: 20 }}>
+    <SuperEllipseMask
+      style={{ height: SCREEN_HEIGHT, backgroundColor: "#F9F5ED" }}
+      radius={{ topRight: 20, topLeft: 20 }}
+    >
       <MapCard
         fullBleed
         height={SCREEN_HEIGHT - SB_HEIGHT - 5}
@@ -49,7 +53,6 @@ const OpenContent = ({
         loading={!open}
         userLocation={userLocation}
       />
-      <View style={styles.bottomBuffer} />
       <TouchableOpacity style={styles.profileButton} onPress={showProfileScreen}>
         <Image source={{ uri: user.photo }} style={styles.photo} />
       </TouchableOpacity>
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   profileButton: {
     position: "absolute",
     right: 2 * CARD_GUTTER,
-    bottom: IS_X ? 30 : 2 * CARD_GUTTER + 10
+    bottom: IS_X ? 80 : 2 * CARD_GUTTER + 60
   },
   photo: {
     height: ICON_SIZE,
@@ -85,7 +88,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 15
   },
-  bottomBuffer: { width: SCREEN_WIDTH, height: 10, backgroundColor: "#F9F5ED" },
   icon: { transform: [{ scaleX: 1.5 }] }
 });
 

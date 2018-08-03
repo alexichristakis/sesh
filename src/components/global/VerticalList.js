@@ -113,13 +113,16 @@ const styles = StyleSheet.create({
   },
   list: {
     // flex: 1,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
     paddingTop: SB_HEIGHT === 40 ? 60 : 56,
-    position: "absolute",
+
+    // position: "absolute",
     // top: SB_HEIGHT,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
 
     // paddingBottom: 70,
     // marginBottom: 35,

@@ -37,17 +37,21 @@ class Drawer extends Component {
 
   toggleDrawer = () => {
     this.setState({ transitioning: true }, () => {
-      let newIndex = this.state.open ? 0 : 1;
+      let index = this.state.open ? 0 : 1;
       ReactNativeHapticFeedback.trigger("impactLight");
-      this.interactable.snapTo({ index: newIndex });
+      this.interactable.snapTo({ index });
     });
   };
 
   showProfileScreen = () => {
+    this.interactable.snapTo({ index: 0 });
     Navigation.showModal({
       component: {
         name: "sesh.Profile",
-        passProps: { user: this.props.user, data: this.props.data }
+        passProps: { user: this.props.user, data: this.props.data },
+        options: {
+          modalPresentationStyle: "fullScreen"
+        }
       }
     });
   };

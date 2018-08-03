@@ -6,7 +6,7 @@ import { UserAuthenticated } from "./api";
 registerScreens();
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setDefaultOptions({
-    popGesture: false,
+    // popGesture: false,
     topBar: {
       visible: false
     }
