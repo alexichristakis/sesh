@@ -12,7 +12,7 @@ import { Colors, FillAbsolute } from "../../lib/styles";
 
 const PHOTO_SIZE = 100;
 
-const Header = ({ user, offset }) => {
+const Header = ({ user, offset, showProfileSettings }) => {
   const { displayName, photo } = user;
   const inputRange = [-SB_HEIGHT - 50, -SB_HEIGHT, 0, 50];
 
@@ -82,7 +82,7 @@ const Header = ({ user, offset }) => {
       </Animated.View>
       <Animated.View style={[styles.actionButtonContainer, animatedActionButtons]}>
         {/* <FeatherIcon name={"settings"} size={25} color={"white"} /> */}
-        <TouchableOpacity onPress={() => console.log("settings")}>
+        <TouchableOpacity onPress={showProfileSettings}>
           <IonIcon name={"ios-settings"} size={30} color={"white"} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => console.log("add friend")}>

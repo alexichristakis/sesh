@@ -6,6 +6,7 @@ import { Navigation } from "react-native-navigation";
 import Header from "./Header";
 import Groups from "../Groups";
 
+import { TransparentModalTo } from "../../lib/functions";
 import { SCREEN_WIDTH, SB_HEIGHT, IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
@@ -18,11 +19,6 @@ class Profile extends Component {
     this.state = {};
   }
 
-  _onScroll = () =>
-    Animated.event([{ nativeEvent: { contentOffset: { y: this.yOffset } } }], {
-      useNativeDriver: true
-    });
-
   componentDidMount() {
     this.yOffset.addListener(() => {});
   }
@@ -30,6 +26,15 @@ class Profile extends Component {
   componentWillUnmount() {
     this.yOffset.removeAllListeners();
   }
+
+  _onScroll = () =>
+    Animated.event([{ nativeEvent: { contentOffset: { y: this.yOffset } } }], {
+      useNativeDriver: true
+    });
+
+  showProfileSettings = () => {
+    TransparentModalTo("profile.Settings");
+  };
 
   handleScrollRelease = event => {
     const { changedTouches, locationY, pageY } = event.nativeEvent;
@@ -59,7 +64,7 @@ class Profile extends Component {
         >
           <Groups data={data.groups} />
         </Animated.ScrollView>
-        <Header user={user} offset={this.yOffset} />
+        <Header user={user} offset={this.yOffset} showProfileSettings={this.showProfileSettings} />
       </View>
     );
   }

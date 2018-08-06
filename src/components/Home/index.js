@@ -97,9 +97,9 @@ class Home extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.barOpen !== nextState.barOpen) return true;
-    else if (this.state.focused !== nextState.focused) return true;
-    else if (this.state.loading !== nextState.loading) return true;
+    // if (this.state.barOpen !== nextState.barOpen) return true;
+    // else if (this.state.focused !== nextState.focused) return true;
+    if (this.state.loading !== nextState.loading) return true;
     else if (this.state.refreshing !== nextState.refreshing) return true;
     else return false;
   }

@@ -126,9 +126,9 @@ class Button extends Component {
             ...buttonShadow
           }}
         >
-          {!this.state.loading && this.state.checkmark && <Checkmark size={24} />}
+          {!this.state.loading && this.state.checkmark && <Checkmark size={22} />}
 
-          {this.state.loading && !this.state.checkmark && <LoadingCircle size={24} />}
+          {this.state.loading && !this.state.checkmark && <LoadingCircle size={18} />}
 
           {!this.state.loading &&
             !this.state.checkmark && (

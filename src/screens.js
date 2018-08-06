@@ -9,17 +9,18 @@ import SignIn from "./components/Authentication/SignIn";
 // main
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-import AddFriend from "./components/AddFriend";
+import AddFriend from "./components/Profile/AddFriend";
+import ProfileSettings from "./components/Profile/Settings";
+
 import Groups from "./components/Groups";
 import CreateGroup from "./components/Groups/CreateGroup";
 import AddToGroup from "./components/Groups/AddToGroup";
 import CreateMove from "./components/CreateMove";
 
-import Settings from "./components/Groups/Settings";
-import Focus from "./components/global/Focus";
+import GroupSettings from "./components/Groups/Settings";
+import Focus from "./components/Focus";
 
 import EditName from "./components/Groups/EditName";
-import AddMember from "./components/Groups/AddMember";
 
 function sceneCreator(sceneComp, store) {
   return () => {
@@ -32,23 +33,25 @@ function sceneCreator(sceneComp, store) {
 }
 
 function registerScreens() {
+  /* authentication */
   Navigation.registerComponent("sesh.Register", () => Register);
   Navigation.registerComponent("sesh.SignIn", () => SignIn);
 
+  /* global screens */
   Navigation.registerComponent("sesh.Home", () => Home);
   Navigation.registerComponent("sesh.Focus", () => Focus);
-  Navigation.registerComponent("sesh.Profile", () => Profile);
-  Navigation.registerComponent("sesh.AddFriend", () => AddFriend);
-
-  Navigation.registerComponent("sesh.Groups", () => Groups);
-  Navigation.registerComponent("sesh.CreateGroup", () => CreateGroup);
-  Navigation.registerComponent("sesh.AddToGroup", () => AddToGroup);
-  Navigation.registerComponent("sesh.Settings", () => Settings);
-
   Navigation.registerComponent("sesh.CreateMove", () => CreateMove);
+  Navigation.registerComponent("sesh.Profile", () => Profile);
 
-  Navigation.registerComponent("sesh.EditName", () => EditName);
-  Navigation.registerComponent("sesh.AddMember", () => AddMember);
+  /* profile screens */
+  Navigation.registerComponent("profile.AddFriend", () => AddFriend);
+  Navigation.registerComponent("profile.Settings", () => ProfileSettings);
+
+  /* group screens */
+  Navigation.registerComponent("groups.CreateGroup", () => CreateGroup);
+  Navigation.registerComponent("groups.EditName", () => EditName);
+  Navigation.registerComponent("groups.AddToGroup", () => AddToGroup);
+  Navigation.registerComponent("groups.Settings", () => GroupSettings);
 }
 
 module.exports = {

@@ -28,17 +28,18 @@ export default class App extends Component<Props> {
   onPressFacebook = () => {
     this.setState({ loading: true });
     FacebookLogin(this.cancelLogin).then(user => {
+      console.log(user.user._user.uid);
       if (user) {
-        console.log(user);
-        this.setState({ loading: false });
-        Navigation.push(this.props.componentId, {
-          component: {
-            name: "sesh.Home",
-            passProps: {
-              user: user.user._user
+        this.setState({ loading: false }, () =>
+          Navigation.push(this.props.componentId, {
+            component: {
+              name: "sesh.Home",
+              passProps: {
+                user: user.user._user
+              }
             }
-          }
-        });
+          })
+        );
       }
     });
   };

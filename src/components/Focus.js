@@ -8,13 +8,13 @@ import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
-import TouchableScale from "./TouchableScale";
-import ActiveFocus from "../Active/ActiveFocus";
-import ActiveMove from "../Active/ActiveMove";
-import LaterFocus from "../Later/LaterFocus";
-import LaterMove from "../Later/LaterMove";
-import Group from "../Groups/Group";
-import GroupFocus from "../Groups/GroupFocus";
+import TouchableScale from "./global/TouchableScale";
+import ActiveFocus from "./Active/ActiveFocus";
+import ActiveMove from "./Active/ActiveMove";
+import LaterFocus from "./Later/LaterFocus";
+import LaterMove from "./Later/LaterMove";
+import Group from "./Groups/Group";
+import GroupFocus from "./Groups/GroupFocus";
 
 import {
   SCREEN_WIDTH,
@@ -23,8 +23,8 @@ import {
   BORDER_RADIUS,
   TRANSITION_DURATION,
   CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+} from "../lib/constants";
+import { Colors, shadow, FillAbsolute } from "../lib/styles";
 
 const DATA = [
   {

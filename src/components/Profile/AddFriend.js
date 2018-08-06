@@ -4,11 +4,11 @@ import { StyleSheet, Keyboard, View, Text, FlatList, TextInput, Image } from "re
 import { BlurView, VibrancyView } from "react-native-blur";
 import { Navigation } from "react-native-navigation";
 
-import BackButton from "./global/BackButton";
-import SearchResult from "./global/SearchResult";
+import BackButton from "../global/BackButton";
+import SearchResult from "../global/SearchResult";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../lib/constants";
-import { Colors, shadow } from "../lib/styles";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
+import { Colors, shadow } from "../../lib/styles";
 
 class AddFriend extends Component {
   constructor(props) {

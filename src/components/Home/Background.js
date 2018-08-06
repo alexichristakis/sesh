@@ -57,6 +57,8 @@ const Background = ({ xOffset, loading, children }) => {
   const backgroundStyle1 = loading ? loadingStyle1 : backgroundTransform(0);
   const backgroundStyle2 = loading ? loadingStyle2 : backgroundTransform(1);
 
+  console.log("render background");
+
   return (
     <View style={{ flex: 1 }}>
       <Animated.View style={[FillAbsolute, backgroundStyle1]}>

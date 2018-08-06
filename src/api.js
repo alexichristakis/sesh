@@ -104,8 +104,10 @@ export const FacebookLogin = async cancelLogin => {
 
       // login with credential
       const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
-
-      if (currentUser.additionalUserInfo.isNewUser) await NewUser(currentUser);
+      // console.log(Promise.all(firebase.auth().signInAndRetrieveDataWithCredential(credential)));
+      // console.log("currentUser: ", currentUser.user);
+      const { additionalUserInfo, user } = currentUser;
+      if (additionalUserInfo.isNewUser) await NewUser(additionalUserInfo.profile, user);
 
       return currentUser;
     }
@@ -114,25 +116,20 @@ export const FacebookLogin = async cancelLogin => {
   }
 };
 
-const NewUser = user => {
+const NewUser = ({ id, email, first_name, last_name, display_name }, { uid }) => {
   return new Promise(resolve => {
-    const email = user.user._user.email;
-    const first_name = user.additionalUserInfo.profile.first_name;
-    const last_name = user.additionalUserInfo.profile.last_name;
-    const display_name = user.additionalUserInfo.profile.name;
-    const id = user.additionalUserInfo.profile.id;
-    const profile_pic = "https://graph.facebook.com/" + id + "/picture?type=large";
-    const uid = user.user._user.uid;
-
+    const profile_pic = `https://graph.facebook.com/${id}/picture?type=large`;
     const user = {
+      fb_id: id,
+      uid,
       email,
       first_name,
       last_name,
       display_name,
-      id,
-      uid,
       profile_pic
     };
+
+    console.log(user);
 
     /* set in RNFS? */
 
@@ -145,5 +142,10 @@ const NewUser = user => {
 };
 
 export const FacebookLogout = async () => {
-  firebase.auth().signOut();
+  return new Promise(resolve => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => resolve(true));
+  });
 };

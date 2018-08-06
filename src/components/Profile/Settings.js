@@ -9,6 +9,8 @@ import { BlurView, VibrancyView } from "react-native-blur";
 
 import ColorButton from "../global/ColorButton";
 
+import { FacebookLogout } from "../../api";
+
 import { Colors, FillAbsolute } from "../../lib/styles";
 import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 
@@ -37,19 +39,18 @@ class Settings extends Component {
     }
   };
 
-  handleOnPressEditName = () => {
-    Navigation.showModal({
-      component: {
-        name: "groups.EditName",
-        passProps: { name: this.props.name, id: this.props.id }
-      }
+  handleOnPressSignOut = () => {
+    FacebookLogout().then(() => {
+      Navigation.pop("Component3");
+      Navigation.dismissModal("Component7");
+      Navigation.dismissModal("Component5");
     });
   };
 
-  handleOnPressAddMember = () => {
+  handleOnPressReportIssue = () => {
     Navigation.showModal({
       component: {
-        name: "groups.AddToGroup",
+        name: "sesh.AddMember",
         passProps: { name: this.props.name, id: this.props.id }
       }
     });
@@ -81,24 +82,18 @@ class Settings extends Component {
           animatedValueY={this.deltaY}
         >
           <SuperEllipseMask style={styles.interactable} radius={20}>
-            <Text style={styles.name}>{this.props.name}</Text>
+            <Text style={styles.name}>Settings</Text>
             <ColorButton
               textStyle={styles.textStyle}
-              title={"edit name"}
+              title={"sign out"}
               color={Colors.primary}
-              onPress={this.handleOnPressEditName}
+              onPress={this.handleOnPressSignOut}
             />
             <ColorButton
               textStyle={styles.textStyle}
-              title={"add members"}
+              title={"report issue"}
               color={Colors.primary}
-              onPress={this.handleOnPressAddMember}
-            />
-            <ColorButton
-              textStyle={styles.textStyle}
-              title={"leave group"}
-              color={Colors.primary}
-              onPress={() => console.log("leave group")}
+              onPress={this.handleOnPressReportIssue}
             />
             <TouchableOpacity
               style={{ alignSelf: "center", paddingTop: 10 }}

@@ -18,7 +18,7 @@ const ICON_SIZE2 = 30;
 
 const Group = props => {
   presentOptionsOverlay = item => () => {
-    TransparentModalTo("sesh.Settings", { name: item.name, data: item });
+    TransparentModalTo("groups.Settings", { name: item.name, data: item });
   };
 
   const group = props.data;

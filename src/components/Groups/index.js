@@ -10,6 +10,7 @@ import {
 
 import Icon from "react-native-vector-icons/Feather";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
+import { Navigation } from "react-native-navigation";
 
 import Group from "./Group";
 
@@ -20,10 +21,16 @@ import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 const Groups = props => {
   console.log(props);
 
-  handleGroupOnPress = group => {
+  handleOnPressGroup = group => {
     TransparentModalTo("sesh.Focus", {
       groups: true,
       data: { name: group.name, size: 12 }
+    });
+  };
+
+  handleOnPressCreateGroup = () => {
+    Navigation.showModal({
+      component: "groups.CreateGroup"
     });
   };
 
@@ -32,7 +39,7 @@ const Groups = props => {
       style={{ backgroundColor: "white" }}
       activeOpacity={0.8}
       underlayColor={Colors.mediumGray}
-      onPress={() => handleGroupOnPress(item)}
+      onPress={() => handleOnPressGroup(item)}
     >
       <Group data={item} />
     </TouchableHighlight>
@@ -46,7 +53,7 @@ const Groups = props => {
     <>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>My Groups:</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.handleOnPressCreateGroup}>
           <Icon name={"plus"} size={30} color={"white"} />
         </TouchableOpacity>
       </View>
