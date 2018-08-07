@@ -284,7 +284,7 @@ class CreateMove extends Component {
         >
           <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
             <LinearGradient
-              style={{ flex: 1 }}
+              style={styles.flex}
               locations={[0.25, 0.5, 1]}
               colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
             />

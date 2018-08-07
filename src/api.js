@@ -6,7 +6,9 @@ let storage = firebase.storage();
 
 //////////////* MISC. *//////////////
 export const DownloadPhoto = url => {
-  return new Promise(resolve => {});
+  return new Promise(resolve => {
+    fetch(url).then(response => resolve(response));
+  });
 };
 
 //////////////* SETUP *//////////////

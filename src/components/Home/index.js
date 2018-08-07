@@ -18,7 +18,7 @@ import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
 /* import fetch functions */
-import {} from "../../api";
+import { DownloadPhoto } from "../../api";
 
 /* to replace with data from firestore */
 import GROUPS from "../../mock-data/GROUPS";
@@ -76,6 +76,8 @@ class Home extends Component {
   async componentDidMount() {
     const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
     this.setState({ photo: url });
+
+    DownloadPhoto(url).then(data => console.log(data));
     // const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
     // //
     // await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
