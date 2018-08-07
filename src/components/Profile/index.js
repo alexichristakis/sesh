@@ -46,6 +46,14 @@ class Profile extends Component {
     TransparentModalTo("profile.Settings");
   };
 
+  showAddFriend = () => {
+    Navigation.showModal({
+      component: {
+        name: "profile.AddFriend"
+      }
+    });
+  };
+
   handleScrollRelease = event => {
     const { changedTouches, locationY, pageY } = event.nativeEvent;
     if (this.yOffset._value < -75) {
@@ -55,9 +63,9 @@ class Profile extends Component {
 
   offsetListener = ({ value }) => {
     const { barStyle } = this.state;
-    if (value >= 50 && barStyle === LIGHT)
+    if (value >= 145 && barStyle === LIGHT)
       this.setState({ barStyle: DARK }, () => StatusBar.setBarStyle(DARK, true));
-    else if (value < 50 && barStyle === DARK)
+    else if (value < 145 && barStyle === DARK)
       this.setState({ barStyle: LIGHT }, () => StatusBar.setBarStyle(LIGHT, true));
   };
 
@@ -73,14 +81,19 @@ class Profile extends Component {
         />
         <Animated.ScrollView
           style={styles.scroll}
-          contentContainerStyle={{ paddingBottom: 150 }}
+          contentContainerStyle={styles.contentContainer}
           onScroll={this._onScroll()}
           onResponderRelease={this.handleScrollRelease}
           scrollEventThrottle={16}
         >
           <Groups data={data.groups} />
         </Animated.ScrollView>
-        <Header user={user} offset={this.yOffset} showProfileSettings={this.showProfileSettings} />
+        <Header
+          user={user}
+          offset={this.yOffset}
+          showProfileSettings={this.showProfileSettings}
+          showAddFriend={this.showAddFriend}
+        />
       </View>
     );
   }
@@ -91,9 +104,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.groupsHeader1
   },
+  contentContainer: {
+    paddingBottom: 182
+  },
   scroll: {
     flex: 1,
-    // backgroundColor: "red",
     paddingTop: 215
   }
 });

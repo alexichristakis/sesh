@@ -11,6 +11,7 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { Navigation } from "react-native-navigation";
+import { VibrancyView } from "react-native-blur";
 
 import Group from "./Group";
 
@@ -30,7 +31,7 @@ const Groups = props => {
 
   handleOnPressCreateGroup = () => {
     Navigation.showModal({
-      component: "groups.CreateGroup"
+      component: { name: "groups.CreateGroup" }
     });
   };
 
@@ -47,10 +48,23 @@ const Groups = props => {
 
   _renderSeparator = () => <View style={styles.separator} />;
 
-  _renderFooter = () => (
-    <View style={styles.footerContainer}>
-      <Text style={styles.footerText}>Press '+' to create a group! 🎉</Text>
+  _renderHeader = () => (
+    <View style={styles.headerContainer}>
+      <Text style={styles.header}>My Groups:</Text>
+      <TouchableOpacity onPress={handleOnPressCreateGroup}>
+        <Icon name={"plus"} size={30} color={Colors.gray} />
+      </TouchableOpacity>
     </View>
+  );
+
+  _renderFooter = () => (
+    <TouchableHighlight
+      onPress={handleOnPressCreateGroup}
+      underlayColor={Colors.mediumGray}
+      style={styles.footerContainer}
+    >
+      <Text style={styles.footerText}>Create a group! 🎉</Text>
+    </TouchableHighlight>
   );
 
   _keyExtractor = item => item.id.toString();
@@ -59,11 +73,10 @@ const Groups = props => {
     <>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>My Groups:</Text>
-        <TouchableOpacity onPress={this.handleOnPressCreateGroup}>
+        <TouchableOpacity onPress={handleOnPressCreateGroup}>
           <Icon name={"plus"} size={30} color={"white"} />
         </TouchableOpacity>
       </View>
-
       <SuperEllipseMask radius={BORDER_RADIUS}>
         <FlatList
           scrollEnabled={false}
@@ -71,6 +84,7 @@ const Groups = props => {
           data={props.data}
           renderItem={_renderItem}
           ItemSeparatorComponent={_renderSeparator}
+          // ListHeaderComponent={_renderHeader}
           ListFooterComponent={_renderFooter}
           keyExtractor={_keyExtractor}
         />
@@ -90,6 +104,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     color: "white",
+    // color: Colors.gray,
     fontWeight: "bold"
   },
   listBackground: {
@@ -107,6 +122,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 20
+  },
+  footerText: {
+    fontSize: 18,
+    fontWeight: "300",
+    color: Colors.gray
   }
 });
 

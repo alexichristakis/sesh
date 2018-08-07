@@ -12,7 +12,7 @@ import { Colors, FillAbsolute } from "../../lib/styles";
 
 const PHOTO_SIZE = 100;
 
-const Header = ({ user, offset, showProfileSettings }) => {
+const Header = ({ user, offset, showProfileSettings, showAddFriend }) => {
   const { displayName, photo } = user;
   const inputRange = [-SB_HEIGHT - 50, -SB_HEIGHT, 0, 150];
 
@@ -59,8 +59,8 @@ const Header = ({ user, offset, showProfileSettings }) => {
 
   const barOpacity = {
     opacity: offset.interpolate({
-      inputRange,
-      outputRange: [0, 0, 0, 1],
+      inputRange: [0, 140, 150],
+      outputRange: [0, 0, 1],
       extrapolate: "clamp"
     })
   };
@@ -79,7 +79,7 @@ const Header = ({ user, offset, showProfileSettings }) => {
             color={Colors.groupsHeader1}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={() => console.log("add friend")}>
+        <TouchableOpacity style={styles.actionButton} onPress={showAddFriend}>
           <MaterialIcon name={"person-add"} size={30} color={Colors.groupsHeader1} />
         </TouchableOpacity>
       </Animated.View>

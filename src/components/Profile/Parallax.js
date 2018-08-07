@@ -1,15 +1,9 @@
 import React from "react";
-import { StyleSheet, Animated, View, TouchableOpacity, Image, Text } from "react-native";
-
-import LinearGradient from "react-native-linear-gradient";
-import SuperEllipseMask from "react-native-super-ellipse-mask";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import IonIcon from "react-native-vector-icons/Ionicons";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { StyleSheet, Animated, View } from "react-native";
 
 import ProgressiveImage from "../global/ProgressiveImage";
 
-import { TransparentModalTo, GetPhotoURL, GetThumbnailURL } from "../../lib/functions";
+import { GetPhotoURL, GetThumbnailURL } from "../../lib/functions";
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, IS_X, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
@@ -42,7 +36,6 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
   return (
     <View style={styles.container}>
       <Animated.View style={animatedImage}>
-        {/* <Image source={{ uri: photo }} style={styles.photo} /> */}
         <ProgressiveImage
           style={styles.photo}
           source={GetPhotoURL(user_fb_id, PHOTO_SIZE, PHOTO_SIZE)}

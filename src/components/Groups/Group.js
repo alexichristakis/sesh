@@ -28,10 +28,16 @@ const Group = props => {
     backgroundColor: props.card ? "white" : "transparent"
   };
 
+  const indicatorStyle = {
+    ...styles.indicator,
+    backgroundColor: props.selected ? Colors.groups : "white",
+    borderColor: props.selected ? Colors.groups : Colors.gray
+  };
+
   return (
     <SuperEllipseMask style={containerStyle} radius={props.card ? BORDER_RADIUS : 0}>
       <View style={styles.mid}>
-        <Text allowFontScaling={props.card ? false : true} style={styles.name}>
+        <Text allowFontScaling={false} style={styles.name}>
           {group.name}
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -55,18 +61,7 @@ const Group = props => {
           />
         </TouchableOpacity>
       )}
-      {props.selectable && (
-        <View
-          style={{
-            width: 22,
-            height: 22,
-            borderRadius: 5,
-            backgroundColor: props.selected ? Colors.groups : "white",
-            borderColor: props.selected ? Colors.groups : Colors.gray,
-            borderWidth: 0.5
-          }}
-        />
-      )}
+      {props.selectable && <View style={indicatorStyle} />}
     </SuperEllipseMask>
   );
 };
@@ -110,6 +105,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "800",
     color: Colors.gray
+  },
+  indicator: {
+    width: 22,
+    height: 22,
+    borderRadius: 5,
+    borderWidth: 0.5
   }
 });
 

@@ -6,7 +6,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import MapCard from "../../global/MapCard";
 
-import { GenerateMarkers } from "../../../lib/functions";
+import { GenerateMarkers, GetPhotoURL } from "../../../lib/functions";
 import { Colors } from "../../../lib/styles";
 import {
   SCREEN_WIDTH,
@@ -51,7 +51,10 @@ const OpenContent = ({
         userLocation={userLocation}
       />
       <TouchableOpacity style={styles.profileButton} onPress={showProfileScreen}>
-        <Image source={{ uri: user.photo }} style={styles.photo} />
+        <Image
+          source={{ uri: GetPhotoURL(user.user_fb_id, ICON_SIZE, ICON_SIZE) }}
+          style={styles.photo}
+        />
       </TouchableOpacity>
       <AnimatedTouchable style={[styles.buttonContainer, animatedOpacity]} onPress={toggleDrawer}>
         <VibrancyView blurAmount={20} blurType="dark" style={styles.vibrancy}>
