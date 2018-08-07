@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Animated, View, TouchableOpacity, Image, Text } from "react-native";
+import { StyleSheet, Animated, StatusBar, View, TouchableOpacity, Image, Text } from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
@@ -14,7 +14,7 @@ const PHOTO_SIZE = 100;
 
 const Header = ({ user, offset, showProfileSettings }) => {
   const { displayName, photo } = user;
-  const inputRange = [-SB_HEIGHT - 50, -SB_HEIGHT, 0, 50];
+  const inputRange = [-SB_HEIGHT - 50, -SB_HEIGHT, 0, 150];
 
   const animatedUserInfo = {
     top: SB_HEIGHT + 10,
@@ -38,15 +38,15 @@ const Header = ({ user, offset, showProfileSettings }) => {
   };
 
   const animatedActionButtons = {
-    transform: [
-      {
-        translateY: offset.interpolate({
-          inputRange,
-          outputRange: [50, 0, -20, -40],
-          extrapolate: "clamp"
-        })
-      }
-    ]
+    // transform: [
+    //   {
+    //     translateY: offset.interpolate({
+    //       inputRange,
+    //       outputRange: [10, 0, -20, -40],
+    //       extrapolateRight: "clamp"
+    //     })
+    //   }
+    // ]
   };
 
   const textAnimatedStyle = {
@@ -57,36 +57,30 @@ const Header = ({ user, offset, showProfileSettings }) => {
     })
   };
 
-  const shadowOpacity = {
+  const barOpacity = {
     opacity: offset.interpolate({
       inputRange,
-      outputRange: [0, 0, 0.5, 1],
+      outputRange: [0, 0, 0, 1],
       extrapolate: "clamp"
     })
   };
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
-        <LinearGradient
-          style={styles.flex}
-          locations={[0.25, 1]}
-          colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0)"]}
-        />
-      </Animated.View>
-      <Animated.View style={animatedUserInfo}>
-        <SuperEllipseMask radius={PHOTO_SIZE / 4}>
-          <Image source={{ uri: photo }} style={styles.photo} />
-        </SuperEllipseMask>
-        <Animated.Text style={[styles.name, textAnimatedStyle]}>{displayName}</Animated.Text>
+      <Animated.View style={[styles.bar, barOpacity]}>
+        <Text style={styles.title}>My Groups:</Text>
       </Animated.View>
       <Animated.View style={[styles.actionButtonContainer, animatedActionButtons]}>
-        {/* <FeatherIcon name={"settings"} size={25} color={"white"} /> */}
-        <TouchableOpacity onPress={showProfileSettings}>
-          <IonIcon name={"ios-settings"} size={30} color={"white"} />
+        <TouchableOpacity style={styles.actionButton} onPress={showProfileSettings}>
+          <IonIcon
+            style={{ marginTop: 3 }}
+            name={"ios-settings"}
+            size={30}
+            color={Colors.groupsHeader1}
+          />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log("add friend")}>
-          <MaterialIcon name={"person-add"} size={30} color={"white"} />
+        <TouchableOpacity style={styles.actionButton} onPress={() => console.log("add friend")}>
+          <MaterialIcon name={"person-add"} size={30} color={Colors.groupsHeader1} />
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -102,12 +96,23 @@ const styles = StyleSheet.create({
     alignItems: "center"
     // height:
   },
-  shadowContainer: {
+  bar: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    height: 100
+    paddingTop: SB_HEIGHT,
+    height: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderBottomWidth: 0.5,
+    borderColor: Colors.mediumGray
+  },
+  title: {
+    fontSize: 20,
+    color: Colors.groupsHeader1,
+    fontWeight: "bold"
   },
   flex: {
     flex: 1
@@ -125,12 +130,20 @@ const styles = StyleSheet.create({
   },
   actionButtonContainer: {
     position: "absolute",
-    top: SB_HEIGHT + 50,
+    top: SB_HEIGHT + 5,
     left: 0,
     right: 0,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  actionButton: {
+    width: 45,
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderRadius: 22.5
   }
 });
 
