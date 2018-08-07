@@ -16,6 +16,7 @@
     "react-native-code-push": "5.3.5",
     "react-native-fbsdk": "^0.7.0",
     "react-native-firebase": "^4.3.7",
+    "react-native-fs": "^2.11.15",
     "react-native-haptic-feedback": "^1.2.0",
     "react-native-interactable": "^0.1.10",
     "react-native-linear-gradient": "^2.4.0",

@@ -1,13 +1,40 @@
+import { Platform } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import firebase from "react-native-firebase";
-// import RNFS from "react-native-fs";
+import RNFS from "react-native-fs";
 let firestore = firebase.firestore();
 let storage = firebase.storage();
 
 //////////////* MISC. *//////////////
-export const DownloadPhoto = url => {
+const getFileName = name => {
+  const FILE = Platform.OS === "ios" ? "" : "file://";
+  return FILE + RNFS.DocumentDirectoryPath + "/" + name + ".png";
+};
+
+export const DownloadPhoto = (name, source_url) => {
   return new Promise(resolve => {
-    fetch(url).then(response => resolve(response));
+    const fileName = getFileName(name);
+    return RNFS.exists(fileName)
+      .then(response => {
+        if (response) {
+          resolve({ uri: fileName });
+        } else {
+          const destination_path = "/" + name + ".png";
+          return RNFS.downloadFile({
+            fromUrl: source_url,
+            toFile: RNFS.DocumentDirectoryPath + destination_path
+          })
+            .promise.then(response => {
+              resolve({ uri: fileName });
+            })
+            .catch(error => {
+              resolve({ uri: source_url });
+            });
+        }
+      })
+      .catch(error => {
+        resolve({ uri: source_url });
+      });
   });
 };
 

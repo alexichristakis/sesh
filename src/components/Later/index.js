@@ -5,9 +5,8 @@ import LinearGradient from "react-native-linear-gradient";
 
 import { Colors } from "../../lib/styles";
 
-import LaterMove from "./LaterMove";
+import Move from "../global/Move";
 import VerticalList from "../global/VerticalList";
-import CardWrapper from "../global/CardWrapper";
 
 class Later extends Component {
   constructor(props) {
@@ -32,13 +31,12 @@ class Later extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <CardWrapper index={index} data={item} transitionFrom={this.transitionFrom}>
-      <LaterMove
-        onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-        move={item}
-        coords={this.props.data.coords}
-      />
-    </CardWrapper>
+    <Move
+      index={index}
+      move={item}
+      coords={this.props.data.coords}
+      transitionFrom={this.transitionFrom}
+    />
   );
 
   render() {

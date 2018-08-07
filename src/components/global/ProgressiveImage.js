@@ -4,7 +4,7 @@ import { BlurView } from "react-native-blur";
 
 import { FillAbsolute } from "../../lib/styles";
 
-const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
+const ProgressiveImage = ({ thumbnail, source, loading = false, style = {} }) => {
   const thumbnailOpacity = new Animated.Value(0);
   const blurOpacity = new Animated.Value(1);
 
@@ -23,13 +23,13 @@ const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image resizeMode="cover" style={style} source={{ uri: source }} onLoad={onMainLoad} />
+    <View style={style}>
+      {!loading && <Image resizeMode="cover" style={style} source={source} onLoad={onMainLoad} />}
       <Animated.View style={[FillAbsolute, { opacity: blurOpacity }]}>
         <Animated.Image
           resizeMode="cover"
           style={[{ opacity: thumbnailOpacity }, style]}
-          source={{ uri: thumbnail }}
+          source={thumbnail}
           onLoad={onThumbnailLoad}
         />
         <BlurView blurType="dark" style={FillAbsolute} blurAmount={8} />
@@ -37,12 +37,5 @@ const ProgressiveImage = ({ thumbnail, source, style = {} }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    overflow: "hidden"
-  }
-});
 
 export default ProgressiveImage;
