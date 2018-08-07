@@ -20,9 +20,11 @@ import {
   SB_HEIGHT,
   IS_X,
   TRANSITION_DURATION,
-  CARD_GUTTER
+  CARD_GUTTER,
+  LOADING
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+import { ShowLoadingOverlay } from "../../lib/functions";
 
 import { SendMove } from "../../api";
 
@@ -162,7 +164,12 @@ class CreateMove extends Component {
 
   handleOnPressSend = () => {
     this.setState({ buttonVisible: false }, () => {
-      this.interactable.snapTo({ index: 2 });
+      ShowLoadingOverlay();
+      setTimeout(() => {
+        Navigation.dismissOverlay(LOADING);
+        this.interactable.snapTo({ index: 2 });
+      }, 500);
+      // this.interactable.snapTo({ index: 2 });
     });
   };
 

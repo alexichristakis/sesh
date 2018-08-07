@@ -2,6 +2,8 @@ import { PixelRatio } from "react-native";
 import { Navigation } from "react-native-navigation";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
+import { LOADING } from "./constants";
+
 const FB_GRAPH = "https://graph.facebook.com/";
 
 export const GenerateMarkers = moves => {
@@ -98,6 +100,15 @@ export const TransparentModalTo = (componentName, props, options) => {
         },
         ...options
       }
+    }
+  });
+};
+
+export const ShowLoadingOverlay = () => {
+  Navigation.showOverlay({
+    component: {
+      id: LOADING,
+      name: "sesh.Loading"
     }
   });
 };

@@ -40,20 +40,20 @@ class Settings extends Component {
   };
 
   handleOnPressSignOut = () => {
-    FacebookLogout().then(() => {
-      Navigation.pop("Component3");
-      Navigation.dismissModal("Component7");
-      Navigation.dismissModal("Component5");
-    });
+    // FacebookLogout().then(() => {
+    // Navigation.pop("Component3");
+    // Navigation.dismissModal("Component7");
+    // Navigation.dismissModal("Component5");
+    // });
   };
 
   handleOnPressReportIssue = () => {
-    Navigation.showModal({
-      component: {
-        name: "sesh.AddMember",
-        passProps: { name: this.props.name, id: this.props.id }
-      }
-    });
+    // Navigation.showModal({
+    //   component: {
+    //     name: "sesh.AddMember",
+    //     passProps: { name: this.props.name, id: this.props.id }
+    //   }
+    // });
   };
 
   render() {

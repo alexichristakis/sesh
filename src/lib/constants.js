@@ -15,6 +15,8 @@ const BORDER_RADIUS = 12;
 
 const REFRESH_OFFSET = -150;
 
+const LOADING = "loading";
+
 module.exports = {
   SCREEN_WIDTH: width,
   SCREEN_HEIGHT: height,
@@ -24,5 +26,6 @@ module.exports = {
   TRANSITION_DURATION,
   CARD_GUTTER,
   BORDER_RADIUS,
-  REFRESH_OFFSET
+  REFRESH_OFFSET,
+  LOADING
 };

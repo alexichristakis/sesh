@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import AddFriend from "./components/Profile/AddFriend";
 import ProfileSettings from "./components/Profile/Settings";
+import LoadingOverlay from "./components/global/LoadingOverlay";
 
 import Groups from "./components/Groups";
 import CreateGroup from "./components/Groups/CreateGroup";
@@ -42,6 +43,7 @@ function registerScreens() {
   Navigation.registerComponent("sesh.Focus", () => Focus);
   Navigation.registerComponent("sesh.CreateMove", () => CreateMove);
   Navigation.registerComponent("sesh.Profile", () => Profile);
+  Navigation.registerComponent("sesh.Loading", () => LoadingOverlay);
 
   /* profile screens */
   Navigation.registerComponent("profile.AddFriend", () => AddFriend);

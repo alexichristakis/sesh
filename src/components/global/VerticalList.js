@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#979797"
   },
   content: {
-    paddingBottom: 110
+    paddingBottom: 125
   },
   separatorContainer: {
     width: SCREEN_WIDTH,
