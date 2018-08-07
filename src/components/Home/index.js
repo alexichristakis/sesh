@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, View, StatusBar, StyleSheet } from "react-native";
+import { Animated, View, StatusBar, setBarStyle, StyleSheet } from "react-native";
 
 import codePush from "react-native-code-push";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -59,6 +59,7 @@ class Home extends Component {
 
       user: {
         ...this.props.user,
+        user_fb_id: 1779355238751386,
         photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
       },
 
@@ -89,6 +90,8 @@ class Home extends Component {
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
+
+    console.log(this.state.user);
   }
 
   componentWillUnmount() {

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, View, Text, Image, Button } from "react-native";
+import { StyleSheet, Animated, StatusBar, View, Text, Image, Button } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 
+import Parallax from "./Parallax";
 import Header from "./Header";
 import Groups from "../Groups";
 
@@ -10,21 +11,30 @@ import { TransparentModalTo } from "../../lib/functions";
 import { SCREEN_WIDTH, SB_HEIGHT, IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
+const LIGHT = "light-content";
+const DARK = "dark-content";
+
 class Profile extends Component {
   constructor(props) {
     super(props);
 
     this.yOffset = new Animated.Value(0);
 
-    this.state = {};
+    this.state = {
+      barStyle: LIGHT
+    };
   }
 
   componentDidMount() {
-    this.yOffset.addListener(() => {});
+    this.yOffset.addListener(this.offsetListener);
   }
 
   componentWillUnmount() {
     this.yOffset.removeAllListeners();
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   _onScroll = () =>
@@ -43,20 +53,26 @@ class Profile extends Component {
     }
   };
 
+  offsetListener = ({ value }) => {
+    const { barStyle } = this.state;
+    if (value >= 50 && barStyle === LIGHT)
+      this.setState({ barStyle: DARK }, () => StatusBar.setBarStyle(DARK, true));
+    else if (value < 50 && barStyle === DARK)
+      this.setState({ barStyle: LIGHT }, () => StatusBar.setBarStyle(LIGHT, true));
+  };
+
   render() {
     const { user, data } = this.props;
 
-    const animatedScrollStyle = {
-      opacity: this.yOffset.interpolate({
-        inputRange: [-100, -SB_HEIGHT, 50],
-        outputRange: [0.7, 1, 1]
-      })
-    };
-
     return (
       <View style={styles.container}>
+        <Parallax
+          user={user}
+          offset={this.yOffset}
+          showProfileSettings={this.showProfileSettings}
+        />
         <Animated.ScrollView
-          style={[styles.scroll, animatedScrollStyle]}
+          style={styles.scroll}
           contentContainerStyle={{ paddingBottom: 150 }}
           onScroll={this._onScroll()}
           onResponderRelease={this.handleScrollRelease}
@@ -77,8 +93,8 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingTop: 150,
-    paddingHorizontal: CARD_GUTTER
+    // backgroundColor: "red",
+    paddingTop: 215
   }
 });
 
