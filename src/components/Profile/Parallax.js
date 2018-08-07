@@ -11,7 +11,7 @@ const PHOTO_SIZE = 1.25 * SCREEN_WIDTH;
 
 const Parallax = ({ user, offset, showProfileSettings }) => {
   const { displayName, photo, user_fb_id } = user;
-  const inputRange = [-50, 0, 50];
+  const inputRange = [-100, -50, 0, 50];
 
   const animatedImage = {
     top: -50,
@@ -19,14 +19,14 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
       {
         scale: offset.interpolate({
           inputRange,
-          outputRange: [1.1, 1, 4 / 5],
+          outputRange: [1.3, 1.1, 1, 4 / 5],
           extrapolateRight: "clamp"
         })
       },
       {
         translateY: offset.interpolate({
           inputRange,
-          outputRange: [30, 0, -50]
+          outputRange: [50, 25, 0, -50]
           // extrapolateLeft: "clamp"
         })
       }
@@ -38,8 +38,8 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
       <Animated.View style={animatedImage}>
         <ProgressiveImage
           style={styles.photo}
-          source={GetPhotoURL(user_fb_id, PHOTO_SIZE, PHOTO_SIZE)}
-          thumbnail={GetThumbnailURL(user_fb_id)}
+          source={{ uri: GetPhotoURL(user_fb_id, PHOTO_SIZE, PHOTO_SIZE) }}
+          thumbnail={{ uri: GetThumbnailURL(user_fb_id) }}
         />
       </Animated.View>
     </View>

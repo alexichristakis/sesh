@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
-import { Navigation } from "react-native-navigation";
-import { VibrancyView, BlurView } from "react-native-blur";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Icon from "react-native-vector-icons/Feather";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import moment from "moment";
