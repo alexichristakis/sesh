@@ -5,10 +5,8 @@ import LinearGradient from "react-native-linear-gradient";
 
 import { Colors } from "../../lib/styles";
 
-import ActiveMove from "./ActiveMove";
 import VerticalList from "../global/VerticalList";
-import CardWrapper from "../global/CardWrapper";
-import LoadingCircle from "../global/LoadingCircle";
+import Move from "../global/Move";
 
 class Active extends Component {
   constructor(props) {
@@ -33,9 +31,13 @@ class Active extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <CardWrapper active index={index} data={item} transitionFrom={this.transitionFrom}>
-      <ActiveMove move={item} coords={this.props.data.coords} />
-    </CardWrapper>
+    <Move
+      active
+      index={index}
+      move={item}
+      coords={this.props.data.coords}
+      transitionFrom={this.transitionFrom}
+    />
   );
 
   joinMove = moveId => {

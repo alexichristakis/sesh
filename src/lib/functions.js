@@ -2,9 +2,18 @@ import { PixelRatio } from "react-native";
 import { Navigation } from "react-native-navigation";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
+import geolib from "geolib";
+
 import { LOADING } from "./constants";
 
 const FB_GRAPH = "https://graph.facebook.com/";
+
+export const FormatDistanceAway = (location, coords) => {
+  const miles = geolib.getDistance(location, coords) * 0.000621;
+  const suffix = "mi";
+  if (miles > 1) return Math.round(miles) + suffix;
+  else return Math.round(100 * miles) / 100 + suffix;
+};
 
 export const GenerateMarkers = moves => {
   const currentTime = new Date().getTime();

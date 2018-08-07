@@ -19,18 +19,21 @@
 @end
 
 @interface JWTCryptoSecurity (Certificates)
-+ (OSStatus)extractIdentityAndTrustFromPKCS12:(CFDataRef)inPKCS12Data password:(CFStringRef)password identity:(SecIdentityRef *)outIdentity trust:(SecTrustRef *)outTrust;
++ (OSStatus)extractIdentityAndTrustFromPKCS12:(CFDataRef)inPKCS12Data password:(CFStringRef)password identity:(SecIdentityRef *)outIdentity trust:(SecTrustRef *)outTrust __deprecated;
++ (OSStatus)extractIdentityAndTrustFromPKCS12:(CFDataRef)inPKCS12Data password:(CFStringRef)password identity:(SecIdentityRef *)outIdentity trust:(SecTrustRef *)outTrust error:(CFErrorRef *)error;
 + (SecKeyRef)publicKeyFromCertificate:(NSData *)certificateData;
 @end
 
+//API_DEPRECATED("Use methods from JWTCryptoSecurity+Extraction.h", macos(10.4, 10.8), ios(2.0, 3.0), watchos(2.0, 3.0), tvos(9.0, 10.0))
+__deprecated
 @interface JWTCryptoSecurity (Pem)
-+ (NSString *)certificateFromPemFileContent:(NSString *)content;
-+ (NSString *)keyFromPemFileContent:(NSString *)content;
-+ (NSArray *)itemsFromPemFileContent:(NSString *)content byRegex:(NSRegularExpression *)expression;
-+ (NSString *)certificateFromPemFileWithName:(NSString *)name;
-+ (NSString *)keyFromPemFileWithName:(NSString *)name;
-+ (NSArray *)itemsFromPemFileWithName:(NSString *)name byRegex:(NSRegularExpression *)expression;
-+ (NSString *)stringByRemovingPemHeadersFromString:(NSString *)string;
++ (NSString *)certificateFromPemFileContent:(NSString *)content __deprecated;
++ (NSString *)keyFromPemFileContent:(NSString *)content __deprecated;
++ (NSArray *)itemsFromPemFileContent:(NSString *)content byRegex:(NSRegularExpression *)expression __deprecated;
++ (NSString *)certificateFromPemFileWithName:(NSString *)name __deprecated;
++ (NSString *)keyFromPemFileWithName:(NSString *)name __deprecated;
++ (NSArray *)itemsFromPemFileWithName:(NSString *)name byRegex:(NSRegularExpression *)expression __deprecated;
++ (NSString *)stringByRemovingPemHeadersFromString:(NSString *)string __deprecated;
 @end
 
 @interface JWTCryptoSecurity (PublicKey)

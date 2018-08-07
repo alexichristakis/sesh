@@ -9,10 +9,9 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
 import TouchableScale from "./global/TouchableScale";
+import Move from "./global/Move";
 import ActiveFocus from "./Active/ActiveFocus";
-import ActiveMove from "./Active/ActiveMove";
 import LaterFocus from "./Later/LaterFocus";
-import LaterMove from "./Later/LaterMove";
 import Group from "./Groups/Group";
 import GroupFocus from "./Groups/GroupFocus";
 
@@ -256,23 +255,11 @@ class Focus extends Component {
       }
     ];
 
-    const { data } = this.props;
-    const Card = !this.props.groups ? (
-      this.props.active ? (
-        <ActiveMove
-          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-          move={data}
-          coords={this.props.coords}
-        />
-      ) : (
-        <LaterMove
-          onPressPresentOverlayTo={this.props.onPressPresentOverlayTo}
-          move={this.props.data}
-          coords={this.props.coords}
-        />
-      )
-    ) : (
+    const { data, groups, coords, active } = this.props;
+    const Card = groups ? (
       <Group card data={data} />
+    ) : (
+      <Move focused active={active} move={data} coords={coords} />
     );
 
     const FocusContent = !this.props.groups ? (
@@ -283,16 +270,16 @@ class Focus extends Component {
           joined={this.state.joined}
           users={DATA}
           open={this.state.open}
-          userLocation={this.props.coords}
-          moveLocation={this.props.data.location}
+          userLocation={coords}
+          moveLocation={data.location}
         />
       ) : (
         <LaterFocus
           handleOnPress={this.handleOnPressJoin}
           joined={this.state.joined}
           open={this.state.open}
-          userLocation={this.props.coords}
-          moveLocation={this.props.data.location}
+          userLocation={coords}
+          moveLocation={data.location}
         />
       )
     ) : (

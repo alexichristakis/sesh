@@ -77,7 +77,9 @@ class Home extends Component {
     const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
     this.setState({ photo: url });
 
-    DownloadPhoto(url).then(data => console.log(data));
+    // DownloadPhoto("profile", url).then(data =>
+    //   this.setState(prevState => ({ loading: false, user: { ...prevState.user, photo: data } }))
+    // );
     // const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
     // //
     // await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
