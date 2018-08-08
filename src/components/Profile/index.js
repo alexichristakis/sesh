@@ -86,7 +86,7 @@ class Profile extends Component {
           onResponderRelease={this.handleScrollRelease}
           scrollEventThrottle={16}
         >
-          <Groups data={data.groups} />
+          <Groups data={data} />
         </Animated.ScrollView>
         <Header
           user={user}

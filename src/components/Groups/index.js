@@ -1,6 +1,7 @@
 import React from "react";
 import {
   StyleSheet,
+  StatusBar,
   FlatList,
   View,
   Text,
@@ -30,8 +31,14 @@ const Groups = props => {
   };
 
   handleOnPressCreateGroup = () => {
+    StatusBar.setBarStyle("dark-content", true);
     Navigation.showModal({
-      component: { name: "groups.CreateGroup" }
+      component: {
+        name: "groups.CreateGroup",
+        passProps: {
+          friends: props.data.friends
+        }
+      }
     });
   };
 
@@ -81,7 +88,7 @@ const Groups = props => {
         <FlatList
           scrollEnabled={false}
           style={styles.listBackground}
-          data={props.data}
+          data={props.data.groups}
           renderItem={_renderItem}
           ItemSeparatorComponent={_renderSeparator}
           // ListHeaderComponent={_renderHeader}
