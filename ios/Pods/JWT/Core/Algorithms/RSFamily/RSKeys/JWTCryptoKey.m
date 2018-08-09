@@ -8,6 +8,8 @@
 
 #import "JWTCryptoKey.h"
 #import "JWTCryptoSecurity.h"
+#import "JWTCryptoSecurity+Extraction.h"
+#import "JWTCryptoSecurity+ExternalRepresentation.h"
 #import "JWTBase64Coder.h"
 @interface JWTCryptoKeyBuilder()
 + (NSString *)keyTypeRSA;
@@ -70,11 +72,10 @@
 // Parameters are nil at that moment, could be used later for some purposes
 - (NSString *)extractedSecKeyTypeWithParameters:(NSDictionary *)parameters {
     JWTCryptoKeyBuilder *builder = [self extractedBuilderWithParameters:parameters];
-    NSString *result = nil;
     if (builder.withKeyTypeEC) {
-        result = [JWTCryptoSecurity keyTypeEC];
+        return JWTCryptoSecurityKeysTypes.EC;
     }
-    return result ?: [JWTCryptoSecurity keyTypeRSA];
+    return JWTCryptoSecurityKeysTypes.RSA;
 }
 @end
 @interface JWTCryptoKey (Generator) <JWTCryptoKey__Generator__Protocol, JWTCryptoKey__Raw__Generator__Protocol>
@@ -101,7 +102,7 @@
 - (instancetype)initWithPemEncoded:(NSString *)encoded parameters:(NSDictionary *)parameters error:(NSError *__autoreleasing*)error {
     //TODO: check correctness.
     //maybe use clean initWithBase64String and remove ?: encoded tail.
-    NSString *clean = [JWTCryptoSecurity keyFromPemFileContent:encoded] ?: encoded;//[JWTCryptoSecurity stringByRemovingPemHeadersFromString:encoded];
+    NSString *clean = ((JWTCryptoSecurityComponent *)[[JWTCryptoSecurity componentsFromFileContent:encoded] componentsOfType:JWTCryptoSecurityComponents.Key].firstObject).content ?: encoded;//[JWTCryptoSecurity stringByRemovingPemHeadersFromString:encoded];
     return [self initWithBase64String:clean parameters:parameters error:error];
 }
 - (instancetype)initWithPemAtURL:(NSURL *)url parameters:(NSDictionary *)parameters error:(NSError *__autoreleasing*)error {
@@ -129,6 +130,14 @@
         *error = [NSError errorWithDomain:@"org.opensource.jwt.security.key" code:-200 userInfo:@{NSLocalizedDescriptionKey : @"Security key not retrieved! something went wrong!"}];
     }
     return self;
+}
+@end
+
+@implementation JWTCryptoKey (ExternalRepresentation)
+- (NSString *)externalRepresentationForCoder:(JWTBase64Coder *)coder error:(NSError *__autoreleasing *)error {
+    NSData *data = [JWTCryptoSecurity externalRepresentationForKey:self.key error:error];
+    NSString *result = (NSString *)[coder ?: JWTBase64Coder.withBase64String stringWithData:data];
+    return result;
 }
 @end
 
@@ -304,30 +313,35 @@
             }
         }
     }
+    
     BOOL identityAndTrust = identity && trust;
-
-    if (identityAndTrust) {
-        self = [super init];
-        SecKeyRef privateKey;
-        SecIdentityCopyPrivateKey(identity, &privateKey);
-        if (self) {
-            self.key = privateKey;
-        }
-    }
-
-    if (identity) {
-        CFRelease(identity);
-    }
-
+    
+    // we don't need trust anymore.
     if (trust) {
         CFRelease(trust);
     }
-
-    if (!identityAndTrust) {
-        //error: no identity and trust.
-        return nil;
+    
+    SecKeyRef privateKey = NULL;
+    if (identityAndTrust) {
+        OSStatus status = SecIdentityCopyPrivateKey(identity, &privateKey);
+        NSError *theError = [JWTCryptoSecurity securityErrorWithOSStatus:status];
+        if (theError) {
+            if (error) {
+                *error = theError;
+            }
+        }
     }
-
+    
+    if (identity) {
+        CFRelease(identity);
+    }
+    
+    if (privateKey != NULL) {
+        if (self = [super init]) {
+            self.key = privateKey;
+        }
+    }
+    
     return self;
 }
 @end

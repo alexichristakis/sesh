@@ -16,45 +16,14 @@
 
 #include "Firestore/core/src/firebase/firestore/util/path.h"
 
-#include "absl/strings/ascii.h"
-#include "absl/strings/string_view.h"
-
 namespace firebase {
 namespace firestore {
 namespace util {
 
-namespace {
-
-static constexpr absl::string_view::size_type npos = absl::string_view::npos;
-
-/** Returns the given path with its leading drive letter removed. */
-inline absl::string_view StripDriveLetter(absl::string_view path) {
-#if defined(_WIN32)
-  if (path.size() >= 2 && path[1] == ':' && absl::ascii_isalpha(path[0])) {
-    return path.substr(2);
-  }
-  return path;
-
-#else
-  return path;
-#endif  // defined(_WIN32)
-}
-
-/** Returns true if the given character is a pathname separator. */
-inline bool IsSeparator(char c) {
-#if defined(_WIN32)
-  return c == '/' || c == '\\';
-#else
-  return c == '/';
-#endif  // defined(_WIN32)
-}
-
-}  // namespace
-
 absl::string_view Path::Basename(absl::string_view pathname) {
   size_t slash = pathname.find_last_of('/');
 
-  if (slash == npos) {
+  if (slash == absl::string_view::npos) {
     // No path separator found => the whole string.
     return pathname;
   }
@@ -66,7 +35,7 @@ absl::string_view Path::Basename(absl::string_view pathname) {
 absl::string_view Path::Dirname(absl::string_view pathname) {
   size_t last_slash = pathname.find_last_of('/');
 
-  if (last_slash == npos) {
+  if (last_slash == absl::string_view::npos) {
     // No path separator found => empty string. Conformance with POSIX would
     // have us return "." here.
     return pathname.substr(0, 0);
@@ -74,7 +43,7 @@ absl::string_view Path::Dirname(absl::string_view pathname) {
 
   // Collapse runs of slashes.
   size_t nonslash = pathname.find_last_not_of('/', last_slash);
-  if (nonslash == npos) {
+  if (nonslash == absl::string_view::npos) {
     // All characters preceding the last path separator are slashes
     return pathname.substr(0, 1);
   }
@@ -86,8 +55,12 @@ absl::string_view Path::Dirname(absl::string_view pathname) {
 }
 
 bool Path::IsAbsolute(absl::string_view path) {
-  path = StripDriveLetter(path);
-  return !path.empty() && IsSeparator(path.front());
+#if defined(_WIN32)
+#error "Handle drive letters"
+
+#else
+  return !path.empty() && path.front() == '/';
+#endif
 }
 
 void Path::JoinAppend(std::string* base, absl::string_view path) {
@@ -96,7 +69,7 @@ void Path::JoinAppend(std::string* base, absl::string_view path) {
 
   } else {
     size_t nonslash = base->find_last_not_of('/');
-    if (nonslash != npos) {
+    if (nonslash != std::string::npos) {
       base->resize(nonslash + 1);
       base->push_back('/');
     }

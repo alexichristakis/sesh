@@ -32,8 +32,8 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		7116AD922A4D4C57B30F70C3 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B35A7A3E3D8483C89B952A1 /* libRCTFBSDK.a */; };
 		7A077E09AFE544A6944A69BB /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE77BA60B1492D853CE92E /* libRNFirebase.a */; };
-		7EA98FBF20C86C3E00C321F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EA98FBE20C86C3E00C321F3 /* GoogleService-Info.plist */; };
 		7EDD924620C76AA50091E94F /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EDD924320C76A900091E94F /* libReactNativeNavigation.a */; };
+		7EFBA595211B91EC00262C75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EFBA594211B91EC00262C75 /* GoogleService-Info.plist */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		876AB38D425B4B0B984283DF /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9576AC013AA4F279857BDC8 /* MaterialIcons.ttf */; };
 		9FD0E0703E7B48ABB51E616E /* libRNReactNativeHapticFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B5A54BAA84493A893BDD1 /* libRNReactNativeHapticFeedback.a */; };
@@ -407,8 +407,8 @@
 		7539DEC2565A455D9D9C46D7 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7B4C63A942AE072908E233B7 /* Pods-sesh.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sesh.release.xcconfig"; path = "Pods/Target Support Files/Pods-sesh/Pods-sesh.release.xcconfig"; sourceTree = "<group>"; };
-		7EA98FBE20C86C3E00C321F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7EDD921820C76A900091E94F /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
+		7EFBA594211B91EC00262C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8ABE77BA60B1492D853CE92E /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		923C88E324164C64B4F73F5A /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
@@ -573,7 +573,7 @@
 		13B07FAE1A68108700A75B9A /* sesh */ = {
 			isa = PBXGroup;
 			children = (
-				7EA98FBE20C86C3E00C321F3 /* GoogleService-Info.plist */,
+				7EFBA594211B91EC00262C75 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -806,6 +806,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				566BD14409FDF6D92968AD33 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1270,8 +1271,8 @@
 				876AB38D425B4B0B984283DF /* MaterialIcons.ttf in Resources */,
 				F1C38A59D7BE4372A10C23EC /* Octicons.ttf in Resources */,
 				AAD857C056C64D3D9C0CB171 /* SimpleLineIcons.ttf in Resources */,
+				7EFBA595211B91EC00262C75 /* GoogleService-Info.plist in Resources */,
 				EBC885F64EFC40F099CC946B /* Zocial.ttf in Resources */,
-				7EA98FBF20C86C3E00C321F3 /* GoogleService-Info.plist in Resources */,
 				4B3B46C0B9C74DFFBC6E2CFA /* FontAwesome5_Brands.ttf in Resources */,
 				4358F557F9324BB6990E11A6 /* FontAwesome5_Regular.ttf in Resources */,
 				A0E3C7AFEDA44B4082753818 /* FontAwesome5_Solid.ttf in Resources */,
@@ -1311,6 +1312,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		566BD14409FDF6D92968AD33 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-sesh/Pods-sesh-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-sesh/Pods-sesh-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

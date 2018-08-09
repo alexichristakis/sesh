@@ -91,11 +91,11 @@ EOM
       ;;
   esac
 }
-if [[ "$CONFIGURATION" == "Release" ]]; then
+if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle"
 fi
-if [[ "$CONFIGURATION" == "Debug" ]]; then
+if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle"
 fi
