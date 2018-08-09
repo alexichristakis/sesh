@@ -145,6 +145,17 @@ export const FacebookLogin = async cancelLogin => {
   }
 };
 
+export const Test = () => {
+  return new Promise(resolve => {
+    console.log("testing firestore...");
+    firestore
+      .collection("users")
+      .doc("alexi")
+      .set({ name: "alexi" });
+    // .then(() => resolve(true));
+  });
+};
+
 const NewUser = ({ id, email, first_name, last_name, display_name }, { uid }) => {
   return new Promise(resolve => {
     const profile_pic = `https://graph.facebook.com/${id}/picture?type=large`;
@@ -158,7 +169,10 @@ const NewUser = ({ id, email, first_name, last_name, display_name }, { uid }) =>
       profile_pic
     };
 
-    console.log(user);
+    // console.log(user);
+    //
+    // console.log(firestore);
+    // console.log(firebase.firestore().collection("users"));
 
     /* set in RNFS? */
 
@@ -166,7 +180,7 @@ const NewUser = ({ id, email, first_name, last_name, display_name }, { uid }) =>
       .collection("users")
       .doc(uid)
       .set(user)
-      .then(resolve(true));
+      .then(() => resolve(true));
   });
 };
 

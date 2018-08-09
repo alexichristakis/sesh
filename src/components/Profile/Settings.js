@@ -9,7 +9,7 @@ import { BlurView, VibrancyView } from "react-native-blur";
 
 import ColorButton from "../global/ColorButton";
 
-import { FacebookLogout } from "../../api";
+import { FacebookLogout, Test } from "../../api";
 
 import { Colors, FillAbsolute } from "../../lib/styles";
 import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
@@ -40,14 +40,15 @@ class Settings extends Component {
   };
 
   handleOnPressSignOut = () => {
-    // FacebookLogout().then(() => {
-    // Navigation.pop("Component3");
-    // Navigation.dismissModal("Component7");
-    // Navigation.dismissModal("Component5");
-    // });
+    FacebookLogout().then(() => {
+      // Navigation.pop("Component3");
+      // Navigation.dismissModal("Component7");
+      // Navigation.dismissModal("Component5");
+    });
   };
 
   handleOnPressReportIssue = () => {
+    Test().then(() => console.log("success!"));
     // Navigation.showModal({
     //   component: {
     //     name: "sesh.AddMember",
