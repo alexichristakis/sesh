@@ -25,7 +25,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
     component: {
       name: "sesh.Home",
       passProps: {
-        user: user._user
+        user: user
       }
     }
   };

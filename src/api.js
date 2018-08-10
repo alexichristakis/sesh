@@ -105,8 +105,14 @@ export const UserAuthenticated = () => {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        const { uid } = user;
+        const ref = firestore.collection("users").doc(uid);
+        ref.get().then(doc => {
+          resolve(doc.data());
+        });
+
         /* TODO: download full user object from firebase */
-        resolve(user);
+        // resolve(user);
       } else resolve(false);
     });
   });
@@ -136,6 +142,7 @@ export const FacebookLogin = async cancelLogin => {
       // console.log(Promise.all(firebase.auth().signInAndRetrieveDataWithCredential(credential)));
       // console.log("currentUser: ", currentUser.user);
       const { additionalUserInfo, user } = currentUser;
+      console.log(currentUser);
       if (additionalUserInfo.isNewUser) await NewUser(additionalUserInfo.profile, user);
 
       return currentUser;
@@ -156,16 +163,16 @@ export const Test = () => {
   });
 };
 
-const NewUser = ({ id, email, first_name, last_name, display_name }, { uid }) => {
+const NewUser = ({ id, email, name, first_name, last_name }, { uid }) => {
   return new Promise(resolve => {
     const profile_pic = `https://graph.facebook.com/${id}/picture?type=large`;
     const user = {
       fb_id: id,
       uid,
       email,
+      name,
       first_name,
       last_name,
-      display_name,
       profile_pic
     };
 

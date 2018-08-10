@@ -58,11 +58,11 @@ class Home extends Component {
       vertScrolling: false,
 
       user: {
-        ...this.props.user,
-        // user_fb_id: 1779355238751386,
-        user_fb_id: this.props.user.providerData[0].uid,
-        // user_fb_id: 1182281483,
-        photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
+        ...this.props.user
+        // // user_fb_id: 1779355238751386,
+        // user_fb_id: this.props.user.providerData[0].uid,
+        // // user_fb_id: 1182281483,
+        // photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
       },
 
       coords: { latitude: null, longitude: null },

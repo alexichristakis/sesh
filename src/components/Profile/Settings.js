@@ -41,9 +41,9 @@ class Settings extends Component {
 
   handleOnPressSignOut = () => {
     FacebookLogout().then(() => {
-      // Navigation.pop("Component3");
-      // Navigation.dismissModal("Component7");
-      // Navigation.dismissModal("Component5");
+      Navigation.pop("Component3");
+      Navigation.dismissModal("Component6");
+      Navigation.dismissModal("Component9");
     });
   };
 
