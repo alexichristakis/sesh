@@ -52,7 +52,7 @@ const OpenContent = ({
       />
       <TouchableOpacity style={styles.profileButton} onPress={showProfileScreen}>
         <Image
-          source={{ uri: GetPhotoURL(user.user_fb_id, ICON_SIZE, ICON_SIZE) }}
+          source={{ uri: GetPhotoURL(user.fb_id, ICON_SIZE, ICON_SIZE) }}
           style={styles.photo}
         />
       </TouchableOpacity>

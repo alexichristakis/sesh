@@ -34,8 +34,8 @@ const yOffset = new Animated.Value(initialVertScroll);
   email,
   first_name,
   last_name,
-  display_name,
-  id,
+  name,
+  fb_id,
   uid,
   profile_pic
 }; */
@@ -57,13 +57,7 @@ class Home extends Component {
       focused: false,
       vertScrolling: false,
 
-      user: {
-        ...this.props.user
-        // // user_fb_id: 1779355238751386,
-        // user_fb_id: this.props.user.providerData[0].uid,
-        // // user_fb_id: 1182281483,
-        // photo: "https://graph.facebook.com/1779355238751386/picture?type=large"
-      },
+      user: this.props.user,
 
       coords: { latitude: null, longitude: null },
 

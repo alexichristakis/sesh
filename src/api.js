@@ -152,17 +152,6 @@ export const FacebookLogin = async cancelLogin => {
   }
 };
 
-export const Test = () => {
-  return new Promise(resolve => {
-    console.log("testing firestore...");
-    firestore
-      .collection("users")
-      .doc("alexi")
-      .set({ name: "alexi" });
-    // .then(() => resolve(true));
-  });
-};
-
 const NewUser = ({ id, email, name, first_name, last_name }, { uid }) => {
   return new Promise(resolve => {
     const profile_pic = `https://graph.facebook.com/${id}/picture?type=large`;

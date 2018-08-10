@@ -10,7 +10,7 @@ const moves = [
       longitude: -122.223837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
     // photo: "https://graph.facebook.com/1779355238751386/picture?width=300&height=300"
   },
   {
@@ -24,7 +24,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/100004662791911/picture?type=large",
-    user_fb_id: 100004662791911
+    fb_id: 100004662791911
   },
   {
     id: "alexi3",
@@ -37,7 +37,7 @@ const moves = [
       longitude: -122.203837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   },
   {
     id: "alexi4",
@@ -50,7 +50,7 @@ const moves = [
       longitude: -122.043837
     },
     // photo: "https://graph.facebook.com/100000731179223/picture?type=large",
-    user_fb_id: 100000731179223
+    fb_id: 100000731179223
   },
   {
     id: "alexi5",
@@ -63,7 +63,7 @@ const moves = [
       longitude: -122.063837
     },
     // photo: "https://graph.facebook.com/1182281483/picture?type=large",
-    user_fb_id: 1182281483
+    fb_id: 1182281483
   },
   {
     id: "alexi6",
@@ -76,7 +76,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   },
   {
     id: "alexi7",
@@ -89,7 +89,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   },
   {
     id: "alexi8",
@@ -102,7 +102,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   },
   {
     id: "alexi9",
@@ -115,7 +115,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/100004662791911/picture?type=large",
-    user_fb_id: 100004662791911
+    fb_id: 100004662791911
   },
   {
     id: "alexi10",
@@ -128,7 +128,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   },
   {
     id: "alexi11",
@@ -141,7 +141,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/100000731179223/picture?type=large",
-    user_fb_id: 100000731179223
+    fb_id: 100000731179223
   },
   {
     id: "alexi12",
@@ -154,7 +154,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1182281483/picture?type=large",
-    user_fb_id: 1182281483
+    fb_id: 1182281483
   },
   {
     id: "alexi13",
@@ -167,7 +167,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   },
   {
     id: "alexi14",
@@ -180,7 +180,7 @@ const moves = [
       longitude: -122.263837
     },
     // photo: "https://graph.facebook.com/1779355238751386/picture?type=large",
-    user_fb_id: 1779355238751386
+    fb_id: 1779355238751386
   }
 ];
 

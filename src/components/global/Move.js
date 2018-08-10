@@ -39,8 +39,8 @@ class Move extends Component {
   }
 
   componentDidMount() {
-    const { user_fb_id } = this.props.move;
-    DownloadPhoto(user_fb_id, GetPhotoURL(user_fb_id, ICON_SIZE, ICON_SIZE)).then(photo =>
+    const { fb_id } = this.props.move;
+    DownloadPhoto(fb_id, GetPhotoURL(fb_id, ICON_SIZE, ICON_SIZE)).then(photo =>
       this.setState({ photo, loading: false })
     );
 
@@ -60,7 +60,7 @@ class Move extends Component {
   onLeave = () => {
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
-      delay: 50,
+      delay: 45,
       duration: 25,
       useNativeDriver: true
     }).start();
@@ -104,7 +104,7 @@ class Move extends Component {
 
   render() {
     const { focused, active, move, coords } = this.props;
-    const { group, name, description, location, time, user_fb_id } = move;
+    const { group, name, description, location, time, fb_id } = move;
     const { loading, photo } = this.state;
 
     let opacity = {
@@ -120,7 +120,7 @@ class Move extends Component {
             style={styles.image}
             loading={loading}
             source={photo}
-            thumbnail={{ uri: GetThumbnailURL(user_fb_id) }}
+            thumbnail={{ uri: GetThumbnailURL(fb_id) }}
           />
         )}
         <View style={styles.contentContainer}>

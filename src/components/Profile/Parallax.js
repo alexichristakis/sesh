@@ -10,7 +10,7 @@ import { Colors, FillAbsolute } from "../../lib/styles";
 const PHOTO_SIZE = 1.25 * SCREEN_WIDTH;
 
 const Parallax = ({ user, offset, showProfileSettings }) => {
-  const { displayName, photo, user_fb_id } = user;
+  const { displayName, photo, fb_id } = user;
   const inputRange = [-100, -50, 0, 50];
 
   const animatedImage = {
@@ -38,8 +38,8 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
       <Animated.View style={animatedImage}>
         <ProgressiveImage
           style={styles.photo}
-          source={{ uri: GetPhotoURL(user_fb_id, PHOTO_SIZE, PHOTO_SIZE) }}
-          thumbnail={{ uri: GetThumbnailURL(user_fb_id) }}
+          source={{ uri: GetPhotoURL(fb_id, PHOTO_SIZE, PHOTO_SIZE) }}
+          thumbnail={{ uri: GetThumbnailURL(fb_id) }}
         />
       </Animated.View>
     </View>
