@@ -98,7 +98,7 @@ class Move extends Component {
   handleGroupOnPress = () => {
     TransparentModalTo("sesh.Focus", {
       groups: true,
-      data: { name: this.props.move.group, size: 12 }
+      data: { name: this.props.move.group, size: 10 }
     });
   };
 
