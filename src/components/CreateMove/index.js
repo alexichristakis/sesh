@@ -37,8 +37,6 @@ class CreateMove extends Component {
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
     this.buttonScale = new Animated.Value(0);
 
-    // yOffset.addListener(this.handleCheckIfSnap);
-    yOffset.addListener(() => {});
     this.state = {
       open: false,
       buttonVisible: false,
@@ -69,10 +67,6 @@ class CreateMove extends Component {
     }, 5);
   }
 
-  componentWillUnmount() {
-    yOffset.removeAllListeners();
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.open !== nextState.open) return true;
     else if (this.state.chosenDate !== nextState.chosenDate) return true;
@@ -85,9 +79,9 @@ class CreateMove extends Component {
     useNativeDriver: true
   });
 
-  handleVertScrollRelease = event => {
-    const { changedTouches, locationY, pageY } = event.nativeEvent;
-    if (yOffset._value < -50) {
+  handleScrollEndDrag = ({ nativeEvent }) => {
+    const { y } = nativeEvent.contentOffset;
+    if (y < -75) {
       this.setState({ buttonVisible: false }, () => {
         Keyboard.dismiss();
         this.interactable.snapTo({ index: 0 });
@@ -231,7 +225,7 @@ class CreateMove extends Component {
 
         <Animated.ScrollView
           ref={view => (this.scroll = view)}
-          onResponderRelease={this.handleVertScrollRelease}
+          onScrollEndDrag={this.handleScrollEndDrag}
           onScroll={this.handleOnScroll}
           scrollEventThrottle={16}
           scrollEnabled={this.state.scrollEnabled}

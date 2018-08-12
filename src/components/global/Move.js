@@ -16,7 +16,7 @@ import {
   GetPhotoURL,
   GetThumbnailURL
 } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, TextStyles, shadow } from "../../lib/styles";
 import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = Math.round((SCREEN_WIDTH - 2 * CARD_GUTTER) / 3);
@@ -125,7 +125,7 @@ class Move extends Component {
         )}
         <View style={styles.contentContainer}>
           <TouchableOpacity style={styles.groupButton} onPress={this.handleGroupOnPress}>
-            <Text allowFontScaling={false} style={styles.group}>
+            <Text allowFontScaling={false} style={TextStyles.bold}>
               {name}
             </Text>
             <Icon
@@ -134,7 +134,7 @@ class Move extends Component {
               size={14}
               color={active ? Colors.active : Colors.later}
             />
-            <Text allowFontScaling={false} style={styles.group}>
+            <Text allowFontScaling={false} style={TextStyles.bold}>
               {group}
             </Text>
           </TouchableOpacity>
@@ -212,14 +212,12 @@ const styles = StyleSheet.create({
     fontWeight: "500"
   },
   time: {
-    textAlign: "right",
-    fontSize: 14,
-    color: Colors.gray
-    // color: Colors.gray
+    ...TextStyles.gray,
+    textAlign: "right"
   },
   description: {
-    flex: 1,
-    fontSize: 14
+    ...TextStyles.body,
+    flex: 1
   },
   bottom: {
     flexDirection: "row",
@@ -227,9 +225,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   location: {
-    fontSize: 14,
-    textAlignVertical: "center",
-    color: Colors.gray
+    ...TextStyles.gray,
+    textAlignVertical: "center"
   }
 });
 

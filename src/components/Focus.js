@@ -96,16 +96,11 @@ class Focus extends Component {
   }
 
   componentDidMount() {
-    this.yOffset.addListener(() => {});
     this.beginTransition();
     /* fetch users who have joined move */
     setTimeout(() => {
       this.setState({ loading: false });
     }, 500);
-  }
-
-  componentWillUnmount() {
-    this.yOffset.removeAllListeners();
   }
 
   beginTransition = () => {
@@ -125,11 +120,10 @@ class Focus extends Component {
     this.interactable.snapTo({ index: 0 });
   };
 
-  handleVertScrollRelease = event => {
-    const { changedTouches, locationY, pageY } = event.nativeEvent;
-    if (this.yOffset._value < -50) {
-      this.handleClose();
-    }
+  handleScrollEndDrag = ({ nativeEvent }) => {
+    const { y } = nativeEvent.contentOffset;
+    if (y < -75) this.handleClose();
+    // console.log(event.nativeEvent);
   };
 
   handleOnSnap = event => {
@@ -294,7 +288,7 @@ class Focus extends Component {
 
         <Animated.ScrollView
           ref={ScrollView => (this.vertScrollView = ScrollView)}
-          onResponderRelease={this.handleVertScrollRelease}
+          onScrollEndDrag={this.handleScrollEndDrag}
           style={focusContainerStyle}
           onScroll={this.vertOnScroll()}
           scrollEventThrottle={16}
@@ -328,11 +322,6 @@ class Focus extends Component {
           onDrag={this.handleOnDrag}
           onSnap={this.handleOnSnap}
         >
-          {/* {this.props.groups && <View style={styles.moveContainer}>{Card}</View>} */}
-          {/* <View shouldRasterizeIOS style={styles.moveContainer}>
-            {Card}
-          </View> */}
-          {/* {!this.props.groups && ( */}
           <Animated.ScrollView
             horizontal
             pagingEnabled
@@ -353,7 +342,6 @@ class Focus extends Component {
               </SuperEllipseMask>
             </Animated.View>
           </Animated.ScrollView>
-          {/* )} */}
         </Interactable.View>
       </View>
     );

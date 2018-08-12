@@ -18,7 +18,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, SeparatorStyles, shadow } from "../../lib/styles";
 import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
 import User from "../global/User";
@@ -87,15 +87,9 @@ class GroupFocus extends Component {
 
   _keyExtractor = item => item.id.toString();
 
-  _renderItem = ({ item, index }) => (
-    <User length={this.state.data.length} index={index} data={item} />
-  );
+  _renderItem = ({ item, index }) => <User user={item} />;
 
-  _renderSeparator = () => (
-    <View style={styles.separatorContainer}>
-      <View style={styles.separator} />
-    </View>
-  );
+  _renderSeparator = () => <View style={SeparatorStyles.users} />;
 
   render() {
     return (
@@ -139,10 +133,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   separator: {
-    width: SCREEN_WIDTH - 50,
-    marginLeft: 50,
-    height: 0.5,
-    backgroundColor: Colors.gray
+    width: SCREEN_WIDTH - 24.5,
+    marginLeft: 24.5,
+    height: 1,
+    backgroundColor: Colors.lightGray
   },
   footerContainer: {
     // flex: 1,

@@ -6,7 +6,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import Group from "../Groups/Group";
 
 import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+import { Colors, SeparatorStyles, shadow, FillAbsolute } from "../../lib/styles";
 
 const GroupSelectionCard = props => {
   _renderItem = ({ item, index }) => (
@@ -20,7 +20,7 @@ const GroupSelectionCard = props => {
     </TouchableHighlight>
   );
 
-  _renderSeparator = () => <View style={styles.separator} />;
+  _renderSeparator = () => <View style={SeparatorStyles.groups} />;
 
   _keyExtractor = item => item.id.toString();
 

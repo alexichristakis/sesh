@@ -1,12 +1,19 @@
 import React from "react";
-import { Animated, StyleSheet, View, Text } from "react-native";
+import { Animated, StyleSheet, View, Text, TextInput } from "react-native";
 
 import { SB_HEIGHT } from "../../../lib/constants";
+import { Colors } from "../../../lib/styles";
 
-const Header = props => {
+const Header = ({ onChangeName }) => {
   return (
     <View style={styles.container}>
-      <Text>Create Group</Text>
+      {/* <Text>Create Group</Text> */}
+      <TextInput
+        autoFocus
+        style={styles.text}
+        placeholder={"group name"}
+        onChangeText={onChangeName}
+      />
     </View>
   );
 };
@@ -19,9 +26,15 @@ const styles = StyleSheet.create({
     right: 0,
     height: SB_HEIGHT + 50,
     paddingTop: SB_HEIGHT / 2,
-    backgroundColor: "white",
-    alignItems: "center",
+    paddingLeft: 10,
+    backgroundColor: Colors.groupsHeader1,
+    alignItems: "flex-start",
     justifyContent: "center"
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white"
   }
 });
 

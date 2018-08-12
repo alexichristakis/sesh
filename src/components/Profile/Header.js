@@ -6,9 +6,10 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { VibrancyView } from "react-native-blur";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, IS_X, REFRESH_OFFSET } from "../../lib/constants";
-import { Colors, FillAbsolute } from "../../lib/styles";
+import { Colors, TextStyles, FillAbsolute } from "../../lib/styles";
 
 const PHOTO_SIZE = 100;
 
@@ -59,32 +60,40 @@ const Header = ({ user, offset, showProfileSettings, showAddFriend }) => {
 
   const barOpacity = {
     opacity: offset.interpolate({
-      inputRange: [0, 140, 150],
+      inputRange: [0, 200, 210],
       outputRange: [0, 0, 1],
       extrapolate: "clamp"
     })
   };
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.bar, barOpacity]}>
-        <Text style={styles.title}>My Groups:</Text>
-      </Animated.View>
-      <Animated.View style={[styles.actionButtonContainer, animatedActionButtons]}>
-        <TouchableOpacity style={styles.actionButton} onPress={showProfileSettings}>
-          <IonIcon
-            style={{ marginTop: 3 }}
-            name={"ios-settings"}
-            size={30}
-            color={Colors.groupsHeader1}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={showAddFriend}>
-          <MaterialIcon name={"person-add"} size={30} color={Colors.groupsHeader1} />
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
+    <Animated.View style={[styles.bar, barOpacity]}>
+      <VibrancyView style={{ flex: 1 }}>
+        <Text style={TextStyles.headerWhite}>{user.name}</Text>
+      </VibrancyView>
+    </Animated.View>
   );
+
+  // return (
+  //   <View style={styles.container}>
+  //     <Animated.View style={[styles.bar, barOpacity]}>
+  //       <Text style={styles.title}>My Groups:</Text>
+  //     </Animated.View>
+  //     {<Animated.View style={[styles.actionButtonContainer, animatedActionButtons]}>
+  //             <TouchableOpacity style={styles.actionButton} onPress={showProfileSettings}>
+  //               <IonIcon
+  //                 style={{ marginTop: 3 }}
+  //                 name={"ios-settings"}
+  //                 size={30}
+  //                 color={Colors.groupsHeader1}
+  //               />
+  //             </TouchableOpacity>
+  //             <TouchableOpacity style={styles.actionButton} onPress={showAddFriend}>
+  //               <MaterialIcon name={"person-add"} size={30} color={Colors.groupsHeader1} />
+  //             </TouchableOpacity>
+  //           </Animated.View>}
+  //   </View>
+  // );
 };
 
 const styles = StyleSheet.create({
@@ -101,13 +110,13 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    paddingTop: SB_HEIGHT,
-    height: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-    borderBottomWidth: 0.5,
-    borderColor: Colors.mediumGray
+    // paddingTop: SB_HEIGHT,
+    height: SB_HEIGHT
+    // alignItems: "center",
+    // justifyContent: "center"
+    // backgroundColor: "white",
+    // borderBottomWidth: 0.5,
+    // borderColor: Colors.mediumGray
   },
   title: {
     fontSize: 20,
@@ -142,7 +151,7 @@ const styles = StyleSheet.create({
     height: 45,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     borderRadius: 22.5
   }
 });

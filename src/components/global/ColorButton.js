@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
-import { Colors } from "../../lib/styles";
+import { Colors, TextStyles } from "../../lib/styles";
 
 class ColorButton extends Component {
   constructor(props) {
@@ -21,29 +21,31 @@ class ColorButton extends Component {
   };
 
   render() {
-    const { style = {} } = this.props;
+    const {
+      style = styles.button,
+      textStyle = TextStyles.body,
+      borderRadius = 20,
+      onPress,
+      color,
+      title
+    } = this.props;
     return (
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={this.handlePressIn}
         onPressOut={this.handlePressOut}
-        onPress={this.props.onPress}
+        onPress={onPress}
         style={[
-          styles.button,
           style,
           {
-            borderColor: this.props.color,
-            backgroundColor: this.state.pressed ? this.props.color : "transparent"
+            borderRadius,
+            borderColor: color,
+            backgroundColor: this.state.pressed ? color : "transparent"
           }
         ]}
       >
-        <Text
-          style={[
-            this.props.textStyle,
-            { color: this.state.pressed ? Colors.lightGray : this.props.color }
-          ]}
-        >
-          {this.props.title}
+        <Text style={[textStyle, { color: this.state.pressed ? Colors.lightGray : color }]}>
+          {title}
         </Text>
       </TouchableOpacity>
     );
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 10,
     paddingHorizontal: 50,
-    borderRadius: 20,
+    // borderRadius: 20,
     borderWidth: 1,
     marginVertical: 5
   }

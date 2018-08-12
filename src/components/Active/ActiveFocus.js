@@ -26,9 +26,24 @@ const ActiveFocus = ({
   users,
   handleOnPress
 }) => {
-  _renderItem = ({ item }) => <User data={item} />;
+  _renderItem = ({ item }) => <User user={item} onPress={() => {}} />;
 
   _renderSeparator = () => <View style={styles.separator} />;
+
+  _renderHeader = () => (
+    <View
+      style={{
+        paddingVertical: 12,
+        paddingLeft: 12,
+        // alignItems: "center",
+        justifyContent: "center",
+        borderBottomWidth: 1,
+        borderColor: Colors.lightGray
+      }}
+    >
+      <Text style={{ fontSize: 18 }}>Going:</Text>
+    </View>
+  );
 
   _keyExtractor = item => item.id.toString();
 
@@ -69,6 +84,7 @@ const ActiveFocus = ({
             data={users}
             renderItem={_renderItem}
             ItemSeparatorComponent={_renderSeparator}
+            ListHeaderComponent={_renderHeader}
             keyExtractor={_keyExtractor}
           />
         </SuperEllipseMask>
@@ -98,10 +114,10 @@ const styles = StyleSheet.create({
     marginVertical: CARD_GUTTER
   },
   separator: {
-    width: SCREEN_WIDTH - 15,
-    marginLeft: 15,
+    width: SCREEN_WIDTH - 24.5,
+    marginLeft: 24.5,
     height: 1,
-    backgroundColor: Colors.mediumGray
+    backgroundColor: Colors.lightGray
   }
 });
 

@@ -21,7 +21,7 @@ import { Colors, shadow } from "../../lib/styles";
 const BAR_HEIGHT = 30;
 const ICON_DIMENSION = 50;
 
-const TopBar = ({ yOffset, xOffset, scrollToStart, scrollToEnd, refreshing }) => {
+const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing }) => {
   const initialOffset = IS_X ? -44 : -20;
   const animatedProgress = new Animated.Value(0);
 
@@ -155,6 +155,7 @@ const TopBar = ({ yOffset, xOffset, scrollToStart, scrollToEnd, refreshing }) =>
           </Animated.View>
         </Animated.View>
       )}
+
       <Animated.View style={[styles.loading, animatedLoading]}>
         <ControlledLoadingCircle progress={progress} size={18} />
       </Animated.View>

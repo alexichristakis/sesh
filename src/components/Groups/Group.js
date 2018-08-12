@@ -10,7 +10,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import TouchableScale from "../global/TouchableScale";
 
 import { TransparentModalTo } from "../../lib/functions";
-import { Colors, shadow, cardShadow } from "../../lib/styles";
+import { Colors, TextStyles } from "../../lib/styles";
 import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE1 = 35;
@@ -37,11 +37,9 @@ const Group = props => {
   return (
     <SuperEllipseMask style={containerStyle} radius={props.card ? BORDER_RADIUS : 0}>
       <View style={styles.mid}>
-        <Text allowFontScaling={false} style={styles.name}>
-          {group.name}
-        </Text>
+        <Text style={TextStyles.header}>{group.name}</Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={styles.size}>{group.size}</Text>
+          <Text style={TextStyles.gray}>{group.size}</Text>
           <FeatherIcon
             style={{ paddingLeft: 5, paddingBottom: 1 }}
             name={"users"}

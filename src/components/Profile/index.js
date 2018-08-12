@@ -5,6 +5,8 @@ import { Navigation } from "react-native-navigation";
 
 import Parallax from "./Parallax";
 import Header from "./Header";
+import TopButtons from "./TopButtons";
+import Notifications from "./Notifications";
 import Groups from "../Groups";
 
 import { TransparentModalTo } from "../../lib/functions";
@@ -13,6 +15,27 @@ import { Colors, FillAbsolute } from "../../lib/styles";
 
 const LIGHT = "light-content";
 const DARK = "dark-content";
+
+const notifications = [
+  {
+    uid: 1,
+    name: "Alexi Christakis",
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    uid: 2,
+    name: "William Oles",
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    uid: 3,
+    name: "Michelle Li",
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  }
+];
 
 class Profile extends Component {
   constructor(props) {
@@ -25,13 +48,13 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount() {
-    this.yOffset.addListener(this.offsetListener);
-  }
+  // componentDidMount() {
+  //   this.yOffset.addListener(this.offsetListener);
+  // }
 
-  componentWillUnmount() {
-    this.yOffset.removeAllListeners();
-  }
+  // componentWillUnmount() {
+  //   this.yOffset.removeAllListeners();
+  // }
 
   shouldComponentUpdate() {
     return false;
@@ -54,20 +77,34 @@ class Profile extends Component {
     });
   };
 
-  handleScrollRelease = event => {
-    const { changedTouches, locationY, pageY } = event.nativeEvent;
-    if (this.yOffset._value < -75) {
-      Navigation.dismissModal(this.props.componentId);
-    }
+  handleOnPressAcceptFriend = uid => {
+    const { user } = this.props;
   };
 
-  offsetListener = ({ value }) => {
-    const { barStyle } = this.state;
-    if (value >= 145 && barStyle === LIGHT)
-      this.setState({ barStyle: DARK }, () => StatusBar.setBarStyle(DARK, true));
-    else if (value < 145 && barStyle === DARK)
-      this.setState({ barStyle: LIGHT }, () => StatusBar.setBarStyle(LIGHT, true));
+  handleOnPressDeleteRequest = uid => {
+    const { user } = this.props;
   };
+
+  // handleScrollRelease = event => {
+  //   const { changedTouches, locationY, pageY } = event.nativeEvent;
+  //   if (this.yOffset._value < -75) {
+  //     Navigation.dismissModal(this.props.componentId);
+  //   }
+  // };
+
+  handleScrollEndDrag = ({ nativeEvent }) => {
+    const { y } = nativeEvent.contentOffset;
+    if (y < -75) Navigation.dismissModal(this.props.componentId);
+    // console.log(event.nativeEvent);
+  };
+
+  // offsetListener = ({ value }) => {
+  //   const { barStyle } = this.state;
+  //   if (value >= 145 && barStyle === LIGHT)
+  //     this.setState({ barStyle: DARK }, () => StatusBar.setBarStyle(DARK, true));
+  //   else if (value < 145 && barStyle === DARK)
+  //     this.setState({ barStyle: LIGHT }, () => StatusBar.setBarStyle(LIGHT, true));
+  // };
 
   render() {
     const { user, data } = this.props;
@@ -82,17 +119,28 @@ class Profile extends Component {
         <Animated.ScrollView
           style={styles.scroll}
           contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
           onScroll={this._onScroll()}
-          onResponderRelease={this.handleScrollRelease}
+          onScrollEndDrag={this.handleScrollEndDrag}
+          // onResponderRelease={this.handleScrollRelease}
           scrollEventThrottle={16}
         >
+          <TopButtons
+            onPressSettings={this.showProfileSettings}
+            onPressAddFriend={this.showAddFriend}
+          />
+          <Notifications
+            data={notifications}
+            acceptFriend={this.handleOnPressAcceptFriend}
+            deleteRequest={this.handleOnPressDeleteRequest}
+          />
           <Groups data={data} />
         </Animated.ScrollView>
         <Header
           user={user}
           offset={this.yOffset}
-          showProfileSettings={this.showProfileSettings}
-          showAddFriend={this.showAddFriend}
+          // showProfileSettings={this.showProfileSettings}
+          // showAddFriend={this.showAddFriend}
         />
       </View>
     );
@@ -105,11 +153,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.groupsHeader1
   },
   contentContainer: {
-    paddingBottom: 182
+    paddingBottom: 182,
+    paddingHorizontal: CARD_GUTTER
   },
   scroll: {
     flex: 1,
-    paddingTop: 215
+    paddingTop: 250
   }
 });
 

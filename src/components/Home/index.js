@@ -14,11 +14,12 @@ import Active from "../Active";
 import Later from "../Later";
 
 import { TransparentModalTo } from "../../lib/functions";
-import { SCREEN_WIDTH, IS_X, REFRESH_OFFSET } from "../../lib/constants";
-import { Colors, FillAbsolute } from "../../lib/styles";
+import { REFRESH_OFFSET } from "../../lib/constants";
 
 /* import fetch functions */
-import { DownloadPhoto } from "../../api";
+import {} from "../../api";
+
+import { IS_X } from "../../lib/constants";
 
 /* to replace with data from firestore */
 import GROUPS from "../../mock-data/GROUPS";
@@ -78,8 +79,8 @@ class Home extends Component {
     // //
     // await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
     // RNFS.readFile(path, "base64").then(res => {
-    // 	console.log("finished");
-    // 	this.setState({ photo: "data:image/png;base64," + res, loading: false });
+    //  console.log("finished");
+    //  this.setState({ photo: "data:image/png;base64," + res, loading: false });
     // });
     // console.log(res);
 
@@ -194,6 +195,7 @@ class Home extends Component {
         <TopBar
           yOffset={yOffset}
           xOffset={xOffset}
+          user={user}
           refreshing={refreshing}
           barOpen={this.state.barOpen}
           scrollToStart={this._scrollToStart}

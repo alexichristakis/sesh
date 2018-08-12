@@ -40,10 +40,10 @@ export const DownloadPhoto = (name, source_url) => {
 
 //////////////* SETUP *//////////////
 // export const SetupRNFS = () => {
-// 	let path = RNFS.DocumentDirectoryPath;
-// 	RNFS.mkdir(path + "/photos");
-// 	RNFS.mkdir(path + "/groups");
-// 	RNFS.mkdir(path + "/moves");
+//  let path = RNFS.DocumentDirectoryPath;
+//  RNFS.mkdir(path + "/photos");
+//  RNFS.mkdir(path + "/groups");
+//  RNFS.mkdir(path + "/moves");
 // };
 
 //////////////* STORAGE *//////////////
@@ -105,6 +105,7 @@ export const UserAuthenticated = () => {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log("user authenticated: ", user);
         const { uid } = user;
         const ref = firestore.collection("users").doc(uid);
         ref.get().then(doc => {
@@ -139,43 +140,40 @@ export const FacebookLogin = async cancelLogin => {
 
       // login with credential
       const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
-      // console.log(Promise.all(firebase.auth().signInAndRetrieveDataWithCredential(credential)));
-      // console.log("currentUser: ", currentUser.user);
-      const { additionalUserInfo, user } = currentUser;
-      console.log(currentUser);
-      if (additionalUserInfo.isNewUser) await NewUser(additionalUserInfo.profile, user);
 
-      return currentUser;
+      const { additionalUserInfo, user } = currentUser;
+      const { id, email, name, first_name, last_name } = additionalUserInfo.profile;
+      const { uid } = user;
+
+      const profile_pic = `https://graph.facebook.com/${id}/picture?type=large`;
+
+      const userObj = {
+        fb_id: id,
+        uid,
+        email,
+        name,
+        first_name,
+        last_name,
+        profile_pic
+      };
+
+      if (additionalUserInfo.isNewUser) await NewUser(userObj);
+
+      return userObj;
     }
   } catch (e) {
     console.error(e);
   }
 };
 
-const NewUser = ({ id, email, name, first_name, last_name }, { uid }) => {
+const NewUser = userObj => {
   return new Promise(resolve => {
-    const profile_pic = `https://graph.facebook.com/${id}/picture?type=large`;
-    const user = {
-      fb_id: id,
-      uid,
-      email,
-      name,
-      first_name,
-      last_name,
-      profile_pic
-    };
-
-    // console.log(user);
-    //
-    // console.log(firestore);
-    // console.log(firebase.firestore().collection("users"));
-
     /* set in RNFS? */
 
     firestore
       .collection("users")
-      .doc(uid)
-      .set(user)
+      .doc(userObj.uid)
+      .set(userObj)
       .then(() => resolve(true));
   });
 };

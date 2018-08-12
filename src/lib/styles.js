@@ -1,4 +1,6 @@
-import { CARD_GUTTER } from "./constants";
+import { StyleSheet } from "react-native";
+
+import { CARD_GUTTER, SCREEN_WIDTH } from "./constants";
 
 // const activeBackground1 = "rgba(74,226,255,1)";
 const activeBackground1 = "rgba(55,223,255,1)";
@@ -64,7 +66,7 @@ const CardMargins = {
   marginBottom: CARD_GUTTER
 };
 
-const colors = {
+const Colors = {
   whiteTrans,
   activeBackground1,
   activeBackground2,
@@ -87,8 +89,49 @@ const colors = {
   green
 };
 
+const SeparatorStyles = StyleSheet.create({
+  groups: {
+    width: SCREEN_WIDTH - 15,
+    marginLeft: 15,
+    height: 1,
+    backgroundColor: Colors.lightGray
+  },
+  users: {
+    width: SCREEN_WIDTH - 24.5,
+    marginLeft: 24.5,
+    height: 1,
+    backgroundColor: Colors.lightGray
+  }
+});
+
+const TextStyles = StyleSheet.create({
+  header: {
+    fontSize: 22,
+    fontWeight: "300"
+  },
+  headerWhite: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "white"
+  },
+  body: {
+    fontSize: 16,
+    fontWeight: "400"
+  },
+  bold: {
+    fontSize: 16,
+    fontWeight: "500"
+  },
+  gray: {
+    fontSize: 14,
+    color: Colors.gray
+  }
+});
+
 module.exports = {
-  Colors: colors,
+  Colors,
+  TextStyles,
+  SeparatorStyles,
   shadow,
   FillAbsolute
 };

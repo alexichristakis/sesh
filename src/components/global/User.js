@@ -1,48 +1,106 @@
 import React, { Component } from "react";
-import {
-  LayoutAnimation,
-  Easing,
-  Animated,
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  TouchableOpacity
-} from "react-native";
-import PropTypes from "prop-types";
+import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 
-import { Navigation } from "react-native-navigation";
-import SuperEllipseMask from "react-native-super-ellipse-mask";
+import Icon from "react-native-vector-icons/Feather";
 
-// import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import Checkmark from "./Checkmark";
+import ColorButton from "./ColorButton";
 
-import { TimeAgo } from "../../lib/functions";
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, TextStyles } from "../../lib/styles";
 import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 35;
 
-const User = props => {
-  const user = props.data;
-
-  let borderRadius = {
-    topLeft: props.index === 0 ? BORDER_RADIUS : 0,
-    topRight: props.index === 0 ? BORDER_RADIUS : 0
+const User = ({ selectable, request, onPressAccept, onPressDelete, user, selected, onPress }) => {
+  handleOnPress = () => {
+    onPress(user);
   };
 
-  return (
-    <SuperEllipseMask radius={borderRadius}>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => {
-          console.log(props.index);
-        }}
-      >
-        <Image style={styles.image} source={{ uri: user.photo }} />
-        <Text style={styles.name}>{user.name}</Text>
-      </TouchableOpacity>
-    </SuperEllipseMask>
+  let content = (
+    <>
+      <Image style={styles.image} source={{ uri: user.photo }} />
+      <Text style={styles.name}>{user.name}</Text>
+      {selectable &&
+        (selected ? (
+          <Checkmark style={{ marginRight: 5 }} size={25} />
+        ) : (
+          <Icon name={"plus"} size={20} color={Colors.primary} />
+        ))}
+      {request && (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <ColorButton
+            title="Confirm"
+            textStyle={TextStyles.bold}
+            style={styles.button}
+            borderRadius={5}
+            onPress={() => onPressAccept(user.uid)}
+            color={Colors.green}
+          />
+          <ColorButton
+            title="Delete"
+            textStyle={TextStyles.bold}
+            style={styles.button}
+            borderRadius={5}
+            onPress={() => onPressDelete(user.uid)}
+            color={Colors.red}
+          />
+        </View>
+      )}
+    </>
   );
+
+  if (selectable)
+    return (
+      <TouchableOpacity style={styles.container} onPress={handleOnPress}>
+        {content}
+      </TouchableOpacity>
+    );
+  else return <View style={styles.container}>{content}</View>;
+
+  // return (
+  //   <TouchableOpacity style={styles.container} onPress={handleOnPress}>
+  //     <Image style={styles.image} source={{ uri: user.photo }} />
+  //     <Text style={styles.name}>{user.name}</Text>
+  //     {selectable &&
+  //       (selected ? (
+  //         <Checkmark style={{ marginRight: 5 }} size={25} />
+  //       ) : (
+  //         <Icon name={"plus"} size={20} color={Colors.primary} />
+  //       ))}
+  //     {request && (
+  //       <View
+  //         style={{
+  //           flex: 1,
+  //           flexDirection: "row",
+  //           justifyContent: "space-between"
+  //         }}
+  //       >
+  //         <ColorButton
+  //           title="Confirm"
+  //           textStyle={TextStyles.bold}
+  //           style={styles.button}
+  //           borderRadius={5}
+  //           onPress={() => onPressAccept(user.uid)}
+  //           color={Colors.green}
+  //         />
+  //         <ColorButton
+  //           title="Delete"
+  //           textStyle={TextStyles.bold}
+  //           style={styles.button}
+  //           borderRadius={5}
+  //           onPress={() => onPressDelete(user.uid)}
+  //           color={Colors.red}
+  //         />
+  //       </View>
+  //     )}
+  //   </TouchableOpacity>
+  // );
 };
 
 const styles = StyleSheet.create({
@@ -51,7 +109,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     justifyContent: "center",
-    padding: 5
+    alignItems: "center",
+    padding: 7
   },
   image: {
     // position: "absolute",
@@ -63,19 +122,25 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: "row" },
   name: {
+    ...TextStyles.body,
     flex: 1,
     marginLeft: 10,
-    alignSelf: "center",
-    fontSize: 20,
-    fontWeight: "300"
-    // color: Colors.active,
+    alignSelf: "center"
   },
-
   time: {
     alignSelf: "center",
     fontSize: 12,
     fontWeight: "300",
     color: Colors.gray
+  },
+  button: {
+    // flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+    borderWidth: 1
+    // marginHorizontal: 2.5
   }
 });
 

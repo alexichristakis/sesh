@@ -18,6 +18,7 @@ import {
 } from "../../../lib/constants";
 
 const BUTTON_SIZE = 40;
+const MAIN_BUTTON_SIZE = 65;
 const ICON_SIZE = 60;
 
 const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => {
@@ -87,7 +88,7 @@ const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => 
       </TouchableScale>
       <TouchableScale onPress={toggleDrawer}>
         <Animated.View style={[primary, styles.mainButton]}>
-          <FeatherIcon name={"navigation"} size={30} color={Colors.darkerGray} />
+          <FeatherIcon name={"navigation"} size={35} color={Colors.darkerGray} />
         </Animated.View>
       </TouchableScale>
       <TouchableScale disabled={open} onPress={presentNewLaterMove}>
@@ -122,9 +123,9 @@ const styles = StyleSheet.create({
   },
   mainButton: {
     flexDirection: "row",
-    height: BUTTON_SIZE + 20,
-    width: BUTTON_SIZE + 20,
-    borderRadius: BUTTON_SIZE / 2 + 10,
+    height: MAIN_BUTTON_SIZE,
+    width: MAIN_BUTTON_SIZE,
+    borderRadius: MAIN_BUTTON_SIZE / 2,
     backgroundColor: Colors.lightGray,
     marginHorizontal: 30,
     justifyContent: "center",

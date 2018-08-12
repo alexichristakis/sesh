@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Animated, View } from "react-native";
+import { StyleSheet, Animated, View, Image } from "react-native";
 
 import ProgressiveImage from "../global/ProgressiveImage";
 
@@ -35,6 +35,11 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={{ uri: GetPhotoURL(fb_id, PHOTO_SIZE / 4, PHOTO_SIZE / 4) }}
+        style={{ position: "absolute", top: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+        blurRadius={20}
+      />
       <Animated.View style={animatedImage}>
         <ProgressiveImage
           style={styles.photo}

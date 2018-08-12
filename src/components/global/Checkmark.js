@@ -38,7 +38,7 @@ export default class Checkmark extends Component {
             ref={animation => {
               this.animation = animation;
             }}
-            source={require("../../assets/animations/checkmark.json")}
+            source={require("../../assets/animations/Checkmark1.json")}
             style={{
               height: animationSize,
               width: animationSize
