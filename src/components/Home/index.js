@@ -48,8 +48,6 @@ class Home extends Component {
     this.activeOffset = new Animated.Value(initialVertScroll);
     this.laterOffset = new Animated.Value(initialVertScroll);
 
-    xOffset.addListener(() => {});
-    yOffset.addListener(this.handleRefresh);
     this.state = {
       loading: true,
       refreshing: false,
@@ -95,11 +93,6 @@ class Home extends Component {
     console.log(this.state.user);
   }
 
-  componentWillUnmount() {
-    xOffset.removeAllListeners();
-    yOffset.removeAllListeners();
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     // if (this.state.barOpen !== nextState.barOpen) return true;
     // else if (this.state.focused !== nextState.focused) return true;
@@ -141,9 +134,9 @@ class Home extends Component {
     );
   };
 
-  handleRefresh = event => {
-    const { value } = event;
-    if (value <= REFRESH_OFFSET && !this.state.refreshing) {
+  handleOnVertScrollEndDrag = ({ nativeEvent }) => {
+    const { y } = nativeEvent.contentOffset;
+    if (y <= REFRESH_OFFSET && !this.state.refreshing) {
       ReactNativeHapticFeedback.trigger("impactHeavy");
       this.setState({ refreshing: true }, () => {
         setTimeout(() => {
@@ -174,13 +167,15 @@ class Home extends Component {
         <Active
           shortened={!this.state.barOpen}
           handleTransition={this.handleTransition}
-          _vertOnScroll={this._vertOnScroll}
+          onScroll={this._vertOnScroll}
+          onScrollEndDrag={this.handleOnVertScrollEndDrag}
           data={data}
         />
         <Later
           shortened={!this.state.barOpen}
           handleTransition={this.handleTransition}
-          _vertOnScroll={this._vertOnScroll}
+          onScroll={this._vertOnScroll}
+          onScrollEndDrag={this.handleOnVertScrollEndDrag}
           data={data}
         />
       </Animated.ScrollView>

@@ -96,9 +96,9 @@ class VerticalList extends Component {
         data={this.props.data}
         renderItem={this.props.renderItem}
         scrollEventThrottle={16}
-        onScroll={this.props._vertOnScroll}
+        onScroll={this.props.onScroll}
         onScrollBeginDrag={this.props._onScrollBegin}
-        onScrollEndDrag={this.props._onScrollEnd}
+        onScrollEndDrag={this.props.onScrollEndDrag}
         keyExtractor={this._keyExtractor}
         showsVerticalScrollIndicator={false}
         // ListHeaderComponent={this.renderHeader}
