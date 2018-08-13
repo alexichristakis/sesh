@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
