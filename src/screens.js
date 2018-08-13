@@ -20,42 +20,62 @@ import CreateMove from "./components/CreateMove";
 
 import GroupSettings from "./components/Groups/Settings";
 import Focus from "./components/Focus";
-
 import EditName from "./components/Groups/EditName";
 
-function sceneCreator(sceneComp, store) {
-  return () => {
-    class SceneWrapper extends React.Component {
-      render() {
-        return <Provider store={store}>{React.createElement(sceneComp)}</Provider>;
-      }
-    }
-  };
-}
+const REGISTER = "register";
+const SIGN_IN = "sign_in";
+const HOME = "home";
+const FOCUS = "focus";
+const CREATE_MOVE = "create_move";
+const PROFILE = "profile";
+const LOADING = "loading";
+const ADD_FRIEND = "add_friend";
+const SETTINGS = "settings";
+const CREATE_GROUP = "create_group";
+const EDIT_GROUP_NAME = "edit_group_name";
+const ADD_TO_GROUP = "add_to_group";
+const GROUP_SETTINGS = "group_settings";
+
+const SCREENS = {
+  REGISTER,
+  SIGN_IN,
+  HOME,
+  FOCUS,
+  CREATE_MOVE,
+  PROFILE,
+  LOADING,
+  ADD_FRIEND,
+  SETTINGS,
+  CREATE_GROUP,
+  EDIT_GROUP_NAME,
+  ADD_TO_GROUP,
+  GROUP_SETTINGS
+};
 
 function registerScreens() {
   /* authentication */
-  Navigation.registerComponent("sesh.Register", () => Register);
-  Navigation.registerComponent("sesh.SignIn", () => SignIn);
+  Navigation.registerComponent(REGISTER, () => Register);
+  Navigation.registerComponent(SIGN_IN, () => SignIn);
 
   /* global screens */
-  Navigation.registerComponent("sesh.Home", () => Home);
-  Navigation.registerComponent("sesh.Focus", () => Focus);
-  Navigation.registerComponent("sesh.CreateMove", () => CreateMove);
-  Navigation.registerComponent("sesh.Profile", () => Profile);
-  Navigation.registerComponent("sesh.Loading", () => LoadingOverlay);
+  Navigation.registerComponent(HOME, () => Home);
+  Navigation.registerComponent(FOCUS, () => Focus);
+  Navigation.registerComponent(CREATE_MOVE, () => CreateMove);
+  Navigation.registerComponent(PROFILE, () => Profile);
+  Navigation.registerComponent(LOADING, () => LoadingOverlay);
 
   /* profile screens */
-  Navigation.registerComponent("profile.AddFriend", () => AddFriend);
-  Navigation.registerComponent("profile.Settings", () => ProfileSettings);
+  Navigation.registerComponent(ADD_FRIEND, () => AddFriend);
+  Navigation.registerComponent(SETTINGS, () => ProfileSettings);
 
   /* group screens */
-  Navigation.registerComponent("groups.CreateGroup", () => CreateGroup);
-  Navigation.registerComponent("groups.EditName", () => EditName);
-  Navigation.registerComponent("groups.AddToGroup", () => AddToGroup);
-  Navigation.registerComponent("groups.Settings", () => GroupSettings);
+  Navigation.registerComponent(CREATE_GROUP, () => CreateGroup);
+  Navigation.registerComponent(EDIT_GROUP_NAME, () => EditName);
+  Navigation.registerComponent(ADD_TO_GROUP, () => AddToGroup);
+  Navigation.registerComponent(GROUP_SETTINGS, () => GroupSettings);
 }
 
 module.exports = {
+  SCREENS,
   registerScreens
 };
