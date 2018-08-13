@@ -42,7 +42,10 @@ const OpenContent = ({
   };
 
   return (
-    <SuperEllipseMask style={styles.container} radius={{ topRight: 20, topLeft: 20 }}>
+    <SuperEllipseMask
+      style={styles.container}
+      radius={{ topRight: 20, topLeft: 20 }}
+    >
       <MapCard
         fullBleed
         height={SCREEN_HEIGHT - SB_HEIGHT - 5}
@@ -50,15 +53,26 @@ const OpenContent = ({
         loading={!open}
         userLocation={userLocation}
       />
-      <TouchableOpacity style={styles.profileButton} onPress={showProfileScreen}>
+      <TouchableOpacity
+        style={styles.profileButton}
+        onPress={showProfileScreen}
+      >
         <Image
           source={{ uri: GetPhotoURL(user.fb_id, ICON_SIZE, ICON_SIZE) }}
           style={styles.photo}
         />
       </TouchableOpacity>
-      <AnimatedTouchable style={[styles.buttonContainer, animatedOpacity]} onPress={toggleDrawer}>
+      <AnimatedTouchable
+        style={[styles.buttonContainer, animatedOpacity]}
+        onPress={toggleDrawer}
+      >
         <VibrancyView blurAmount={20} blurType="dark" style={styles.vibrancy}>
-          <FeatherIcon style={styles.icon} name={"chevron-down"} size={28} color={"white"} />
+          <FeatherIcon
+            style={styles.icon}
+            name={"chevron-down"}
+            size={28}
+            color={"white"}
+          />
         </VibrancyView>
       </AnimatedTouchable>
     </SuperEllipseMask>
@@ -73,7 +87,7 @@ const styles = StyleSheet.create({
   profileButton: {
     position: "absolute",
     right: 2 * CARD_GUTTER,
-    bottom: IS_X ? 80 : 2 * CARD_GUTTER + 60
+    bottom: IS_X ? 80 : 2 * CARD_GUTTER + 25
   },
   photo: {
     height: ICON_SIZE,

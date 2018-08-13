@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome5";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
 import { BlurView } from "react-native-blur";
 
@@ -26,21 +27,21 @@ const TopButtons = ({
 			/>
 			<SuperEllipseMask radius={BORDER_RADIUS} style={styles.container}>
 				<ColorButton
-					title={<IonIcon name={"ios-settings"} size={24} />}
+					title={<IonIcon name={"ios-settings"} size={25} />}
 					subTitle={"Settings"}
 					style={styles.button}
 					onPress={onPressSettings}
 					color={Colors.gray}
 				/>
 				<ColorButton
-					title={<IonIcon name={"md-person-add"} size={24} />}
+					title={<AwesomeIcon name={"user-plus"} size={22} />}
 					subTitle={"Add Friends"}
 					style={[styles.border, styles.button]}
 					onPress={onPressAddFriend}
 					color={Colors.gray}
 				/>
 				<ColorButton
-					title={<AwesomeIcon name={"user-friends"} size={24} />}
+					title={<AwesomeIcon name={"users"} size={24} />}
 					subTitle={"Create Group"}
 					style={styles.button}
 					onPress={onPressCreateGroup}
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
 	button: {
 		flex: 1,
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "space-between",
 		paddingVertical: 10,
 		borderRadius: 0
 		// paddingHorizontal: 47.5,

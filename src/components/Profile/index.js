@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Animated,
-  StatusBar,
-  View,
-  Text,
-  Image,
-  Button
-} from "react-native";
+import { StyleSheet, Animated, View, Text, Image, Button } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 
@@ -18,19 +10,10 @@ import Notifications from "./Notifications";
 import Groups from "../Groups";
 
 import { TransparentModalTo } from "../../lib/functions";
-import {
-  SCREEN_WIDTH,
-  SB_HEIGHT,
-  IS_X,
-  CARD_GUTTER,
-  REFRESH_OFFSET
-} from "../../lib/constants";
+import { IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
-const LIGHT = "light-content";
-const DARK = "dark-content";
-
-const notifications = [
+const DATA = [
   {
     uid: 1,
     name: "Alexi Christakis",
@@ -58,7 +41,7 @@ class Profile extends Component {
     this.yOffset = new Animated.Value(0);
 
     this.state = {
-      barStyle: LIGHT
+      notifications: DATA
     };
   }
 
@@ -97,10 +80,12 @@ class Profile extends Component {
 
   handleOnPressAcceptFriend = uid => {
     const { user } = this.props;
+    console.log(user, " accepted ", uid);
   };
 
   handleOnPressDeleteRequest = uid => {
     const { user } = this.props;
+    console.log(user, " deleted ", uid);
   };
 
   handleScrollEndDrag = ({ nativeEvent }) => {
@@ -111,6 +96,7 @@ class Profile extends Component {
 
   render() {
     const { user, data } = this.props;
+    const { notifications } = this.state;
 
     return (
       <View style={styles.container}>
@@ -151,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.groupsHeader1
   },
   contentContainer: {
-    paddingBottom: 250,
+    paddingBottom: 250 + CARD_GUTTER,
     paddingHorizontal: CARD_GUTTER
   },
   scroll: {
