@@ -11,6 +11,7 @@ export const SET_MOVES = "SET_MOVES";
 export const SET_LOCATION = "SET_LOCATION";
 export const SET_USER = "SET_USER";
 export const SET_GROUPS = "SET_GROUPS";
+export const SET_FRIENDS = "SET_FRIENDS";
 
 export const ADD_MOVE = "ADD_MOVE";
 export const END_MOVE = "END_MOVE";
@@ -48,5 +49,12 @@ export function setGroups(groups) {
 	return {
 		type: SET_GROUPS,
 		groups
+	};
+}
+
+export function setFriends(friends) {
+	return {
+		type: SET_FRIENDS,
+		friends
 	};
 }

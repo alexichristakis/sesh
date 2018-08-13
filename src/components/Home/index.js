@@ -57,9 +57,9 @@ class Home extends Component {
 
       barOpen: true,
       focused: false,
-      vertScrolling: false,
+      vertScrolling: false
 
-      user: this.props.user
+      // user: this.props.user
 
       // coords: { latitude: null, longitude: null }
 
@@ -70,10 +70,12 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const { setMoves, setUser, setLocation } = this.props;
+    const { userObj, setMoves, setUser, setLocation, setGroups, setFriends } = this.props;
 
     setMoves(MOVES);
-    setUser(this.state.user);
+    setGroups(GROUPS);
+    setFriends(FRIENDS);
+    setUser(userObj);
 
     navigator.geolocation.getCurrentPosition(
       position => {

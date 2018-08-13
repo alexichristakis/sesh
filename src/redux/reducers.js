@@ -5,6 +5,7 @@ import {
 	SET_LOCATION,
 	SET_USER,
 	SET_GROUPS,
+	SET_FRIENDS,
 	ADD_MOVE,
 	END_MOVE,
 	JOIN_MOVE,
@@ -86,6 +87,8 @@ function groups(state = [], action) {
 
 function friends(state = [], action) {
 	switch (action.type) {
+		case SET_FRIENDS:
+			return [...action.friends];
 		case ACCEPT_FRIEND_REQUEST:
 			return [...state, action.friend];
 		case DELETE_FRIEND_REQUEST:

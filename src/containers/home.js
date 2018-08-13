@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import Home from "../components/Home";
 
-import { setMoves, setUser, setLocation } from "../redux/actions";
+import { setMoves, setUser, setLocation, setGroups, setFriends } from "../redux/actions";
 
 const mapStateToProps = state => {
 	return {
@@ -13,7 +13,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		// dispatch,
 		setMoves: moves => {
 			dispatch(setMoves(moves));
 		},
@@ -22,10 +21,13 @@ const mapDispatchToProps = dispatch => {
 		},
 		setLocation: location => {
 			dispatch(setLocation(location));
+		},
+		setGroups: groups => {
+			dispatch(setGroups(groups));
+		},
+		setFriends: friends => {
+			dispatch(setFriends(friends));
 		}
-		// onTodoClick: id => {
-		// 	dispatch(toggleTodo(id));
-		// }
 	};
 };
 

@@ -25,7 +25,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
     component: {
       name: SCREENS.HOME,
       passProps: {
-        user
+        userObj: user
       }
     }
   };

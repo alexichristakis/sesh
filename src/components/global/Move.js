@@ -11,11 +11,12 @@ import ProgressiveImage from "../global/ProgressiveImage";
 
 import { DownloadPhoto } from "../../api";
 import {
-  TransparentModalTo,
+  // TransparentModalTo,
   FormatDistanceAway,
   GetPhotoURL,
   GetThumbnailURL
 } from "../../lib/functions";
+import { ShowGroupFocus } from "../../lib/navigation";
 import { Colors, TextStyles, shadow } from "../../lib/styles";
 import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
@@ -87,10 +88,11 @@ class Move extends Component {
   };
 
   handleGroupOnPress = () => {
-    TransparentModalTo("sesh.Focus", {
-      isGroups: true,
-      cardData: { name: this.props.move.group, size: 10 }
-    });
+    // TransparentModalTo("sesh.Focus", {
+    //   isGroups: true,
+    //   cardData: { name: this.props.move.group, size: 10 }
+    // });
+    ShowGroupFocus({ group: { name: this.props.move.group, size: 10 } });
   };
 
   render() {

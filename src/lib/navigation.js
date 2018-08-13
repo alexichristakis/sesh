@@ -5,24 +5,21 @@ import { SCREENS } from "../screens";
 export const ShowGroupFocus = ({ group }) => {
 	TransparentModalTo(SCREENS.FOCUS, {
 		isGroups: true,
-		data: group
+		cardData: group
 	});
 };
 
 export const ShowMoveFocus = ({ props }) => {
-	console.log("SCREENS: ", SCREENS);
-	console.log("props: ", props);
 	TransparentModalTo(SCREENS.FOCUS, {
 		...props,
 		isGroups: false
 	});
 };
 
-export const ShowProfile = ({ user, data }) => {
+export const ShowProfile = () => {
 	Navigation.showModal({
 		component: {
 			name: SCREENS.PROFILE,
-			passProps: { user, data },
 			options: {
 				modalPresentationStyle: "fullScreen"
 			}
@@ -46,7 +43,7 @@ export const ShowCreateLaterMove = ({ user, groups }) => {
 	});
 };
 
-export const ShowCreateGroup = ({ user, friends }) => {
+export const ShowCreateGroup = () => {
 	Navigation.showModal({
 		component: {
 			name: SCREENS.CREATE_GROUP,

@@ -95,7 +95,8 @@ class Profile extends Component {
   };
 
   render() {
-    const { user, data } = this.props;
+    const { user, groups } = this.props;
+    console.log("groups: ", groups);
     const { notifications } = this.state;
 
     return (
@@ -123,7 +124,7 @@ class Profile extends Component {
             acceptFriend={this.handleOnPressAcceptFriend}
             deleteRequest={this.handleOnPressDeleteRequest}
           />
-          <Groups data={data} />
+          <Groups data={groups} />
         </Animated.ScrollView>
         <Header offset={this.yOffset} />
       </View>

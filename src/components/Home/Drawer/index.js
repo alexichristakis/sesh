@@ -8,6 +8,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import ActionButtonContainer from "./ActionButtonContainer";
 import OpenContent from "./OpenContent";
 
+import { ShowProfile } from "../../../lib/navigation";
 import { FillAbsolute, shadow } from "../../../lib/styles";
 import { SCREEN_HEIGHT, SB_HEIGHT, DRAWER_HEIGHT } from "../../../lib/constants";
 
@@ -45,15 +46,7 @@ class Drawer extends Component {
 
   showProfileScreen = () => {
     this.interactable.snapTo({ index: 0 });
-    Navigation.showModal({
-      component: {
-        name: "sesh.Profile",
-        passProps: { user: this.props.user, data: this.props.data },
-        options: {
-          modalPresentationStyle: "fullScreen"
-        }
-      }
-    });
+    ShowProfile();
   };
 
   render() {
