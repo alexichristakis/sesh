@@ -31,24 +31,24 @@ const LIGHT = "light-content";
 const DARK = "dark-content";
 
 const notifications = [
-  // {
-  //   uid: 1,
-  //   name: "Alexi Christakis",
-  //   time: 1526598742850,
-  //   photo: "https://graph.facebook.com/1825693684117541/picture"
-  // },
-  // {
-  //   uid: 2,
-  //   name: "William Oles",
-  //   time: 1526598742850,
-  //   photo: "https://graph.facebook.com/1825693684117541/picture"
-  // },
-  // {
-  //   uid: 3,
-  //   name: "Michelle Li",
-  //   time: 1526598742850,
-  //   photo: "https://graph.facebook.com/1825693684117541/picture"
-  // }
+  {
+    uid: 1,
+    name: "Alexi Christakis",
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    uid: 2,
+    name: "William Oles",
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  },
+  {
+    uid: 3,
+    name: "Michelle Li",
+    time: 1526598742850,
+    photo: "https://graph.facebook.com/1825693684117541/picture"
+  }
 ];
 
 class Profile extends Component {
