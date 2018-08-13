@@ -6,7 +6,6 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
-import { BlurView } from "react-native-blur";
 
 import ColorButton from "../global/ColorButton";
 

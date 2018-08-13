@@ -21,11 +21,9 @@ import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
 import { Colors, TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Groups = props => {
-  console.log(props);
-
   handleOnPressGroup = group => {
     TransparentModalTo("sesh.Focus", {
-      groups: true,
+      isGroups: true,
       data: { name: group.name, size: 12 }
     });
   };

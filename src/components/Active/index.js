@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  View,
+  FlatList,
+  Text
+} from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
 
@@ -24,7 +31,7 @@ class Active extends Component {
       onReturn,
       data,
       joined,
-      active: true,
+      isActive: true,
       joinMove: this.joinMove,
       leaveMove: this.leaveMove
     });

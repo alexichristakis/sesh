@@ -63,7 +63,7 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
       <Animated.Image
         source={{ uri: GetPhotoURL(fb_id, PHOTO_SIZE / 4, PHOTO_SIZE / 4) }}
         style={[animatedTranslate, styles.blurPhoto]}
-        blurRadius={20}
+        blurRadius={30}
       />
     </View>
   );

@@ -22,7 +22,7 @@ class Later extends Component {
       ...dimensions,
       onReturn,
       data,
-      active: false
+      isActive: false
     });
   };
 

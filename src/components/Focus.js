@@ -117,10 +117,19 @@ class Focus extends Component {
     }, 500);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // const { loading, open, sourceDimension } = this.state;
+
+    // // if (loading !== nextState.loading) return true;
+    // // else if (open !== nextState.open) return true;
+    // if (sourceDimension.height !== nextState.sourceDimension.height)
+    //   return true;
+    // else return false;
+    return true;
+  }
+
   measureCard = ({ nativeEvent }) => {
     const { height, width, x, y, pageX, pageY } = nativeEvent.layout;
-    console.log(height);
-
     this.setState(({ sourceDimension }) => {
       return {
         sourceDimension: {
@@ -144,7 +153,7 @@ class Focus extends Component {
   };
 
   handleClose = () => {
-    if (!this.props.groups)
+    if (!this.props.isGroups)
       this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
     this.interactable.snapTo({ index: 0 });
   };
@@ -157,8 +166,9 @@ class Focus extends Component {
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
+    const { isGroups } = this.props;
     if (index === 0) {
-      if (!this.props.groups) {
+      if (!isGroups) {
         this.props.onReturn().then(() => {
           const moveId = this.props.data.id;
           if (this.state.joined && !this.props.joined)
@@ -193,10 +203,10 @@ class Focus extends Component {
 
   render() {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
-    console.log(height);
+    // console.log(height);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
-    const closedOffset = this.props.groups
+    const closedOffset = this.props.isGroups
       ? SCREEN_HEIGHT + 500
       : SCREEN_HEIGHT;
     const inputRange =
@@ -287,15 +297,15 @@ class Focus extends Component {
       }
     ];
 
-    const { data, groups, coords, active } = this.props;
-    const Card = groups ? (
+    const { data, isGroups, isActive, coords } = this.props;
+    const Card = isGroups ? (
       <Group card data={data} />
     ) : (
-      <Move focused active={active} move={data} coords={coords} />
+      <Move focused isActive={isActive} move={data} coords={coords} />
     );
 
-    const FocusContent = !this.props.groups ? (
-      this.props.active ? (
+    const FocusContent = !isGroups ? (
+      isActive ? (
         <ActiveFocus
           loading={this.state.loading}
           handleOnPress={this.handleOnPressJoin}
