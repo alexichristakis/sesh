@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image
-} from "react-native";
+import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import Icon from "react-native-vector-icons/Feather";
@@ -97,12 +89,12 @@ class Move extends Component {
   handleGroupOnPress = () => {
     TransparentModalTo("sesh.Focus", {
       isGroups: true,
-      data: { name: this.props.move.group, size: 10 }
+      cardData: { name: this.props.move.group, size: 10 }
     });
   };
 
   render() {
-    const { focused, active, move, coords } = this.props;
+    const { focused, active, move, userLocation } = this.props;
     const { group, name, description, location, time, fb_id } = move;
     const { loading, photo } = this.state;
 
@@ -123,10 +115,7 @@ class Move extends Component {
           />
         )}
         <View style={styles.contentContainer}>
-          <TouchableOpacity
-            style={styles.groupButton}
-            onPress={this.handleGroupOnPress}
-          >
+          <TouchableOpacity style={styles.groupButton} onPress={this.handleGroupOnPress}>
             <Text allowFontScaling={false} style={TextStyles.bold}>
               {name}
             </Text>
@@ -144,7 +133,7 @@ class Move extends Component {
           <View style={styles.bottom}>
             <Text style={styles.location}>
               <Icon name={"compass"} size={12} color={Colors.gray} />
-              {" " + FormatDistanceAway(location, coords)}
+              {" " + FormatDistanceAway(location, userLocation)}
             </Text>
             <Text style={styles.time}>{moment(time).fromNow()}</Text>
           </View>

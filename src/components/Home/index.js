@@ -13,7 +13,10 @@ import TopBar from "./TopBar";
 import Active from "../Active";
 import Later from "../Later";
 
+import { LOAD_MOVES } from "../../redux/actions";
+
 import { TransparentModalTo } from "../../lib/functions";
+import { ShowMoveFocus } from "../../lib/navigation";
 import { REFRESH_OFFSET } from "../../lib/constants";
 
 /* import fetch functions */
@@ -56,41 +59,31 @@ class Home extends Component {
       focused: false,
       vertScrolling: false,
 
-      user: this.props.user,
+      user: this.props.user
 
-      coords: { latitude: null, longitude: null },
+      // coords: { latitude: null, longitude: null }
 
-      friends: FRIENDS,
-      groups: GROUPS,
-      moves: MOVES
+      // friends: FRIENDS,
+      // groups: GROUPS,
+      // moves: MOVES
     };
   }
 
   async componentDidMount() {
-    const url = "https://graph.facebook.com/1779355238751386/picture?type=large";
-    this.setState({ photo: url });
+    const { setMoves, setUser, setLocation } = this.props;
 
-    // DownloadPhoto("profile", url).then(data =>
-    //   this.setState(prevState => ({ loading: false, user: { ...prevState.user, photo: data } }))
-    // );
-    // const path = RNFS.DocumentDirectoryPath + "/profile_pic.png";
-    // //
-    // await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
-    // RNFS.readFile(path, "base64").then(res => {
-    //  console.log("finished");
-    //  this.setState({ photo: "data:image/png;base64," + res, loading: false });
-    // });
-    // console.log(res);
+    setMoves(MOVES);
+    setUser(this.state.user);
 
     navigator.geolocation.getCurrentPosition(
       position => {
-        this.setState({ coords: position.coords, loading: false });
+        const { coords } = position;
+        setLocation(coords);
+        this.setState({ loading: false });
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
-
-    console.log(this.state.user);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -124,12 +117,10 @@ class Home extends Component {
   _scrollToStart = () => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
   _scrollToEnd = () => this.scrollView.getNode().scrollToEnd();
 
-  handleTransition = props => {
+  handleTransition = moveProps => {
     this.setState({ focused: true }, () =>
-      TransparentModalTo("sesh.Focus", {
-        ...props,
-        coords: this.state.coords,
-        returnScreen: () => this.setState({ focused: false })
+      ShowMoveFocus({
+        props: { ...moveProps, returnScreen: () => this.setState({ focused: false }) }
       })
     );
   };
@@ -147,8 +138,10 @@ class Home extends Component {
   };
 
   render() {
-    const { friends, groups, moves, user, refreshing, coords, loading } = this.state;
-    const data = { friends, groups, moves, coords };
+    const { refreshing, loading } = this.state;
+    const { friends, groups, moves, user } = this.props;
+    const data = { friends, groups, moves };
+    console.log(this.props);
 
     const Loading = <LoadingCircle style={styles.loading} size={20} />;
 
@@ -161,22 +154,23 @@ class Home extends Component {
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={this._horizOnScroll}
-        // onMomentumScrollEnd={this._onHorizScrollEnd}
         style={styles.scroll}
       >
         <Active
+          user={user}
+          data={data}
           shortened={!this.state.barOpen}
           handleTransition={this.handleTransition}
           onScroll={this._vertOnScroll}
           onScrollEndDrag={this.handleOnVertScrollEndDrag}
-          data={data}
         />
         <Later
+          user={user}
+          data={data}
           shortened={!this.state.barOpen}
           handleTransition={this.handleTransition}
           onScroll={this._vertOnScroll}
           onScrollEndDrag={this.handleOnVertScrollEndDrag}
-          data={data}
         />
       </Animated.ScrollView>
     );

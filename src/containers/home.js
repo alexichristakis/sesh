@@ -1,24 +1,37 @@
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
-import Home from './components/Home'
+import Home from "../components/Home";
+
+import { setMoves, setUser, setLocation } from "../redux/actions";
 
 const mapStateToProps = state => {
-  return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter)
-  }
-}
-​
+	return {
+		...state
+		// todos: getVisibleTodos(state.todos, state.visibilityFilter)
+	};
+};
+
 const mapDispatchToProps = dispatch => {
-  return {
-    onTodoClick: id => {
-      dispatch(toggleTodo(id))
-    }
-  }
-}
-​
+	return {
+		// dispatch,
+		setMoves: moves => {
+			dispatch(setMoves(moves));
+		},
+		setUser: user => {
+			dispatch(setUser(user));
+		},
+		setLocation: location => {
+			dispatch(setLocation(location));
+		}
+		// onTodoClick: id => {
+		// 	dispatch(toggleTodo(id));
+		// }
+	};
+};
+
 const HomeContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home)
-​
-export default HomeContainer
+	mapStateToProps,
+	mapDispatchToProps
+)(Home);
+
+export default HomeContainer;

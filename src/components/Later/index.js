@@ -17,11 +17,11 @@ class Later extends Component {
     };
   }
 
-  transitionFrom = (dimensions, onReturn, data) => {
+  transitionFrom = (dimensions, onReturn, cardData) => {
     this.props.handleTransition({
       ...dimensions,
       onReturn,
-      data,
+      cardData,
       isActive: false
     });
   };
@@ -34,7 +34,7 @@ class Later extends Component {
     <Move
       index={index}
       move={item}
-      coords={this.props.data.coords}
+      userLocation={this.props.user.location}
       transitionFrom={this.transitionFrom}
     />
   );

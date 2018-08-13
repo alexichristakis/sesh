@@ -57,8 +57,8 @@ class Drawer extends Component {
   };
 
   render() {
-    const { user, data } = this.props;
-    const { groups, moves, coords } = data;
+    const { user, data, loading } = this.props;
+    const { groups, moves } = data;
 
     let blurOpacity = {
       opacity: this.deltaY.interpolate({
@@ -98,13 +98,13 @@ class Drawer extends Component {
             open={this.state.open}
           />
           <OpenContent
+            loading={loading}
             deltaY={this.deltaY}
             toggleDrawer={this.toggleDrawer}
             showProfileScreen={this.showProfileScreen}
             open={this.state.open}
             moves={moves}
             user={user}
-            userLocation={coords}
           />
         </Interactable.View>
       </View>

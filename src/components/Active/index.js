@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  View,
-  FlatList,
-  Text
-} from "react-native";
+import { Animated, Easing, StyleSheet, View, FlatList, Text } from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
 
@@ -24,12 +17,12 @@ class Active extends Component {
     };
   }
 
-  transitionFrom = (dimensions, onReturn, data) => {
-    let joined = this.state.joinedMoves.includes(data.id);
+  transitionFrom = (dimensions, onReturn, cardData) => {
+    let joined = this.state.joinedMoves.includes(cardData.id);
     this.props.handleTransition({
       ...dimensions,
       onReturn,
-      data,
+      cardData,
       joined,
       isActive: true,
       joinMove: this.joinMove,
@@ -42,7 +35,7 @@ class Active extends Component {
       active
       index={index}
       move={item}
-      coords={this.props.data.coords}
+      userLocation={this.props.user.location}
       transitionFrom={this.transitionFrom}
     />
   );

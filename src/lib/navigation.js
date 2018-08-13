@@ -1,7 +1,6 @@
 import { Navigation } from "react-native-navigation";
 import { TransparentModalTo } from "./functions";
-
-import SCREENS from "../screens";
+import { SCREENS } from "../screens";
 
 export const ShowGroupFocus = ({ group }) => {
 	TransparentModalTo(SCREENS.FOCUS, {
@@ -11,6 +10,8 @@ export const ShowGroupFocus = ({ group }) => {
 };
 
 export const ShowMoveFocus = ({ props }) => {
+	console.log("SCREENS: ", SCREENS);
+	console.log("props: ", props);
 	TransparentModalTo(SCREENS.FOCUS, {
 		...props,
 		isGroups: false
@@ -72,4 +73,4 @@ export const ShowGroupSettings = ({ user, group }) => {
 	TransparentModalTo(SCREENS.GROUP_SETTINGS, { user, group });
 };
 
-export const ShowProfileSettings 
+// export const ShowProfileSettings;

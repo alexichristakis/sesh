@@ -1,7 +1,6 @@
 import { Provider } from "react-redux";
-import { createStore applyMiddleware} from "redux";
-import thunk from 'redux-thunk';
-
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 import { Navigation } from "react-native-navigation";
 
@@ -38,7 +37,7 @@ const EDIT_GROUP_NAME = "edit_group_name";
 const ADD_TO_GROUP = "add_to_group";
 const GROUP_SETTINGS = "group_settings";
 
-const SCREENS = {
+export const SCREENS = {
   REGISTER,
   SIGN_IN,
   HOME,
@@ -56,7 +55,7 @@ const SCREENS = {
 
 const store = createStore(seshApp, applyMiddleware(thunk));
 
-function registerScreens() {
+export function registerScreens() {
   /* register containers */
   Navigation.registerComponentWithRedux(HOME, () => HomeContainer, Provider, store);
   Navigation.registerComponentWithRedux(FOCUS, () => FocusContainer, Provider, store);
@@ -64,7 +63,12 @@ function registerScreens() {
   Navigation.registerComponentWithRedux(PROFILE, () => ProfileContainer, Provider, store);
   Navigation.registerComponentWithRedux(ADD_FRIEND, () => AddFriendContainer, Provider, store);
   Navigation.registerComponentWithRedux(CREATE_GROUP, () => CreateGroupContainer, Provider, store);
-  Navigation.registerComponentWithRedux(EDIT_GROUP_NAME, () => EditGroupNameContainer, Provider, store);
+  Navigation.registerComponentWithRedux(
+    EDIT_GROUP_NAME,
+    () => EditGroupNameContainer,
+    Provider,
+    store
+  );
   Navigation.registerComponentWithRedux(ADD_TO_GROUP, () => AddToGroupContainer, Provider, store);
 
   /* register components */
@@ -75,7 +79,7 @@ function registerScreens() {
   Navigation.registerComponent(GROUP_SETTINGS, () => GroupSettings);
 }
 
-module.exports = {
-  SCREENS,
-  registerScreens
-};
+// module.exports = {
+//   SCREENS,
+//   registerScreens
+// };

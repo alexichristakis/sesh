@@ -24,15 +24,8 @@ const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 const BUTTON_SIZE = 40;
 const ICON_SIZE = 60;
 
-const OpenContent = ({
-  moves,
-  deltaY,
-  user,
-  userLocation,
-  open,
-  toggleDrawer,
-  showProfileScreen
-}) => {
+const OpenContent = ({ loading, moves, deltaY, user, open, toggleDrawer, showProfileScreen }) => {
+  console.log("drawers moves: ", moves);
   let animatedOpacity = {
     opacity: deltaY.interpolate({
       inputRange: [0, SB_HEIGHT, SCREEN_HEIGHT],
@@ -41,38 +34,26 @@ const OpenContent = ({
     })
   };
 
+  console.log(user);
+
   return (
-    <SuperEllipseMask
-      style={styles.container}
-      radius={{ topRight: 20, topLeft: 20 }}
-    >
+    <SuperEllipseMask style={styles.container} radius={{ topRight: 20, topLeft: 20 }}>
       <MapCard
         fullBleed
         height={SCREEN_HEIGHT - SB_HEIGHT - 5}
         markers={GenerateMarkers(moves)}
-        loading={!open}
-        userLocation={userLocation}
+        loading={!open || loading}
+        userLocation={user.location}
       />
-      <TouchableOpacity
-        style={styles.profileButton}
-        onPress={showProfileScreen}
-      >
+      <TouchableOpacity style={styles.profileButton} onPress={showProfileScreen}>
         <Image
           source={{ uri: GetPhotoURL(user.fb_id, ICON_SIZE, ICON_SIZE) }}
           style={styles.photo}
         />
       </TouchableOpacity>
-      <AnimatedTouchable
-        style={[styles.buttonContainer, animatedOpacity]}
-        onPress={toggleDrawer}
-      >
+      <AnimatedTouchable style={[styles.buttonContainer, animatedOpacity]} onPress={toggleDrawer}>
         <VibrancyView blurAmount={20} blurType="dark" style={styles.vibrancy}>
-          <FeatherIcon
-            style={styles.icon}
-            name={"chevron-down"}
-            size={28}
-            color={"white"}
-          />
+          <FeatherIcon style={styles.icon} name={"chevron-down"} size={28} color={"white"} />
         </VibrancyView>
       </AnimatedTouchable>
     </SuperEllipseMask>
