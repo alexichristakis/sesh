@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, StatusBar, View, Text, Image, Button } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  StatusBar,
+  View,
+  Text,
+  Image,
+  Button
+} from "react-native";
 
 import { Navigation } from "react-native-navigation";
 
@@ -10,7 +18,13 @@ import Notifications from "./Notifications";
 import Groups from "../Groups";
 
 import { TransparentModalTo } from "../../lib/functions";
-import { SCREEN_WIDTH, SB_HEIGHT, IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
+import {
+  SCREEN_WIDTH,
+  SB_HEIGHT,
+  IS_X,
+  CARD_GUTTER,
+  REFRESH_OFFSET
+} from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
 const LIGHT = "light-content";
@@ -77,6 +91,18 @@ class Profile extends Component {
     });
   };
 
+  showCreateGroup = () => {
+    const { friends } = this.props.data;
+    Navigation.showModal({
+      component: {
+        name: "groups.CreateGroup",
+        passProps: {
+          friends
+        }
+      }
+    });
+  };
+
   handleOnPressAcceptFriend = uid => {
     const { user } = this.props;
   };
@@ -128,6 +154,7 @@ class Profile extends Component {
           <TopButtons
             onPressSettings={this.showProfileSettings}
             onPressAddFriend={this.showAddFriend}
+            onPressCreateGroup={this.showCreateGroup}
           />
           <Notifications
             data={notifications}
@@ -153,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.groupsHeader1
   },
   contentContainer: {
-    paddingBottom: 182,
+    paddingBottom: 250,
     paddingHorizontal: CARD_GUTTER
   },
   scroll: {

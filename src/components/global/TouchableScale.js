@@ -7,7 +7,7 @@ const TouchableScale = props => {
 
   handlePressIn = () => {
     Animated.spring(animated, {
-      toValue: 0.95,
+      toValue: 0.9,
       useNativeDriver: true
     }).start();
   };

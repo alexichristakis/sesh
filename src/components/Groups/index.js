@@ -79,10 +79,10 @@ const Groups = props => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={TextStyles.headerWhite}>My Groups:</Text>
-        <TouchableOpacity onPress={handleOnPressCreateGroup}>
-          <Icon name={"plus"} size={24} color={"white"} />
-        </TouchableOpacity>
+        <Text style={TextStyles.headerWhite}>MY GROUPS:</Text>
+        {/*<TouchableOpacity onPress={handleOnPressCreateGroup}>
+                  <Icon name={"plus"} size={24} color={"white"} />
+                </TouchableOpacity>*/}
       </View>
       <SuperEllipseMask radius={BORDER_RADIUS}>
         <FlatList

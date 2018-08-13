@@ -4,7 +4,13 @@ import { StyleSheet, Animated, View, Image } from "react-native";
 import ProgressiveImage from "../global/ProgressiveImage";
 
 import { GetPhotoURL, GetThumbnailURL } from "../../lib/functions";
-import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT, IS_X, REFRESH_OFFSET } from "../../lib/constants";
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  SB_HEIGHT,
+  IS_X,
+  REFRESH_OFFSET
+} from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
 const PHOTO_SIZE = 1.25 * SCREEN_WIDTH;
@@ -14,20 +20,32 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
   const inputRange = [-100, -50, 0, 50];
 
   const animatedImage = {
-    top: -50,
+    top: 0,
     transform: [
       {
         scale: offset.interpolate({
           inputRange,
-          outputRange: [1.3, 1.1, 1, 4 / 5],
+          outputRange: [1.4, 1.1, 1, 1],
           extrapolateRight: "clamp"
         })
       },
       {
         translateY: offset.interpolate({
           inputRange,
-          outputRange: [50, 25, 0, -50]
+          outputRange: [20, 5, 0, -20]
           // extrapolateLeft: "clamp"
+        })
+      }
+    ]
+  };
+
+  const animatedTranslate = {
+    transform: [
+      {
+        translateY: offset.interpolate({
+          inputRange: [-50, 0, 50, 275],
+          outputRange: [50, 0, -50, -275],
+          extrapolateRight: "clamp"
         })
       }
     ]
@@ -35,11 +53,6 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: GetPhotoURL(fb_id, PHOTO_SIZE / 4, PHOTO_SIZE / 4) }}
-        style={{ position: "absolute", top: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
-        blurRadius={20}
-      />
       <Animated.View style={animatedImage}>
         <ProgressiveImage
           style={styles.photo}
@@ -47,6 +60,11 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
           thumbnail={{ uri: GetThumbnailURL(fb_id) }}
         />
       </Animated.View>
+      <Animated.Image
+        source={{ uri: GetPhotoURL(fb_id, PHOTO_SIZE / 4, PHOTO_SIZE / 4) }}
+        style={[animatedTranslate, styles.blurPhoto]}
+        blurRadius={20}
+      />
     </View>
   );
 };
@@ -74,9 +92,15 @@ const styles = StyleSheet.create({
   },
   photo: {
     backgroundColor: Colors.mediumGray,
-    height: PHOTO_SIZE,
-    width: PHOTO_SIZE
+    height: 300,
+    width: SCREEN_WIDTH
     // margin: 5
+  },
+  blurPhoto: {
+    position: "absolute",
+    top: 275,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT
   },
   name: {
     marginVertical: 5,

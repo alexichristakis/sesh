@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, FlatList, View, Text, TouchableHighlight } from "react-native";
+import {
+	StyleSheet,
+	FlatList,
+	View,
+	Text,
+	TouchableHighlight
+} from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
@@ -48,7 +54,7 @@ const Notifications = props => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerContainer}>
-				<Text style={TextStyles.headerWhite}>Requests:</Text>
+				<Text style={TextStyles.headerWhite}>REQUESTS:</Text>
 			</View>
 			<SuperEllipseMask radius={BORDER_RADIUS}>
 				<FlatList

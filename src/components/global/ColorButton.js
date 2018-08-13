@@ -27,8 +27,15 @@ class ColorButton extends Component {
       borderRadius = 20,
       onPress,
       color,
-      title
+      title,
+      subTitle
     } = this.props;
+
+    const computedTextStyle = [
+      textStyle,
+      { color: this.state.pressed ? Colors.lightGray : color }
+    ];
+
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -44,9 +51,8 @@ class ColorButton extends Component {
           }
         ]}
       >
-        <Text style={[textStyle, { color: this.state.pressed ? Colors.lightGray : color }]}>
-          {title}
-        </Text>
+        <Text style={computedTextStyle}>{title}</Text>
+        {subTitle && <Text style={computedTextStyle}>{subTitle}</Text>}
       </TouchableOpacity>
     );
   }

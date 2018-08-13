@@ -45,8 +45,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.activeOffset = new Animated.Value(initialVertScroll);
-    this.laterOffset = new Animated.Value(initialVertScroll);
+    // this.activeOffset = new Animated.Value(initialVertScroll);
+    // this.laterOffset = new Animated.Value(initialVertScroll);
 
     this.state = {
       loading: true,
@@ -109,16 +109,16 @@ class Home extends Component {
     useNativeDriver: true
   });
 
-  _onHorizScrollEnd = ({ nativeEvent }) => {
-    const { x, y } = nativeEvent.contentOffset;
-    if (xOffset._value === 0) {
-      this.laterOffset = yOffset;
-      // do some logic to fix the top bar scroll?
-    } else {
-      this.activeOffset = yOffset;
-      // do some logic to fix the top bar scroll?
-    }
-  };
+  // _onHorizScrollEnd = ({ nativeEvent }) => {
+  //   const { x, y } = nativeEvent.contentOffset;
+  //   if (xOffset._value === 0) {
+  //     this.laterOffset = yOffset;
+  //     // do some logic to fix the top bar scroll?
+  //   } else {
+  //     this.activeOffset = yOffset;
+  //     // do some logic to fix the top bar scroll?
+  //   }
+  // };
 
   /* horiz scroll control */
   _scrollToStart = () => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
@@ -161,7 +161,7 @@ class Home extends Component {
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={this._horizOnScroll}
-        onMomentumScrollEnd={this._onHorizScrollEnd}
+        // onMomentumScrollEnd={this._onHorizScrollEnd}
         style={styles.scroll}
       >
         <Active
