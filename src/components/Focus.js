@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity
+} from "react-native";
 
 import Interactable from "react-native-interactable";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -73,7 +80,14 @@ const DATA = [
 class Focus extends Component {
   constructor(props) {
     super(props);
-    const { height = 65, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
+    const {
+      height = 0,
+      width,
+      x,
+      y,
+      pageX,
+      pageY = SCREEN_HEIGHT
+    } = this.props;
 
     this.yOffset = new Animated.Value(0);
     this.xOffset = new Animated.Value(0);
@@ -103,6 +117,20 @@ class Focus extends Component {
     }, 500);
   }
 
+  measureCard = ({ nativeEvent }) => {
+    const { height, width, x, y, pageX, pageY } = nativeEvent.layout;
+    console.log(height);
+
+    this.setState(({ sourceDimension }) => {
+      return {
+        sourceDimension: {
+          ...sourceDimension,
+          height
+        }
+      };
+    });
+  };
+
   beginTransition = () => {
     setTimeout(() => {
       this.interactable.snapTo({ index: 1 });
@@ -116,7 +144,8 @@ class Focus extends Component {
   };
 
   handleClose = () => {
-    if (!this.props.groups) this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+    if (!this.props.groups)
+      this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
     this.interactable.snapTo({ index: 0 });
   };
 
@@ -132,8 +161,10 @@ class Focus extends Component {
       if (!this.props.groups) {
         this.props.onReturn().then(() => {
           const moveId = this.props.data.id;
-          if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
-          else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
+          if (this.state.joined && !this.props.joined)
+            this.props.joinMove(moveId);
+          else if (!this.state.joined && this.props.joined)
+            this.props.leaveMove(moveId);
           this.props.returnScreen();
           Navigation.dismissModal(this.props.componentId);
         });
@@ -162,10 +193,14 @@ class Focus extends Component {
 
   render() {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
+    console.log(height);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
-    const closedOffset = this.props.groups ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
-    const inputRange = openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
+    const closedOffset = this.props.groups
+      ? SCREEN_HEIGHT + 500
+      : SCREEN_HEIGHT;
+    const inputRange =
+      openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
 
     const springConfig = { damping: 0.5, tension: 600 };
     const interactableSnapPoints = [
@@ -197,7 +232,10 @@ class Focus extends Component {
         {
           translateY: this.deltaY.interpolate({
             inputRange,
-            outputRange: openOffset < pageY ? [SB_HEIGHT, closedOffset] : [SCREEN_HEIGHT, SB_HEIGHT]
+            outputRange:
+              openOffset < pageY
+                ? [SB_HEIGHT, closedOffset]
+                : [SCREEN_HEIGHT, SB_HEIGHT]
           })
         }
       ]
@@ -331,12 +369,19 @@ class Focus extends Component {
             scrollEventThrottle={16}
             style={styles.scroll}
           >
-            <View shouldRasterizeIOS style={styles.moveContainer}>
+            <View
+              shouldRasterizeIOS
+              style={styles.cardContainer}
+              onLayout={this.measureCard}
+            >
               {Card}
             </View>
             <Animated.View style={buttonAnimatedStyle}>
               <SuperEllipseMask radius={BORDER_RADIUS}>
-                <TouchableScale style={endMoveComputedStyle} onPress={() => console.log("yo")}>
+                <TouchableScale
+                  style={endMoveComputedStyle}
+                  onPress={() => console.log("yo")}
+                >
                   <Text style={styles.text}>End Move</Text>
                 </TouchableScale>
               </SuperEllipseMask>
@@ -352,7 +397,7 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  moveContainer: {
+  cardContainer: {
     width: SCREEN_WIDTH,
     paddingHorizontal: CARD_GUTTER
   },

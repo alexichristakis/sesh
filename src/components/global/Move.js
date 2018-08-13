@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image
+} from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import Icon from "react-native-vector-icons/Feather";
@@ -29,12 +37,8 @@ class Move extends Component {
     this.state = {
       loading: true,
       photo: { uri: "" },
-      height: 0,
-      width: 0,
       pageX: 0,
-      pageY: 0,
-      x: 0,
-      y: 0
+      pageY: 0
     };
   }
 
@@ -79,7 +83,7 @@ class Move extends Component {
   handleOnPress = () => {
     this.onLeave();
     this.view.measure((x, y, width, height, pageX, pageY) => {
-      this.setState({ pageX: pageX, pageY: pageY }, () => {
+      this.setState({ pageX, pageY }, () => {
         const { height, width, x, y, photo } = this.state;
         const dimensions = { height, width, x, y, pageX, pageY };
         this.props.transitionFrom(dimensions, this.onReturn, {
@@ -88,11 +92,6 @@ class Move extends Component {
         });
       });
     });
-  };
-
-  measureCard = event => {
-    const { height, width, x, y } = event.nativeEvent.layout;
-    this.setState({ height, width, x, y });
   };
 
   handleGroupOnPress = () => {
@@ -124,7 +123,10 @@ class Move extends Component {
           />
         )}
         <View style={styles.contentContainer}>
-          <TouchableOpacity style={styles.groupButton} onPress={this.handleGroupOnPress}>
+          <TouchableOpacity
+            style={styles.groupButton}
+            onPress={this.handleGroupOnPress}
+          >
             <Text allowFontScaling={false} style={TextStyles.bold}>
               {name}
             </Text>
@@ -153,7 +155,7 @@ class Move extends Component {
     if (focused) return Content;
     else
       return (
-        <View ref={view => (this.view = view)} style={styles.container} onLayout={this.measureCard}>
+        <View ref={view => (this.view = view)} style={styles.container}>
           <TouchableScale animatedStyle={opacity} onPress={this.handleOnPress}>
             {Content}
           </TouchableScale>

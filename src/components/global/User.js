@@ -11,7 +11,15 @@ import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 35;
 
-const User = ({ selectable, request, onPressAccept, onPressDelete, user, selected, onPress }) => {
+const User = ({
+  selectable,
+  request,
+  onPressAccept,
+  onPressDelete,
+  user,
+  selected,
+  onPress
+}) => {
   handleOnPress = () => {
     onPress(user);
   };
@@ -31,7 +39,7 @@ const User = ({ selectable, request, onPressAccept, onPressDelete, user, selecte
           style={{
             flex: 1,
             flexDirection: "row",
-            justifyContent: "space-between"
+            justifyContent: "space-around"
           }}
         >
           <ColorButton

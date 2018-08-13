@@ -25,7 +25,7 @@ const Parallax = ({ user, offset, showProfileSettings }) => {
       {
         scale: offset.interpolate({
           inputRange,
-          outputRange: [1.4, 1.1, 1, 1],
+          outputRange: [1.25, 1.1, 1, 1],
           extrapolateRight: "clamp"
         })
       },
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   },
   blurPhoto: {
     position: "absolute",
+    backgroundColor: Colors.gray,
     top: 275,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT

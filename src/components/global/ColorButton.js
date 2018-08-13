@@ -43,12 +43,12 @@ class ColorButton extends Component {
         onPressOut={this.handlePressOut}
         onPress={onPress}
         style={[
-          style,
           {
             borderRadius,
             borderColor: color,
             backgroundColor: this.state.pressed ? color : "transparent"
-          }
+          },
+          style
         ]}
       >
         <Text style={computedTextStyle}>{title}</Text>

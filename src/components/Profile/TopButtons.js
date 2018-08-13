@@ -29,15 +29,13 @@ const TopButtons = ({
 					title={<IonIcon name={"ios-settings"} size={24} />}
 					subTitle={"Settings"}
 					style={styles.button}
-					borderRadius={BORDER_RADIUS}
 					onPress={onPressSettings}
 					color={Colors.gray}
 				/>
 				<ColorButton
 					title={<IonIcon name={"md-person-add"} size={24} />}
 					subTitle={"Add Friends"}
-					style={styles.button}
-					borderRadius={BORDER_RADIUS}
+					style={[styles.border, styles.button]}
 					onPress={onPressAddFriend}
 					color={Colors.gray}
 				/>
@@ -45,7 +43,6 @@ const TopButtons = ({
 					title={<AwesomeIcon name={"user-friends"} size={24} />}
 					subTitle={"Create Group"}
 					style={styles.button}
-					borderRadius={BORDER_RADIUS}
 					onPress={onPressCreateGroup}
 					color={Colors.gray}
 				/>
@@ -58,7 +55,7 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		padding: 5,
+		// padding: 5,
 		backgroundColor: "white"
 	},
 	shadow: {
@@ -72,10 +69,15 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		paddingVertical: 10,
+		borderRadius: 0
 		// paddingHorizontal: 47.5,
-		// borderRadius: 20,
-		borderWidth: 1,
-		margin: 5
+		// borderWidth: 1,
+		// margin: 5
+	},
+	border: {
+		borderLeftWidth: 1,
+		borderRightWidth: 1,
+		borderColor: Colors.mediumGray
 	}
 });
 

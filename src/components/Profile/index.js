@@ -31,24 +31,24 @@ const LIGHT = "light-content";
 const DARK = "dark-content";
 
 const notifications = [
-  {
-    uid: 1,
-    name: "Alexi Christakis",
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    uid: 2,
-    name: "William Oles",
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    uid: 3,
-    name: "Michelle Li",
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  }
+  // {
+  //   uid: 1,
+  //   name: "Alexi Christakis",
+  //   time: 1526598742850,
+  //   photo: "https://graph.facebook.com/1825693684117541/picture"
+  // },
+  // {
+  //   uid: 2,
+  //   name: "William Oles",
+  //   time: 1526598742850,
+  //   photo: "https://graph.facebook.com/1825693684117541/picture"
+  // },
+  // {
+  //   uid: 3,
+  //   name: "Michelle Li",
+  //   time: 1526598742850,
+  //   photo: "https://graph.facebook.com/1825693684117541/picture"
+  // }
 ];
 
 class Profile extends Component {
@@ -61,14 +61,6 @@ class Profile extends Component {
       barStyle: LIGHT
     };
   }
-
-  // componentDidMount() {
-  //   this.yOffset.addListener(this.offsetListener);
-  // }
-
-  // componentWillUnmount() {
-  //   this.yOffset.removeAllListeners();
-  // }
 
   shouldComponentUpdate() {
     return false;
@@ -111,26 +103,11 @@ class Profile extends Component {
     const { user } = this.props;
   };
 
-  // handleScrollRelease = event => {
-  //   const { changedTouches, locationY, pageY } = event.nativeEvent;
-  //   if (this.yOffset._value < -75) {
-  //     Navigation.dismissModal(this.props.componentId);
-  //   }
-  // };
-
   handleScrollEndDrag = ({ nativeEvent }) => {
     const { y } = nativeEvent.contentOffset;
     if (y < -75) Navigation.dismissModal(this.props.componentId);
     // console.log(event.nativeEvent);
   };
-
-  // offsetListener = ({ value }) => {
-  //   const { barStyle } = this.state;
-  //   if (value >= 145 && barStyle === LIGHT)
-  //     this.setState({ barStyle: DARK }, () => StatusBar.setBarStyle(DARK, true));
-  //   else if (value < 145 && barStyle === DARK)
-  //     this.setState({ barStyle: LIGHT }, () => StatusBar.setBarStyle(LIGHT, true));
-  // };
 
   render() {
     const { user, data } = this.props;
@@ -148,7 +125,6 @@ class Profile extends Component {
           showsVerticalScrollIndicator={false}
           onScroll={this._onScroll()}
           onScrollEndDrag={this.handleScrollEndDrag}
-          // onResponderRelease={this.handleScrollRelease}
           scrollEventThrottle={16}
         >
           <TopButtons
@@ -163,12 +139,7 @@ class Profile extends Component {
           />
           <Groups data={data} />
         </Animated.ScrollView>
-        <Header
-          user={user}
-          offset={this.yOffset}
-          // showProfileSettings={this.showProfileSettings}
-          // showAddFriend={this.showAddFriend}
-        />
+        <Header offset={this.yOffset} />
       </View>
     );
   }
