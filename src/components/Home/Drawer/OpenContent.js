@@ -25,7 +25,6 @@ const BUTTON_SIZE = 40;
 const ICON_SIZE = 60;
 
 const OpenContent = ({ loading, moves, deltaY, user, open, toggleDrawer, showProfileScreen }) => {
-  console.log("drawers moves: ", moves);
   let animatedOpacity = {
     opacity: deltaY.interpolate({
       inputRange: [0, SB_HEIGHT, SCREEN_HEIGHT],

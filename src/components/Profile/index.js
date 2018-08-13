@@ -9,7 +9,8 @@ import TopButtons from "./TopButtons";
 import Notifications from "./Notifications";
 import Groups from "../Groups";
 
-import { TransparentModalTo } from "../../lib/functions";
+import {} from "../../lib/navigation";
+
 import { IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
@@ -66,18 +67,6 @@ class Profile extends Component {
     });
   };
 
-  showCreateGroup = () => {
-    const { friends } = this.props.data;
-    Navigation.showModal({
-      component: {
-        name: "groups.CreateGroup",
-        passProps: {
-          friends
-        }
-      }
-    });
-  };
-
   handleOnPressAcceptFriend = uid => {
     const { user } = this.props;
     console.log(user, " accepted ", uid);
@@ -114,11 +103,7 @@ class Profile extends Component {
           onScrollEndDrag={this.handleScrollEndDrag}
           scrollEventThrottle={16}
         >
-          <TopButtons
-            onPressSettings={this.showProfileSettings}
-            onPressAddFriend={this.showAddFriend}
-            onPressCreateGroup={this.showCreateGroup}
-          />
+          <TopButtons />
           <Notifications
             data={notifications}
             acceptFriend={this.handleOnPressAcceptFriend}

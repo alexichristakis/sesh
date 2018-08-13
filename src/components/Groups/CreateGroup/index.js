@@ -86,6 +86,7 @@ class CreateGroup extends Component {
   };
 
   render() {
+    console.log(this.props);
     const { friends } = this.props;
 
     return (

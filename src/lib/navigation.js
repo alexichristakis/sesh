@@ -46,22 +46,15 @@ export const ShowCreateLaterMove = ({ user, groups }) => {
 export const ShowCreateGroup = () => {
 	Navigation.showModal({
 		component: {
-			name: SCREENS.CREATE_GROUP,
-			passProps: {
-				user,
-				friends
-			}
+			name: SCREENS.CREATE_GROUP
 		}
 	});
 };
 
-export const ShowAddFriend = ({ user }) => {
+export const ShowAddFriend = () => {
 	Navigation.showModal({
 		component: {
-			name: SCREENS.ADD_FRIEND,
-			passProps: {
-				friends
-			}
+			name: SCREENS.ADD_FRIEND
 		}
 	});
 };
