@@ -8,17 +8,9 @@ import { Colors } from "../../lib/styles";
 import Move from "../global/Move";
 import VerticalList from "../global/VerticalList";
 
-class Later extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // MoveComponent: null
-    };
-  }
-
+const Later = ({ user, moves, handleTransition, onScroll, onScrollEndDrag }) => {
   transitionFrom = (dimensions, onReturn, cardData) => {
-    this.props.handleTransition({
+    handleTransition({
       ...dimensions,
       onReturn,
       cardData,
@@ -31,29 +23,21 @@ class Later extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <Move
-      index={index}
-      move={item}
-      userLocation={this.props.user.location}
-      transitionFrom={this.transitionFrom}
-    />
+    <Move index={index} move={item} userLocation={user.location} transitionFrom={transitionFrom} />
   );
 
-  render() {
-    const { moves } = this.props.data;
-    return (
-      <View style={styles.container}>
-        <VerticalList
-          data={moves}
-          renderItem={this._renderItem}
-          shortened={this.props.shortened}
-          onScroll={this.props.onScroll}
-          onScrollEndDrag={this.props.onScrollEndDrag}
-        />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <VerticalList
+        data={moves}
+        renderItem={_renderItem}
+        // shortened={props.shortened}
+        onScroll={onScroll}
+        onScrollEndDrag={onScrollEndDrag}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -281,7 +281,7 @@ class Focus extends Component {
     const Card = isGroups ? (
       <Group card data={cardData} />
     ) : (
-      <Move focused isActive={isActive} move={cardData} userLocation={user.location} />
+      <Move focused active={isActive} move={cardData} userLocation={user.location} />
     );
 
     const FocusContent = !isGroups ? (

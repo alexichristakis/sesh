@@ -88,13 +88,14 @@ class Home extends Component {
     );
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   // if (this.state.barOpen !== nextState.barOpen) return true;
-  //   // else if (this.state.focused !== nextState.focused) return true;
-  //   if (this.state.loading !== nextState.loading) return true;
-  //   else if (this.state.refreshing !== nextState.refreshing) return true;
-  //   else return false;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    // if (this.state.barOpen !== nextState.barOpen) return true;
+    // else if (this.state.focused !== nextState.focused) return true;
+    // if (this.state.loading !== nextState.loading) return true;
+    // else if (this.state.refreshing !== nextState.refreshing) return true;
+    // else return false;
+    return true
+  }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
     useNativeDriver: true
@@ -160,7 +161,7 @@ class Home extends Component {
       >
         <Active
           user={user}
-          data={data}
+          moves={moves}
           shortened={!this.state.barOpen}
           handleTransition={this.handleTransition}
           onScroll={this._vertOnScroll}
@@ -168,7 +169,7 @@ class Home extends Component {
         />
         <Later
           user={user}
-          data={data}
+          moves={moves}
           shortened={!this.state.barOpen}
           handleTransition={this.handleTransition}
           onScroll={this._vertOnScroll}
@@ -184,9 +185,9 @@ class Home extends Component {
         {loading ? Loading : Feed}
 
         <TopBar
+          user={user}
           yOffset={yOffset}
           xOffset={xOffset}
-          user={user}
           refreshing={refreshing}
           barOpen={this.state.barOpen}
           scrollToStart={this._scrollToStart}

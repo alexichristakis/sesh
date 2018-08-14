@@ -76,11 +76,10 @@ function groups(state = [], action) {
 			return [...state, action.group];
 		case LEAVE_GROUP:
 			/* make api call */
-			console.log("leave group reducer", action);
-			let index = 0;
-			// state.forEach((group, i) => {
-			// 	if (group.id === action.group.id) index = i;
-			// });
+			let index;
+			state.forEach((group, i) => {
+				if (group.id === action.group.id) index = i;
+			});
 			return [...state.slice(0, index), ...state.slice(index + 1)];
 		case ADD_FRIEND_TO_GROUP:
 			return [...state];
