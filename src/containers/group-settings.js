@@ -11,6 +11,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
+	console.log(dispatch);
 	return {
 		leaveGroup: (group, user) => {
 			dispatch(leaveGroup(group, user));

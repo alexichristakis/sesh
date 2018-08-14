@@ -44,7 +44,7 @@ const initialUserState = {
 function user(state = initialUserState, action) {
 	switch (action.type) {
 		case SET_USER:
-			return { ...action.user };
+			return { ...state, ...action.user };
 		case SET_LOCATION:
 			return { ...state, location: action.userLocation };
 		default:

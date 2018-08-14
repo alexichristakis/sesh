@@ -33,7 +33,8 @@ const OpenContent = ({ loading, moves, deltaY, user, open, toggleDrawer, showPro
     })
   };
 
-  console.log(user);
+  // console.log("open content: ", user);
+  // console.log(user);
 
   return (
     <SuperEllipseMask style={styles.container} radius={{ topRight: 20, topLeft: 20 }}>

@@ -157,13 +157,26 @@ class CreateMove extends Component {
   };
 
   handleOnPressSend = () => {
+    const { user, groups, addMove } = this.props;
+    const { text, coords, chosenDate, selectedIndex } = this.state;
+
+    const move = {
+      id: user.name + chosenDate,
+      name: user.name,
+      fb_id: user.fb_id,
+      group: groups[selectedIndex].name,
+      description: text,
+      location: coords,
+      time: chosenDate
+    };
+
     this.setState({ buttonVisible: false }, () => {
       ShowLoadingOverlay();
+      addMove(move);
       setTimeout(() => {
         Navigation.dismissOverlay(LOADING);
         this.interactable.snapTo({ index: 2 });
       }, 500);
-      // this.interactable.snapTo({ index: 2 });
     });
   };
 

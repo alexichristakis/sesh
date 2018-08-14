@@ -31,6 +31,13 @@ export function setMoves(moves) {
 	};
 }
 
+export function addMove(move) {
+	return {
+		type: ADD_MOVE,
+		move
+	}
+}
+
 export function setLocation(userLocation) {
 	return {
 		type: SET_LOCATION,

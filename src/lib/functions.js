@@ -5,6 +5,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import geolib from "geolib";
 
 import { LOADING } from "./constants";
+import { SCREENS } from "../screens";
 
 const FB_GRAPH = "https://graph.facebook.com/";
 
@@ -117,7 +118,7 @@ export const ShowLoadingOverlay = () => {
   Navigation.showOverlay({
     component: {
       id: LOADING,
-      name: "sesh.Loading"
+      name: SCREENS.LOADING
     }
   });
 };

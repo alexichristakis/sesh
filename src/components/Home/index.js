@@ -72,15 +72,15 @@ class Home extends Component {
   async componentDidMount() {
     const { userObj, setMoves, setUser, setLocation, setGroups, setFriends } = this.props;
 
-    setMoves(MOVES);
-    setGroups(GROUPS);
-    setFriends(FRIENDS);
-    setUser(userObj);
-
     navigator.geolocation.getCurrentPosition(
       position => {
         const { coords } = position;
         setLocation(coords);
+        setMoves(MOVES);
+        setGroups(GROUPS);
+        setFriends(FRIENDS);
+        setUser(userObj);
+
         this.setState({ loading: false });
       },
       error => this.setState({ error: error.message }),
@@ -88,13 +88,13 @@ class Home extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // if (this.state.barOpen !== nextState.barOpen) return true;
-    // else if (this.state.focused !== nextState.focused) return true;
-    if (this.state.loading !== nextState.loading) return true;
-    else if (this.state.refreshing !== nextState.refreshing) return true;
-    else return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // if (this.state.barOpen !== nextState.barOpen) return true;
+  //   // else if (this.state.focused !== nextState.focused) return true;
+  //   if (this.state.loading !== nextState.loading) return true;
+  //   else if (this.state.refreshing !== nextState.refreshing) return true;
+  //   else return false;
+  // }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
     useNativeDriver: true
@@ -143,7 +143,7 @@ class Home extends Component {
     const { refreshing, loading } = this.state;
     const { friends, groups, moves, user } = this.props;
     const data = { friends, groups, moves };
-    console.log(this.props);
+    console.log("render home: ", moves);
 
     const Loading = <LoadingCircle style={styles.loading} size={20} />;
 
