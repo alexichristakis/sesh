@@ -101,6 +101,7 @@ class VerticalList extends Component {
         onScrollEndDrag={this.props.onScrollEndDrag}
         keyExtractor={this._keyExtractor}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={this.props.ListEmptyComponent}
         // ListHeaderComponent={this.renderHeader}
       />
     );

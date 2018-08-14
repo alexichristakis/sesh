@@ -20,11 +20,10 @@ import {
   SB_HEIGHT,
   IS_X,
   TRANSITION_DURATION,
-  CARD_GUTTER,
-  LOADING
+  CARD_GUTTER
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
-import { ShowLoadingOverlay } from "../../lib/functions";
+import { ShowLoadingOverlay, HideLoadingOverlay } from "../../lib/navigation";
 
 import { SendMove } from "../../api";
 
@@ -174,7 +173,7 @@ class CreateMove extends Component {
       ShowLoadingOverlay();
       addMove(move);
       setTimeout(() => {
-        Navigation.dismissOverlay(LOADING);
+        HideLoadingOverlay();
         this.interactable.snapTo({ index: 2 });
       }, 500);
     });

@@ -1,8 +1,44 @@
 import { Navigation } from "react-native-navigation";
-import { TransparentModalTo } from "./functions";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+
 import { SCREENS } from "../screens";
 
+const TransparentModalTo = (componentName, props, options) => {
+	Navigation.showModal({
+		component: {
+			name: componentName,
+			passProps: props,
+			options: {
+				modalPresentationStyle: "overCurrentContext",
+				animations: {
+					showModal: {
+						enable: false
+					},
+					dismissModal: {
+						enable: false
+					}
+				},
+				...options
+			}
+		}
+	});
+};
+
+export const ShowLoadingOverlay = () => {
+	Navigation.showOverlay({
+		component: {
+			id: "LOADING",
+			name: SCREENS.LOADING
+		}
+	});
+};
+
+export const HideLoadingOverlay = () => {
+	Navigation.dismissModal("LOADING");
+};
+
 export const ShowMoveFocus = ({ props }) => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	TransparentModalTo(SCREENS.FOCUS, {
 		...props,
 		isGroups: false
@@ -10,6 +46,7 @@ export const ShowMoveFocus = ({ props }) => {
 };
 
 export const ShowProfile = () => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	Navigation.showModal({
 		component: {
 			name: SCREENS.PROFILE,
@@ -20,23 +57,26 @@ export const ShowProfile = () => {
 	});
 };
 
-export const ShowCreateActiveMove = ({ user, groups }) => {
+export const ShowProfileSettings = () => {
+	TransparentModalTo(SCREENS.SETTINGS);
+};
+
+export const ShowCreateActiveMove = () => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	TransparentModalTo(SCREENS.CREATE_MOVE, {
-		active: true,
-		groups,
-		user
+		active: true
 	});
 };
 
-export const ShowCreateLaterMove = ({ user, groups }) => {
+export const ShowCreateLaterMove = () => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	TransparentModalTo(SCREENS.CREATE_MOVE, {
-		active: false,
-		groups,
-		user
+		active: false
 	});
 };
 
 export const ShowCreateGroup = () => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	Navigation.showModal({
 		component: {
 			name: SCREENS.CREATE_GROUP
@@ -45,6 +85,7 @@ export const ShowCreateGroup = () => {
 };
 
 export const ShowAddFriend = () => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	Navigation.showModal({
 		component: {
 			name: SCREENS.ADD_FRIEND
@@ -54,6 +95,7 @@ export const ShowAddFriend = () => {
 
 /* Groups */
 export const ShowGroupFocus = ({ group }) => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	TransparentModalTo(SCREENS.FOCUS, {
 		isGroups: true,
 		cardData: group
@@ -61,6 +103,7 @@ export const ShowGroupFocus = ({ group }) => {
 };
 
 export const ShowEditGroupName = ({ group }) => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	Navigation.showModal({
 		component: {
 			name: SCREENS.EDIT_GROUP_NAME,
@@ -74,6 +117,7 @@ export const ShowGroupSettings = ({ group }) => {
 };
 
 export const ShowAddToGroup = ({ group }) => {
+	ReactNativeHapticFeedback.trigger("impactLight");
 	Navigation.showModal({
 		component: {
 			name: SCREENS.ADD_TO_GROUP,

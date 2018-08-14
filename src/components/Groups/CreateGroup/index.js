@@ -10,7 +10,7 @@ import Footer from "./Footer";
 
 import { SB_HEIGHT, LOADING } from "../../../lib/constants";
 import { Colors } from "../../../lib/styles";
-import { ShowLoadingOverlay } from "../../../lib/functions";
+import { ShowLoadingOverlay, HideLoadingOverlay } from "../../../lib/navigation";
 
 class CreateGroup extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class CreateGroup extends Component {
     console.log(groupName, selectedUsers);
     ShowLoadingOverlay();
     setTimeout(() => {
-      Navigation.dismissOverlay(LOADING);
+      HideLoadingOverlay();
       Navigation.dismissModal(this.props.componentId);
     }, 500);
     /* make api call */
