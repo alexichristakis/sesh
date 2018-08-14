@@ -52,16 +52,8 @@ class Home extends Component {
       refreshing: false,
 
       barOpen: true,
-      focused: false,
-      vertScrolling: false
-
-      // user: this.props.user
-
-      // coords: { latitude: null, longitude: null }
-
-      // friends: FRIENDS,
-      // groups: GROUPS,
-      // moves: MOVES
+      focused: false
+      // vertScrolling: false
     };
   }
 
@@ -93,11 +85,11 @@ class Home extends Component {
     return true;
   }
 
-  _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
+  horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
     useNativeDriver: true
   });
 
-  _vertOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
+  vertOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
     useNativeDriver: true
   });
 
@@ -112,9 +104,9 @@ class Home extends Component {
   //   }
   // };
 
-  /* horiz scroll control */
-  _scrollToStart = () => this.scrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-  _scrollToEnd = () => this.scrollView.getNode().scrollToEnd();
+  /* horizontal scroll control */
+  _scrollToStart = () => this.hoScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+  _scrollToEnd = () => this.hoScrollView.getNode().scrollToEnd();
 
   handleTransition = moveProps => {
     this.setState({ focused: true }, () =>
@@ -139,7 +131,6 @@ class Home extends Component {
   render() {
     const { refreshing, loading } = this.state;
     const { friends, groups, moves, user } = this.props;
-    const data = { friends, groups, moves };
     console.log("render home: ", moves);
 
     return (
@@ -153,10 +144,10 @@ class Home extends Component {
             user={user}
             moves={moves}
             handleTransition={this.handleTransition}
-            onHoScroll={this._horizOnScroll}
-            onVertScroll={this._vertOnScroll}
+            onHoScroll={this.horizOnScroll}
+            onVertScroll={this.vertOnScroll}
             onVertScrollEndDrag={this.handleOnVertScrollEndDrag}
-            hoScrollRef={ScrollView => (this.scrollView = ScrollView)}
+            hoScrollRef={ScrollView => (this.hoScrollView = ScrollView)}
           />
         )}
 
@@ -169,17 +160,13 @@ class Home extends Component {
           scrollToStart={this._scrollToStart}
           scrollToEnd={this._scrollToEnd}
         />
-        <Drawer loading={loading} user={user} data={data} />
+        <Drawer loading={loading} user={user} moves={moves} />
       </Background>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scroll: {
-    flex: 1,
-    flexDirection: "row"
-  },
   loading: {
     alignSelf: "center",
     marginTop: 150

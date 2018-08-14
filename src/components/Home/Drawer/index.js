@@ -50,8 +50,7 @@ class Drawer extends Component {
   };
 
   render() {
-    const { user, data, loading } = this.props;
-    const { groups, moves } = data;
+    const { user, moves, loading } = this.props;
 
     let blurOpacity = {
       opacity: this.deltaY.interpolate({
@@ -86,8 +85,6 @@ class Drawer extends Component {
           <ActionButtonContainer
             deltaY={this.deltaY}
             toggleDrawer={this.toggleDrawer}
-            groups={groups}
-            user={user}
             open={this.state.open}
           />
           <OpenContent

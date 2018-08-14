@@ -21,7 +21,7 @@ const BUTTON_SIZE = 40;
 const MAIN_BUTTON_SIZE = 65;
 const ICON_SIZE = 60;
 
-const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => {
+const ActionButtonContainer = ({ open, toggleDrawer, deltaY }) => {
   let secondary = {
     opacity: deltaY.interpolate({
       inputRange: [0, SCREEN_HEIGHT / 2, 0.75 * SCREEN_HEIGHT, SCREEN_HEIGHT],

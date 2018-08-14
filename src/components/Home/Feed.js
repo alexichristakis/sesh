@@ -3,26 +3,21 @@ import { StyleSheet, Animated, FlatList, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
-import { Colors, TextStyles } from "../../lib/styles";
+import { TextStyles } from "../../lib/styles";
 import { IS_X, BORDER_RADIUS, CARD_GUTTER, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../lib/constants";
 
 import Move from "../global/Move";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const activeEmptyMessage =
-	"No active moves! Create one to let your friends know what's going on now.";
-const laterEmptyMessage =
-	"No later moves! Create one to let your friends know what's going on later.";
-
 const Feed = ({
 	user,
 	moves,
+	hoScrollRef,
 	onHoScroll,
 	onVertScroll,
 	onVertScrollEndDrag,
-	handleTransition,
-	hoScrollRef
+	handleTransition
 }) => {
 	const activeData = moves.filter(move => move.time <= Date.now()).sort((a, b) => b.time - a.time);
 	const laterData = moves.filter(move => move.time > Date.now()).sort((a, b) => a.time - b.time);
@@ -47,7 +42,11 @@ const Feed = ({
 
 	renderEmptyListComponent = ({ isActive }) => (
 		<SuperEllipseMask style={styles.emptyCardContainer} radius={BORDER_RADIUS}>
-			<Text style={TextStyles.body}>{isActive ? activeEmptyMessage : laterEmptyMessage}</Text>
+			<Text style={TextStyles.body}>
+				{isActive
+					? "No active moves! Create one to let your friends know what's going on now."
+					: "No later moves! Create one to let your friends know what's going on later."}
+			</Text>
 		</SuperEllipseMask>
 	);
 

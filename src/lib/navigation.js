@@ -34,7 +34,7 @@ export const ShowLoadingOverlay = () => {
 };
 
 export const HideLoadingOverlay = () => {
-	Navigation.dismissModal("LOADING");
+	Navigation.dismissOverlay("LOADING");
 };
 
 export const ShowMoveFocus = ({ props }) => {
