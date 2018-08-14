@@ -1,5 +1,5 @@
 import { Navigation } from "react-native-navigation";
-import { registerScreens } from "./screens";
+import { registerScreens, SCREENS } from "./screens";
 
 import { UserAuthenticated } from "./api";
 
@@ -17,15 +17,15 @@ Navigation.events().registerAppLaunchedListener(async () => {
 
   const Register = {
     component: {
-      name: "sesh.Register"
+      name: SCREENS.REGISTER
     }
   };
 
   const Home = {
     component: {
-      name: "sesh.Home",
+      name: SCREENS.HOME,
       passProps: {
-        user: user
+        userObj: user
       }
     }
   };

@@ -9,6 +9,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TouchableScale from "../global/TouchableScale";
 
+import { ShowGroupSettings } from "../../lib/navigation";
 import { TransparentModalTo } from "../../lib/functions";
 import { Colors, TextStyles } from "../../lib/styles";
 import { BORDER_RADIUS } from "../../lib/constants";
@@ -17,8 +18,9 @@ const ICON_SIZE1 = 35;
 const ICON_SIZE2 = 30;
 
 const Group = props => {
-  presentOptionsOverlay = item => () => {
-    TransparentModalTo("groups.Settings", { name: item.name, data: item });
+  presentOptionsOverlay = group => () => {
+    // TransparentModalTo("groups.Settings", { name: item.name, data: item });
+    ShowGroupSettings({ group });
   };
 
   const group = props.data;

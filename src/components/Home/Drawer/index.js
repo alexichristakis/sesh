@@ -8,6 +8,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import ActionButtonContainer from "./ActionButtonContainer";
 import OpenContent from "./OpenContent";
 
+import { ShowProfile } from "../../../lib/navigation";
 import { FillAbsolute, shadow } from "../../../lib/styles";
 import { SCREEN_HEIGHT, SB_HEIGHT, DRAWER_HEIGHT } from "../../../lib/constants";
 
@@ -45,20 +46,12 @@ class Drawer extends Component {
 
   showProfileScreen = () => {
     this.interactable.snapTo({ index: 0 });
-    Navigation.showModal({
-      component: {
-        name: "sesh.Profile",
-        passProps: { user: this.props.user, data: this.props.data },
-        options: {
-          modalPresentationStyle: "fullScreen"
-        }
-      }
-    });
+    ShowProfile();
   };
 
   render() {
-    const { user, data } = this.props;
-    const { groups, moves, coords } = data;
+    const { user, data, loading } = this.props;
+    const { groups, moves } = data;
 
     let blurOpacity = {
       opacity: this.deltaY.interpolate({
@@ -98,13 +91,13 @@ class Drawer extends Component {
             open={this.state.open}
           />
           <OpenContent
+            loading={loading}
             deltaY={this.deltaY}
             toggleDrawer={this.toggleDrawer}
             showProfileScreen={this.showProfileScreen}
             open={this.state.open}
             moves={moves}
             user={user}
-            userLocation={coords}
           />
         </Interactable.View>
       </View>

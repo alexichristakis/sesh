@@ -9,7 +9,8 @@ import TopButtons from "./TopButtons";
 import Notifications from "./Notifications";
 import Groups from "../Groups";
 
-import { TransparentModalTo } from "../../lib/functions";
+import {} from "../../lib/navigation";
+
 import { IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
@@ -46,7 +47,8 @@ class Profile extends Component {
   }
 
   shouldComponentUpdate() {
-    return false;
+    // return false;
+    return true;
   }
 
   _onScroll = () =>
@@ -62,18 +64,6 @@ class Profile extends Component {
     Navigation.showModal({
       component: {
         name: "profile.AddFriend"
-      }
-    });
-  };
-
-  showCreateGroup = () => {
-    const { friends } = this.props.data;
-    Navigation.showModal({
-      component: {
-        name: "groups.CreateGroup",
-        passProps: {
-          friends
-        }
       }
     });
   };
@@ -95,7 +85,9 @@ class Profile extends Component {
   };
 
   render() {
-    const { user, data } = this.props;
+    const { user, groups } = this.props;
+    // console.log("groups: ", groups);
+    console.log("update profile: ", this.props);
     const { notifications } = this.state;
 
     return (
@@ -113,17 +105,13 @@ class Profile extends Component {
           onScrollEndDrag={this.handleScrollEndDrag}
           scrollEventThrottle={16}
         >
-          <TopButtons
-            onPressSettings={this.showProfileSettings}
-            onPressAddFriend={this.showAddFriend}
-            onPressCreateGroup={this.showCreateGroup}
-          />
+          <TopButtons />
           <Notifications
             data={notifications}
             acceptFriend={this.handleOnPressAcceptFriend}
             deleteRequest={this.handleOnPressDeleteRequest}
           />
-          <Groups data={data} />
+          <Groups data={groups} />
         </Animated.ScrollView>
         <Header offset={this.yOffset} />
       </View>

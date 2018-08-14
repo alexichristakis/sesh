@@ -1,61 +1,80 @@
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+
 import { Navigation } from "react-native-navigation";
 
-// authentication
+import seshApp from "./redux/reducers";
+
+/* REDUX CONNECTED */
+import HomeContainer from "./containers/home";
+import ProfileContainer from "./containers/profile";
+import AddFriendContainer from "./containers/add-friend";
+import CreateGroupContainer from "./containers/create-group";
+import AddToGroupContainer from "./containers/add-to-group";
+import EditGroupNameContainer from "./containers/edit-group-name";
+import CreateMoveContainer from "./containers/create-move";
+import FocusContainer from "./containers/focus";
+import GroupSettingsContainer from "./containers/group-settings";
+
+/* REGULAR SCREENS */
 import Register from "./components/Authentication/Register";
 import SignIn from "./components/Authentication/SignIn";
-
-// onboarding
-
-// main
-import Home from "./components/Home";
-import Profile from "./components/Profile";
-import AddFriend from "./components/Profile/AddFriend";
-import ProfileSettings from "./components/Profile/Settings";
 import LoadingOverlay from "./components/global/LoadingOverlay";
+import ProfileSettings from "./components/Profile/Settings";
 
-import Groups from "./components/Groups";
-import CreateGroup from "./components/Groups/CreateGroup";
-import AddToGroup from "./components/Groups/AddToGroup";
-import CreateMove from "./components/CreateMove";
+const REGISTER = "register";
+const SIGN_IN = "sign_in";
+const HOME = "home";
+const FOCUS = "focus";
+const CREATE_MOVE = "create_move";
+const PROFILE = "profile";
+const LOADING = "loading";
+const ADD_FRIEND = "add_friend";
+const SETTINGS = "settings";
+const CREATE_GROUP = "create_group";
+const EDIT_GROUP_NAME = "edit_group_name";
+const ADD_TO_GROUP = "add_to_group";
+const GROUP_SETTINGS = "group_settings";
 
-import GroupSettings from "./components/Groups/Settings";
-import Focus from "./components/Focus";
-
-import EditName from "./components/Groups/EditName";
-
-function sceneCreator(sceneComp, store) {
-  return () => {
-    class SceneWrapper extends React.Component {
-      render() {
-        return <Provider store={store}>{React.createElement(sceneComp)}</Provider>;
-      }
-    }
-  };
-}
-
-function registerScreens() {
-  /* authentication */
-  Navigation.registerComponent("sesh.Register", () => Register);
-  Navigation.registerComponent("sesh.SignIn", () => SignIn);
-
-  /* global screens */
-  Navigation.registerComponent("sesh.Home", () => Home);
-  Navigation.registerComponent("sesh.Focus", () => Focus);
-  Navigation.registerComponent("sesh.CreateMove", () => CreateMove);
-  Navigation.registerComponent("sesh.Profile", () => Profile);
-  Navigation.registerComponent("sesh.Loading", () => LoadingOverlay);
-
-  /* profile screens */
-  Navigation.registerComponent("profile.AddFriend", () => AddFriend);
-  Navigation.registerComponent("profile.Settings", () => ProfileSettings);
-
-  /* group screens */
-  Navigation.registerComponent("groups.CreateGroup", () => CreateGroup);
-  Navigation.registerComponent("groups.EditName", () => EditName);
-  Navigation.registerComponent("groups.AddToGroup", () => AddToGroup);
-  Navigation.registerComponent("groups.Settings", () => GroupSettings);
-}
-
-module.exports = {
-  registerScreens
+export const SCREENS = {
+  REGISTER,
+  SIGN_IN,
+  HOME,
+  FOCUS,
+  CREATE_MOVE,
+  PROFILE,
+  LOADING,
+  ADD_FRIEND,
+  SETTINGS,
+  CREATE_GROUP,
+  EDIT_GROUP_NAME,
+  ADD_TO_GROUP,
+  GROUP_SETTINGS
 };
+
+const store = createStore(seshApp, applyMiddleware(thunk));
+
+export function registerScreens() {
+  /* register containers */
+  Navigation.registerComponentWithRedux(HOME, () => HomeContainer, Provider, store);
+  Navigation.registerComponentWithRedux(FOCUS, () => FocusContainer, Provider, store);
+  Navigation.registerComponentWithRedux(CREATE_MOVE, () => CreateMoveContainer, Provider, store);
+  Navigation.registerComponentWithRedux(PROFILE, () => ProfileContainer, Provider, store);
+  Navigation.registerComponentWithRedux(ADD_FRIEND, () => AddFriendContainer, Provider, store);
+  Navigation.registerComponentWithRedux(CREATE_GROUP, () => CreateGroupContainer, Provider, store);
+  Navigation.registerComponentWithRedux(EDIT_GROUP_NAME, () => EditGroupNameContainer, Provider, store);
+  Navigation.registerComponentWithRedux(ADD_TO_GROUP, () => AddToGroupContainer, Provider, store);
+  Navigation.registerComponentWithRedux(GROUP_SETTINGS, () => GroupSettingsContainer, Provider, store);
+
+  /* register components */
+  Navigation.registerComponent(REGISTER, () => Register);
+  Navigation.registerComponent(SIGN_IN, () => SignIn);
+  Navigation.registerComponent(LOADING, () => LoadingOverlay);
+  Navigation.registerComponent(SETTINGS, () => ProfileSettings);
+}
+
+// module.exports = {
+//   SCREENS,
+//   registerScreens
+// };

@@ -1,10 +1,11 @@
 import { PixelRatio } from "react-native";
-import { Navigation } from "react-native-navigation";
+// import { Navigation } from "react-native-navigation";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import geolib from "geolib";
 
 import { LOADING } from "./constants";
+import { SCREENS } from "../screens";
 
 const FB_GRAPH = "https://graph.facebook.com/";
 
@@ -91,33 +92,33 @@ export const GetPhotoURL = (fbID, size) => {
   return url;
 };
 
-export const TransparentModalTo = (componentName, props, options) => {
-  ReactNativeHapticFeedback.trigger("impactLight");
-  Navigation.showModal({
-    component: {
-      name: componentName,
-      passProps: props,
-      options: {
-        modalPresentationStyle: "overCurrentContext",
-        animations: {
-          showModal: {
-            enable: false
-          },
-          dismissModal: {
-            enable: false
-          }
-        },
-        ...options
-      }
-    }
-  });
-};
+// export const TransparentModalTo = (componentName, props, options) => {
+//   ReactNativeHapticFeedback.trigger("impactLight");
+//   Navigation.showModal({
+//     component: {
+//       name: componentName,
+//       passProps: props,
+//       options: {
+//         modalPresentationStyle: "overCurrentContext",
+//         animations: {
+//           showModal: {
+//             enable: false
+//           },
+//           dismissModal: {
+//             enable: false
+//           }
+//         },
+//         ...options
+//       }
+//     }
+//   });
+// };
 
-export const ShowLoadingOverlay = () => {
-  Navigation.showOverlay({
-    component: {
-      id: LOADING,
-      name: "sesh.Loading"
-    }
-  });
-};
+// export const ShowLoadingOverlay = () => {
+//   Navigation.showOverlay({
+//     component: {
+//       id: LOADING,
+//       name: SCREENS.LOADING
+//     }
+//   });
+// };

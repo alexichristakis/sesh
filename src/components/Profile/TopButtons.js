@@ -12,11 +12,9 @@ import ColorButton from "../global/ColorButton";
 import { Colors } from "../../lib/styles";
 import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
 
-const TopButtons = ({
-	onPressSettings,
-	onPressAddFriend,
-	onPressCreateGroup
-}) => {
+import { ShowCreateGroup, ShowAddFriend, ShowProfileSettings } from "../../lib/navigation";
+
+const TopButtons = props => {
 	return (
 		<>
 			<LinearGradient
@@ -29,21 +27,21 @@ const TopButtons = ({
 					title={<IonIcon name={"ios-settings"} size={25} />}
 					subTitle={"Settings"}
 					style={styles.button}
-					onPress={onPressSettings}
+					onPress={ShowProfileSettings}
 					color={Colors.gray}
 				/>
 				<ColorButton
 					title={<AwesomeIcon name={"user-plus"} size={22} />}
 					subTitle={"Add Friends"}
 					style={[styles.border, styles.button]}
-					onPress={onPressAddFriend}
+					onPress={ShowAddFriend}
 					color={Colors.gray}
 				/>
 				<ColorButton
 					title={<AwesomeIcon name={"users"} size={24} />}
 					subTitle={"Create Group"}
 					style={styles.button}
-					onPress={onPressCreateGroup}
+					onPress={ShowCreateGroup}
 					color={Colors.gray}
 				/>
 			</SuperEllipseMask>

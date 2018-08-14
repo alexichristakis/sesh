@@ -6,7 +6,7 @@ import AwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import TouchableScale from "../../global/TouchableScale";
 
-import { TransparentModalTo, GenerateMarkers } from "../../../lib/functions";
+import { ShowCreateActiveMove, ShowCreateLaterMove } from "../../../lib/navigation";
 import { Colors, FillAbsolute, shadow } from "../../../lib/styles";
 import {
   SCREEN_WIDTH,
@@ -22,22 +22,6 @@ const MAIN_BUTTON_SIZE = 65;
 const ICON_SIZE = 60;
 
 const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => {
-  presentNewActiveMove = () => {
-    TransparentModalTo("sesh.CreateMove", {
-      active: true,
-      groups,
-      user
-    });
-  };
-
-  presentNewLaterMove = () => {
-    TransparentModalTo("sesh.CreateMove", {
-      active: false,
-      groups,
-      user
-    });
-  };
-
   let secondary = {
     opacity: deltaY.interpolate({
       inputRange: [0, SCREEN_HEIGHT / 2, 0.75 * SCREEN_HEIGHT, SCREEN_HEIGHT],
@@ -74,7 +58,7 @@ const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => 
 
   return (
     <View style={styles.actionButtonContainer}>
-      <TouchableScale disabled={open} onPress={presentNewActiveMove}>
+      <TouchableScale disabled={open} onPress={ShowCreateActiveMove}>
         <Animated.View style={[secondary, styles.button]}>
           <AwesomeIcon name={"bolt"} size={30} color={Colors.darkerGray} />
           {/* <FeatherIcon name={'zap'} size={30} color={Colors.darkerGray} /> */}
@@ -91,7 +75,7 @@ const ActionButtonContainer = ({ groups, user, open, toggleDrawer, deltaY }) => 
           <FeatherIcon name={"navigation"} size={35} color={Colors.darkerGray} />
         </Animated.View>
       </TouchableScale>
-      <TouchableScale disabled={open} onPress={presentNewLaterMove}>
+      <TouchableScale disabled={open} onPress={ShowCreateLaterMove}>
         <Animated.View style={[secondary, styles.button]}>
           <IonIcon name={"ios-time"} size={30} color={Colors.darkerGray} />
           {/* <IonIcon name={"ios-time-outline"} size={30} color={Colors.darkerGray} /> */}

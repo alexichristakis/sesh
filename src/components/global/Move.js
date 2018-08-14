@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image
-} from "react-native";
+import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 import Icon from "react-native-vector-icons/Feather";
@@ -19,11 +11,12 @@ import ProgressiveImage from "../global/ProgressiveImage";
 
 import { DownloadPhoto } from "../../api";
 import {
-  TransparentModalTo,
+  // TransparentModalTo,
   FormatDistanceAway,
   GetPhotoURL,
   GetThumbnailURL
 } from "../../lib/functions";
+import { ShowGroupFocus } from "../../lib/navigation";
 import { Colors, TextStyles, shadow } from "../../lib/styles";
 import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
@@ -95,14 +88,15 @@ class Move extends Component {
   };
 
   handleGroupOnPress = () => {
-    TransparentModalTo("sesh.Focus", {
-      isGroups: true,
-      data: { name: this.props.move.group, size: 10 }
-    });
+    // TransparentModalTo("sesh.Focus", {
+    //   isGroups: true,
+    //   cardData: { name: this.props.move.group, size: 10 }
+    // });
+    ShowGroupFocus({ group: { name: this.props.move.group, size: 10 } });
   };
 
   render() {
-    const { focused, active, move, coords } = this.props;
+    const { focused, active, move, userLocation } = this.props;
     const { group, name, description, location, time, fb_id } = move;
     const { loading, photo } = this.state;
 
@@ -123,10 +117,7 @@ class Move extends Component {
           />
         )}
         <View style={styles.contentContainer}>
-          <TouchableOpacity
-            style={styles.groupButton}
-            onPress={this.handleGroupOnPress}
-          >
+          <TouchableOpacity style={styles.groupButton} onPress={this.handleGroupOnPress}>
             <Text allowFontScaling={false} style={TextStyles.bold}>
               {name}
             </Text>
@@ -144,7 +135,7 @@ class Move extends Component {
           <View style={styles.bottom}>
             <Text style={styles.location}>
               <Icon name={"compass"} size={12} color={Colors.gray} />
-              {" " + FormatDistanceAway(location, coords)}
+              {" " + FormatDistanceAway(location, userLocation)}
             </Text>
             <Text style={styles.time}>{moment(time).fromNow()}</Text>
           </View>

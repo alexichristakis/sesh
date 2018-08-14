@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { StyleSheet, Easing, Animated, TouchableOpacity, View, Text, Image } from "react-native";
+import { StyleSheet, Animated, TouchableOpacity, View, Text } from "react-native";
 
+import { Navigation } from "react-native-navigation";
 import Interactable from "react-native-interactable";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
-import Icon from "react-native-vector-icons/Feather";
-import { Navigation } from "react-native-navigation";
-import { BlurView, VibrancyView } from "react-native-blur";
 
 import ColorButton from "../global/ColorButton";
 
+import { ShowEditGroupName, ShowAddToGroup } from "../../lib/navigation";
 import { Colors, FillAbsolute } from "../../lib/styles";
-import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
+import { SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 
 class Settings extends Component {
   constructor(props) {
@@ -31,31 +30,30 @@ class Settings extends Component {
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
-    if (index === 0) {
-      // Navigation.dismissOverlay(this.props.componentId);
-      Navigation.dismissModal(this.props.componentId);
-    }
+    if (index === 0) Navigation.dismissModal(this.props.componentId);
   };
 
   handleOnPressEditName = () => {
-    Navigation.showModal({
-      component: {
-        name: "groups.EditName",
-        passProps: { name: this.props.name, id: this.props.id }
-      }
-    });
+    const { group } = this.props;
+    ShowEditGroupName({ group });
   };
 
   handleOnPressAddMember = () => {
-    Navigation.showModal({
-      component: {
-        name: "groups.AddToGroup",
-        passProps: { name: this.props.name, id: this.props.id }
-      }
-    });
+    const { group } = this.props;
+    ShowAddToGroup({ group });
+  };
+
+  handleOnPressLeaveGroup = () => {
+    const { leaveGroup, group, user } = this.props;
+    leaveGroup(group, user);
+    this.dismiss();
   };
 
   render() {
+    console.log(this.props);
+    const { group } = this.props;
+    const { name } = group;
+
     let animatedOpacity = {
       opacity: this.deltaY.interpolate({
         inputRange: [SCREEN_HEIGHT / 2 - 100, SCREEN_HEIGHT],
@@ -81,7 +79,7 @@ class Settings extends Component {
           animatedValueY={this.deltaY}
         >
           <SuperEllipseMask style={styles.interactable} radius={20}>
-            <Text style={styles.name}>{this.props.name}</Text>
+            <Text style={styles.name}>{name}</Text>
             <ColorButton
               textStyle={styles.textStyle}
               title={"edit name"}
@@ -98,7 +96,7 @@ class Settings extends Component {
               textStyle={styles.textStyle}
               title={"leave group"}
               color={Colors.primary}
-              onPress={() => console.log("leave group")}
+              onPress={this.handleOnPressLeaveGroup}
             />
             <TouchableOpacity
               style={{ alignSelf: "center", paddingTop: 10 }}

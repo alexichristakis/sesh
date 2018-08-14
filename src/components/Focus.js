@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import Interactable from "react-native-interactable";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -80,14 +73,7 @@ const DATA = [
 class Focus extends Component {
   constructor(props) {
     super(props);
-    const {
-      height = 0,
-      width,
-      x,
-      y,
-      pageX,
-      pageY = SCREEN_HEIGHT
-    } = this.props;
+    const { height = 0, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
 
     this.yOffset = new Animated.Value(0);
     this.xOffset = new Animated.Value(0);
@@ -170,11 +156,9 @@ class Focus extends Component {
     if (index === 0) {
       if (!isGroups) {
         this.props.onReturn().then(() => {
-          const moveId = this.props.data.id;
-          if (this.state.joined && !this.props.joined)
-            this.props.joinMove(moveId);
-          else if (!this.state.joined && this.props.joined)
-            this.props.leaveMove(moveId);
+          const moveId = this.props.cardData.id;
+          if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
+          else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
           this.props.returnScreen();
           Navigation.dismissModal(this.props.componentId);
         });
@@ -203,14 +187,12 @@ class Focus extends Component {
 
   render() {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
+    console.log('update focus: ', this.props);
     // console.log(height);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
-    const closedOffset = this.props.isGroups
-      ? SCREEN_HEIGHT + 500
-      : SCREEN_HEIGHT;
-    const inputRange =
-      openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
+    const closedOffset = this.props.isGroups ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
+    const inputRange = openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
 
     const springConfig = { damping: 0.5, tension: 600 };
     const interactableSnapPoints = [
@@ -242,10 +224,7 @@ class Focus extends Component {
         {
           translateY: this.deltaY.interpolate({
             inputRange,
-            outputRange:
-              openOffset < pageY
-                ? [SB_HEIGHT, closedOffset]
-                : [SCREEN_HEIGHT, SB_HEIGHT]
+            outputRange: openOffset < pageY ? [SB_HEIGHT, closedOffset] : [SCREEN_HEIGHT, SB_HEIGHT]
           })
         }
       ]
@@ -297,11 +276,12 @@ class Focus extends Component {
       }
     ];
 
-    const { data, isGroups, isActive, coords } = this.props;
+    const { groups, cardData, isGroups, isActive, user } = this.props;
+
     const Card = isGroups ? (
-      <Group card data={data} />
+      <Group card data={cardData} />
     ) : (
-      <Move focused isActive={isActive} move={data} coords={coords} />
+      <Move focused active={isActive} move={cardData} userLocation={user.location} />
     );
 
     const FocusContent = !isGroups ? (
@@ -312,16 +292,16 @@ class Focus extends Component {
           joined={this.state.joined}
           users={DATA}
           open={this.state.open}
-          userLocation={coords}
-          moveLocation={data.location}
+          userLocation={user.location}
+          moveLocation={cardData.location}
         />
       ) : (
         <LaterFocus
           handleOnPress={this.handleOnPressJoin}
           joined={this.state.joined}
           open={this.state.open}
-          userLocation={coords}
-          moveLocation={data.location}
+          userLocation={user.location}
+          moveLocation={cardData.location}
         />
       )
     ) : (
@@ -379,19 +359,12 @@ class Focus extends Component {
             scrollEventThrottle={16}
             style={styles.scroll}
           >
-            <View
-              shouldRasterizeIOS
-              style={styles.cardContainer}
-              onLayout={this.measureCard}
-            >
+            <View shouldRasterizeIOS style={styles.cardContainer} onLayout={this.measureCard}>
               {Card}
             </View>
             <Animated.View style={buttonAnimatedStyle}>
               <SuperEllipseMask radius={BORDER_RADIUS}>
-                <TouchableScale
-                  style={endMoveComputedStyle}
-                  onPress={() => console.log("yo")}
-                >
+                <TouchableScale style={endMoveComputedStyle} onPress={() => console.log("yo")}>
                   <Text style={styles.text}>End Move</Text>
                 </TouchableScale>
               </SuperEllipseMask>

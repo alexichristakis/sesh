@@ -16,28 +16,13 @@ import { VibrancyView } from "react-native-blur";
 
 import Group from "./Group";
 
-import { TransparentModalTo } from "../../lib/functions";
+import { ShowGroupFocus, ShowCreateGroup } from "../../lib/navigation";
 import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
 import { Colors, TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Groups = props => {
   handleOnPressGroup = group => {
-    TransparentModalTo("sesh.Focus", {
-      isGroups: true,
-      data: { name: group.name, size: 12 }
-    });
-  };
-
-  handleOnPressCreateGroup = () => {
-    // StatusBar.setBarStyle("dark-content", true);
-    Navigation.showModal({
-      component: {
-        name: "groups.CreateGroup",
-        passProps: {
-          friends: props.data.friends
-        }
-      }
-    });
+    ShowGroupFocus({ group });
   };
 
   _renderItem = ({ item, index }) => (
@@ -56,7 +41,7 @@ const Groups = props => {
   _renderHeader = () => (
     <View style={styles.headerContainer}>
       <Text style={styles.header}>My Groups:</Text>
-      <TouchableOpacity onPress={handleOnPressCreateGroup}>
+      <TouchableOpacity onPress={ShowCreateGroup}>
         <Icon name={"plus"} size={30} color={Colors.gray} />
       </TouchableOpacity>
     </View>
@@ -64,7 +49,7 @@ const Groups = props => {
 
   _renderFooter = () => (
     <TouchableHighlight
-      onPress={handleOnPressCreateGroup}
+      onPress={ShowCreateGroup}
       underlayColor={Colors.mediumGray}
       style={styles.footerContainer}
     >
@@ -78,18 +63,14 @@ const Groups = props => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={TextStyles.headerWhite}>MY GROUPS:</Text>
-        {/*<TouchableOpacity onPress={handleOnPressCreateGroup}>
-                  <Icon name={"plus"} size={24} color={"white"} />
-                </TouchableOpacity>*/}
       </View>
       <SuperEllipseMask radius={BORDER_RADIUS}>
         <FlatList
           scrollEnabled={false}
           style={styles.listBackground}
-          data={props.data.groups}
+          data={props.data}
           renderItem={_renderItem}
           ItemSeparatorComponent={_renderSeparator}
-          // ListHeaderComponent={_renderHeader}
           ListFooterComponent={_renderFooter}
           keyExtractor={_keyExtractor}
         />
