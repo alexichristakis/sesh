@@ -1,15 +1,12 @@
 import { connect } from "react-redux";
 
-import { leaveGroup } from "../redux/actions";
+import GroupSettings from "../components/Groups/Settings";
 
-import Profile from "../components/Profile";
+import { leaveGroup } from "../redux/actions";
 
 const mapStateToProps = state => {
 	return {
 		...state
-		// user: state.user,
-		// numGroups: groups.length,
-		// groups: groups
 	};
 };
 
@@ -21,9 +18,9 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-const ProfileContainer = connect(
+const GroupSettingsContainer = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Profile);
+)(GroupSettings);
 
-export default ProfileContainer;
+export default GroupSettingsContainer;

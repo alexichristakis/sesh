@@ -15,13 +15,13 @@ import AddToGroupContainer from "./containers/add-to-group";
 import EditGroupNameContainer from "./containers/edit-group-name";
 import CreateMoveContainer from "./containers/create-move";
 import FocusContainer from "./containers/focus";
+import GroupSettingsContainer from "./containers/group-settings";
 
 /* REGULAR SCREENS */
 import Register from "./components/Authentication/Register";
 import SignIn from "./components/Authentication/SignIn";
 import LoadingOverlay from "./components/global/LoadingOverlay";
 import ProfileSettings from "./components/Profile/Settings";
-import GroupSettings from "./components/Groups/Settings";
 
 const REGISTER = "register";
 const SIGN_IN = "sign_in";
@@ -63,20 +63,15 @@ export function registerScreens() {
   Navigation.registerComponentWithRedux(PROFILE, () => ProfileContainer, Provider, store);
   Navigation.registerComponentWithRedux(ADD_FRIEND, () => AddFriendContainer, Provider, store);
   Navigation.registerComponentWithRedux(CREATE_GROUP, () => CreateGroupContainer, Provider, store);
-  Navigation.registerComponentWithRedux(
-    EDIT_GROUP_NAME,
-    () => EditGroupNameContainer,
-    Provider,
-    store
-  );
+  Navigation.registerComponentWithRedux(EDIT_GROUP_NAME, () => EditGroupNameContainer, Provider, store);
   Navigation.registerComponentWithRedux(ADD_TO_GROUP, () => AddToGroupContainer, Provider, store);
+  Navigation.registerComponentWithRedux(GROUP_SETTINGS, () => GroupSettingsContainer, Provider, store);
 
   /* register components */
   Navigation.registerComponent(REGISTER, () => Register);
   Navigation.registerComponent(SIGN_IN, () => SignIn);
   Navigation.registerComponent(LOADING, () => LoadingOverlay);
   Navigation.registerComponent(SETTINGS, () => ProfileSettings);
-  Navigation.registerComponent(GROUP_SETTINGS, () => GroupSettings);
 }
 
 // module.exports = {

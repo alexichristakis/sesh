@@ -47,7 +47,8 @@ class Profile extends Component {
   }
 
   shouldComponentUpdate() {
-    return false;
+    // return false;
+    return true;
   }
 
   _onScroll = () =>
@@ -85,7 +86,8 @@ class Profile extends Component {
 
   render() {
     const { user, groups } = this.props;
-    console.log("groups: ", groups);
+    // console.log("groups: ", groups);
+    console.log("update profile: ", this.props);
     const { notifications } = this.state;
 
     return (

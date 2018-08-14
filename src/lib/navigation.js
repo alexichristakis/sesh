@@ -2,13 +2,6 @@ import { Navigation } from "react-native-navigation";
 import { TransparentModalTo } from "./functions";
 import { SCREENS } from "../screens";
 
-export const ShowGroupFocus = ({ group }) => {
-	TransparentModalTo(SCREENS.FOCUS, {
-		isGroups: true,
-		cardData: group
-	});
-};
-
 export const ShowMoveFocus = ({ props }) => {
 	TransparentModalTo(SCREENS.FOCUS, {
 		...props,
@@ -59,8 +52,34 @@ export const ShowAddFriend = () => {
 	});
 };
 
-export const ShowGroupSettings = ({ user, group }) => {
-	TransparentModalTo(SCREENS.GROUP_SETTINGS, { user, group });
+/* Groups */
+export const ShowGroupFocus = ({ group }) => {
+	TransparentModalTo(SCREENS.FOCUS, {
+		isGroups: true,
+		cardData: group
+	});
+};
+
+export const ShowEditGroupName = ({ group }) => {
+	Navigation.showModal({
+		component: {
+			name: SCREENS.EDIT_GROUP_NAME,
+			passProps: { group }
+		}
+	});
+};
+
+export const ShowGroupSettings = ({ group }) => {
+	TransparentModalTo(SCREENS.GROUP_SETTINGS, { group });
+};
+
+export const ShowAddToGroup = ({ group }) => {
+	Navigation.showModal({
+		component: {
+			name: SCREENS.ADD_TO_GROUP,
+			passProps: { group }
+		}
+	});
 };
 
 // export const ShowProfileSettings;

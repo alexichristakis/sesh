@@ -58,3 +58,11 @@ export function setFriends(friends) {
 		friends
 	};
 }
+
+export function leaveGroup(group, user) {
+	return {
+		type: LEAVE_GROUP,
+		group,
+		user
+	};
+}

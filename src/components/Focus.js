@@ -187,7 +187,7 @@ class Focus extends Component {
 
   render() {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
-    console.log(this.props);
+    console.log('update focus: ', this.props);
     // console.log(height);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
@@ -276,7 +276,7 @@ class Focus extends Component {
       }
     ];
 
-    const { cardData, isGroups, isActive, user } = this.props;
+    const { groups, cardData, isGroups, isActive, user } = this.props;
 
     const Card = isGroups ? (
       <Group card data={cardData} />
