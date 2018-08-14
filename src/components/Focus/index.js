@@ -8,12 +8,12 @@ import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
 
-import TouchableScale from "./global/TouchableScale";
-import Move from "./global/Move";
-import ActiveFocus from "./Active/ActiveFocus";
-import LaterFocus from "./Later/LaterFocus";
-import Group from "./Groups/Group";
-import GroupFocus from "./Groups/GroupFocus";
+import TouchableScale from "../global/TouchableScale";
+import Move from "../global/Move";
+import Group from "../Groups/Group";
+import ActiveFocus from "./ActiveFocus";
+import LaterFocus from "./LaterFocus";
+import GroupFocus from "./GroupFocus";
 
 import {
   SCREEN_WIDTH,
@@ -22,8 +22,8 @@ import {
   BORDER_RADIUS,
   TRANSITION_DURATION,
   CARD_GUTTER
-} from "../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../lib/styles";
+} from "../../lib/constants";
+import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
 const DATA = [
   {
@@ -187,7 +187,7 @@ class Focus extends Component {
 
   render() {
     const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
-    console.log('update focus: ', this.props);
+    console.log("update focus: ", this.props);
     // console.log(height);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;

@@ -22,9 +22,6 @@ import { Colors, SeparatorStyles, shadow } from "../../lib/styles";
 import { SB_HEIGHT, SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 
 import User from "../global/User";
-import MapCard from "../global/MapCard";
-import BackButton from "../global/BackButton";
-import Group from "./Group";
 
 const DATA = [
   {

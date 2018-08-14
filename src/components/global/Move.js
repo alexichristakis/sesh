@@ -79,7 +79,7 @@ class Move extends Component {
       this.setState({ pageX, pageY }, () => {
         const { height, width, x, y, photo } = this.state;
         const dimensions = { height, width, x, y, pageX, pageY };
-        this.props.transitionFrom(dimensions, this.onReturn, {
+        this.props.transition(dimensions, this.onReturn, {
           ...this.props.move,
           photo: photo.uri !== "" ? photo : null
         });

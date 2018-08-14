@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 
 import { Navigation } from "react-native-navigation";
 
+/* root reducer */
 import seshApp from "./redux/reducers";
 
 /* REDUX CONNECTED */
@@ -37,22 +38,7 @@ const EDIT_GROUP_NAME = "edit_group_name";
 const ADD_TO_GROUP = "add_to_group";
 const GROUP_SETTINGS = "group_settings";
 
-export const SCREENS = {
-  REGISTER,
-  SIGN_IN,
-  HOME,
-  FOCUS,
-  CREATE_MOVE,
-  PROFILE,
-  LOADING,
-  ADD_FRIEND,
-  SETTINGS,
-  CREATE_GROUP,
-  EDIT_GROUP_NAME,
-  ADD_TO_GROUP,
-  GROUP_SETTINGS
-};
-
+/* create redux store */
 const store = createStore(seshApp, applyMiddleware(thunk));
 
 export function registerScreens() {
@@ -74,7 +60,18 @@ export function registerScreens() {
   Navigation.registerComponent(SETTINGS, () => ProfileSettings);
 }
 
-// module.exports = {
-//   SCREENS,
-//   registerScreens
-// };
+export const SCREENS = {
+  REGISTER,
+  SIGN_IN,
+  HOME,
+  FOCUS,
+  CREATE_MOVE,
+  PROFILE,
+  LOADING,
+  ADD_FRIEND,
+  SETTINGS,
+  CREATE_GROUP,
+  EDIT_GROUP_NAME,
+  ADD_TO_GROUP,
+  GROUP_SETTINGS
+};

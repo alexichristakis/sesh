@@ -8,14 +8,10 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import LoadingCircle from "../global/LoadingCircle";
 import Background from "./Background";
+import Feed from "./Feed";
 import Drawer from "./Drawer";
 import TopBar from "./TopBar";
-import Active from "../Active";
-import Later from "../Later";
 
-import { LOAD_MOVES } from "../../redux/actions";
-
-import { TransparentModalTo } from "../../lib/functions";
 import { ShowMoveFocus } from "../../lib/navigation";
 import { REFRESH_OFFSET } from "../../lib/constants";
 
@@ -94,7 +90,7 @@ class Home extends Component {
     // if (this.state.loading !== nextState.loading) return true;
     // else if (this.state.refreshing !== nextState.refreshing) return true;
     // else return false;
-    return true
+    return true;
   }
 
   _horizOnScroll = Animated.event([{ nativeEvent: { contentOffset: { x: xOffset } } }], {
@@ -146,43 +142,23 @@ class Home extends Component {
     const data = { friends, groups, moves };
     console.log("render home: ", moves);
 
-    const Loading = <LoadingCircle style={styles.loading} size={20} />;
-
-    const Feed = (
-      <Animated.ScrollView
-        horizontal
-        pagingEnabled
-        ref={ScrollView => (this.scrollView = ScrollView)}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={this._horizOnScroll}
-        style={styles.scroll}
-      >
-        <Active
-          user={user}
-          moves={moves}
-          shortened={!this.state.barOpen}
-          handleTransition={this.handleTransition}
-          onScroll={this._vertOnScroll}
-          onScrollEndDrag={this.handleOnVertScrollEndDrag}
-        />
-        <Later
-          user={user}
-          moves={moves}
-          shortened={!this.state.barOpen}
-          handleTransition={this.handleTransition}
-          onScroll={this._vertOnScroll}
-          onScrollEndDrag={this.handleOnVertScrollEndDrag}
-        />
-      </Animated.ScrollView>
-    );
-
     return (
       <Background loading={loading || refreshing} xOffset={xOffset}>
         <StatusBar barStyle="light-content" />
 
-        {loading ? Loading : Feed}
+        {loading ? (
+          <LoadingCircle style={styles.loading} size={20} />
+        ) : (
+          <Feed
+            user={user}
+            moves={moves}
+            handleTransition={this.handleTransition}
+            onHoScroll={this._horizOnScroll}
+            onVertScroll={this._vertOnScroll}
+            onVertScrollEndDrag={this.handleOnVertScrollEndDrag}
+            hoScrollRef={ScrollView => (this.scrollView = ScrollView)}
+          />
+        )}
 
         <TopBar
           user={user}
