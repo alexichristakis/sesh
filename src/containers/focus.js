@@ -5,13 +5,15 @@ import Focus from "../components/Focus";
 import { fetchGoingUsers, joinMove } from "../redux/actions";
 
 const mapStateToProps = state => {
-	const { user, moves, groups, app } = state;
+	const { user, moves, groups } = state;
+
+	// const goingUsers = moves.find(move => move.id === cardData.id).going;
+
 	return {
 		// ...state
 		user,
 		moves,
-		groups,
-		fetchingGoingUsers: app.fetchingGoingUsers
+		groups
 	};
 };
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import Interactable from "react-native-interactable";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -20,60 +20,18 @@ import {
   SCREEN_HEIGHT,
   SB_HEIGHT,
   BORDER_RADIUS,
-  TRANSITION_DURATION,
   CARD_GUTTER
 } from "../../lib/constants";
 import { Colors, shadow, FillAbsolute } from "../../lib/styles";
 
-const DATA = [
-  {
-    id: "1",
-    name: "Alexi Christakis",
-    size: 9,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "2",
-    name: "William Oles",
-    size: 105,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "3",
-    name: "Michelle Li",
-    size: 6,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "4",
-    name: "Janvi Trivedi",
-    size: 63,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "5",
-    name: "Max Golden",
-    size: 105,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    id: "6",
-    name: "Laszlo Gendler",
-    size: 9,
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  }
-];
-
 class Focus extends Component {
   constructor(props) {
     super(props);
-    const { height = 0, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
+    const { user, cardData, height = 0, width, x, y, pageX, pageY = SCREEN_HEIGHT } = this.props;
+
+    // let joined = false;
+    // const goingUsers = moves.find(({ id }) => id === cardData.id).going;
+    // const joined = goingUsers.find(({ uid }) => uid === user.uid);
 
     this.yOffset = new Animated.Value(0);
     this.xOffset = new Animated.Value(0);
@@ -83,6 +41,8 @@ class Focus extends Component {
     this.state = {
       open: false,
       transitioning: true,
+      loadingJoinedUsers: true,
+      joined: false,
       sourceDimension: {
         height,
         width,
@@ -96,7 +56,7 @@ class Focus extends Component {
 
   componentDidMount() {
     const { isGroups, fetchGoingUsers, cardData } = this.props;
-    if (!isGroups) fetchGoingUsers(cardData.id);
+    if (!isGroups) fetchGoingUsers(cardData.id).then(() => this.setState({ loading: false }));
 
     this.beginTransition();
     // /* fetch users who have joined move */
@@ -188,13 +148,16 @@ class Focus extends Component {
 
   handleOnPressJoin = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    // this.setState({ joined: !this.state.joined });
-    const { joinMove, cardData } = this.props;
-    joinMove(cardData.id).then(() => console.log("done!"));
+    const { joinMove, leaveMove, cardData, moves, user } = this.props;
+
+    const goingUsers = moves.find(({ id }) => id === cardData.id).going;
+    if (goingUsers.find(({ uid }) => uid === user.uid))
+      leaveMove(cardData.id).then(() => console.log("done!"));
+    else joinMove(cardData.id).then(() => console.log("done!"));
   };
 
   render() {
-    const { isGroups, isActive, fetchingGoingUsers, cardData, moves, user } = this.props;
+    const { isGroups, isActive, cardData, moves, user } = this.props;
     const { open, loading, transitioning, sourceDimension } = this.state;
     const { height, width, x, y, pageX, pageY } = sourceDimension;
     // console.log("update focus: ", this.props);
@@ -294,17 +257,16 @@ class Focus extends Component {
       <Move focused active={isActive} move={cardData} userLocation={user.location} />
     );
 
-    console.log("fetchingGoingUsers: ", fetchingGoingUsers);
+    // let joined = false;
+    // const goingUsers = moves.find(move => move.id === cardData.id).going;
+    // if (goingUsers) joined = goingUsers.find(_user => _user.uid === user.uid);
+    const goingUsers = moves.find(({ id }) => id === cardData.id).going;
+    const joined = goingUsers.find(({ uid }) => uid === user.uid);
 
-    let joined = false;
-    const goingUsers = moves.find(move => move.id === cardData.id).going;
-    console.log("going users: ", goingUsers);
-    if (goingUsers) joined = goingUsers.find(_user => _user.uid === user.uid);
-    // const joined = goingUsers.find(_user => _user.uid === user.uid);
     const FocusContent = !isGroups ? (
       isActive ? (
         <ActiveFocus
-          loading={fetchingGoingUsers}
+          loading={loading}
           handleOnPress={this.handleOnPressJoin}
           joined={joined}
           users={goingUsers}

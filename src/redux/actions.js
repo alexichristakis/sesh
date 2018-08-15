@@ -97,10 +97,11 @@ export function joinMove(id) {
 			const state = getState();
 			const { user } = state;
 
+			ShowLoadingOverlay();
 			api
 				.JoinMove({ user, move_id: id })
 				.then(() => {
-					// dispatch(finishedUpdating());
+					HideLoadingOverlay();
 					dispatch(joinMoveComplete(id));
 				})
 				.catch(error => {
@@ -120,15 +121,13 @@ export function joinMoveComplete(id) {
 }
 
 export function fetchGoingUsers(id) {
-	console.log("inside action: ", id);
 	return (dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			dispatch(fetchGoingUsersInit());
-
 			api
 				.FetchGoingUsers({ move_id: id })
 				.then(users => {
 					dispatch(setGoingUsers(id, users));
+					resolve(true);
 				})
 				.catch(error => {
 					dispatch(fetchError(error));
@@ -138,26 +137,11 @@ export function fetchGoingUsers(id) {
 	};
 }
 
-export function fetchGoingUsersInit() {
-	return {
-		type: ActionTypes.BEGIN_GOING_USERS_FETCH
-	};
-}
-
-export function fetchGoingUsersComplete() {
-	return {
-		type: ActionTypes.FINISH_GOING_USERS_FETCH
-	};
-}
-
 export function setGoingUsers(id, users) {
-	return (dispatch, getState) => {
-		dispatch(fetchGoingUsersComplete());
-		return {
-			type: ActionTypes.SET_GOING_USERS,
-			id,
-			users
-		};
+	return {
+		type: ActionTypes.SET_GOING_USERS,
+		id,
+		users
 	};
 }
 

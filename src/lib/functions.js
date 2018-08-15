@@ -36,8 +36,6 @@ export const GenerateMarkers = moves => {
 };
 
 export const GenerateInitialRegion = (markers, userLocation) => {
-  console.log("userLocation: ", userLocation);
-  console.log("moveLocation: ", markers[0].coords);
   const userLatitude = userLocation.latitude;
   const userLongitude = userLocation.longitude;
 
@@ -69,8 +67,6 @@ export const GenerateInitialRegion = (markers, userLocation) => {
       Math.abs(maxLatitude - minLatitude),
       Math.abs(maxLongitude - minLongitude)
     );
-
-    console.log(delta);
 
     region = {
       latitude,

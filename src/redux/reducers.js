@@ -26,32 +26,32 @@ import Navigator from "../lib/navigation";
 // }
 
 //////* APP *//////
-const initialAppState = {
-	// isUpdating: true,
-	// screen: SCREENS.HOME,
-	fetchingMoves: true,
-	fetchingGroups: true,
-	fetchingFriends: false,
-	fetchingRequests: false,
-	fetchingGoingUsers: false
-};
+// const initialAppState = {
+// 	// isUpdating: true,
+// 	// screen: SCREENS.HOME,
+// 	fetchingMoves: true,
+// 	fetchingGroups: true,
+// 	fetchingFriends: false,
+// 	fetchingRequests: false,
+// 	fetchingGoingUsers: false
+// };
 
-function app(state = initialAppState, action, rootState) {
-	switch (action.type) {
-		case ActionTypes.SHOW_LOADING_OVERLAY:
-			Navigator.showLoading();
-			return { ...state };
-		case ActionTypes.HIDE_LOADING_OVERLAY:
-			Navigator.hideLoading();
-			return { ...state };
-		case ActionTypes.BEGIN_GOING_USERS_FETCH:
-			return { ...state, fetchingGoingUsers: true };
-		case ActionTypes.FINISH_GOING_USERS_FETCH:
-			return { ...state, fetchingGoingUsers: false };
-		default:
-			return state;
-	}
-}
+// function app(state = initialAppState, action, rootState) {
+// 	switch (action.type) {
+// 		case ActionTypes.SHOW_LOADING_OVERLAY:
+// 			Navigator.showLoading();
+// 			return { ...state };
+// 		case ActionTypes.HIDE_LOADING_OVERLAY:
+// 			Navigator.hideLoading();
+// 			return { ...state };
+// 		case ActionTypes.BEGIN_GOING_USERS_FETCH:
+// 			return { ...state, fetchingGoingUsers: true };
+// 		case ActionTypes.FINISH_GOING_USERS_FETCH:
+// 			return { ...state, fetchingGoingUsers: false };
+// 		default:
+// 			return state;
+// 	}
+// }
 
 //////* USER *//////
 const initialUserState = {
@@ -179,7 +179,7 @@ const initialState = {
 
 const seshApp = (state = initialState, action) => {
 	return {
-		app: app(state.app, action, state),
+		// app: app(state.app, action, state),
 		user: user(state.user, action, state),
 		moves: moves(state.moves, action, state),
 		groups: groups(state.groups, action, state),
