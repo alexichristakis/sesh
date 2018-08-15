@@ -88,16 +88,12 @@ class Move extends Component {
   };
 
   handleGroupOnPress = () => {
-    // TransparentModalTo("sesh.Focus", {
-    //   isGroups: true,
-    //   cardData: { name: this.props.move.group, size: 10 }
-    // });
-    ShowGroupFocus({ group: { name: this.props.move.group, size: 10 } });
+    ShowGroupFocus({ group: { name: this.props.move.group_name, size: 10 } });
   };
 
   render() {
     const { focused, active, move, userLocation } = this.props;
-    const { group, name, description, location, time, fb_id } = move;
+    const { group_name, sender_name, description, location, time, fb_id } = move;
     const { loading, photo } = this.state;
 
     let opacity = {
@@ -119,7 +115,7 @@ class Move extends Component {
         <View style={styles.contentContainer}>
           <TouchableOpacity style={styles.groupButton} onPress={this.handleGroupOnPress}>
             <Text allowFontScaling={false} style={TextStyles.bold}>
-              {name}
+              {sender_name}
             </Text>
             <Icon
               style={{ paddingTop: 3 }}
@@ -128,7 +124,7 @@ class Move extends Component {
               color={active ? Colors.active : Colors.later}
             />
             <Text allowFontScaling={false} style={TextStyles.bold}>
-              {group}
+              {group_name}
             </Text>
           </TouchableOpacity>
           <Text style={styles.description}>{description}</Text>

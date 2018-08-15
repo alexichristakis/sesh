@@ -3,10 +3,12 @@ import { StyleSheet, Animated, FlatList, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
-import { TextStyles } from "../../lib/styles";
-import { IS_X, BORDER_RADIUS, CARD_GUTTER, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../lib/constants";
-
 import Move from "../global/Move";
+import TouchableScale from "../global/TouchableScale";
+
+import { TextStyles } from "../../lib/styles";
+import { ShowCreateActiveMove, ShowCreateLaterMove } from "../../lib/navigation";
+import { IS_X, BORDER_RADIUS, CARD_GUTTER, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../lib/constants";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -41,13 +43,15 @@ const Feed = ({
 	};
 
 	renderEmptyListComponent = ({ isActive }) => (
-		<SuperEllipseMask style={styles.emptyCardContainer} radius={BORDER_RADIUS}>
-			<Text style={TextStyles.body}>
-				{isActive
-					? "No active moves! Create one to let your friends know what's going on now."
-					: "No later moves! Create one to let your friends know what's going on later."}
-			</Text>
-		</SuperEllipseMask>
+		<TouchableScale onPress={isActive ? ShowCreateActiveMove : ShowCreateLaterMove}>
+			<SuperEllipseMask style={styles.emptyCardContainer} radius={BORDER_RADIUS}>
+				<Text style={TextStyles.body}>
+					{isActive
+						? "No active moves! Create one to let your friends know what's going on now."
+						: "No later moves! Create one to let your friends know what's going on later."}
+				</Text>
+			</SuperEllipseMask>
+		</TouchableScale>
 	);
 
 	renderActiveMove = ({ item, index }) => (

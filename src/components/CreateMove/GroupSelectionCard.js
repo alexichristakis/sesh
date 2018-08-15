@@ -1,26 +1,26 @@
 import React from "react";
-import { StyleSheet, FlatList, View, TouchableHighlight } from "react-native";
+import { FlatList, View, TouchableHighlight } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import Group from "../Groups/Group";
 
-import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
-import { Colors, SeparatorStyles, shadow, FillAbsolute } from "../../lib/styles";
+import { BORDER_RADIUS } from "../../lib/constants";
+import { Colors, SeparatorStyles } from "../../lib/styles";
 
-const GroupSelectionCard = props => {
-  _renderItem = ({ item, index }) => (
+const GroupSelectionCard = ({ onPressSelect, selectedIndex, groups }) => {
+  renderGroup = ({ item, index }) => (
     <TouchableHighlight
       style={{ backgroundColor: "white" }}
       activeOpacity={0.8}
       underlayColor={Colors.mediumGray}
-      onPress={() => props.onPressSelect(index)}
+      onPress={() => onPressSelect(index)}
     >
-      <Group selectable data={item} selected={props.selectedIndex === index} />
+      <Group selectable data={item} selected={selectedIndex === index} />
     </TouchableHighlight>
   );
 
-  _renderSeparator = () => <View style={SeparatorStyles.groups} />;
+  renderSeparator = () => <View style={SeparatorStyles.groups} />;
 
   _keyExtractor = item => item.id.toString();
 
@@ -29,22 +29,13 @@ const GroupSelectionCard = props => {
       <FlatList
         scrollEnabled={false}
         style={{ backgroundColor: "white" }}
-        data={props.groups}
-        renderItem={_renderItem}
-        ItemSeparatorComponent={_renderSeparator}
+        data={groups}
+        renderItem={renderGroup}
+        ItemSeparatorComponent={renderSeparator}
         keyExtractor={_keyExtractor}
       />
     </SuperEllipseMask>
   );
 };
-
-const styles = StyleSheet.create({
-  separator: {
-    width: SCREEN_WIDTH - 15,
-    marginLeft: 15,
-    height: 1,
-    backgroundColor: Colors.mediumGray
-  }
-});
 
 export default GroupSelectionCard;

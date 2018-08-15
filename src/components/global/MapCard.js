@@ -18,7 +18,7 @@ import {
 import { Colors, shadow } from "../../lib/styles";
 
 const MapCard = props => {
-  const { markers = [], userLocation, style, height = 200 } = props;
+  const { markers = [], userLocation, style, height = 250 } = props;
   const { initialRegion = GenerateInitialRegion(markers, userLocation) } = props;
 
   let map = !props.draggable ? (

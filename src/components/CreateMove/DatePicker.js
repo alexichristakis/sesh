@@ -5,14 +5,14 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 
-const DatePicker = props => {
+const DatePicker = ({chosenDate, currentDate, onDateChange}) => {
   return (
     <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
       <DatePickerIOS
-        date={props.chosenDate}
-        minimumDate={props.currentDate}
+        date={chosenDate}
+        minimumDate={currentDate}
         minuteInterval={10}
-        onDateChange={props.onDateChange}
+        onDateChange={onDateChange}
       />
     </SuperEllipseMask>
   );

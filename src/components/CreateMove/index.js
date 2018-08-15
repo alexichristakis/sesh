@@ -3,26 +3,18 @@ import { StyleSheet, Keyboard, Animated, View } from "react-native";
 
 import Interactable from "react-native-interactable";
 import { Navigation } from "react-native-navigation";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { BlurView } from "react-native-blur";
 import LinearGradient from "react-native-linear-gradient";
-import Icon from "react-native-vector-icons/Ionicons";
 
 import TextEntryCard from "./TextEntryCard";
 import DatePicker from "./DatePicker";
 import MapCard from "../global/MapCard";
-import TouchableScale from "../global/TouchableScale";
 import GroupSelectionCard from "./GroupSelectionCard";
 import SendButton from "./SendButton";
 
-import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  SB_HEIGHT,
-  IS_X,
-  TRANSITION_DURATION,
-  CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+import { SCREEN_HEIGHT, SB_HEIGHT, IS_X, CARD_GUTTER } from "../../lib/constants";
+import { FillAbsolute } from "../../lib/styles";
 import { ShowLoadingOverlay, HideLoadingOverlay } from "../../lib/navigation";
 
 import { SendMove } from "../../api";
@@ -44,7 +36,7 @@ class CreateMove extends Component {
       chosenDate: new Date(),
       selectedIndex: null,
       loading: true,
-      coords: {
+      location: {
         latitude: 0,
         longitude: 0
       },
@@ -55,7 +47,7 @@ class CreateMove extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        this.setState({ coords: position.coords, loading: false });
+        this.setState({ location: position.coords, loading: false });
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -95,21 +87,6 @@ class CreateMove extends Component {
     } else if (index === 1) {
       this.setState({ open: true }, () => this.checkButtonOpen());
     } else {
-      const { selectedIndex, coords, text, chosenDate } = this.state;
-      const { groups, user } = this.props;
-      const { id } = groups[selectedIndex];
-
-      const move = {
-        groupID: id,
-        location: coords,
-        description: text,
-        date: chosenDate
-      };
-
-      /* send move*/
-      console.log(move);
-      console.log(user);
-
       this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
     }
   };
@@ -157,25 +134,29 @@ class CreateMove extends Component {
 
   handleOnPressSend = () => {
     const { user, groups, addMove } = this.props;
-    const { text, coords, chosenDate, selectedIndex } = this.state;
+    const { text: description, location, chosenDate, selectedIndex } = this.state;
+
+    const { name: sender_name, uid, fb_id } = user;
+    const { name: group_name, id: group_id } = groups[selectedIndex];
+    const time = new Date(chosenDate).getTime();
 
     const move = {
-      id: user.name + chosenDate,
-      name: user.name,
-      fb_id: user.fb_id,
-      group: groups[selectedIndex].name,
-      description: text,
-      location: coords,
-      time: chosenDate
+      id: user.uid + time.toString(),
+      ts: Date.now(),
+      description,
+      location,
+      sender_name,
+      group_id,
+      group_name,
+      time,
+      uid,
+      fb_id
     };
 
     this.setState({ buttonVisible: false }, () => {
-      ShowLoadingOverlay();
-      addMove(move);
-      setTimeout(() => {
-        HideLoadingOverlay();
-        this.interactable.snapTo({ index: 2 });
-      }, 500);
+      ReactNativeHapticFeedback.trigger("impactHeavy");
+      Keyboard.dismiss();
+      addMove(move).then(() => this.interactable.snapTo({ index: 2 }));
     });
   };
 
@@ -223,7 +204,7 @@ class CreateMove extends Component {
     };
 
     let region = {
-      ...this.state.coords,
+      ...this.state.location,
       latitudeDelta: 0.0044,
       longitudeDelta: 0.0044
     };

@@ -111,8 +111,9 @@ const TextStyles = StyleSheet.create({
   },
   headerWhite: {
     fontSize: 16,
-    fontWeight: "500",
-    color: "white"
+    fontWeight: "600",
+    color: "white",
+    letterSpacing: 0.5
   },
   body: {
     fontSize: 16,

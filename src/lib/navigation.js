@@ -27,14 +27,14 @@ const TransparentModalTo = (componentName, props, options) => {
 export const ShowLoadingOverlay = () => {
 	Navigation.showOverlay({
 		component: {
-			id: "LOADING",
+			id: SCREENS.LOADING,
 			name: SCREENS.LOADING
 		}
 	});
 };
 
 export const HideLoadingOverlay = () => {
-	Navigation.dismissOverlay("LOADING");
+	Navigation.dismissOverlay(SCREENS.LOADING);
 };
 
 export const ShowMoveFocus = ({ props }) => {
@@ -124,6 +124,22 @@ export const ShowAddToGroup = ({ group }) => {
 			passProps: { group }
 		}
 	});
+};
+
+export default {
+	showLoading: ShowLoadingOverlay,
+	hideLoading: HideLoadingOverlay,
+	moveFocus: ShowMoveFocus,
+	profile: ShowProfile,
+	profileSettings: ShowProfileSettings,
+	createActiveMove: ShowCreateActiveMove,
+	createLaterMove: ShowCreateLaterMove,
+	createGroup: ShowCreateGroup,
+	addFriend: ShowAddFriend,
+	groupFocus: ShowGroupFocus,
+	editGroupName: ShowEditGroupName,
+	groupSettings: ShowGroupSettings,
+	addToGroup: ShowAddToGroup
 };
 
 // export const ShowProfileSettings;

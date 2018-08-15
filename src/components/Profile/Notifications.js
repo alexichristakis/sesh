@@ -10,12 +10,7 @@ import { TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Notifications = ({ data, acceptFriend, deleteRequest }) => {
 	_renderItem = ({ item }) => (
-		<User
-			request
-			user={item}
-			onPressAccept={acceptFriend}
-			onPressDelete={deleteRequest}
-		/>
+		<User request user={item} onPressAccept={acceptFriend} onPressDelete={deleteRequest} />
 	);
 
 	_renderSeparator = () => <View style={SeparatorStyles.users} />;
@@ -26,7 +21,7 @@ const Notifications = ({ data, acceptFriend, deleteRequest }) => {
 		return (
 			<View style={styles.container}>
 				<View style={styles.headerContainer}>
-					<Text style={TextStyles.headerWhite}>REQUESTS:</Text>
+					<Text style={TextStyles.headerWhite}>REQUESTS</Text>
 				</View>
 				<SuperEllipseMask radius={BORDER_RADIUS}>
 					<FlatList

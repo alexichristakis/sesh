@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, ScrollView, FlatList, View, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
+import { BlurView } from "react-native-blur";
 
 import TouchableScale from "../global/TouchableScale";
 import MapCard from "../global/MapCard";
@@ -15,7 +16,7 @@ import {
   BORDER_RADIUS,
   CARD_GUTTER
 } from "../../lib/constants";
-import { Colors, shadow } from "../../lib/styles";
+import { Colors, TextStyles } from "../../lib/styles";
 
 const ActiveFocus = ({
   moveLocation,
@@ -45,24 +46,34 @@ const ActiveFocus = ({
     </View>
   );
 
-  _keyExtractor = item => item.id.toString();
+  _keyExtractor = item => item.uid;
 
   let buttonStyle = [
     styles.joinButton,
     {
-      backgroundColor: joined ? Colors.active : "white"
+      backgroundColor: joined ? Colors.active : "transparent"
     }
   ];
 
   let textStyle = [
-    styles.joinText,
+    TextStyles.header,
     {
       color: joined ? "white" : Colors.active
+      // color: Colors.active
     }
   ];
 
   return (
     <>
+      <TouchableScale onPress={handleOnPress}>
+        <SuperEllipseMask style={styles.buttonMask} radius={BORDER_RADIUS}>
+          <BlurView blurType="light" style={buttonStyle}>
+            <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
+          </BlurView>
+        </SuperEllipseMask>
+      </TouchableScale>
+      <Text style={[styles.header, TextStyles.headerWhite]}>LOCATION</Text>
+
       <MapCard
         active
         loading={!open}
@@ -70,24 +81,22 @@ const ActiveFocus = ({
         userLocation={userLocation}
         markers={[{ coords: moveLocation, active: true, key: "location" }]}
       />
-      <TouchableScale onPress={handleOnPress}>
-        <SuperEllipseMask style={buttonStyle} radius={BORDER_RADIUS}>
-          <Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
-        </SuperEllipseMask>
-      </TouchableScale>
 
       {loading ? (
         <LoadingCircle style={styles.loading} size={20} />
       ) : (
-        <SuperEllipseMask style={styles.joinedUsersContainer} radius={BORDER_RADIUS}>
-          <FlatList
-            data={users}
-            renderItem={_renderItem}
-            ItemSeparatorComponent={_renderSeparator}
-            ListHeaderComponent={_renderHeader}
-            keyExtractor={_keyExtractor}
-          />
-        </SuperEllipseMask>
+        <>
+          <Text style={[styles.header, TextStyles.headerWhite]}>GOING</Text>
+          <SuperEllipseMask style={styles.joinedUsersContainer} radius={BORDER_RADIUS}>
+            <FlatList
+              data={users}
+              renderItem={_renderItem}
+              ItemSeparatorComponent={_renderSeparator}
+              // ListHeaderComponent={_renderHeader}
+              keyExtractor={_keyExtractor}
+            />
+          </SuperEllipseMask>
+        </>
       )}
     </>
   );
@@ -95,19 +104,27 @@ const ActiveFocus = ({
 
 const styles = StyleSheet.create({
   mapCard: {
-    marginVertical: CARD_GUTTER
+    marginTop: CARD_GUTTER
+  },
+  header: {
+    paddingTop: 10,
+    paddingLeft: 10
   },
   loading: {
     alignSelf: "center",
     marginTop: 50
   },
+  buttonMask: {
+    marginVertical: CARD_GUTTER,
+    marginHorizontal: 15
+  },
   joinButton: {
-    padding: 15,
+    // marginVertical: CARD_GUTTER,
+    // marginHorizontal: 15,
+    paddingVertical: 15,
+    paddingTop: 25,
     alignItems: "center",
     justifyContent: "center"
-  },
-  joinText: {
-    fontSize: 18
   },
   joinedUsersContainer: {
     backgroundColor: "white",

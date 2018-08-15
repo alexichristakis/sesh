@@ -1,11 +1,4 @@
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-
 import { Navigation } from "react-native-navigation";
-
-/* root reducer */
-import seshApp from "./redux/reducers";
 
 /* REDUX CONNECTED */
 import HomeContainer from "./containers/home";
@@ -38,10 +31,7 @@ const EDIT_GROUP_NAME = "edit_group_name";
 const ADD_TO_GROUP = "add_to_group";
 const GROUP_SETTINGS = "group_settings";
 
-/* create redux store */
-const store = createStore(seshApp, applyMiddleware(thunk));
-
-export function registerScreens() {
+export function registerScreens(Provider, store) {
   /* register containers */
   Navigation.registerComponentWithRedux(HOME, () => HomeContainer, Provider, store);
   Navigation.registerComponentWithRedux(FOCUS, () => FocusContainer, Provider, store);

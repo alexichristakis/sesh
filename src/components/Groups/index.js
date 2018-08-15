@@ -62,7 +62,7 @@ const Groups = props => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={TextStyles.headerWhite}>MY GROUPS:</Text>
+        <Text style={TextStyles.headerWhite}>MY GROUPS</Text>
       </View>
       <SuperEllipseMask radius={BORDER_RADIUS}>
         <FlatList

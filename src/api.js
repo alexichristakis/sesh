@@ -55,9 +55,7 @@ export const GetMoves = fromGroups => {
   // go through each group, download active moves
 };
 
-export const GetJoinedUsers = move => {
-  // get the users who have rsvped to a certain move
-};
+// get the users who have rsvped to a certain move
 
 // store locally?
 export const GetGroups = () => {};
@@ -78,11 +76,59 @@ export const GetUser = () => {
 ///* SET *///
 // note: firebase.firestore.GeoPoint(latitude, longitude)
 /* MOVES */
-export const SendMove = move => {
-  /* firestore.collection("moves").doc() */
+export const SendMove = ({ move, user }) => {
+  return new Promise(resolve => {
+    const { id, group_id } = move;
+    const { name, uid, fb_id } = user;
+
+    const moveRef = firestore.collection("moves").doc(id);
+    const groupRef = firestore
+      .collection("groups")
+      .doc(group_id)
+      .collection("moves")
+      .doc(id);
+
+    let movePromise1 = moveRef.set(move);
+    let movePromise2 = moveRef
+      .collection("going")
+      .doc(uid)
+      .set({ name, uid, fb_id });
+    let groupPromise = groupRef.set({ id });
+
+    Promise.all([movePromise1, movePromise2, groupPromise]).then(() => resolve(true));
+  });
 };
 
-export const JoinMove = move => {};
+export const JoinMove = ({ user, move_id }) => {
+  return new Promise(resolve => {
+    const { uid, fb_id, name } = user;
+    const ref = firestore
+      .collection("moves")
+      .doc(move_id)
+      .collection("joined_users")
+      .doc(uid);
+
+    ref.set({ uid, fb_id, name }).then(() => resolve(true));
+  });
+};
+
+export const FetchGoingUsers = ({ move_id }) => {
+  return new Promise(resolve => {
+    const ref = firestore
+      .collection("moves")
+      .doc(move_id)
+      .collection("joined_users");
+
+    let users = [];
+    ref.get().then(snapshot => {
+      snapshot.forEach(doc => {
+        users.push(doc.data());
+      });
+
+      resolve(users);
+    });
+  });
+};
 
 export const EndMove = move => {};
 
@@ -185,4 +231,11 @@ export const FacebookLogout = async () => {
       .signOut()
       .then(() => resolve(true));
   });
+};
+
+export default {
+  SendMove,
+  JoinMove,
+  FetchGoingUsers,
+  UserAuthenticated
 };

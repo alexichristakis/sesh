@@ -82,8 +82,7 @@ class Focus extends Component {
 
     this.state = {
       open: false,
-      loading: true,
-      joined: this.props.joined,
+      transitioning: true,
       sourceDimension: {
         height,
         width,
@@ -96,11 +95,14 @@ class Focus extends Component {
   }
 
   componentDidMount() {
+    const { isGroups, fetchGoingUsers, cardData } = this.props;
+    if (!isGroups) fetchGoingUsers(cardData.id);
+
     this.beginTransition();
-    /* fetch users who have joined move */
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 500);
+    // /* fetch users who have joined move */
+    // setTimeout(() => {
+    //   this.setState({ loading: false });
+    // }, 500);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -139,9 +141,11 @@ class Focus extends Component {
   };
 
   handleClose = () => {
-    if (!this.props.isGroups)
-      this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
-    this.interactable.snapTo({ index: 0 });
+    this.setState({ transitioning: true }, () => {
+      if (!this.props.isGroups)
+        this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
+      this.interactable.snapTo({ index: 0 });
+    });
   };
 
   handleScrollEndDrag = ({ nativeEvent }) => {
@@ -156,17 +160,19 @@ class Focus extends Component {
     if (index === 0) {
       if (!isGroups) {
         this.props.onReturn().then(() => {
-          const moveId = this.props.cardData.id;
-          if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
-          else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
+          // const moveId = this.props.cardData.id;
+          // if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
+          // else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
           this.props.returnScreen();
           Navigation.dismissModal(this.props.componentId);
         });
       } else {
-        Navigation.dismissModal(this.props.componentId);
+        this.setState({ open: false, transitioning: false }, () =>
+          Navigation.dismissModal(this.props.componentId)
+        );
       }
     } else {
-      this.setState({ open: true });
+      this.setState({ open: true, transitioning: false });
     }
   };
 
@@ -182,13 +188,16 @@ class Focus extends Component {
 
   handleOnPressJoin = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
-    this.setState({ joined: !this.state.joined });
+    // this.setState({ joined: !this.state.joined });
+    const { joinMove, cardData } = this.props;
+    joinMove(cardData.id).then(() => console.log("done!"));
   };
 
   render() {
-    const { height, width, x, y, pageX, pageY } = this.state.sourceDimension;
-    console.log("update focus: ", this.props);
-    // console.log(height);
+    const { isGroups, isActive, fetchingGoingUsers, cardData, moves, user } = this.props;
+    const { open, loading, transitioning, sourceDimension } = this.state;
+    const { height, width, x, y, pageX, pageY } = sourceDimension;
+    // console.log("update focus: ", this.props);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
     const closedOffset = this.props.isGroups ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
@@ -215,10 +224,13 @@ class Focus extends Component {
       })
     };
 
+    const groupsPadding = height - 20 + CARD_GUTTER;
+    const movePadding = height - 40 + CARD_GUTTER;
     let focusContainerStyle = {
-      ...FillAbsolute,
+      // ...FillAbsolute,
+      flex: 1,
       top: 20,
-      paddingTop: height - 20 + CARD_GUTTER,
+      paddingTop: isGroups ? groupsPadding : movePadding,
       paddingHorizontal: CARD_GUTTER,
       transform: [
         {
@@ -259,7 +271,7 @@ class Focus extends Component {
     let gradientContainerStyle = [
       {
         position: "absolute",
-        top: SB_HEIGHT + height / 2,
+        top: height / 2,
         left: 0,
         right: 0,
         height: height / 2 + 15
@@ -276,30 +288,35 @@ class Focus extends Component {
       }
     ];
 
-    const { groups, cardData, isGroups, isActive, user } = this.props;
-
     const Card = isGroups ? (
       <Group card data={cardData} />
     ) : (
       <Move focused active={isActive} move={cardData} userLocation={user.location} />
     );
 
+    console.log("fetchingGoingUsers: ", fetchingGoingUsers);
+
+    let joined = false;
+    const goingUsers = moves.find(move => move.id === cardData.id).going;
+    console.log("going users: ", goingUsers);
+    if (goingUsers) joined = goingUsers.find(_user => _user.uid === user.uid);
+    // const joined = goingUsers.find(_user => _user.uid === user.uid);
     const FocusContent = !isGroups ? (
       isActive ? (
         <ActiveFocus
-          loading={this.state.loading}
+          loading={fetchingGoingUsers}
           handleOnPress={this.handleOnPressJoin}
-          joined={this.state.joined}
-          users={DATA}
-          open={this.state.open}
+          joined={joined}
+          users={goingUsers}
+          open={open}
           userLocation={user.location}
           moveLocation={cardData.location}
         />
       ) : (
         <LaterFocus
           handleOnPress={this.handleOnPressJoin}
-          joined={this.state.joined}
-          open={this.state.open}
+          joined={joined}
+          open={open}
           userLocation={user.location}
           moveLocation={cardData.location}
         />
@@ -321,23 +338,17 @@ class Focus extends Component {
           onScroll={this.vertOnScroll()}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.flex}
+          contentContainerStyle={{ paddingBottom: height + SB_HEIGHT + CARD_GUTTER }}
         >
           {FocusContent}
           <TouchableOpacity
-            // style={[styles.flex, { backgroundColor: "red" }]}
-            style={styles.flex}
+            style={{
+              height: "100%",
+              width: "100%"
+            }}
             onPress={this.handleClose}
           />
         </Animated.ScrollView>
-
-        <Animated.View style={gradientContainerStyle}>
-          <LinearGradient
-            style={styles.flex}
-            locations={[0, 0.5, 1]}
-            colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
-          />
-        </Animated.View>
 
         <Interactable.View
           animatedNativeDriver
@@ -350,6 +361,13 @@ class Focus extends Component {
           onDrag={this.handleOnDrag}
           onSnap={this.handleOnSnap}
         >
+          <Animated.View style={!transitioning ? gradientContainerStyle : opacity}>
+            <LinearGradient
+              style={styles.flex}
+              locations={[0, 0.5, 1]}
+              colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
+            />
+          </Animated.View>
           <Animated.ScrollView
             horizontal
             pagingEnabled
