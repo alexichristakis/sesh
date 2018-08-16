@@ -12,6 +12,7 @@ import TouchableScale from "../global/TouchableScale";
 import Move from "../global/Move";
 import Group from "../Groups/Group";
 import ActiveFocus from "./ActiveFocus";
+import MoveFocus from "./MoveFocus";
 import LaterFocus from "./LaterFocus";
 import GroupFocus from "./GroupFocus";
 
@@ -41,8 +42,6 @@ class Focus extends Component {
     this.state = {
       open: false,
       transitioning: true,
-      loadingJoinedUsers: true,
-      joined: false,
       sourceDimension: {
         height,
         width,
@@ -55,26 +54,19 @@ class Focus extends Component {
   }
 
   componentDidMount() {
-    const { isGroups, fetchGoingUsers, cardData } = this.props;
-    if (!isGroups) fetchGoingUsers(cardData.id).then(() => this.setState({ loading: false }));
-
     this.beginTransition();
-    // /* fetch users who have joined move */
-    // setTimeout(() => {
-    //   this.setState({ loading: false });
-    // }, 500);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // const { loading, open, sourceDimension } = this.state;
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // const { loading, open, sourceDimension } = this.state;
 
-    // // if (loading !== nextState.loading) return true;
-    // // else if (open !== nextState.open) return true;
-    // if (sourceDimension.height !== nextState.sourceDimension.height)
-    //   return true;
-    // else return false;
-    return true;
-  }
+  //   // // if (loading !== nextState.loading) return true;
+  //   // // else if (open !== nextState.open) return true;
+  //   // if (sourceDimension.height !== nextState.sourceDimension.height)
+  //   //   return true;
+  //   // else return false;
+  //   return true;
+  // }
 
   measureCard = ({ nativeEvent }) => {
     const { height, width, x, y, pageX, pageY } = nativeEvent.layout;
@@ -116,24 +108,36 @@ class Focus extends Component {
 
   handleOnSnap = event => {
     const { index } = event.nativeEvent;
-    const { isGroups } = this.props;
+    const { onReturn, returnScreen } = this.props;
     if (index === 0) {
-      if (!isGroups) {
-        this.props.onReturn().then(() => {
-          // const moveId = this.props.cardData.id;
-          // if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
-          // else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
-          this.props.returnScreen();
-          Navigation.dismissModal(this.props.componentId);
-        });
-      } else {
-        this.setState({ open: false, transitioning: false }, () =>
-          Navigation.dismissModal(this.props.componentId)
-        );
-      }
+      this.setState({ open: false, transitioning: false }, () => {
+        if (onReturn) {
+          onReturn().then(() => {
+            if (returnScreen) returnScreen();
+            Navigation.dismissModal(this.props.componentId);
+          });
+        } else Navigation.dismissModal(this.props.componentId);
+      });
     } else {
       this.setState({ open: true, transitioning: false });
     }
+
+    //   if (!isGroups) {
+    //     this.props.onReturn().then(() => {
+    //       // const moveId = this.props.cardData.id;
+    //       // if (this.state.joined && !this.props.joined) this.props.joinMove(moveId);
+    //       // else if (!this.state.joined && this.props.joined) this.props.leaveMove(moveId);
+    //       this.props.returnScreen();
+    //       Navigation.dismissModal(this.props.componentId);
+    //     });
+    //   } else {
+    //     this.setState({ open: false, transitioning: false }, () =>
+    //       Navigation.dismissModal(this.props.componentId)
+    //     );
+    //   }
+    // } else {
+    //   this.setState({ open: true, transitioning: false });
+    // }
   };
 
   vertOnScroll = () =>
@@ -151,19 +155,27 @@ class Focus extends Component {
     const { joinMove, leaveMove, cardData, moves, user } = this.props;
 
     const goingUsers = moves.find(({ id }) => id === cardData.id).going;
-    if (goingUsers.find(({ uid }) => uid === user.uid))
-      leaveMove(cardData.id).then(() => console.log("done!"));
-    else joinMove(cardData.id).then(() => console.log("done!"));
+    if (goingUsers.find(({ uid }) => uid === user.uid)) leaveMove(cardData.id).then();
+    else joinMove(cardData.id).then();
   };
 
   render() {
-    const { isGroups, isActive, cardData, moves, user } = this.props;
-    const { open, loading, transitioning, sourceDimension } = this.state;
+    const {
+      isGroups,
+      isActive,
+      cardData,
+      moves,
+      user,
+      joinMove,
+      leaveMove,
+      fetchGoingUsers,
+      fetchGroupMembers
+    } = this.props;
+    const { open, transitioning, sourceDimension } = this.state;
     const { height, width, x, y, pageX, pageY } = sourceDimension;
-    // console.log("update focus: ", this.props);
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
-    const closedOffset = this.props.isGroups ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
+    const closedOffset = pageY === SCREEN_HEIGHT ? SCREEN_HEIGHT + 500 : SCREEN_HEIGHT;
     const inputRange = openOffset < pageY ? [openOffset, pageY] : [pageY, openOffset];
 
     const springConfig = { damping: 0.5, tension: 600 };
@@ -180,6 +192,8 @@ class Focus extends Component {
     };
 
     let shadowOpacity = {
+      top: height / 2,
+      height: height / 2 + 15,
       opacity: this.yOffset.interpolate({
         inputRange: [0, 30],
         outputRange: [0, 1],
@@ -231,17 +245,6 @@ class Focus extends Component {
       ]
     };
 
-    let gradientContainerStyle = [
-      {
-        position: "absolute",
-        top: height / 2,
-        left: 0,
-        right: 0,
-        height: height / 2 + 15
-      },
-      shadowOpacity
-    ];
-
     let endMoveComputedStyle = [
       styles.endMoveButton,
       {
@@ -257,36 +260,53 @@ class Focus extends Component {
       <Move focused active={isActive} move={cardData} userLocation={user.location} />
     );
 
+    const FocusContent = isGroups ? (
+      <GroupFocus cardData={cardData} fetchGroupMembers={fetchGroupMembers} />
+    ) : (
+      <MoveFocus
+        active={isActive}
+        open={open}
+        cardData={cardData}
+        moves={moves}
+        user={user}
+        fetchGoingUsers={fetchGoingUsers}
+        joinMove={joinMove}
+        leaveMove={leaveMove}
+      />
+    );
+
     // let joined = false;
     // const goingUsers = moves.find(move => move.id === cardData.id).going;
     // if (goingUsers) joined = goingUsers.find(_user => _user.uid === user.uid);
-    const goingUsers = moves.find(({ id }) => id === cardData.id).going;
-    const joined = goingUsers.find(({ uid }) => uid === user.uid);
+    // const goingUsers = moves.find(({ id }) => id === cardData.id).going;
+    // const joined = goingUsers.find(({ uid }) => uid === user.uid);
+    // console.log("goingUser: ", goingUsers);
 
-    const FocusContent = !isGroups ? (
-      isActive ? (
-        <ActiveFocus
-          loading={loading}
-          handleOnPress={this.handleOnPressJoin}
-          joined={joined}
-          users={goingUsers}
-          open={open}
-          userLocation={user.location}
-          moveLocation={cardData.location}
-        />
-      ) : (
-        <LaterFocus
-          handleOnPress={this.handleOnPressJoin}
-          joined={joined}
-          open={open}
-          userLocation={user.location}
-          moveLocation={cardData.location}
-        />
-      )
-    ) : (
-      <GroupFocus />
-    );
+    // const FocusContent = !isGroups ? (
+    //   isActive ? (
+    //     <ActiveFocus
+    //       loading={loading}
+    //       handleOnPress={this.handleOnPressJoin}
+    //       joined={joined}
+    //       users={goingUsers}
+    //       open={open}
+    //       userLocation={user.location}
+    //       moveLocation={cardData.location}
+    //     />
+    //   ) : (
+    //     <LaterFocus
+    //       handleOnPress={this.handleOnPressJoin}
+    //       joined={joined}
+    //       open={open}
+    //       userLocation={user.location}
+    //       moveLocation={cardData.location}
+    //     />
+    //   )
+    // ) : (
+    //   <GroupFocus />
+    // );
 
+    console.log("rendered focus");
     return (
       <View style={styles.flex}>
         <Animated.View style={[FillAbsolute, opacity]}>
@@ -323,7 +343,7 @@ class Focus extends Component {
           onDrag={this.handleOnDrag}
           onSnap={this.handleOnSnap}
         >
-          <Animated.View style={!transitioning ? gradientContainerStyle : opacity}>
+          <Animated.View style={!transitioning ? [styles.shadow, shadowOpacity] : opacity}>
             <LinearGradient
               style={styles.flex}
               locations={[0, 0.5, 1]}
@@ -373,6 +393,11 @@ const styles = StyleSheet.create({
   },
   scroll: {
     width: SCREEN_WIDTH
+  },
+  shadow: {
+    position: "absolute",
+    left: 0,
+    right: 0
   },
   endMoveButton: {
     backgroundColor: Colors.red,

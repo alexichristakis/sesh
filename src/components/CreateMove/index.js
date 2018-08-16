@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Keyboard, Animated, View } from "react-native";
+import { StyleSheet, Keyboard, Animated, View, Text } from "react-native";
 
 import Interactable from "react-native-interactable";
 import { Navigation } from "react-native-navigation";
@@ -14,7 +14,7 @@ import GroupSelectionCard from "./GroupSelectionCard";
 import SendButton from "./SendButton";
 
 import { SCREEN_HEIGHT, SB_HEIGHT, IS_X, CARD_GUTTER } from "../../lib/constants";
-import { FillAbsolute } from "../../lib/styles";
+import { FillAbsolute, TextStyles } from "../../lib/styles";
 import { ShowLoadingOverlay, HideLoadingOverlay } from "../../lib/navigation";
 
 import { SendMove } from "../../api";
@@ -227,6 +227,7 @@ class CreateMove extends Component {
           style={[styles.scroll, animatedTranslate]}
           contentContainerStyle={styles.scrollContent}
         >
+          <Text style={[styles.header, TextStyles.headerWhite]}>LOCATION</Text>
           <MapCard
             draggable
             active={this.props.active}
@@ -237,12 +238,16 @@ class CreateMove extends Component {
             loading={!this.state.open || this.state.loading}
           />
           {!this.props.active && (
-            <DatePicker
-              currentDate={this.state.currentDate}
-              chosenDate={this.state.chosenDate}
-              onDateChange={this.handleOnChangeDate}
-            />
+            <>
+              <Text style={[styles.header, TextStyles.headerWhite]}>TIME</Text>
+              <DatePicker
+                currentDate={this.state.currentDate}
+                chosenDate={this.state.chosenDate}
+                onDateChange={this.handleOnChangeDate}
+              />
+            </>
           )}
+          <Text style={[styles.header, TextStyles.headerWhite]}>GROUP</Text>
           <GroupSelectionCard
             groups={this.props.groups}
             selectedIndex={this.state.selectedIndex}
@@ -296,6 +301,10 @@ class CreateMove extends Component {
 const styles = StyleSheet.create({
   flex: {
     flex: 1
+  },
+  header: {
+    paddingTop: 10,
+    paddingLeft: 10
   },
   container: {
     flex: 1,

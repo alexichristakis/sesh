@@ -1,6 +1,8 @@
+import _ from "lodash";
+
 import { ActionTypes } from "./actions";
 import Navigator from "../lib/navigation";
-// import { SCREENS } from "../screens";
+import { SCREENS } from "../screens";
 // import Navigator from "../lib/navigation";
 
 // function screen(state = SCREENS.HOME, action) {
@@ -26,15 +28,17 @@ import Navigator from "../lib/navigation";
 // }
 
 //////* APP *//////
-// const initialAppState = {
-// 	// isUpdating: true,
-// 	// screen: SCREENS.HOME,
-// 	fetchingMoves: true,
-// 	fetchingGroups: true,
-// 	fetchingFriends: false,
-// 	fetchingRequests: false,
-// 	fetchingGoingUsers: false
-// };
+const initialAppState = {
+	// isUpdating: true,
+	screen: SCREENS.HOME,
+	// fetchingMoves: true,
+	// fetchingGroups: true,
+	// fetchingFriends: false,
+	// fetchingRequests: false,
+	// fetchingGoingUsers: false,
+	focusedGroupId: "",
+	focusedMoveId: ""
+};
 
 // function app(state = initialAppState, action, rootState) {
 // 	switch (action.type) {
@@ -77,8 +81,11 @@ function user(state = initialUserState, action, rootState) {
 }
 
 //////* MOVES *//////
+const initialMoveState = {
+	moves: new Map()
+};
+
 function moves(state = [], action, rootState) {
-	console.log("root state in moves reducer ", rootState);
 	const { uid, name, fb_id } = rootState.user;
 	let index;
 	let updatedMove;
@@ -89,29 +96,30 @@ function moves(state = [], action, rootState) {
 			// return arrayUnique(state, action.moves);
 			return action.moves;
 		case ActionTypes.ADD_MOVE:
-			let updatedMove = { ...action.move, going: [{ uid, name, fb_id }] };
-			return [...state, updatedMove];
+			return [...state, { ...action.move, going: [{ uid, name, fb_id }] }];
 		case ActionTypes.END_MOVE:
-			const { move } = action;
-			return [move];
+			index = _.findIndex(state, o => o.id === action.id);
+			updatedMove = { ...action.move, ended: true };
+
+			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
 		case ActionTypes.SET_GOING_USERS:
-			state.forEach((move, i) => {
-				if (move.id === action.id) {
-					index = i;
-					updatedMove = { ...move, going: action.users };
-				}
-			});
+			index = _.findIndex(state, o => o.id === action.id);
+			updatedMove = { ...state[index], going: action.users };
 
-			return [...state.slice(0, index), ...state.slice(index + 1), updatedMove];
+			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
 		case ActionTypes.JOIN_MOVE:
-			state.forEach((move, i) => {
-				if (move.id === action.id) {
-					index = i;
-					updatedMove = { ...move, going: [...move.going, { uid, fb_id, name }] };
-				}
-			});
+			index = _.findIndex(state, o => o.id === action.id);
+			updatedMove = {
+				...state[index],
+				going: [...state[index].going, { uid, fb_id, name, ts: action.ts }]
+			};
 
-			return [...state.slice(0, index), ...state.slice(index + 1), updatedMove];
+			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
+		case ActionTypes.LEAVE_MOVE:
+			index = _.findIndex(state, o => o.id === action.id);
+			updatedMove = { ...state[index], going: state[index].going.filter(o => o.uid !== uid) };
+
+			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
 		default:
 			return state;
 	}

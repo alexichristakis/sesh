@@ -12,7 +12,11 @@ const moves = [
       latitude: 47.875598,
       longitude: -122.223837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi2",
@@ -27,7 +31,9 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 100004662791911
+
+    fb_id: 100004662791911,
+    going: [{ name: "Everest Fang", fb_id: "100004662791911", uid: "test_uid", ts: 1531531515151 }]
   },
   {
     id: "alexi3",
@@ -42,7 +48,11 @@ const moves = [
       latitude: 47.695598,
       longitude: -122.203837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi4",
@@ -57,7 +67,9 @@ const moves = [
       latitude: 47.255598,
       longitude: -122.043837
     },
-    fb_id: 100000731179223
+
+    fb_id: 100000731179223,
+    going: [{ name: "William Oles", fb_id: "100000731179223", uid: "test_uid", ts: 1531531515151 }]
   },
   {
     id: "alexi5",
@@ -72,7 +84,9 @@ const moves = [
       latitude: 47.673598,
       longitude: -122.063837
     },
-    fb_id: 1182281483
+
+    fb_id: 1182281483,
+    going: [{ name: "Max Golden", fb_id: "1182281483", uid: "test_uid", ts: 1531531515151 }]
   },
   {
     id: "alexi6",
@@ -87,7 +101,11 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi7",
@@ -102,7 +120,11 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi8",
@@ -117,7 +139,11 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi9",
@@ -132,7 +158,9 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 100004662791911
+
+    fb_id: 100004662791911,
+    going: [{ name: "Everest Fang", fb_id: "100004662791911", uid: "test_uid", ts: 1531531515151 }]
   },
   {
     id: "alexi10",
@@ -147,7 +175,11 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi11",
@@ -162,7 +194,9 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 100000731179223
+
+    fb_id: 100000731179223,
+    going: [{ name: "William Oles", fb_id: "100000731179223", uid: "test_uid", ts: 1531531515151 }]
   },
   {
     id: "alexi12",
@@ -177,7 +211,9 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1182281483
+
+    fb_id: 1182281483,
+    going: [{ name: "Max Golden", fb_id: "1182281483", uid: "test_uid", ts: 1531531515151 }]
   },
   {
     id: "alexi13",
@@ -192,7 +228,11 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   },
   {
     id: "alexi14",
@@ -207,7 +247,11 @@ const moves = [
       latitude: 47.675598,
       longitude: -122.263837
     },
-    fb_id: 1779355238751386
+
+    fb_id: 1779355238751386,
+    going: [
+      { name: "Alexi Christakis", fb_id: "1779355238751386", uid: "test_uid", ts: 1531531515151 }
+    ]
   }
 ];
 

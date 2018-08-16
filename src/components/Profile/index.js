@@ -7,7 +7,8 @@ import Parallax from "./Parallax";
 import Header from "./Header";
 import TopButtons from "./TopButtons";
 import Notifications from "./Notifications";
-import Groups from "../Groups";
+// import Groups from "../Groups";
+import Groups from "./Groups";
 
 import {} from "../../lib/navigation";
 
@@ -111,13 +112,15 @@ class Profile extends Component {
             acceptFriend={this.handleOnPressAcceptFriend}
             deleteRequest={this.handleOnPressDeleteRequest}
           />
-          <Groups data={groups} />
+          <Groups groups={groups} />
         </Animated.ScrollView>
         <Header offset={this.yOffset} />
       </View>
     );
   }
 }
+
+//           <Groups data={groups} />
 
 const styles = StyleSheet.create({
   container: {

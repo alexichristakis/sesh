@@ -94,11 +94,11 @@ export const ShowAddFriend = () => {
 };
 
 /* Groups */
-export const ShowGroupFocus = ({ group }) => {
+export const ShowGroupFocus = ({ props }) => {
 	ReactNativeHapticFeedback.trigger("impactLight");
 	TransparentModalTo(SCREENS.FOCUS, {
-		isGroups: true,
-		cardData: group
+		...props,
+		isGroups: true
 	});
 };
 

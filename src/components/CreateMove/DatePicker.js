@@ -5,7 +5,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 
-const DatePicker = ({chosenDate, currentDate, onDateChange}) => {
+const DatePicker = ({ chosenDate, currentDate, onDateChange }) => {
   return (
     <SuperEllipseMask style={styles.container} radius={BORDER_RADIUS}>
       <DatePickerIOS
@@ -19,7 +19,7 @@ const DatePicker = ({chosenDate, currentDate, onDateChange}) => {
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: "white", marginBottom: CARD_GUTTER }
+  container: { backgroundColor: "white", marginVertical: CARD_GUTTER }
 });
 
 export default DatePicker;

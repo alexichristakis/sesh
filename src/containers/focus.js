@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import Focus from "../components/Focus";
 
-import { fetchGoingUsers, joinMove } from "../redux/actions";
+import { fetchGoingUsers, joinMove, leaveMove } from "../redux/actions";
 
 const mapStateToProps = state => {
 	const { user, moves, groups } = state;
@@ -20,7 +20,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		fetchGoingUsers: id => dispatch(fetchGoingUsers(id)),
-		joinMove: id => dispatch(joinMove(id))
+		joinMove: id => dispatch(joinMove(id)),
+		leaveMove: id => dispatch(leaveMove(id))
 	};
 };
 

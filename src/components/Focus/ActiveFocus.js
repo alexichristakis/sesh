@@ -27,6 +27,7 @@ const ActiveFocus = ({
   users,
   handleOnPress
 }) => {
+  console.log("users:", users);
   _renderItem = ({ item }) => <User user={item} onPress={() => {}} />;
 
   _renderSeparator = () => <View style={styles.separator} />;
@@ -87,8 +88,23 @@ const ActiveFocus = ({
       ) : (
         <>
           <Text style={[styles.header, TextStyles.headerWhite]}>GOING</Text>
-          <SuperEllipseMask style={styles.joinedUsersContainer} radius={BORDER_RADIUS}>
+          <FlatList
+            style={styles.goingContainer}
+            data={users}
+            renderItem={_renderItem}
+            ItemSeparatorComponent={_renderSeparator}
+            // ListHeaderComponent={_renderHeader}
+            keyExtractor={_keyExtractor}
+          />
+        </>
+      )}
+    </>
+  );
+};
+/*
+<SuperEllipseMask style={styles.goingContainer} radius={BORDER_RADIUS}>
             <FlatList
+              // style={styles.goingContainer}
               data={users}
               renderItem={_renderItem}
               ItemSeparatorComponent={_renderSeparator}
@@ -96,11 +112,7 @@ const ActiveFocus = ({
               keyExtractor={_keyExtractor}
             />
           </SuperEllipseMask>
-        </>
-      )}
-    </>
-  );
-};
+          */
 
 const styles = StyleSheet.create({
   mapCard: {
@@ -126,7 +138,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  joinedUsersContainer: {
+  goingContainer: {
+    // flex: 1,
+    width: 500,
+    height: 500,
     backgroundColor: "white",
     marginVertical: CARD_GUTTER
   },

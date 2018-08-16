@@ -99,16 +99,29 @@ export const SendMove = ({ move, user }) => {
   });
 };
 
-export const JoinMove = ({ user, move_id }) => {
+export const JoinMove = ({ user, move_id, ts }) => {
   return new Promise(resolve => {
     const { uid, fb_id, name } = user;
     const ref = firestore
       .collection("moves")
       .doc(move_id)
-      .collection("joined_users")
+      .collection("going")
       .doc(uid);
 
-    ref.set({ uid, fb_id, name }).then(() => resolve(true));
+    ref.set({ uid, fb_id, name, ts }).then(() => resolve(true));
+  });
+};
+
+export const LeaveMove = ({ user, move_id }) => {
+  return new Promise(resolve => {
+    const { uid, fb_id, name } = user;
+    const ref = firestore
+      .collection("moves")
+      .doc(move_id)
+      .collection("going")
+      .doc(uid);
+
+    ref.delete().then(() => resolve(true));
   });
 };
 
@@ -117,7 +130,7 @@ export const FetchGoingUsers = ({ move_id }) => {
     const ref = firestore
       .collection("moves")
       .doc(move_id)
-      .collection("joined_users");
+      .collection("going");
 
     let users = [];
     ref.get().then(snapshot => {
@@ -236,6 +249,7 @@ export const FacebookLogout = async () => {
 export default {
   SendMove,
   JoinMove,
+  LeaveMove,
   FetchGoingUsers,
   UserAuthenticated
 };

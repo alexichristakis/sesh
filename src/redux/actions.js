@@ -96,13 +96,15 @@ export function joinMove(id) {
 		return new Promise((resolve, reject) => {
 			const state = getState();
 			const { user } = state;
+			const ts = Date.now();
 
 			ShowLoadingOverlay();
 			api
-				.JoinMove({ user, move_id: id })
+				.JoinMove({ user, move_id: id, ts })
 				.then(() => {
 					HideLoadingOverlay();
-					dispatch(joinMoveComplete(id));
+					dispatch(joinMoveComplete(id, ts));
+					resolve(true);
 				})
 				.catch(error => {
 					dispatch(postError(error));
@@ -112,10 +114,37 @@ export function joinMove(id) {
 	};
 }
 
-export function joinMoveComplete(id) {
-	console.log("join move complete");
+export function joinMoveComplete(id, ts) {
 	return {
 		type: ActionTypes.JOIN_MOVE,
+		id,
+		ts
+	};
+}
+
+export function leaveMove(id) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			const { user } = getState();
+			ShowLoadingOverlay();
+			api
+				.LeaveMove({ user, move_id: id })
+				.then(() => {
+					HideLoadingOverlay();
+					dispatch(leaveMoveComplete(id));
+					resolve(true);
+				})
+				.catch(error => {
+					dispatch(postError(error));
+					reject(error);
+				});
+		});
+	};
+}
+
+export function leaveMoveComplete(id) {
+	return {
+		type: ActionTypes.LEAVE_MOVE,
 		id
 	};
 }

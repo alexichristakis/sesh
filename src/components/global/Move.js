@@ -88,7 +88,7 @@ class Move extends Component {
   };
 
   handleGroupOnPress = () => {
-    ShowGroupFocus({ group: { name: this.props.move.group_name, size: 10 } });
+    ShowGroupFocus({ props: { cardData: { name: this.props.move.group_name, size: 10 } } });
   };
 
   render() {
@@ -139,6 +139,8 @@ class Move extends Component {
       </SuperEllipseMask>
     );
 
+    // return Content;
+
     if (focused) return Content;
     else
       return (
@@ -160,6 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: "white"
+    // marginBottom: CARD_GUTTER
   },
   top: {
     flex: 2,

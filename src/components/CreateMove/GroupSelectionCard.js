@@ -5,7 +5,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import Group from "../Groups/Group";
 
-import { BORDER_RADIUS } from "../../lib/constants";
+import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 import { Colors, SeparatorStyles } from "../../lib/styles";
 
 const GroupSelectionCard = ({ onPressSelect, selectedIndex, groups }) => {
@@ -25,10 +25,12 @@ const GroupSelectionCard = ({ onPressSelect, selectedIndex, groups }) => {
   _keyExtractor = item => item.id.toString();
 
   return (
-    <SuperEllipseMask radius={BORDER_RADIUS}>
+    <SuperEllipseMask
+      style={{ marginVertical: CARD_GUTTER, backgroundColor: "white" }}
+      radius={BORDER_RADIUS}
+    >
       <FlatList
         scrollEnabled={false}
-        style={{ backgroundColor: "white" }}
         data={groups}
         renderItem={renderGroup}
         ItemSeparatorComponent={renderSeparator}
