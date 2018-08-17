@@ -6,9 +6,12 @@
 // export const REQUEST_FRIENDS = "REQUEST_FRIENDS";
 // export const REQUEST_GROUPS = "REQUEST_GROUPS";
 // export const REQUEST_MOVES = "REQUEST_MOVES";
+import firebase from "react-native-firebase";
 
 import api from "../api";
 import { ShowLoadingOverlay, HideLoadingOverlay } from "../lib/navigation";
+
+let firestore = firebase.firestore();
 
 export const ActionTypes = {
 	SET_MOVES: "SET_MOVES",
@@ -36,6 +39,38 @@ export const ActionTypes = {
 };
 
 /* general */
+export function attachListeners() {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			const state = getState();
+			const { uid } = state.user;
+
+			const groupsQuery = firestore.collection("groups").where("members", "array_includes", uid);
+			const movesQuery = firestore.collection("moves");
+
+			let groups = [];
+			let moves = [];
+			groupsQuery.onSnapshot(groupSnapshot => {
+				groupSnapshot.forEach(group => {
+					let group_id = group.id;
+					groups.push({ id: group_id, ...group.data() });
+
+					movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
+						moveSnapshot.forEach(move => {
+							let move_id = move.id;
+							moves.push({ id: move_id, ...move.data() });
+						});
+
+						dispatch(setMoves(moves));
+					});
+				});
+
+				dispatch(setGroups(groups));
+			});
+		});
+	};
+}
+
 export function loadingOverlay() {
 	return {
 		type: ActionTypes.SHOW_LOADING_OVERLAY

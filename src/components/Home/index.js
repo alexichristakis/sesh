@@ -58,16 +58,27 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const { userObj, setMoves, setUser, setLocation, setGroups, setFriends } = this.props;
+    const {
+      userObj,
+      attachListeners,
+      setMoves,
+      setUser,
+      setLocation,
+      setGroups,
+      setFriends
+    } = this.props;
 
     navigator.geolocation.getCurrentPosition(
       position => {
         const { coords } = position;
-        setLocation(coords);
-        setMoves(MOVES);
-        setGroups(GROUPS);
-        setFriends(FRIENDS);
-        setUser(userObj);
+        // setLocation(coords);
+        // setMoves(MOVES);
+        // setGroups(GROUPS);
+        // setFriends(FRIENDS);
+        // setUser(userObj);
+
+        setUser({ ...userObj, location: coords });
+        attachListeners();
 
         this.setState({ loading: false });
       },

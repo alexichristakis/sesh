@@ -128,8 +128,9 @@ class CreateMove extends Component {
   };
 
   handleOnRegionChange = region => {
+    console.log(region);
     const { latitude, longitude } = region;
-    this.setState({ coords: { latitude, longitude } });
+    this.setState({ location: { latitude, longitude } });
   };
 
   handleOnPressSend = () => {

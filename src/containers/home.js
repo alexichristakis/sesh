@@ -2,7 +2,14 @@ import { connect } from "react-redux";
 
 import Home from "../components/Home";
 
-import { setMoves, setUser, setLocation, setGroups, setFriends } from "../redux/actions";
+import {
+	attachListeners,
+	setMoves,
+	setUser,
+	setLocation,
+	setGroups,
+	setFriends
+} from "../redux/actions";
 
 const mapStateToProps = state => {
 	return {
@@ -22,11 +29,14 @@ const mapDispatchToProps = dispatch => {
 		setLocation: location => {
 			dispatch(setLocation(location));
 		},
-		setGroups: groups => {
-			dispatch(setGroups(groups));
-		},
-		setFriends: friends => {
-			dispatch(setFriends(friends));
+		// setGroups: groups => {
+		// 	dispatch(setGroups(groups));
+		// },
+		// setFriends: friends => {
+		// 	dispatch(setFriends(friends));
+		// },
+		attachListeners: () => {
+			dispatch(attachListeners());
 		}
 	};
 };
