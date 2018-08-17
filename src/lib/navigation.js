@@ -3,10 +3,11 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { SCREENS } from "../screens";
 
-const TransparentModalTo = (componentName, props, options) => {
+const TransparentModalTo = ({ id, name, props, options }) => {
 	Navigation.showModal({
 		component: {
-			name: componentName,
+			id,
+			name,
 			passProps: props,
 			options: {
 				modalPresentationStyle: "overCurrentContext",
@@ -39,10 +40,18 @@ export const HideLoadingOverlay = () => {
 
 export const ShowMoveFocus = ({ props }) => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	TransparentModalTo(SCREENS.FOCUS, {
-		...props,
-		isGroups: false
+	TransparentModalTo({
+		id: SCREENS.ID.MOVE_FOCUS,
+		name: SCREENS.FOCUS,
+		props: {
+			...props,
+			isGroups: false
+		}
 	});
+};
+
+export const DismissMoveFocus = () => {
+	Navigation.dimsissModal(SCREENS.ID.MOVE_FOCUS);
 };
 
 export const ShowProfile = () => {
@@ -58,20 +67,26 @@ export const ShowProfile = () => {
 };
 
 export const ShowProfileSettings = () => {
-	TransparentModalTo(SCREENS.SETTINGS);
+	TransparentModalTo({ name: SCREENS.SETTINGS });
 };
 
 export const ShowCreateActiveMove = () => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	TransparentModalTo(SCREENS.CREATE_MOVE, {
-		active: true
+	TransparentModalTo({
+		name: SCREENS.CREATE_MOVE,
+		props: {
+			active: true
+		}
 	});
 };
 
 export const ShowCreateLaterMove = () => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	TransparentModalTo(SCREENS.CREATE_MOVE, {
-		active: false
+	TransparentModalTo({
+		name: SCREENS.CREATE_MOVE,
+		props: {
+			active: false
+		}
 	});
 };
 
@@ -96,9 +111,12 @@ export const ShowAddFriend = () => {
 /* Groups */
 export const ShowGroupFocus = ({ props }) => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	TransparentModalTo(SCREENS.FOCUS, {
-		...props,
-		isGroups: true
+	TransparentModalTo({
+		name: SCREENS.FOCUS,
+		props: {
+			...props,
+			isGroups: true
+		}
 	});
 };
 
@@ -113,7 +131,7 @@ export const ShowEditGroupName = ({ group }) => {
 };
 
 export const ShowGroupSettings = ({ group }) => {
-	TransparentModalTo(SCREENS.GROUP_SETTINGS, { group });
+	TransparentModalTo({ name: SCREENS.GROUP_SETTINGS, props: { group } });
 };
 
 export const ShowAddToGroup = ({ group }) => {

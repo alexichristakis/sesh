@@ -9,7 +9,7 @@
 import firebase from "react-native-firebase";
 
 import api from "../api";
-import { ShowLoadingOverlay, HideLoadingOverlay } from "../lib/navigation";
+import { DismissMoveFocus, ShowLoadingOverlay, HideLoadingOverlay } from "../lib/navigation";
 
 let firestore = firebase.firestore();
 
@@ -41,6 +41,7 @@ export const ActionTypes = {
 /* general */
 export function attachListeners() {
 	return (dispatch, getState) => {
+		// dispatch(setMoves([]));
 		return new Promise((resolve, reject) => {
 			const state = getState();
 			const { uid } = state.user;
@@ -48,25 +49,47 @@ export function attachListeners() {
 			const groupsQuery = firestore.collection("groups").where("members", "array_includes", uid);
 			const movesQuery = firestore.collection("moves");
 
-			let groups = [];
-			let moves = [];
 			groupsQuery.onSnapshot(groupSnapshot => {
-				groupSnapshot.forEach(group => {
+				let groups = [];
+				groupSnapshot.docChanges.forEach(changedGroup => {
+					const { type: groupChangeType, doc: group } = changedGroup;
 					let group_id = group.id;
-					groups.push({ id: group_id, ...group.data() });
-
-					movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
-						moveSnapshot.forEach(move => {
-							let move_id = move.id;
-							moves.push({ id: move_id, going: [], ...move.data() });
+					if (groupChangeType === "added") {
+						movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
+							let moves = [];
+							moveSnapshot.docChanges.forEach(changedMove => {
+								const { type: moveChangeType, doc: move } = changedMove;
+								let move_id = move.id;
+								if (moveChangeType === "added") {
+									moves.push({ id: move_id, ...move.data() });
+								}
+							});
+							if (moves.length !== 0) dispatch(setMoves(moves));
 						});
-
-						dispatch(setMoves(moves));
-					});
+					} else if (groupChangeType === "removed") {
+						// remove
+					}
 				});
-
-				dispatch(setGroups(groups));
+				if (groups.length !== 0) dispatch(setMoves(groups));
 			});
+
+			// groupsQuery.onSnapshot(groupSnapshot => {
+			// 	groupSnapshot.forEach(group => {
+			// 		let group_id = group.id;
+			// 		groups.push({ id: group_id, ...group.data() });
+
+			// 		movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
+			// 			moveSnapshot.forEach(move => {
+			// 				let move_id = move.id;
+			// 				moves.push({ id: move_id, going: [], ...move.data() });
+			// 			});
+
+			// 			dispatch(setMoves(moves));
+			// 		});
+			// 	});
+
+			// 	dispatch(setGroups(groups));
+			// });
 		});
 	};
 }
@@ -124,6 +147,23 @@ export function addMoveComplete(move) {
 	return {
 		type: ActionTypes.ADD_MOVE,
 		move
+	};
+}
+
+export function endMove(id) {
+	return (dispatch, getState) => {
+		return new Promise(resolve => {
+			const state = getState();
+			const { user } = state;
+
+			ShowLoadingOverlay();
+			api.EndMove({ move_id: id }).then(() => {
+				dispatch(endMoveComplete(id));
+				HideLoadingOverlay();
+				DismissMoveFocus();
+				resolve(true);
+			});
+		});
 	};
 }
 

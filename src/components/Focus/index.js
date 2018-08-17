@@ -176,6 +176,7 @@ class Focus extends Component {
       user,
       joinMove,
       leaveMove,
+      endMove,
       fetchGoingUsers,
       fetchGroupMembers
     } = this.props;
@@ -281,6 +282,7 @@ class Focus extends Component {
         fetchGoingUsers={fetchGoingUsers}
         joinMove={joinMove}
         leaveMove={leaveMove}
+        endMove={endMove}
       />
     );
 

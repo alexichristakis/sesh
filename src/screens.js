@@ -63,5 +63,9 @@ export const SCREENS = {
   CREATE_GROUP,
   EDIT_GROUP_NAME,
   ADD_TO_GROUP,
-  GROUP_SETTINGS
+  GROUP_SETTINGS,
+  ID: {
+    MOVE_FOCUS: 'move_focus',
+    GROUP_FOCUS: 'group_focus'
+  }
 };

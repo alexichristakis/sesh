@@ -58,6 +58,12 @@ class MoveFocus extends Component {
 		});
 	};
 
+	handleOnPressEnd = () => {
+		const { cardData, endMove } = this.props;
+
+		endMove(cardData.id);
+	};
+
 	renderUser = ({ item }) => <User user={item} />;
 
 	renderSeparator = () => <View style={SeparatorStyles.users} />;
@@ -68,11 +74,19 @@ class MoveFocus extends Component {
 		const { active, cardData, moves, user, open } = this.props;
 		const { joined, loading } = this.state;
 		const color = active ? Colors.active : Colors.later;
+		const isMyMove = cardData.uid === user.uid;
 
-		let buttonStyle = [
-			styles.joinButton,
+		let joinButtonStyle = [
+			styles.button,
 			{
 				backgroundColor: joined ? color : "transparent"
+			}
+		];
+
+		let endMoveButtonStyle = [
+			styles.button,
+			{
+				backgroundColor: Colors.red
 			}
 		];
 
@@ -95,15 +109,29 @@ class MoveFocus extends Component {
 			</SuperEllipseMask>
 		);
 
+		const JoinMoveButton = (
+			<TouchableScale disabled={loading} onPress={this.handleOnPressJoin}>
+				<SuperEllipseMask style={styles.buttonMask} radius={BORDER_RADIUS}>
+					<BlurView blurType="light" style={joinButtonStyle}>
+						<Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
+					</BlurView>
+				</SuperEllipseMask>
+			</TouchableScale>
+		);
+
+		const EndMoveButton = (
+			<TouchableScale disabled={loading} onPress={this.handleOnPressEnd}>
+				<SuperEllipseMask style={styles.buttonMask} radius={BORDER_RADIUS}>
+					<BlurView blurType="light" style={endMoveButtonStyle}>
+						<Text style={textStyle}>End Move</Text>
+					</BlurView>
+				</SuperEllipseMask>
+			</TouchableScale>
+		);
+
 		return (
 			<>
-				<TouchableScale disabled={loading} onPress={this.handleOnPressJoin}>
-					<SuperEllipseMask style={styles.buttonMask} radius={BORDER_RADIUS}>
-						<BlurView blurType="light" style={buttonStyle}>
-							<Text style={textStyle}>{!joined ? "Join" : "Leave"}</Text>
-						</BlurView>
-					</SuperEllipseMask>
-				</TouchableScale>
+				{isMyMove ? EndMoveButton : JoinMoveButton}
 				<Text style={TextStyles.headerWhite}>LOCATION</Text>
 				<MapCard
 					active={active}
@@ -139,7 +167,7 @@ const styles = StyleSheet.create({
 		marginVertical: CARD_GUTTER,
 		marginHorizontal: 15
 	},
-	joinButton: {
+	button: {
 		// marginVertical: CARD_GUTTER,
 		// marginHorizontal: 15,
 		paddingVertical: 15,

@@ -128,7 +128,6 @@ class CreateMove extends Component {
   };
 
   handleOnRegionChange = region => {
-    console.log(region);
     const { latitude, longitude } = region;
     this.setState({ location: { latitude, longitude } });
   };
@@ -144,6 +143,7 @@ class CreateMove extends Component {
     const move = {
       id: user.uid + time.toString(),
       ts: Date.now(),
+      ended: false,
       description,
       location,
       sender_name,

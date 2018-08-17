@@ -163,7 +163,12 @@ export const FetchGoingUsers = ({ move_id }) => {
   });
 };
 
-export const EndMove = move => {};
+export const EndMove = ({ move_id }) => {
+  return new Promise(resolve => {
+    const ref = firestore.collection("moves").doc(move_id);
+    ref.set({ ended: true }, { merge: true }).then(() => resolve(true));
+  });
+};
 
 /* FRIENDS */
 export const SendFriendRequest = toUser => {};
@@ -270,6 +275,7 @@ export default {
   SendMove,
   JoinMove,
   LeaveMove,
+  EndMove,
   FetchGoingUsers,
   FetchGroupMembers,
   UserAuthenticated
