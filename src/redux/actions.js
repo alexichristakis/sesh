@@ -58,7 +58,7 @@ export function attachListeners() {
 					movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
 						moveSnapshot.forEach(move => {
 							let move_id = move.id;
-							moves.push({ id: move_id, ...move.data() });
+							moves.push({ id: move_id, going: [], ...move.data() });
 						});
 
 						dispatch(setMoves(moves));

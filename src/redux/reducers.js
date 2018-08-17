@@ -85,6 +85,17 @@ const initialMoveState = {
 	moves: new Map()
 };
 
+function mergeMoves(prevState, newState) {
+	let merge = [];
+	newState.forEach(move => {
+		let common = prevState.find(e => e.id === move.id);
+		if (common) {
+			merge.push({ ...move, going: common.going });
+		}
+	});
+	return merge;
+}
+
 function moves(state = [], action, rootState) {
 	const { uid, name, fb_id } = rootState.user;
 	let index;
@@ -94,7 +105,8 @@ function moves(state = [], action, rootState) {
 		case ActionTypes.SET_MOVES:
 			// return [...state, ...action.moves];
 			// return arrayUnique(state, action.moves);
-			return action.moves;
+			// return action.moves;
+			return mergeMoves(state, action.moves);
 		case ActionTypes.ADD_MOVE:
 			return [...state, { ...action.move, going: [{ uid, name, fb_id }] }];
 		case ActionTypes.END_MOVE:

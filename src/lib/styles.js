@@ -3,8 +3,10 @@ import { StyleSheet } from "react-native";
 import { CARD_GUTTER, SCREEN_WIDTH } from "./constants";
 
 // const activeBackground1 = "rgba(74,226,255,1)";
-const activeBackground1 = "rgba(55,223,255,1)";
-const activeBackground2 = "rgba(59,188,255,1)";
+// const activeBackground1 = "rgba(55,223,255,1)";
+// const activeBackground2 = "rgba(59,188,255,1)";
+const activeBackground1 = "rgba(0,176,255,1)";
+const activeBackground2 = "rgba(0,130,255,1)";
 
 // const laterBackground1 = "rgba(137,89,255,1)";
 const laterBackground1 = "rgba(172,65,255,1)";
@@ -23,7 +25,8 @@ const groupsHeader1 = "#FFBB5C";
 const groupsHeader2 = "#FF9500";
 // const active = "#5856d6";
 // const active = "#9121D3";
-const active = "rgba(23,184,255,1)";
+// const active = "rgba(23,184,255,1)";
+const active = "rgba(0,176,255,1)";
 // const later = "#FF9500";
 const later = "rgba(130,0,220,1)";
 
