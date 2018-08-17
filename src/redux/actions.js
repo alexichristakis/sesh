@@ -22,6 +22,7 @@ export const ActionTypes = {
 	ADD_MOVE: "ADD_MOVE",
 	END_MOVE: "END_MOVE",
 	SET_GOING_USERS: "SET_GOING_USERS",
+	SET_GROUP_MEMBERS: "SET_GROUP_MEMBERS",
 	CREATE_GROUP: "CREATE_GROUP",
 	LEAVE_GROUP: "LEAVE_GROUP",
 	CHANGE_GROUP_NAME: "CHANGE_GROUP_NAME",
@@ -169,6 +170,34 @@ export function fetchGoingUsers(id) {
 export function setGoingUsers(id, users) {
 	return {
 		type: ActionTypes.SET_GOING_USERS,
+		id,
+		users
+	};
+}
+
+/* groups */
+export function fetchGroupMembers(id) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			console.log("fetching group members: ", id);
+			api
+				.FetchGroupMembers({ group_id: id })
+				.then(users => {
+					console.log("users in fetch: ", users);
+					dispatch(setGroupMembers(id, users));
+					resolve(true);
+				})
+				.catch(error => {
+					dispatch(fetchError(error));
+					reject(error);
+				});
+		});
+	};
+}
+
+export function setGroupMembers(id, users) {
+	return {
+		type: ActionTypes.SET_GROUP_MEMBERS,
 		id,
 		users
 	};

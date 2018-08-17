@@ -104,7 +104,7 @@ class MoveFocus extends Component {
 						</BlurView>
 					</SuperEllipseMask>
 				</TouchableScale>
-				<Text style={[styles.header, TextStyles.headerWhite]}>LOCATION</Text>
+				<Text style={TextStyles.headerWhite}>LOCATION</Text>
 				<MapCard
 					active={active}
 					loading={!open}
@@ -130,10 +130,6 @@ class MoveFocus extends Component {
 const styles = StyleSheet.create({
 	mapCard: {
 		marginTop: CARD_GUTTER
-	},
-	header: {
-		paddingTop: 10,
-		paddingLeft: 10
 	},
 	loading: {
 		alignSelf: "center",

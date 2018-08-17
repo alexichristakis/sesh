@@ -227,7 +227,7 @@ class CreateMove extends Component {
           style={[styles.scroll, animatedTranslate]}
           contentContainerStyle={styles.scrollContent}
         >
-          <Text style={[styles.header, TextStyles.headerWhite]}>LOCATION</Text>
+          <Text style={TextStyles.headerWhite}>LOCATION</Text>
           <MapCard
             draggable
             active={this.props.active}
@@ -239,7 +239,7 @@ class CreateMove extends Component {
           />
           {!this.props.active && (
             <>
-              <Text style={[styles.header, TextStyles.headerWhite]}>TIME</Text>
+              <Text style={TextStyles.headerWhite}>TIME</Text>
               <DatePicker
                 currentDate={this.state.currentDate}
                 chosenDate={this.state.chosenDate}
@@ -247,7 +247,7 @@ class CreateMove extends Component {
               />
             </>
           )}
-          <Text style={[styles.header, TextStyles.headerWhite]}>GROUP</Text>
+          <Text style={TextStyles.headerWhite}>GROUP</Text>
           <GroupSelectionCard
             groups={this.props.groups}
             selectedIndex={this.state.selectedIndex}
@@ -301,10 +301,6 @@ class CreateMove extends Component {
 const styles = StyleSheet.create({
   flex: {
     flex: 1
-  },
-  header: {
-    paddingTop: 10,
-    paddingLeft: 10
   },
   container: {
     flex: 1,

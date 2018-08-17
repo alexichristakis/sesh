@@ -42,6 +42,7 @@ class Focus extends Component {
     this.state = {
       open: false,
       transitioning: true,
+      focusContentHeight: 0,
       sourceDimension: {
         height,
         width,
@@ -78,6 +79,12 @@ class Focus extends Component {
         }
       };
     });
+  };
+
+  measureFocusContent = ({ nativeEvent }) => {
+    const { height, width, x, y, pageX, pageY } = nativeEvent.layout;
+    this.setState({ focusContentHeight: height });
+    // console.log(height);
   };
 
   beginTransition = () => {
@@ -164,6 +171,7 @@ class Focus extends Component {
       isGroups,
       isActive,
       cardData,
+      groups,
       moves,
       user,
       joinMove,
@@ -171,7 +179,7 @@ class Focus extends Component {
       fetchGoingUsers,
       fetchGroupMembers
     } = this.props;
-    const { open, transitioning, sourceDimension } = this.state;
+    const { open, transitioning, focusContentHeight, sourceDimension } = this.state;
     const { height, width, x, y, pageX, pageY } = sourceDimension;
 
     const openOffset = SB_HEIGHT + CARD_GUTTER;
@@ -205,6 +213,7 @@ class Focus extends Component {
     const movePadding = height - 40 + CARD_GUTTER;
     let focusContainerStyle = {
       // ...FillAbsolute,
+      // backgroundColor: "blue",
       flex: 1,
       top: 20,
       paddingTop: isGroups ? groupsPadding : movePadding,
@@ -261,7 +270,7 @@ class Focus extends Component {
     );
 
     const FocusContent = isGroups ? (
-      <GroupFocus cardData={cardData} fetchGroupMembers={fetchGroupMembers} />
+      <GroupFocus groups={groups} cardData={cardData} fetchGroupMembers={fetchGroupMembers} />
     ) : (
       <MoveFocus
         active={isActive}
@@ -274,37 +283,6 @@ class Focus extends Component {
         leaveMove={leaveMove}
       />
     );
-
-    // let joined = false;
-    // const goingUsers = moves.find(move => move.id === cardData.id).going;
-    // if (goingUsers) joined = goingUsers.find(_user => _user.uid === user.uid);
-    // const goingUsers = moves.find(({ id }) => id === cardData.id).going;
-    // const joined = goingUsers.find(({ uid }) => uid === user.uid);
-    // console.log("goingUser: ", goingUsers);
-
-    // const FocusContent = !isGroups ? (
-    //   isActive ? (
-    //     <ActiveFocus
-    //       loading={loading}
-    //       handleOnPress={this.handleOnPressJoin}
-    //       joined={joined}
-    //       users={goingUsers}
-    //       open={open}
-    //       userLocation={user.location}
-    //       moveLocation={cardData.location}
-    //     />
-    //   ) : (
-    //     <LaterFocus
-    //       handleOnPress={this.handleOnPressJoin}
-    //       joined={joined}
-    //       open={open}
-    //       userLocation={user.location}
-    //       moveLocation={cardData.location}
-    //     />
-    //   )
-    // ) : (
-    //   <GroupFocus />
-    // );
 
     console.log("rendered focus");
     return (
@@ -322,11 +300,18 @@ class Focus extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: height + SB_HEIGHT + CARD_GUTTER }}
         >
-          {FocusContent}
+          <View onLayout={this.measureFocusContent}>{FocusContent}</View>
+
           <TouchableOpacity
             style={{
-              height: "100%",
-              width: "100%"
+              // backgroundColor: "red",
+              // position: "absolute",
+              // top: 0,
+              // bottom: 0,
+              // left: 0,
+              // right: 0
+              height: SCREEN_HEIGHT - 2 * SB_HEIGHT - height - focusContentHeight
+              // width: "100%"
             }}
             onPress={this.handleClose}
           />

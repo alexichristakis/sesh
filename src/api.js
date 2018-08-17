@@ -73,6 +73,26 @@ export const GetUser = () => {
   });
 };
 
+export const FetchGroupMembers = ({ group_id }) => {
+  return new Promise((resolve, reject) => {
+    let ref = firestore
+      .collection("groups")
+      .doc(group_id)
+      .collection("members");
+
+    console.log(group_id);
+
+    let users = [];
+    ref.get().then(snapshot => {
+      snapshot.forEach(doc => {
+        users.push(doc.data());
+      });
+
+      resolve(users);
+    });
+  });
+};
+
 ///* SET *///
 // note: firebase.firestore.GeoPoint(latitude, longitude)
 /* MOVES */
@@ -251,5 +271,6 @@ export default {
   JoinMove,
   LeaveMove,
   FetchGoingUsers,
+  FetchGroupMembers,
   UserAuthenticated
 };

@@ -128,11 +128,19 @@ function moves(state = [], action, rootState) {
 //////* GROUPS *//////
 function groups(state = [], action, rootState) {
 	const { user } = rootState;
+	let index;
+	let updatedGroup;
+
 	switch (action.type) {
 		case ActionTypes.SET_GROUPS:
 			return action.groups;
 		// return [...state, ...action.groups];
 		// return arrayUnique(state.concat(action.groups));
+		case ActionTypes.SET_GROUP_MEMBERS:
+			index = _.findIndex(state, o => o.id === action.id);
+			updatedGroup = { ...state[index], members: action.users };
+
+			return [...state.slice(0, index), updatedGroup, ...state.slice(index + 1)];
 		case ActionTypes.ADD_GROUP:
 			return [...state, action.group];
 		case ActionTypes.LEAVE_GROUP:

@@ -88,7 +88,9 @@ class Move extends Component {
   };
 
   handleGroupOnPress = () => {
-    ShowGroupFocus({ props: { cardData: { name: this.props.move.group_name, size: 10 } } });
+    const { group_name, group_id } = this.props.move;
+    const props = { cardData: { id: group_id, name: group_name } };
+    ShowGroupFocus({ props });
   };
 
   render() {
