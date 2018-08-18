@@ -125,8 +125,10 @@ class Focus extends Component {
           });
         } else Navigation.dismissModal(this.props.componentId);
       });
-    } else {
+    } else if (index === 1) {
       this.setState({ open: true, transitioning: false });
+    } else {
+      Navigation.dismissModal(this.props.componentId);
     }
 
     //   if (!isGroups) {
@@ -145,6 +147,10 @@ class Focus extends Component {
     // } else {
     //   this.setState({ open: true, transitioning: false });
     // }
+  };
+
+  dismissFocus = () => {
+    this.interactable.snapTo({ index: 2 });
   };
 
   vertOnScroll = () =>
@@ -189,8 +195,9 @@ class Focus extends Component {
 
     const springConfig = { damping: 0.5, tension: 600 };
     const interactableSnapPoints = [
-      { y: pageY, ...springConfig },
-      { y: SB_HEIGHT + CARD_GUTTER, ...springConfig }
+      { y: pageY, ...springConfig }, // closed
+      { y: SB_HEIGHT + CARD_GUTTER, ...springConfig }, // open
+      { y: SCREEN_HEIGHT, ...springConfig } // dismissed (fully closed)
     ];
 
     let opacity = {
@@ -283,6 +290,7 @@ class Focus extends Component {
         joinMove={joinMove}
         leaveMove={leaveMove}
         endMove={endMove}
+        dismissFocus={this.dismissFocus}
       />
     );
 

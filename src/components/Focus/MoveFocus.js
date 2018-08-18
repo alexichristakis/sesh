@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView, FlatList, View, Text } from "react-native";
+import { StyleSheet, FlatList, View, Text } from "react-native";
 
 import _ from "lodash";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
@@ -59,9 +59,9 @@ class MoveFocus extends Component {
 	};
 
 	handleOnPressEnd = () => {
-		const { cardData, endMove } = this.props;
+		const { cardData, endMove, dismissFocus } = this.props;
 
-		endMove(cardData.id);
+		endMove(cardData.id).then(() => dismissFocus());
 	};
 
 	renderUser = ({ item }) => <User user={item} />;
@@ -140,12 +140,13 @@ class MoveFocus extends Component {
 					userLocation={user.location}
 					markers={[{ coords: cardData.location, active, key: "location" }]}
 				/>
-				{/* THIS IS SUCH A HACK TODO: FIND A BETTER WAY*/}
+
 				{goingUsers.length === 0 ? (
 					<LoadingCircle style={styles.loading} size={20} />
 				) : (
 					<>
 						<Text style={[styles.header, TextStyles.headerWhite]}>GOING</Text>
+						{/* THIS IS SUCH A HACK TODO: FIND A BETTER WAY*/}
 						{loading && List}
 						{!loading && List}
 					</>

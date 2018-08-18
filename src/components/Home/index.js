@@ -142,12 +142,12 @@ class Home extends Component {
   render() {
     const { refreshing, loading } = this.state;
     const { friends, groups, moves, user } = this.props;
+    console.log("moves in home: ", moves);
 
     console.log("render home");
     return (
       <Background loading={loading || refreshing} xOffset={xOffset}>
         <StatusBar barStyle="light-content" />
-
         {loading ? (
           <LoadingCircle style={styles.loading} size={20} />
         ) : (
@@ -161,7 +161,6 @@ class Home extends Component {
             hoScrollRef={ScrollView => (this.hoScrollView = ScrollView)}
           />
         )}
-
         <TopBar
           user={user}
           yOffset={yOffset}

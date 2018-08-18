@@ -47,12 +47,13 @@ export function attachListeners() {
 			const { uid } = state.user;
 
 			const groupsQuery = firestore.collection("groups").where("members", "array_includes", uid);
-			const movesQuery = firestore.collection("moves");
+			const movesQuery = firestore.collection("moves").where("ended", "==", false);
 
 			groupsQuery.onSnapshot(groupSnapshot => {
 				let groups = [];
 				groupSnapshot.docChanges.forEach(changedGroup => {
 					const { type: groupChangeType, doc: group } = changedGroup;
+					console.log("group: ", group);
 					let group_id = group.id;
 					if (groupChangeType === "added") {
 						movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
@@ -61,16 +62,19 @@ export function attachListeners() {
 								const { type: moveChangeType, doc: move } = changedMove;
 								let move_id = move.id;
 								if (moveChangeType === "added") {
+									console.log("pushing move: ", move_id, move.data());
 									moves.push({ id: move_id, ...move.data() });
 								}
 							});
-							if (moves.length !== 0) dispatch(setMoves(moves));
+							dispatch(setMoves(moves));
 						});
+						console.log("pushing group: ", group_id, group.data());
+						groups.push({ id: group_id, ...group.data() });
 					} else if (groupChangeType === "removed") {
 						// remove
 					}
 				});
-				if (groups.length !== 0) dispatch(setMoves(groups));
+				dispatch(setGroups(groups));
 			});
 
 			// groupsQuery.onSnapshot(groupSnapshot => {
@@ -160,10 +164,17 @@ export function endMove(id) {
 			api.EndMove({ move_id: id }).then(() => {
 				dispatch(endMoveComplete(id));
 				HideLoadingOverlay();
-				DismissMoveFocus();
+				// DismissMoveFocus();
 				resolve(true);
 			});
 		});
+	};
+}
+
+export function endMoveComplete(id) {
+	return {
+		type: ActionTypes.END_MOVE,
+		id
 	};
 }
 

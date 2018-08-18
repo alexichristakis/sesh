@@ -86,8 +86,8 @@ const initialMoveState = {
 };
 
 function mergeMoves(prevState, newState) {
-	console.log("merging moves: ", prevState, newState);
-	let merged = [...prevState];
+	console.log(prevState, newState);
+	let merged = [...prevState.filter(e => !e.ended)];
 	newState.forEach(move => {
 		if (prevState.find(e => e.id === move.id) === undefined) merged.push({ ...move, going: [] });
 	});
@@ -95,19 +95,24 @@ function mergeMoves(prevState, newState) {
 }
 
 function moves(state = [], action, rootState) {
+	// console.log("state: ", state1, "action: ", action);
 	const { uid, name, fb_id } = rootState.user;
 	let index;
 	let updatedMove;
 
+	// console.log("action.moves: ", action.moves);
 	switch (action.type) {
 		case ActionTypes.SET_MOVES:
 			return mergeMoves(state, action.moves);
+		// return [];
+		// return action.moves;
 
 		case ActionTypes.ADD_MOVE:
 			return mergeMoves(state, [{ ...action.move, going: [{ uid, name, fb_id }] }]);
 		case ActionTypes.END_MOVE:
+			console.log("end move");
 			index = _.findIndex(state, o => o.id === action.id);
-			updatedMove = { ...action.move, ended: true };
+			updatedMove = { ...state[index], ended: true };
 
 			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
 		case ActionTypes.SET_GOING_USERS:
@@ -134,6 +139,8 @@ function moves(state = [], action, rootState) {
 }
 
 //////* GROUPS *//////
+function mergeGroups(prevState, newState) {}
+
 function groups(state = [], action, rootState) {
 	const { user } = rootState;
 	let index;
@@ -144,6 +151,7 @@ function groups(state = [], action, rootState) {
 			return action.groups;
 		// return [...state, ...action.groups];
 		// return arrayUnique(state.concat(action.groups));
+		// return mergeGroups(state, action.groups);
 		case ActionTypes.SET_GROUP_MEMBERS:
 			index = _.findIndex(state, o => o.id === action.id);
 			updatedGroup = { ...state[index], members: action.users };

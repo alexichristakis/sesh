@@ -22,8 +22,9 @@ const Feed = ({
 	onVertScrollEndDrag,
 	handleTransition
 }) => {
-	const activeData = moves.filter(move => move.time <= Date.now()).sort((a, b) => b.time - a.time);
-	const laterData = moves.filter(move => move.time > Date.now()).sort((a, b) => a.time - b.time);
+	const arr = moves.filter(move => !move.ended);
+	const activeData = arr.filter(move => move.time <= Date.now()).sort((a, b) => b.time - a.time);
+	const laterData = arr.filter(move => move.time > Date.now()).sort((a, b) => a.time - b.time);
 
 	transitionToActiveFocus = (dimensions, onReturn, cardData) => {
 		handleTransition({
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
 	list: {
 		width: SCREEN_WIDTH,
 		height: SCREEN_HEIGHT,
-		// paddingHorizontal: CARD_GUTTER,
 		paddingTop: IS_X ? 60 : 56,
 		backgroundColor: "transparent"
 	},

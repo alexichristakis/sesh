@@ -51,7 +51,7 @@ export const ShowMoveFocus = ({ props }) => {
 };
 
 export const DismissMoveFocus = () => {
-	Navigation.dimsissModal(SCREENS.ID.MOVE_FOCUS);
+	Navigation.dismissModal(SCREENS.ID.MOVE_FOCUS);
 };
 
 export const ShowProfile = () => {
