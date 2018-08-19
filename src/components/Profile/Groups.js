@@ -22,7 +22,8 @@ import { Colors, TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Groups = ({ groups }) => {
 	handleOnPressGroup = group => {
-		ShowGroupFocus({ group });
+		const props = { cardData: { ...group } };
+		ShowGroupFocus({ props });
 	};
 
 	renderGroup = ({ item, index }) => (

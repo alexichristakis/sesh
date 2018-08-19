@@ -17,8 +17,10 @@ import {
   TRANSITION_DURATION
 } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
+import { GetPhotoURL } from "../../lib/functions";
+import { ShowProfile } from "../../lib/navigation";
 
-const BAR_HEIGHT = 30;
+const BAR_HEIGHT = 40;
 const ICON_DIMENSION = 50;
 
 const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing }) => {
@@ -80,15 +82,15 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5, BAR_HEIGHT + 10],
-          outputRange: [40, 0, -ICON_DIMENSION / 6, -ICON_DIMENSION / 6, -ICON_DIMENSION / 6]
-          // extrapolate: "clamp"
+          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
+          outputRange: [40, 0, -ICON_DIMENSION / 3],
+          extrapolateRight: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT, BAR_HEIGHT + 5],
-          outputRange: [1.5, 1, 0.8, 0.8],
+          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
+          outputRange: [1.5, 1, 0.8],
           extrapolate: "clamp"
         })
       }
@@ -107,16 +109,16 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
     transform: [
       {
         translateY: yOffset.interpolate({
-          inputRange: [REFRESH_OFFSET, initialOffset, 0, 5],
-          outputRange: [47 + iPhoneXOffset, 7 + iPhoneXOffset, 0, 0]
-          // extrapolate: "clamp"
+          inputRange: [REFRESH_OFFSET, initialOffset, 0],
+          outputRange: [47 + iPhoneXOffset, 7 + iPhoneXOffset, 0],
+          extrapolateRight: "clamp"
         })
       },
       {
         scale: yOffset.interpolate({
-          inputRange: [1.5 * REFRESH_OFFSET, REFRESH_OFFSET, initialOffset, 0, 5],
-          outputRange: [1.4, 1.2, refreshing ? 1 : 0.2, 0, 0],
-          extrapolate: "clamp"
+          inputRange: [1.5 * REFRESH_OFFSET, REFRESH_OFFSET, initialOffset, 0],
+          outputRange: [1.4, 1.2, refreshing ? 1 : 0.2, 0],
+          extrapolateRight: "clamp"
         })
       }
     ]
@@ -128,6 +130,41 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       outputRange: [0, 1],
       extrapolate: "clamp"
     })
+  };
+
+  let animatedProfilePicture = {
+    opacity: yOffset.interpolate({
+      inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
+      outputRange: [0, 1, 1]
+    }),
+    transform: [
+      {
+        translateY: yOffset.interpolate({
+          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
+          outputRange: [0, -30, -50],
+          extrapolateRight: "clamp"
+        })
+      }
+      // {
+      //   scale: yOffset.interpolate({
+      //     inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
+      //     outputRange: [1.1, 1, 0.8],
+      //     extrapolateRight: "clamp"
+      //   })
+      // }
+    ]
+  };
+
+  let animatedScale = {
+    transform: [
+      {
+        scale: yOffset.interpolate({
+          inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
+          outputRange: [1.1, 1, 0.75],
+          extrapolateRight: "clamp"
+        })
+      }
+    ]
   };
 
   return (
@@ -142,18 +179,28 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
         />
       </Animated.View>
       {!refreshing && (
-        <Animated.View style={[styles.topBar, animatedStyle]}>
-          <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
-            <TouchableOpacity onPress={scrollToStart}>
-              <AwesomeIcon name={"bolt"} size={40} color={"white"} />
+        <>
+          <Animated.View style={[styles.topBar, animatedStyle]}>
+            <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
+              <TouchableOpacity onPress={scrollToStart}>
+                <AwesomeIcon name={"bolt"} size={40} color={"white"} />
+              </TouchableOpacity>
+            </Animated.View>
+            <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
+              <TouchableOpacity onPress={scrollToEnd}>
+                <IonIcon name={"ios-time"} size={40} color={"white"} />
+              </TouchableOpacity>
+            </Animated.View>
+          </Animated.View>
+          <Animated.View style={animatedProfilePicture}>
+            <TouchableOpacity style={styles.profileButton} onPress={ShowProfile}>
+              <Animated.Image
+                source={{ uri: GetPhotoURL(user.fb_id, ICON_DIMENSION, ICON_DIMENSION) }}
+                style={[animatedScale, styles.photo]}
+              />
             </TouchableOpacity>
           </Animated.View>
-          <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
-            <TouchableOpacity onPress={scrollToEnd}>
-              <IonIcon name={"ios-time"} size={40} color={"white"} />
-            </TouchableOpacity>
-          </Animated.View>
-        </Animated.View>
+        </>
       )}
 
       <Animated.View style={[styles.loading, animatedLoading]}>
@@ -168,8 +215,22 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    right: 0
+    right: 0,
+    height: BAR_HEIGHT + SB_HEIGHT
     // backgroundColor: "blue"
+  },
+  profileButton: {
+    position: "absolute",
+    right: 10,
+    top: 0
+  },
+  photo: {
+    height: ICON_DIMENSION,
+    width: ICON_DIMENSION,
+    borderRadius: ICON_DIMENSION / 2,
+    borderWidth: 2,
+    borderColor: "white",
+    backgroundColor: Colors.gray
   },
   shadowContainer: {
     position: "absolute",
