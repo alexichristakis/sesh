@@ -44,7 +44,7 @@ const CreateGroupButton = ({ visible, onPress }) => {
           style={[
             styles.sendButton,
             {
-              backgroundColor: Colors.groupsBackground1
+              backgroundColor: Colors.groups
             },
             buttonAnimatedStyle
           ]}

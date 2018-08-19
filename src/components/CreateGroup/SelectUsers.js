@@ -43,13 +43,19 @@ class SelectUsers extends Component {
 	handleOnPressUser = ({ uid }) => {
 		const { selected } = this.state;
 		if (selected.includes(uid)) {
-			this.setState({
-				selected: selected.filter(i => i != uid)
-			});
+			this.setState(
+				{
+					selected: selected.filter(i => i != uid)
+				},
+				() => this.props.onSelect(this.state.selected)
+			);
 		} else {
-			this.setState({
-				selected: [...selected, uid]
-			});
+			this.setState(
+				{
+					selected: [...selected, uid]
+				},
+				() => this.props.onSelect(this.state.selected)
+			);
 		}
 	};
 

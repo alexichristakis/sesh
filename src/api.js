@@ -212,16 +212,34 @@ export const DeleteFriend = user => {};
 export const CreateGroup = ({ group_name, user, members }) => {
   return new Promise(resolve => {
     const { uid, name, fb_id } = user;
+    const group = {
+      name: group_name,
+      created_by: uid,
+      created_at: Date.now(),
+      size: members.length
+    };
+
     firestore
       .collection("groups")
-      .add({
-        name: group_name,
-        created_by: uid,
-        created_at: Date.now(),
-        size: members.length,
-        members
-      })
-      .then(() => resolve(true));
+      .add(group)
+      .then(docRef => {
+        let ref = docRef.collection("members");
+
+        let batch = firestore.batch();
+        members.forEach(member => {
+          console.log("member: ", member);
+          batch.set(ref.doc(member.uid), {
+            uid: member.uid,
+            fb_id: member.fb_id,
+            name: member.name
+          });
+        });
+
+        batch
+          .commit()
+          .then(() => resolve(true))
+          .catch(err => console.log(err));
+      });
   });
 };
 

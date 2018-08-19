@@ -42,6 +42,7 @@ class CreateGroup extends Component {
 
     this.state = {
       open: false,
+      buttonVisible: false,
       groupName: "",
       selectedUsers: []
     };
@@ -80,10 +81,8 @@ class CreateGroup extends Component {
     const { index } = event.nativeEvent;
     if (index === 0) {
       this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
-    } else if (index === 1) {
-      this.setState({ open: true });
     } else {
-      this.setState({ open: false }, () => Navigation.dismissModal(this.props.componentId));
+      this.setState({ open: true }, this.checkButtonOpen);
     }
   };
 
@@ -97,8 +96,10 @@ class CreateGroup extends Component {
   handleScrollRelease = event => {
     const { changedTouches, locationY, pageY } = event.nativeEvent;
     if (this.yOffset._value < -75) {
-      Keyboard.dismiss();
-      Navigation.dismissModal(this.props.componentId);
+      this.setState({ buttonVisible: false }, () => {
+        Keyboard.dismiss();
+        Navigation.dismissModal(this.props.componentId);
+      });
     }
   };
 
@@ -111,7 +112,16 @@ class CreateGroup extends Component {
   };
 
   handleOnNameChange = groupName => {
-    this.setState({ groupName });
+    this.setState({ groupName }, this.checkButtonOpen);
+  };
+
+  checkButtonOpen = () => {
+    const { selectedUsers, groupName } = this.state;
+    if (selectedUsers.length > 0 && groupName !== "") {
+      this.setState({ buttonVisible: true });
+    } else {
+      this.setState({ buttonVisible: false });
+    }
   };
 
   handleOnPressCreateGroup = () => {
@@ -130,12 +140,11 @@ class CreateGroup extends Component {
 
   render() {
     const { friends } = this.props;
-    console.log("render create group: ", this.state.selectedUsers);
+    const { buttonVisible } = this.state;
 
     const springConfig = { damping: 0.5, tension: 600 };
     const closed = { y: SCREEN_HEIGHT, ...springConfig };
     const open = { y: SB_HEIGHT, ...springConfig };
-    const sent = { y: -510, ...springConfig };
 
     let opacity = {
       opacity: this.deltaY.interpolate({
@@ -193,7 +202,7 @@ class CreateGroup extends Component {
           <Text style={TextStyles.headerWhite}>ADD FRIENDS</Text>
           <SelectUsers
             friends={friends}
-            onSelect={users => this.setState({ selectedUsers: users })}
+            onSelect={users => this.setState({ selectedUsers: users }, this.checkButtonOpen)}
           />
         </Animated.ScrollView>
         <Interactable.View
@@ -201,7 +210,7 @@ class CreateGroup extends Component {
           verticalOnly
           ref={item => (this.interactable = item)}
           style={[styles.interactable, animatedScroll]}
-          snapPoints={[closed, open, sent]}
+          snapPoints={[closed, open]}
           onSnap={this.handleOnSnap}
           onDrag={this.handleOnDrag}
           initialPosition={closed}
@@ -219,10 +228,7 @@ class CreateGroup extends Component {
             onChangeText={this.handleOnNameChange}
           />
         </Interactable.View>
-        <CreateGroupButton
-          visible={this.state.buttonVisible}
-          onPress={this.handleOnPressCreateGroup}
-        />
+        <CreateGroupButton visible={buttonVisible} onPress={this.handleOnPressCreateGroup} />
       </View>
     );
   }

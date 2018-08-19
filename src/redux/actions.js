@@ -319,11 +319,22 @@ export function leaveGroup(group) {
 	};
 }
 
-export function createGroup(name, members) {
+export function createGroup(name, selectedUIDs) {
 	return (dispatch, getState) => {
 		return new Promise(resolve => {
 			const state = getState();
-			const { user } = state;
+			const { user, friends } = state;
+
+			/* generate members array */
+			let members = [];
+			selectedUIDs.forEach(uid => {
+				const { name, fb_id } = friends.find(e => e.uid === uid);
+				members.push({ uid, name, fb_id });
+			});
+
+			const { uid, name, fb_id } = user;
+			members.push({ uid, name, fb_id });
+			console.log("members: ", members);
 
 			api.CreateGroup({ group_name: name, user, members }).then(() => {
 				dispatch(createGroupComplete(name, members));
@@ -336,7 +347,7 @@ export function createGroup(name, members) {
 export function createGroupComplete(name, members) {
 	return {
 		type: ActionTypes.CREATE_GROUP,
-		group,
+		name,
 		members
 	};
 }
