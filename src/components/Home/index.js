@@ -16,7 +16,7 @@ import { ShowMoveFocus } from "../../lib/navigation";
 import { REFRESH_OFFSET } from "../../lib/constants";
 
 /* import fetch functions */
-import {} from "../../api";
+import { FetchFriendsList, NewUser, SearchForUser, TestSearch } from "../../api";
 
 import { IS_X } from "../../lib/constants";
 
@@ -67,6 +67,15 @@ class Home extends Component {
       setGroups,
       setFriends
     } = this.props;
+
+    // NewUser({
+    //   first_name: "Joe",
+    //   last_name: "Kelley",
+    //   fb_id: "176387573072294",
+    //   name: "Joe Kelley"
+    // });
+    FetchFriendsList({ fb_id: userObj.fb_id });
+    // SearchForUser({ first: "alexi" });
 
     navigator.geolocation.getCurrentPosition(
       position => {

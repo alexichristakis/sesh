@@ -12,13 +12,9 @@ import { BORDER_RADIUS } from "../../lib/constants";
 
 const ICON_SIZE = 35;
 
-const User = ({ selectable, request, onPressAccept, onPressDelete, user, selected, onPress }) => {
-  handleOnPress = () => {
-    onPress(user);
-  };
-
-  let content = (
-    <>
+const User = ({ user, selectable, selected, request, onPressAccept, onPressDelete }) => {
+  return (
+    <View style={styles.container}>
       <Image style={styles.image} source={{ uri: GetThumbnailURL(user.fb_id) }} />
       <Text style={styles.name}>{user.name}</Text>
       {selectable &&
@@ -53,21 +49,13 @@ const User = ({ selectable, request, onPressAccept, onPressDelete, user, selecte
           />
         </View>
       )}
-    </>
+    </View>
   );
-
-  if (selectable)
-    return (
-      <TouchableOpacity style={styles.container} onPress={handleOnPress}>
-        {content}
-      </TouchableOpacity>
-    );
-  else return <View style={styles.container}>{content}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
     flexDirection: "row",
     overflow: "hidden",
     justifyContent: "center",

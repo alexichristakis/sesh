@@ -5,7 +5,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import User from "../global/User";
 
-import { BORDER_RADIUS } from "../../lib/constants";
+import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 import { TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Notifications = ({ data, acceptFriend, deleteRequest }) => {
@@ -19,11 +19,9 @@ const Notifications = ({ data, acceptFriend, deleteRequest }) => {
 
 	if (data !== undefined && data.length !== 0) {
 		return (
-			<View style={styles.container}>
-				<View style={styles.headerContainer}>
-					<Text style={TextStyles.headerWhite}>REQUESTS</Text>
-				</View>
-				<SuperEllipseMask radius={BORDER_RADIUS}>
+			<>
+				<Text style={TextStyles.headerWhite}>REQUESTS</Text>
+				<SuperEllipseMask style={{ marginTop: CARD_GUTTER }} radius={BORDER_RADIUS}>
 					<FlatList
 						scrollEnabled={false}
 						style={styles.listBackground}
@@ -33,22 +31,15 @@ const Notifications = ({ data, acceptFriend, deleteRequest }) => {
 						keyExtractor={_keyExtractor}
 					/>
 				</SuperEllipseMask>
-			</View>
+			</>
 		);
 	} else return <View />;
 };
 
 const styles = StyleSheet.create({
-	container: { marginTop: 15 },
+	// container: { marginTop: 15 },
 	listBackground: {
 		backgroundColor: "white"
-	},
-	headerContainer: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		paddingHorizontal: 10,
-		marginBottom: 5
 	}
 });
 

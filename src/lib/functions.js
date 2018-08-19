@@ -21,19 +21,37 @@ export const GenerateMarkers = moves => {
 
   let markers = [];
   moves.forEach(move => {
-    const { time, location, id, group, description } = move;
+    const { time, location, id, group_name, description } = move;
     const active = time - currentTime < 0;
     markers.push({
       coords: location,
       key: id,
-      active: active,
-      group: group,
-      description: description
+      active,
+      group_name,
+      description
     });
   });
 
   return markers;
 };
+
+// export const GenerateInitialRegion = (markers, userLocation) => {
+//   console.log("markers: ", markers, " userLocation: ", userLocation);
+//   const markerCoords = markers.map(marker => marker.coords);
+//   const centroid = geolib.getCenter([...markerCoords, userLocation]);
+//   const bounds = geolib.getBounds([...markerCoords, userLocation]);
+//   const { latitude, longitude } = centroid;
+//   const { minLat, maxLat, minLng, maxLng } = bounds;
+//   const region = {
+//     latitude: parseFloat(latitude),
+//     longitude: parseFloat(longitude),
+//     latitudeDelta: maxLat - minLat + 0.0044,
+//     longitudeDelta: maxLng - minLng + 0.0044
+//   };
+
+//   console.log(region);
+//   return region;
+// };
 
 export const GenerateInitialRegion = (markers, userLocation) => {
   const userLatitude = userLocation.latitude;

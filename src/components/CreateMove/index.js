@@ -12,6 +12,7 @@ import DatePicker from "./DatePicker";
 import MapCard from "../global/MapCard";
 import GroupSelectionCard from "./GroupSelectionCard";
 import SendButton from "./SendButton";
+import SelectUsers from "../CreateGroup/SelectUsers";
 
 import { SCREEN_HEIGHT, SB_HEIGHT, IS_X, CARD_GUTTER } from "../../lib/constants";
 import { FillAbsolute, TextStyles } from "../../lib/styles";
@@ -254,6 +255,7 @@ class CreateMove extends Component {
             selectedIndex={this.state.selectedIndex}
             onPressSelect={this.handleOnPressSelect}
           />
+          <SelectUsers friends={this.props.friends} />
         </Animated.ScrollView>
 
         {/* <Animated.View style={[styles.shadowContainer, shadowOpacity]}>

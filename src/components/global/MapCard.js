@@ -27,7 +27,7 @@ const MapCard = props => {
         <Marker
           key={marker.key}
           coordinate={marker.coords}
-          title={marker.group}
+          title={marker.group_name}
           description={marker.description}
         >
           <Icon

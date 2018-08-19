@@ -92,10 +92,13 @@ export const ShowCreateLaterMove = () => {
 
 export const ShowCreateGroup = () => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	Navigation.showModal({
-		component: {
-			name: SCREENS.CREATE_GROUP
-		}
+	// Navigation.showModal({
+	// 	component: {
+	// 		name: SCREENS.CREATE_GROUP
+	// 	}
+	// });
+	TransparentModalTo({
+		name: SCREENS.CREATE_GROUP
 	});
 };
 

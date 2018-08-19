@@ -46,7 +46,7 @@ export function attachListeners() {
 			const state = getState();
 			const { uid } = state.user;
 
-			const groupsQuery = firestore.collection("groups").where("members", "array_includes", uid);
+			const groupsQuery = firestore.collection("groups").where("members", "array-contains", uid);
 			const movesQuery = firestore.collection("moves").where("ended", "==", false);
 
 			groupsQuery.onSnapshot(groupSnapshot => {
@@ -319,7 +319,21 @@ export function leaveGroup(group) {
 	};
 }
 
-export function createGroup({ group, members }) {
+export function createGroup(name, members) {
+	return (dispatch, getState) => {
+		return new Promise(resolve => {
+			const state = getState();
+			const { user } = state;
+
+			api.CreateGroup({ group_name: name, user, members }).then(() => {
+				dispatch(createGroupComplete(name, members));
+				resolve(true);
+			});
+		});
+	};
+}
+
+export function createGroupComplete(name, members) {
 	return {
 		type: ActionTypes.CREATE_GROUP,
 		group,

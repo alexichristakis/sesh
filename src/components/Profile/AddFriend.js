@@ -7,6 +7,7 @@ import { Navigation } from "react-native-navigation";
 import BackButton from "../global/BackButton";
 import SearchResult from "../global/SearchResult";
 
+import { SearchForUser } from "../../api";
 import { SCREEN_WIDTH, SCREEN_HEIGHT, SB_HEIGHT } from "../../lib/constants";
 import { Colors, shadow } from "../../lib/styles";
 
@@ -27,6 +28,8 @@ class AddFriend extends Component {
     //   .on(friends);
     // console.log(res);
     // this.setState({ results: res });
+    const names = searched.split(" ");
+    SearchForUser({ first: names[0], last: names[1] }).then(results => this.setState({ results }));
   };
 
   _renderItem = ({ item }) => <SearchResult data={item} />;
@@ -34,7 +37,7 @@ class AddFriend extends Component {
   _keyExtractor = item => item.uid.toString();
 
   // renderSeparator = () => {
-  // 	return <View style={styles.separator} />;
+  //  return <View style={styles.separator} />;
   // };
   renderSeparator = () => {
     const separatorHeight = 1;

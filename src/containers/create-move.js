@@ -5,10 +5,11 @@ import CreateMove from "../components/CreateMove";
 import { addMove } from "../redux/actions";
 
 const mapStateToProps = state => {
-	const { groups, user } = state;
+	const { groups, friends, user } = state;
 	return {
 		user,
-		groups
+		groups,
+		friends
 	};
 };
 

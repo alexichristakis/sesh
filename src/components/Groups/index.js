@@ -17,7 +17,7 @@ import { VibrancyView } from "react-native-blur";
 import Group from "./Group";
 
 import { ShowGroupFocus, ShowCreateGroup } from "../../lib/navigation";
-import { SCREEN_WIDTH, BORDER_RADIUS } from "../../lib/constants";
+import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
 import { Colors, TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Groups = props => {
@@ -60,11 +60,9 @@ const Groups = props => {
   _keyExtractor = item => item.id.toString();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={TextStyles.headerWhite}>MY GROUPS</Text>
-      </View>
-      <SuperEllipseMask radius={BORDER_RADIUS}>
+    <>
+      <Text style={TextStyles.headerWhite}>MY GROUPS</Text>
+      <SuperEllipseMask style={{ marginTop: CARD_GUTTER }} radius={BORDER_RADIUS}>
         <FlatList
           scrollEnabled={false}
           style={styles.listBackground}
@@ -75,7 +73,7 @@ const Groups = props => {
           keyExtractor={_keyExtractor}
         />
       </SuperEllipseMask>
-    </View>
+    </>
   );
 };
 

@@ -1,9 +1,19 @@
 import { Platform } from "react-native";
-import { AccessToken, LoginManager } from "react-native-fbsdk";
+import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
 import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
 let firestore = firebase.firestore();
 let storage = firebase.storage();
+
+//////////////* GRAPH API *//////////////
+export const FetchFriendsList = ({ fb_id }) => {
+  const friendListRequest = new GraphRequest(`/${fb_id}/friendlists`, null, (error, result) => {
+    if (error) console.log(error);
+    else console.log(result);
+  });
+
+  new GraphRequestManager().addRequest(friendListRequest).start();
+};
 
 //////////////* MISC. *//////////////
 const getFileName = name => {
@@ -49,7 +59,27 @@ export const DownloadPhoto = (name, source_url) => {
 //////////////* STORAGE *//////////////
 
 //////////////* FIRESTORE *//////////////
+
 ///* GET *///
+export const SearchForUser = ({ first, last = "" }) => {
+  return new Promise((resolve, reject) => {
+    console.log(first, last);
+    let query = firestore.collection("indices").where("first", "array-contains", first);
+    //.where("last", "array_contains", last);
+
+    query.get().then(results => {
+      let users = [];
+      results.forEach(doc => {
+        const data = doc.data();
+        const { name, fb_id } = data;
+        users.push({ uid: doc.id, name, fb_id });
+      });
+      console.log(users);
+      resolve(users);
+    });
+  });
+};
+
 // store in the cloud?
 export const GetMoves = fromGroups => {
   // go through each group, download active moves
@@ -99,6 +129,7 @@ export const FetchGroupMembers = ({ group_id }) => {
 export const SendMove = ({ move, user }) => {
   return new Promise(resolve => {
     const { id, group_id } = move;
+    console.log("id for the move: ", id);
     const { name, uid, fb_id } = user;
 
     const moveRef = firestore.collection("moves").doc(id);
@@ -178,7 +209,21 @@ export const AcceptFriend = user => {};
 export const DeleteFriend = user => {};
 
 /* GROUPS */
-export const CreateGroup = (group, users) => {};
+export const CreateGroup = ({ group_name, user, members }) => {
+  return new Promise(resolve => {
+    const { uid, name, fb_id } = user;
+    firestore
+      .collection("groups")
+      .add({
+        name: group_name,
+        created_by: uid,
+        created_at: Date.now(),
+        size: members.length,
+        members
+      })
+      .then(() => resolve(true));
+  });
+};
 
 export const RenameGroup = (group, newName) => {};
 
@@ -205,7 +250,11 @@ export const UserAuthenticated = () => {
 
 export const FacebookLogin = async cancelLogin => {
   try {
-    const result = await LoginManager.logInWithReadPermissions(["public_profile", "email"]);
+    const result = await LoginManager.logInWithReadPermissions([
+      "public_profile",
+      "email",
+      "user_friends"
+    ]);
 
     if (result.isCancelled) {
       cancelLogin();
@@ -250,15 +299,33 @@ export const FacebookLogin = async cancelLogin => {
   }
 };
 
-const NewUser = userObj => {
+export const NewUser = userObj => {
   return new Promise(resolve => {
-    /* set in RNFS? */
+    const { uid, name, fb_id, first_name, last_name } = userObj;
+    const first_name_lower = first_name.toLowerCase();
+    const last_name_lower = last_name.toLowerCase();
 
-    firestore
+    let first = [];
+    for (var i = 1; i <= first_name.length; i++) {
+      first.push(first_name_lower.substring(0, i));
+    }
+
+    let last = [""];
+    for (var i = 1; i <= last_name.length; i++) {
+      last.push(last_name_lower.substring(0, i));
+    }
+
+    let p1 = firestore
       .collection("users")
-      .doc(userObj.uid)
-      .set(userObj)
-      .then(() => resolve(true));
+      .doc(uid)
+      .set(userObj);
+
+    let p2 = firestore
+      .collection("indices")
+      .doc(uid)
+      .set({ name, fb_id, first, last });
+
+    Promise.all([p1, p2]).then(() => resolve(true));
   });
 };
 
@@ -276,6 +343,7 @@ export default {
   JoinMove,
   LeaveMove,
   EndMove,
+  CreateGroup,
   FetchGoingUsers,
   FetchGroupMembers,
   UserAuthenticated

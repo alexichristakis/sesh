@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, Keyboard, View, FlatList, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  Keyboard,
+  View,
+  FlatList,
+  TouchableHighlight,
+  Text,
+  Image
+} from "react-native";
 
 import { Navigation } from "react-native-navigation";
 
@@ -61,12 +70,9 @@ class CreateGroup extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <User
-      selectable
-      selected={this.state.selectedUsers.includes(item.uid)}
-      user={item}
-      onPress={this.handleOnPressUser}
-    />
+    <TouchableHighlight onPress={() => this.handleOnPressUser(item)}>
+      <User selectable selected={this.state.selectedUsers.includes(item.uid)} user={item} />
+    </TouchableHighlight>
   );
 
   _renderSeparator = () => <View style={styles.separator} />;
@@ -100,15 +106,13 @@ class CreateGroup extends Component {
           keyboardShouldPersistTaps="handled"
         >
           <FlatList
-            style={{ paddingTop: 50 }}
+            // style={{ paddingTop: 50 }}
             data={friends}
             keyExtractor={this._keyExtractor}
             ItemSeparatorComponent={this._renderSeparator}
             renderItem={this._renderItem}
           />
         </Animated.ScrollView>
-        <Header onChangeName={this.handleOnNameChange} />
-        <Footer onPressCreateGroup={this.handleOnPressCreateGroup} />
       </View>
     );
   }
