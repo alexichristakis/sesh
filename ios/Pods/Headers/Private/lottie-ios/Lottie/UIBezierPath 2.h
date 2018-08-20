@@ -1,0 +1,1 @@
+../../../../../../node_modules/lottie-ios/lottie-ios/Classes/MacCompatability/UIBezierPath 2.h
