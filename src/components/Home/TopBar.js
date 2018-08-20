@@ -187,13 +187,13 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
               style={[styles.textContainer, indicatorAnimate(0)]}
               onPress={scrollToStart}
             >
-              <AwesomeIcon name={"bolt"} size={40} color={"white"} />
+              <AwesomeIcon name={"bolt"} size={42} color={"white"} />
             </AnimatedTouchable>
             <AnimatedTouchable
               style={[styles.textContainer, indicatorAnimate(1)]}
               onPress={scrollToEnd}
             >
-              <IonIcon name={"ios-time"} size={40} color={"white"} />
+              <IonIcon name={"ios-time"} size={42} color={"white"} />
             </AnimatedTouchable>
           </Animated.View>
           <AnimatedTouchable
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: SB_HEIGHT,
     // paddingHorizontal: 102,
-    paddingHorizontal: SCREEN_WIDTH / 3,
-    justifyContent: "space-between",
+    paddingHorizontal: 100,
+    justifyContent: "space-around",
     flexDirection: "row",
     top: 0
   },
@@ -263,7 +263,9 @@ const styles = StyleSheet.create({
     top: SB_HEIGHT + 5,
     alignSelf: "center",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    padding: IS_X ? 15 : 5,
+    paddingHorizontal: 30
     // backgroundColor: "red"
     // height: 50,
     // width: 50

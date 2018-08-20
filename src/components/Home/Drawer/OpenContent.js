@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     height: ICON_SIZE,
     width: ICON_SIZE,
     borderRadius: ICON_SIZE / 2,
-    borderWidth: 5,
+    borderWidth: 2,
     borderColor: "white",
     backgroundColor: Colors.gray
   },
