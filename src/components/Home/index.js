@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Animated, View, StatusBar, setBarStyle, StyleSheet } from "react-native";
+import { Animated, View, StatusBar, StyleSheet } from "react-native";
 
 import codePush from "react-native-code-push";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-
-// import RNFS from "react-native-fs";
 
 import LoadingCircle from "../global/LoadingCircle";
 import Background from "./Background";
@@ -21,9 +19,9 @@ import { FetchFriendsList, NewUser, SearchForUser, TestSearch } from "../../api"
 import { IS_X } from "../../lib/constants";
 
 /* to replace with data from firestore */
-import GROUPS from "../../mock-data/GROUPS";
-import MOVES from "../../mock-data/MOVES";
-import FRIENDS from "../../mock-data/FRIENDS";
+// import GROUPS from "../../mock-data/GROUPS";
+// import MOVES from "../../mock-data/MOVES";
+// import FRIENDS from "../../mock-data/FRIENDS";
 /*                                     */
 
 const initialVertScroll = IS_X ? -44 : -20;
@@ -113,17 +111,6 @@ class Home extends Component {
     useNativeDriver: true
   });
 
-  // _onHorizScrollEnd = ({ nativeEvent }) => {
-  //   const { x, y } = nativeEvent.contentOffset;
-  //   if (xOffset._value === 0) {
-  //     this.laterOffset = yOffset;
-  //     // do some logic to fix the top bar scroll?
-  //   } else {
-  //     this.activeOffset = yOffset;
-  //     // do some logic to fix the top bar scroll?
-  //   }
-  // };
-
   /* horizontal scroll control */
   _scrollToStart = () => this.hoScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
   _scrollToEnd = () => this.hoScrollView.getNode().scrollToEnd();
@@ -150,7 +137,7 @@ class Home extends Component {
 
   render() {
     const { refreshing, loading } = this.state;
-    const { friends, groups, moves, user } = this.props;
+    const { moves, user } = this.props;
 
     // console.log("render home");
     return (
@@ -174,7 +161,6 @@ class Home extends Component {
           yOffset={yOffset}
           xOffset={xOffset}
           refreshing={refreshing}
-          barOpen={this.state.barOpen}
           scrollToStart={this._scrollToStart}
           scrollToEnd={this._scrollToEnd}
         />

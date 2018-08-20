@@ -1,22 +1,14 @@
-import React, { Component } from "react";
-import { Animated, Easing, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import React from "react";
+import { Animated, StyleSheet, View, TouchableOpacity, Image } from "react-native";
 
 import AwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
 import ControlledLoadingCircle from "../global/ControlledLoadingCircle";
-import LoadingCircle from "../global/LoadingCircle";
 
-import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  SB_HEIGHT,
-  IS_X,
-  REFRESH_OFFSET,
-  TRANSITION_DURATION
-} from "../../lib/constants";
-import { Colors, shadow } from "../../lib/styles";
+import { SCREEN_WIDTH, SB_HEIGHT, IS_X, REFRESH_OFFSET } from "../../lib/constants";
+import { Colors } from "../../lib/styles";
 import { GetPhotoURL } from "../../lib/functions";
 import { ShowProfile } from "../../lib/navigation";
 
@@ -174,8 +166,6 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       <Animated.View style={[styles.shadowContainer, shadowOpacity]}>
         <LinearGradient
           style={styles.flex}
-          // locations={[0.25, 0.5, 0.75, 1]}
-          // colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
           locations={[0.25, 1]}
           colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0)"]}
         />
@@ -184,13 +174,13 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
         <>
           <Animated.View style={[styles.topBar, animatedStyle]}>
             <AnimatedTouchable
-              style={[styles.textContainer, indicatorAnimate(0)]}
+              style={[styles.iconContainer, indicatorAnimate(0)]}
               onPress={scrollToStart}
             >
               <AwesomeIcon name={"bolt"} size={42} color={"white"} />
             </AnimatedTouchable>
             <AnimatedTouchable
-              style={[styles.textContainer, indicatorAnimate(1)]}
+              style={[styles.iconContainer, indicatorAnimate(1)]}
               onPress={scrollToEnd}
             >
               <IonIcon name={"ios-time"} size={42} color={"white"} />
@@ -259,7 +249,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     top: 0
   },
-  textContainer: {
+  iconContainer: {
     top: SB_HEIGHT + 5,
     alignSelf: "center",
     justifyContent: "center",

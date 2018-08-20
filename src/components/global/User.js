@@ -13,16 +13,17 @@ import { BORDER_RADIUS } from "../../lib/constants";
 const ICON_SIZE = 35;
 
 const User = ({ user, selectable, selected, request, onPressAccept, onPressDelete }) => {
+  const indicatorStyle = {
+    ...styles.indicator,
+    backgroundColor: selected ? Colors.primary : "white",
+    borderColor: selected ? Colors.primary : Colors.gray
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: GetThumbnailURL(user.fb_id) }} />
       <Text style={styles.name}>{user.name}</Text>
-      {selectable &&
-        (selected ? (
-          <Checkmark style={{ marginRight: 5 }} size={25} />
-        ) : (
-          <Icon name={"plus"} size={20} color={Colors.primary} />
-        ))}
+      {selectable && <View style={indicatorStyle} />}
       {request && (
         <View
           style={{
@@ -60,7 +61,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
-    padding: 7
+    padding: 7,
+    paddingRight: 12
   },
   image: {
     // position: "absolute",
@@ -91,6 +93,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     borderWidth: 1
     // marginHorizontal: 2.5
+  },
+  indicator: {
+    width: 22,
+    height: 22,
+    borderRadius: 5,
+    borderWidth: 0.5
   }
 });
 

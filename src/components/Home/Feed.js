@@ -5,10 +5,10 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 
 import Move from "../global/Move";
 import TouchableScale from "../global/TouchableScale";
-import Transition from "../global/Transition";
+// import Transition from "../global/Transition";
 
 import { TextStyles } from "../../lib/styles";
-import { ShowCreateActiveMove, ShowCreateLaterMove, ShowMoveFocus } from "../../lib/navigation";
+import { ShowCreateActiveMove, ShowCreateLaterMove } from "../../lib/navigation";
 import { IS_X, BORDER_RADIUS, CARD_GUTTER, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../lib/constants";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

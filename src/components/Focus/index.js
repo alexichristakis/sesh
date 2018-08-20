@@ -11,9 +11,7 @@ import { BlurView } from "react-native-blur";
 import TouchableScale from "../global/TouchableScale";
 import Move from "../global/Move";
 import Group from "../Groups/Group";
-import ActiveFocus from "./ActiveFocus";
 import MoveFocus from "./MoveFocus";
-import LaterFocus from "./LaterFocus";
 import GroupFocus from "./GroupFocus";
 
 import {

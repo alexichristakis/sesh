@@ -1,19 +1,8 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Animated,
-  Keyboard,
-  View,
-  TouchableHighlight,
-  FlatList,
-  Text,
-  Image
-} from "react-native";
+import { StyleSheet, Animated, Keyboard, View, Text } from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import Interactable from "react-native-interactable";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import SuperEllipseMask from "react-native-super-ellipse-mask";
 import { BlurView } from "react-native-blur";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -21,16 +10,8 @@ import CreateGroupButton from "./CreateGroupButton";
 import GroupNameCard from "./GroupNameCard";
 import SelectUsers from "./SelectUsers";
 
-import {
-  SB_HEIGHT,
-  IS_X,
-  BORDER_RADIUS,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  CARD_GUTTER
-} from "../../lib/constants";
-import { Colors, FillAbsolute, TextStyles, SeparatorStyles } from "../../lib/styles";
-import { ShowLoadingOverlay, HideLoadingOverlay } from "../../lib/navigation";
+import { SB_HEIGHT, IS_X, SCREEN_HEIGHT, CARD_GUTTER } from "../../lib/constants";
+import { Colors, FillAbsolute, TextStyles } from "../../lib/styles";
 
 const yOffset = new Animated.Value(0);
 

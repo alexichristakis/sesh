@@ -40,7 +40,6 @@ class AddFriend extends Component {
   //  return <View style={styles.separator} />;
   // };
   renderSeparator = () => {
-    const separatorHeight = 1;
     return (
       <View style={styles.separatorContainer}>
         <View style={styles.separator} />

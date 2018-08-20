@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
-import AddFriend from "../components/Profile/AddFriend";
+// import AddFriend from "../components/Profile/AddFriend";
+import AddFriend from "../components/AddFriend";
 
 const mapStateToProps = state => {
 	return {

@@ -104,10 +104,13 @@ export const ShowCreateGroup = () => {
 
 export const ShowAddFriend = () => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	Navigation.showModal({
-		component: {
-			name: SCREENS.ADD_FRIEND
-		}
+	// Navigation.showModal({
+	// 	component: {
+	// 		name: SCREENS.ADD_FRIEND
+	// 	}
+	// });
+	TransparentModalTo({
+		name: SCREENS.ADD_FRIEND
 	});
 };
 

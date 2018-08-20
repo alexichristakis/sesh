@@ -1,10 +1,10 @@
 import { Provider } from "react-redux";
 import { Navigation } from "react-native-navigation";
 import { persistStore } from "redux-persist";
-import { registerScreens, SCREENS } from "./screens";
 
-import { UserAuthenticated } from "./api";
 import store from "./redux/store";
+import { registerScreens, SCREENS } from "./screens";
+import { UserAuthenticated } from "./api";
 
 persistStore(store, null, () => {
   registerScreens(Provider, store);
