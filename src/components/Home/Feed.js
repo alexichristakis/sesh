@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
 	list: {
 		width: SCREEN_WIDTH,
 		height: SCREEN_HEIGHT,
-		paddingTop: IS_X ? 90 : 56,
+		paddingTop: IS_X ? 90 : 76,
 		backgroundColor: "transparent"
 	},
 	content: {

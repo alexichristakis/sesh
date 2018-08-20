@@ -23,6 +23,8 @@ import { ShowProfile } from "../../lib/navigation";
 const BAR_HEIGHT = 40;
 const ICON_DIMENSION = 50;
 
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
 const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing }) => {
   const initialOffset = IS_X ? -44 : -20;
   const animatedProgress = new Animated.Value(0);
@@ -83,7 +85,7 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       {
         translateY: yOffset.interpolate({
           inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
-          outputRange: [40, 0, -ICON_DIMENSION / 3],
+          outputRange: [40, 0, IS_X ? -ICON_DIMENSION / 3 : -ICON_DIMENSION / 6],
           extrapolateRight: "clamp"
         })
       },
@@ -141,7 +143,7 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       {
         translateY: yOffset.interpolate({
           inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
-          outputRange: [0, -30, -50],
+          outputRange: [35, 0, IS_X ? -10 : -5],
           extrapolateRight: "clamp"
         })
       }
@@ -181,30 +183,32 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       {!refreshing && (
         <>
           <Animated.View style={[styles.topBar, animatedStyle]}>
-            <Animated.View style={[styles.textContainer, indicatorAnimate(0)]}>
-              <TouchableOpacity onPress={scrollToStart}>
-                <AwesomeIcon name={"bolt"} size={40} color={"white"} />
-              </TouchableOpacity>
-            </Animated.View>
-            <Animated.View style={[styles.textContainer, indicatorAnimate(1)]}>
-              <TouchableOpacity onPress={scrollToEnd}>
-                <IonIcon name={"ios-time"} size={40} color={"white"} />
-              </TouchableOpacity>
-            </Animated.View>
+            <AnimatedTouchable
+              style={[styles.textContainer, indicatorAnimate(0)]}
+              onPress={scrollToStart}
+            >
+              <AwesomeIcon name={"bolt"} size={40} color={"white"} />
+            </AnimatedTouchable>
+            <AnimatedTouchable
+              style={[styles.textContainer, indicatorAnimate(1)]}
+              onPress={scrollToEnd}
+            >
+              <IonIcon name={"ios-time"} size={40} color={"white"} />
+            </AnimatedTouchable>
           </Animated.View>
-          <Animated.View style={animatedProfilePicture}>
-            <TouchableOpacity style={styles.profileButton} onPress={ShowProfile}>
-              <Animated.Image
-                source={{ uri: GetPhotoURL(user.fb_id, ICON_DIMENSION, ICON_DIMENSION) }}
-                style={[animatedScale, styles.photo]}
-              />
-            </TouchableOpacity>
-          </Animated.View>
+          <AnimatedTouchable
+            style={[animatedProfilePicture, styles.profileButton]}
+            onPress={ShowProfile}
+          >
+            <Animated.Image
+              source={{ uri: GetPhotoURL(user.fb_id, ICON_DIMENSION, ICON_DIMENSION) }}
+              style={[animatedScale, styles.photo]}
+            />
+          </AnimatedTouchable>
         </>
       )}
-
       <Animated.View style={[styles.loading, animatedLoading]}>
-        <ControlledLoadingCircle progress={progress} size={18} />
+        <ControlledLoadingCircle progress={progress} size={20} />
       </Animated.View>
     </View>
   );
@@ -222,7 +226,7 @@ const styles = StyleSheet.create({
   profileButton: {
     position: "absolute",
     right: 10,
-    top: 0
+    top: SB_HEIGHT
   },
   photo: {
     height: ICON_DIMENSION,
@@ -237,7 +241,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 90
+    height: IS_X ? 90 : 70
   },
   statusBar: {
     position: "absolute",
@@ -266,7 +270,7 @@ const styles = StyleSheet.create({
   },
   loading: {
     position: "absolute",
-    top: IS_X ? SB_HEIGHT - 10 : SB_HEIGHT + 10,
+    top: IS_X ? SB_HEIGHT + 5 : SB_HEIGHT + 10,
     alignSelf: "center"
   },
   refreshing: {
