@@ -16,7 +16,7 @@
     "react-native-blur": "^3.2.2",
     "react-native-code-push": "5.3.5",
     "react-native-fbsdk": "^0.7.0",
-    "react-native-firebase": "5.0.0-rc0",
+    "react-native-firebase": "^5.0.0-rc1",
     "react-native-fs": "^2.11.15",
     "react-native-haptic-feedback": "^1.2.0",
     "react-native-interactable": "^0.1.10",
