@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   },
   loading: {
     position: "absolute",
-    top: IS_X ? SB_HEIGHT + 5 : SB_HEIGHT + 10,
+    top: IS_X ? SB_HEIGHT + 5 : SB_HEIGHT + 15,
     alignSelf: "center"
   },
   refreshing: {
