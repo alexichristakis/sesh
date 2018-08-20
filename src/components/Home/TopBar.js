@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: SB_HEIGHT,
     // paddingHorizontal: 102,
-    paddingHorizontal: 100,
+    paddingHorizontal: 90,
     justifyContent: "space-around",
     flexDirection: "row",
     top: 0
