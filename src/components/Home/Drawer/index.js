@@ -51,7 +51,6 @@ class Drawer extends Component {
 
   render() {
     const { user, moves, loading } = this.props;
-    console.log("open content moves: ", moves);
 
     let blurOpacity = {
       opacity: this.deltaY.interpolate({

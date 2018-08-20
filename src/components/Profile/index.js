@@ -88,7 +88,7 @@ class Profile extends Component {
   render() {
     const { user, groups } = this.props;
     // console.log("groups: ", groups);
-    console.log("update profile: ", this.props);
+    // console.log("update profile: ", this.props);
     const { notifications } = this.state;
 
     return (

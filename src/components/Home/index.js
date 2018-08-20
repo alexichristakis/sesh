@@ -151,9 +151,8 @@ class Home extends Component {
   render() {
     const { refreshing, loading } = this.state;
     const { friends, groups, moves, user } = this.props;
-    console.log("moves in home: ", moves);
 
-    console.log("render home");
+    // console.log("render home");
     return (
       <Background loading={loading || refreshing} xOffset={xOffset}>
         <StatusBar barStyle="light-content" />

@@ -227,7 +227,7 @@ export const CreateGroup = ({ group_name, user, members }) => {
 
         let batch = firestore.batch();
         members.forEach(member => {
-          console.log("member: ", member);
+          // console.log("member: ", member);
           batch.set(ref.doc(member.uid), {
             uid: member.uid,
             fb_id: member.fb_id,
@@ -252,7 +252,7 @@ export const UserAuthenticated = () => {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log("user authenticated: ", user);
+        // console.log("user authenticated: ", user);
         const { uid } = user;
         const ref = firestore.collection("users").doc(uid);
         ref.get().then(doc => {

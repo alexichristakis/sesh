@@ -53,7 +53,7 @@ export function attachListeners() {
 				let groups = [];
 				groupSnapshot.docChanges.forEach(changedGroup => {
 					const { type: groupChangeType, doc: group } = changedGroup;
-					console.log("group: ", group);
+					// console.log("group: ", group);
 					let group_id = group.id;
 					if (groupChangeType === "added") {
 						movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
@@ -62,13 +62,13 @@ export function attachListeners() {
 								const { type: moveChangeType, doc: move } = changedMove;
 								let move_id = move.id;
 								if (moveChangeType === "added") {
-									console.log("pushing move: ", move_id, move.data());
+									// console.log("pushing move: ", move_id, move.data());
 									moves.push({ id: move_id, ...move.data() });
 								}
 							});
 							dispatch(setMoves(moves));
 						});
-						console.log("pushing group: ", group_id, group.data());
+						// console.log("pushing group: ", group_id, group.data());
 						groups.push({ id: group_id, ...group.data() });
 					} else if (groupChangeType === "removed") {
 						// remove
@@ -111,7 +111,7 @@ export function finishedUpdating() {
 }
 
 export function postError(error) {
-	console.log("theres been an error: ", error);
+	// console.log("theres been an error: ", error);
 	return {
 		type: ActionTypes.POST_ERROR
 	};
@@ -265,11 +265,11 @@ export function setGoingUsers(id, users) {
 export function fetchGroupMembers(id) {
 	return (dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			console.log("fetching group members: ", id);
+			// console.log("fetching group members: ", id);
 			api
 				.FetchGroupMembers({ group_id: id })
 				.then(users => {
-					console.log("users in fetch: ", users);
+					// console.log("users in fetch: ", users);
 					dispatch(setGroupMembers(id, users));
 					resolve(true);
 				})
@@ -334,7 +334,7 @@ export function createGroup(name, selectedUIDs) {
 
 			const { uid, name, fb_id } = user;
 			members.push({ uid, name, fb_id });
-			console.log("members: ", members);
+			// console.log("members: ", members);
 
 			api.CreateGroup({ group_name: name, user, members }).then(() => {
 				dispatch(createGroupComplete(name, members));
