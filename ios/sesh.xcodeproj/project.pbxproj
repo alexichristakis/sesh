@@ -406,6 +406,7 @@
 		73C0E2B979834BF796DDA13F /* RNReactNativeHapticFeedback.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNReactNativeHapticFeedback.xcodeproj; path = "../node_modules/react-native-haptic-feedback/ios/RNReactNativeHapticFeedback.xcodeproj"; sourceTree = "<group>"; };
 		7539DEC2565A455D9D9C46D7 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7A20BCC7212B737400CBBC7A /* sesh.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = sesh.entitlements; path = sesh/sesh.entitlements; sourceTree = "<group>"; };
 		7B4C63A942AE072908E233B7 /* Pods-sesh.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sesh.release.xcconfig"; path = "Pods/Target Support Files/Pods-sesh/Pods-sesh.release.xcconfig"; sourceTree = "<group>"; };
 		7EDD921820C76A900091E94F /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		7EFBA594211B91EC00262C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -573,6 +574,7 @@
 		13B07FAE1A68108700A75B9A /* sesh */ = {
 			isa = PBXGroup;
 			children = (
+				7A20BCC7212B737400CBBC7A /* sesh.entitlements */,
 				7EFBA594211B91EC00262C75 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -833,6 +835,14 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 78CR4UUJ4J;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1453,6 +1463,7 @@
 			baseConfigurationReference = D059CEAE5723D54B9E94070B /* Pods-sesh.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = sesh/sesh.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 78CR4UUJ4J;
@@ -1483,6 +1494,7 @@
 			baseConfigurationReference = 7B4C63A942AE072908E233B7 /* Pods-sesh.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = sesh/sesh.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 78CR4UUJ4J;
 				HEADER_SEARCH_PATHS = (
