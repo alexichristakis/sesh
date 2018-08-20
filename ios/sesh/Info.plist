@@ -59,8 +59,10 @@
 	</dict>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Explain the reasons for accessing...</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Sync contacts to facilitate the finding of friends</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Explain the reasons for accessing...</string>
+	<string>By sharing your location while using sesh you get realtime distance calculations and can let your friends know where you are when creating a move.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

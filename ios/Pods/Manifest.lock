@@ -15,7 +15,7 @@ PODS:
   - BoringSSL/Interface (10.0.6)
   - BVLinearGradient (2.4.0):
     - React
-  - CodePush (5.3.5):
+  - CodePush (5.4.1):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -136,7 +136,7 @@ PODS:
     - Base64 (~> 1.1.2)
   - leveldb-library (1.20)
   - lottie-ios (2.5.0)
-  - lottie-react-native (2.5.0):
+  - lottie-react-native (2.5.6):
     - lottie-ios
     - React
   - nanopb (0.3.8):
@@ -147,6 +147,8 @@ PODS:
   - Protobuf (3.6.1)
   - React (0.56.0):
     - React/Core (= 0.56.0)
+  - react-native-contacts (2.2.2):
+    - React
   - react-native-maps (0.21.0):
     - React
   - react-native-super-ellipse-mask (1.0.7):
@@ -218,6 +220,7 @@ DEPENDENCIES:
   - Interactable (from `../node_modules/react-native-interactable`)
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
+  - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-super-ellipse-mask (from `../node_modules/react-native-super-ellipse-mask`)
   - React/Core (from `../node_modules/react-native`)
@@ -286,6 +289,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/lottie-react-native"
   React:
     :path: "../node_modules/react-native"
+  react-native-contacts:
+    :path: "../node_modules/react-native-contacts"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-super-ellipse-mask:
@@ -332,12 +337,13 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  react-native-contacts: 1a8913219e54d1fa20e817b99d9b42b9ec98558d
   react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
   react-native-super-ellipse-mask: cedf7655779e816aee36c2d9ab8d238cd419797e
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   SSZipArchive: 51a800ebb77f95a8329b6ced1faaff394b47f509
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: c9930bb72960cfd20cb22cd6fd7503a20f166a03
+PODFILE CHECKSUM: 05720b1d986899a60b55fa4544e0c4736cdc46a7
 
 COCOAPODS: 1.5.3

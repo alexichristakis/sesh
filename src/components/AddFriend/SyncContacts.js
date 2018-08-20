@@ -6,12 +6,17 @@ import Icon from "react-native-vector-icons/Entypo";
 
 import TouchableScale from "../global/TouchableScale";
 
+import { SyncContacts } from "../../api";
 import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 import { Colors, TextStyles } from "../../lib/styles";
 
 const GroupNameCard = () => {
+  sync = () => {
+    SyncContacts().then(res => console.log(res));
+  };
+
   return (
-    <TouchableScale style={{ marginTop: CARD_GUTTER }} onPress={() => console.log("yo")}>
+    <TouchableScale style={{ marginTop: CARD_GUTTER }} onPress={sync}>
       <SuperEllipseMask style={styles.card} radius={BORDER_RADIUS}>
         <Text style={TextStyles.header}>contacts</Text>
       </SuperEllipseMask>

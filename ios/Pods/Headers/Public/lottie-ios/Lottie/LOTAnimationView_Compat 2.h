@@ -1,1 +1,0 @@
-../../../../../../node_modules/lottie-ios/lottie-ios/Classes/PublicHeaders/LOTAnimationView_Compat 2.h

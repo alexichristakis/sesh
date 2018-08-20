@@ -1,7 +1,9 @@
 import { Platform } from "react-native";
 import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
+import Contacts from "react-native-contacts";
 import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
+
 let firestore = firebase.firestore();
 let storage = firebase.storage();
 
@@ -45,6 +47,33 @@ export const DownloadPhoto = (name, source_url) => {
       .catch(error => {
         resolve({ uri: source_url });
       });
+  });
+};
+
+export const SyncContacts = () => {
+  return new Promise((resolve, reject) => {
+    //     Contacts.checkPermission((err, permission) => {
+    //   if (err) throw err;
+
+    //   // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+    //   if (permission === 'undefined') {
+    //     Contacts.requestPermission((err, permission) => {
+    //       // ...
+    //     })
+    //   }
+    //   if (permission === 'authorized') {
+    //     // yay!
+    //   }
+    //   if (permission === 'denied') {
+    //     // x.x
+    //   }
+    // })
+    Contacts.getAll((err, contacts) => {
+      if (err) throw reject(err);
+
+      // contacts returned
+      resolve(contacts);
+    });
   });
 };
 

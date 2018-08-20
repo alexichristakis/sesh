@@ -63,6 +63,9 @@ target 'sesh' do
   # RNFS
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+  # contacts
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+
 end
 
 post_install do |installer|

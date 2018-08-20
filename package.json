@@ -15,6 +15,7 @@
     "react-native": "0.56.0",
     "react-native-blur": "^3.2.2",
     "react-native-code-push": "5.4.1",
+    "react-native-contacts": "^2.2.2",
     "react-native-fbsdk": "^0.7.0",
     "react-native-firebase": "^5.0.0-rc1",
     "react-native-fs": "^2.11.15",

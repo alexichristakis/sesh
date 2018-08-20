@@ -138,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-contacts')
     compile project(':react-native-code-push')
     compile project(':react-native-fbsdk')
     compile(project(':react-native-firebase')) {
