@@ -16,6 +16,7 @@ import firebase from "react-native-firebase";
 // import CountryPicker from "react-native-country-picker-modal";
 import TouchableScale from "../global/TouchableScale";
 
+import { SetUserPhone } from "../../api";
 import { Colors } from "../../lib/styles";
 
 const MAX_LENGTH_CODE = 6;
@@ -41,11 +42,16 @@ class PhoneAuth extends Component {
 	}
 
 	_getCode = () => {
+		const { phoneNumber } = this.state;
 		this.setState({ spinner: true }, () => {
 			firebase
 				.auth()
-				.signInWithPhoneNumber(`+1${this.state.phoneNumber}`)
-				.then(confirmResult => this.setState({ confirmResult, enterCode: true }))
+				.signInWithPhoneNumber(`+1${phoneNumber}`)
+				.then(confirmResult => {
+					this.setState({ confirmResult, enterCode: true }, () => {
+						SetUserPhone(phoneNumber, this.props.user.uid);
+					});
+				})
 				.catch(error => console.log(error));
 		});
 	};

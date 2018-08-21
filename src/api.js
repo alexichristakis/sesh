@@ -2,6 +2,7 @@ import { Platform } from "react-native";
 import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
 import { Navigation } from "react-native-navigation";
 import Contacts from "react-native-contacts";
+import { formatNumber, parseNumber } from "libphonenumber-js";
 import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
 
@@ -9,12 +10,14 @@ let firestore = firebase.firestore();
 
 //////////////* GRAPH API *//////////////
 export const FetchFriendsList = ({ fb_id }) => {
-  const friendListRequest = new GraphRequest(`/${fb_id}/friendlists`, null, (error, result) => {
-    if (error) console.log(error);
-    else console.log(result);
-  });
+  return new Promise((resolve, reject) => {
+    const friendListRequest = new GraphRequest(`/${fb_id}/friendlists`, null, (error, result) => {
+      if (error) reject(error);
+      else resolve(result);
+    });
 
-  new GraphRequestManager().addRequest(friendListRequest).start();
+    new GraphRequestManager().addRequest(friendListRequest).start();
+  });
 };
 
 //////////////* MISC. *//////////////
@@ -51,31 +54,65 @@ export const DownloadPhoto = (name, source_url) => {
 };
 
 export const SyncContacts = () => {
-  return new Promise((resolve, reject) => {
-    //     Contacts.checkPermission((err, permission) => {
-    //   if (err) throw err;
+  return new Promise(async (resolve, reject) => {
+    firestore
+      .runTransaction(contactTransaction)
+      .then(results => resolve(results))
+      .catch(error => console.error(error));
+  });
+};
 
-    //   // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-    //   if (permission === 'undefined') {
-    //     Contacts.requestPermission((err, permission) => {
-    //       // ...
-    //     })
-    //   }
-    //   if (permission === 'authorized') {
-    //     // yay!
-    //   }
-    //   if (permission === 'denied') {
-    //     // x.x
-    //   }
-    // })
+const contactTransaction = async transaction => {
+  let numbers = await getContactNumbers();
+
+  let ref = firestore.collection("users");
+  let promises = [];
+  numbers.forEach(number => {
+    console.log(number);
+    promises.push(transaction.get(ref.where("phone_number", "==", number)));
+  });
+
+  let matches = [];
+  Promise.all(promises).then(results => {
+    results.forEach(doc => {
+      const { uid, fb_id, name } = doc.data();
+      matches.push({ uid, fb_id, name });
+    });
+    console.log(matches);
+    return matches;
+  });
+};
+
+const getContactNumbers = () => {
+  return new Promise((resolve, reject) => {
     Contacts.getAll((err, contacts) => {
       if (err) throw reject(err);
 
-      // contacts returned
-      resolve(contacts);
+      let numbers = [];
+      contacts.forEach(({ phoneNumbers }) => {
+        let number = parseNumber(phoneNumbers[0].number, "US").phone;
+        numbers.push(number);
+      });
+      resolve(numbers);
     });
   });
 };
+
+//     Contacts.checkPermission((err, permission) => {
+//   if (err) throw err;
+//   // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+//   if (permission === 'undefined') {
+//     Contacts.requestPermission((err, permission) => {
+//       // ...
+//     })
+//   }
+//   if (permission === 'authorized') {
+//     // yay!
+//   }
+//   if (permission === 'denied') {
+//     // x.x
+//   }
+// })
 
 //////////////* SETUP *//////////////
 // export const SetupRNFS = () => {
@@ -277,23 +314,33 @@ export const RenameGroup = (group, newName) => {};
 export const LeaveGroup = group => {};
 
 //////////////* AUTH *//////////////
-export const AuthWithPhone = phoneNumber => {
-  firebase
-    .auth()
-    .signInWithPhoneNumber(phoneNumber)
-    .then(confirmResult => {})
-    .catch(error => error);
-};
+// export const AuthWithPhone = phoneNumber => {
+//   firebase
+//     .auth()
+//     .signInWithPhoneNumber(phoneNumber)
+//     .then(confirmResult => {})
+//     .catch(error => error);
+// };
 
-export const VerifyPhone = code => {
-  confirmResult
-    .confirm(verificationCode)
-    .then(user => {
-      // User is logged in
-    })
-    .catch(error => {
-      // Error with verification code
-    });
+// export const VerifyPhone = code => {
+//   confirmResult
+//     .confirm(verificationCode)
+//     .then(user => {
+//       // User is logged in
+//     })
+//     .catch(error => {
+//       // Error with verification code
+//     });
+// };
+
+export const SetUserPhone = (phone, uid) => {
+  return new Promise(resolve => {
+    firestore
+      .collection("users")
+      .doc(uid)
+      .set({ phone_number: phone }, { merge: true })
+      .then(() => resolve(true));
+  });
 };
 
 export const UserAuthenticated = () => {
