@@ -394,6 +394,27 @@ export function acceptFriendComplete(uid) {
 	};
 }
 
+export function deleteRequest(uid) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			const { user } = getState();
+
+			ShowLoadingOverlay();
+			api.DeleteRequest({ user, uid }).then(() => {
+				HideLoadingOverlay();
+				dispatch(deleteRequestComplete(uid));
+			});
+		});
+	};
+}
+
+export function deleteRequestComplete(sender_uid) {
+	return {
+		type: ActionTypes.DELETE_FRIEND_REQUEST,
+		sender_uid
+	};
+}
+
 /* groups */
 export function setGroups(groups) {
 	return {

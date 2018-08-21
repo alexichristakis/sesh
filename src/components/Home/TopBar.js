@@ -168,7 +168,7 @@ const TopBar = ({ yOffset, xOffset, user, photo, scrollToStart, scrollToEnd, ref
         <LinearGradient
           style={styles.flex}
           locations={[0.25, 1]}
-          colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0)"]}
+          colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0)"]}
         />
       </Animated.View>
       {!refreshing && (

@@ -314,6 +314,32 @@ export const AcceptFriend = ({ user, uid }) => {
   });
 };
 
+export const DeleteRequest = ({ user, uid }) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .runTransaction(async transaction => {
+        const users = firestore.collection("users");
+        const receivedRef = users
+          .doc(user.uid)
+          .collection("received_friend_requests")
+          .doc(uid);
+        const sentRef = users
+          .doc(uid)
+          .collection("sent_friend_requests")
+          .doc(user.uid);
+
+        let p1 = transaction.delete(receivedRef);
+        let p2 = transaction.delete(sentRef);
+
+        Promise.all([p1, p2]).then(() => {
+          return true;
+        });
+      })
+      .then(() => resolve(true))
+      .catch(error => console.error(error));
+  });
+};
+
 export const DeleteFriend = uid => {};
 
 /* GROUPS */
@@ -515,6 +541,7 @@ export const FacebookLogout = async () => {
 export default {
   UpdateUser,
   AcceptFriend,
+  DeleteRequest,
   SendMove,
   JoinMove,
   LeaveMove,
