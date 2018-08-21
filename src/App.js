@@ -10,7 +10,7 @@ persistStore(store, null, () => {
   registerScreens(Provider, store);
   Navigation.events().registerAppLaunchedListener(async () => {
     Navigation.setDefaultOptions({
-      // popGesture: false,
+      popGesture: false,
       topBar: {
         visible: false
       }

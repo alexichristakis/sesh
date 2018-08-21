@@ -7,6 +7,7 @@ import { Navigation } from "react-native-navigation";
 
 import { FacebookLogin } from "../../api";
 import { Colors } from "../../lib/styles";
+import { SCREENS } from "../../screens";
 
 import Button from "../global/Button";
 import Waves from "../global/Waves";
@@ -32,7 +33,7 @@ export default class App extends Component<Props> {
         this.setState({ loading: false }, () =>
           Navigation.push(this.props.componentId, {
             component: {
-              name: "sesh.Home",
+              name: SCREENS.PHONE_AUTH,
               passProps: {
                 user
               }

@@ -14,10 +14,12 @@ import GroupSettingsContainer from "./containers/group-settings";
 /* REGULAR SCREENS */
 import Register from "./components/Authentication/Register";
 import SignIn from "./components/Authentication/SignIn";
+import PhoneAuth from "./components/Authentication/PhoneAuth";
 import LoadingOverlay from "./components/global/LoadingOverlay";
 import ProfileSettings from "./components/Profile/Settings";
 
 const REGISTER = "register";
+const PHONE_AUTH = "phone_auth"
 const SIGN_IN = "sign_in";
 const HOME = "home";
 const FOCUS = "focus";
@@ -45,6 +47,7 @@ export function registerScreens(Provider, store) {
 
   /* register components */
   Navigation.registerComponent(REGISTER, () => Register);
+  Navigation.registerComponent(PHONE_AUTH, () => PhoneAuth);
   Navigation.registerComponent(SIGN_IN, () => SignIn);
   Navigation.registerComponent(LOADING, () => LoadingOverlay);
   Navigation.registerComponent(SETTINGS, () => ProfileSettings);
@@ -52,6 +55,7 @@ export function registerScreens(Provider, store) {
 
 export const SCREENS = {
   REGISTER,
+  PHONE_AUTH,
   SIGN_IN,
   HOME,
   FOCUS,

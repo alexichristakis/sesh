@@ -10,7 +10,7 @@ import { BlurView, VibrancyView } from "react-native-blur";
 import ColorButton from "../global/ColorButton";
 
 import { FacebookLogout, Test } from "../../api";
-
+import { SignOutPop } from "../../lib/navigation";
 import { Colors, FillAbsolute } from "../../lib/styles";
 import { SB_HEIGHT, SCREEN_HEIGHT, BORDER_RADIUS } from "../../lib/constants";
 
@@ -40,11 +40,12 @@ class Settings extends Component {
   };
 
   handleOnPressSignOut = () => {
-    FacebookLogout().then(() => {
-      Navigation.pop("Component3");
-      Navigation.dismissModal("Component6");
-      Navigation.dismissModal("Component9");
-    });
+    FacebookLogout();
+
+    // .then(() => {
+    //   Navigation.dismissAllModals();
+    //   setTimeout(() => Navigation.popToRoot("Component3"), 500);
+    // });
   };
 
   handleOnPressReportIssue = () => {

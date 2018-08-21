@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
+import { Navigation } from "react-native-navigation";
 import Contacts from "react-native-contacts";
 import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
@@ -276,6 +277,25 @@ export const RenameGroup = (group, newName) => {};
 export const LeaveGroup = group => {};
 
 //////////////* AUTH *//////////////
+export const AuthWithPhone = phoneNumber => {
+  firebase
+    .auth()
+    .signInWithPhoneNumber(phoneNumber)
+    .then(confirmResult => {})
+    .catch(error => error);
+};
+
+export const VerifyPhone = code => {
+  confirmResult
+    .confirm(verificationCode)
+    .then(user => {
+      // User is logged in
+    })
+    .catch(error => {
+      // Error with verification code
+    });
+};
+
 export const UserAuthenticated = () => {
   return new Promise(resolve => {
     firebase.auth().onAuthStateChanged(user => {
@@ -390,7 +410,11 @@ export const FacebookLogout = async () => {
     firebase
       .auth()
       .signOut()
-      .then(() => resolve(true));
+      .then(() => {
+        Navigation.dismissAllModals();
+        setTimeout(() => Navigation.popToRoot("Component3"), 500);
+        resolve(true);
+      });
   });
 };
 
