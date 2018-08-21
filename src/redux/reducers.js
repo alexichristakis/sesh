@@ -139,7 +139,14 @@ function moves(state = [], action, rootState) {
 }
 
 //////* GROUPS *//////
-function mergeGroups(prevState, newState) {}
+function mergeGroups(prevState, newState) {
+	console.log(prevState, newState);
+	let merged = [...prevState];
+	newState.forEach(group => {
+		if (prevState.find(e => e.id === group.id) === undefined) merged.push({ ...group });
+	});
+	return merged;
+}
 
 function groups(state = [], action, rootState) {
 	const { user } = rootState;
@@ -148,10 +155,10 @@ function groups(state = [], action, rootState) {
 
 	switch (action.type) {
 		case ActionTypes.SET_GROUPS:
-			return action.groups;
-		// return [...state, ...action.groups];
-		// return arrayUnique(state.concat(action.groups));
-		// return mergeGroups(state, action.groups);
+			// return action.groups;
+			// return [...state, ...action.groups];
+			// return arrayUnique(state.concat(action.groups));
+			return mergeGroups(state, action.groups);
 		case ActionTypes.SET_GROUP_MEMBERS:
 			index = _.findIndex(state, o => o.id === action.id);
 			updatedGroup = { ...state[index], members: action.users };
@@ -165,6 +172,13 @@ function groups(state = [], action, rootState) {
 				if (group.id === action.group.id) index = i;
 			});
 			return [...state.slice(0, index), ...state.slice(index + 1)];
+		case ActionTypes.CHANGE_GROUP_NAME:
+			index = _.findIndex(state, o => o.id === action.id);
+			return [
+				...state.slice(0, index),
+				{ ...state[index], name: action.name },
+				...state.slice(index + 1)
+			];
 		case ActionTypes.ADD_FRIEND_TO_GROUP:
 			return [...state];
 		case ActionTypes.CHANGE_GROUP_NAME:
@@ -184,8 +198,10 @@ function friends(state = initialFriendsState, action, rootState) {
 	switch (action.type) {
 		case ActionTypes.SET_FRIENDS:
 			return { ...state, friends: action.friends };
+		// return { friends: [], requests: [] };
 		case ActionTypes.SET_REQUESTS:
 			return { ...state, requests: action.requests };
+		// return { friends: [], requests: [] };
 		case ActionTypes.ACCEPT_FRIEND_REQUEST:
 			const newFriend = state.requests.find(e => e.uid === action.uid);
 			const index = _.findIndex(state.requests, e => e.uid === action.id);

@@ -7,7 +7,7 @@ import { createGroup } from "../redux/actions";
 
 const mapStateToProps = state => {
 	return {
-		...state
+		friends: state.friends.friends
 	};
 };
 

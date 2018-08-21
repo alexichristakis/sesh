@@ -128,12 +128,13 @@ export const ShowGroupFocus = ({ props }) => {
 
 export const ShowEditGroupName = ({ group }) => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	Navigation.showModal({
-		component: {
-			name: SCREENS.EDIT_GROUP_NAME,
-			passProps: { group }
-		}
-	});
+	// Navigation.showModal({
+	// 	component: {
+	// 		name: SCREENS.EDIT_GROUP_NAME,
+	// 		passProps: { group }
+	// 	}
+	// });
+	TransparentModalTo({ name: SCREENS.EDIT_GROUP_NAME, props: { group } });
 };
 
 export const ShowGroupSettings = ({ group }) => {

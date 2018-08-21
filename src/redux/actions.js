@@ -105,7 +105,7 @@ export function attachListeners() {
 			requestsRef.onSnapshot(requestsSnapshot => {
 				let requests = [];
 				requestsSnapshot.docChanges.forEach(changedRequest => {
-					const { type: requestChangeType, doc: request } = changedrequest;
+					const { type: requestChangeType, doc: request } = changedRequest;
 					if (requestChangeType === "added") {
 						requests.push(request.data());
 					} else if (requestChangeType === "removed") {
@@ -114,23 +114,6 @@ export function attachListeners() {
 				});
 				dispatch(setRequests(requests));
 			});
-			// groupsQuery.onSnapshot(groupSnapshot => {
-			// 	groupSnapshot.forEach(group => {
-			// 		let group_id = group.id;
-			// 		groups.push({ id: group_id, ...group.data() });
-
-			// 		movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
-			// 			moveSnapshot.forEach(move => {
-			// 				let move_id = move.id;
-			// 				moves.push({ id: move_id, going: [], ...move.data() });
-			// 			});
-
-			// 			dispatch(setMoves(moves));
-			// 		});
-			// 	});
-
-			// 	dispatch(setGroups(groups));
-			// });
 		});
 	};
 }
@@ -423,6 +406,25 @@ export function leaveGroup(group) {
 	return {
 		type: ActionTypes.LEAVE_GROUP,
 		group
+	};
+}
+
+export function changeGroupName(group_id, group_name) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			api.ChangeGroupName({ group_id, group_name }).then(() => {
+				dispatch(changeGroupNameComplete(group_id, group_name));
+				resolve(true);
+			});
+		});
+	};
+}
+
+export function changeGroupNameComplete(id, name) {
+	return {
+		type: ActionTypes.CHANGE_GROUP_NAME,
+		id,
+		name
 	};
 }
 

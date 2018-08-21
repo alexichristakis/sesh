@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import GroupSettings from "../components/Groups/Settings";
 
-import { leaveGroup } from "../redux/actions";
+import { leaveGroup, changeGroupName } from "../redux/actions";
 
 const mapStateToProps = state => {
 	return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		leaveGroup: (group, user) => {
 			dispatch(leaveGroup(group, user));
+		},
+		changeGroupName: (group_id, group_name) => {
+			dispatch(changeGroupName(group_id, group_name));
 		}
 	};
 };

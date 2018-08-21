@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Animated, TouchableOpacity, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  Keyboard,
+  TouchableOpacity,
+  View,
+  Text,
+  TextInput
+} from "react-native";
 
 import { Navigation } from "react-native-navigation";
 import Interactable from "react-native-interactable";
@@ -16,6 +24,10 @@ class Settings extends Component {
     super(props);
 
     this.deltaY = new Animated.Value(SCREEN_HEIGHT);
+
+    this.state = {
+      groupName: ""
+    };
   }
 
   componentDidMount() {
@@ -25,6 +37,7 @@ class Settings extends Component {
   }
 
   dismiss = () => {
+    Keyboard.dismiss();
     this.interactable.snapTo({ index: 0 });
   };
 
@@ -35,7 +48,8 @@ class Settings extends Component {
 
   handleOnPressEditName = () => {
     const { group } = this.props;
-    ShowEditGroupName({ group });
+    // ShowEditGroupName({ group });
+    this.input.focus();
   };
 
   handleOnPressAddMember = () => {
@@ -47,6 +61,18 @@ class Settings extends Component {
     const { leaveGroup, group, user } = this.props;
     leaveGroup(group, user);
     this.dismiss();
+  };
+
+  handleOnChangeText = text => {
+    this.setState({ groupName: text });
+  };
+
+  handleChangeGroupName = () => {
+    const { groupName } = this.state;
+    const { group, changeGroupName } = this.props;
+
+    changeGroupName(group.id, groupName);
+    // console.log(id, " is now ", groupName);
   };
 
   render() {
@@ -69,6 +95,7 @@ class Settings extends Component {
         <Interactable.View
           animatedNativeDriver
           verticalOnly
+          enablesReturnKeyAutomatically={true}
           ref={Interactable => (this.interactable = Interactable)}
           snapPoints={[
             { y: SCREEN_HEIGHT, damping: 0.5, tension: 600 },
@@ -79,7 +106,19 @@ class Settings extends Component {
           animatedValueY={this.deltaY}
         >
           <SuperEllipseMask style={styles.interactable} radius={20}>
-            <Text style={styles.name}>{name}</Text>
+            {/*<Text style={styles.name}>{name}</Text>*/}
+            <TextInput
+              ref={TextInput => (this.input = TextInput)}
+              onChangeText={this.handleOnChangeText}
+              onSubmitEditing={this.handleChangeGroupName}
+              placeholder={this.props.group.name}
+              style={styles.name}
+              returnKeyType="go"
+              // autoFocus
+              placeholderTextColor={Colors.primary}
+              selectionColor={Colors.primary}
+              maxLength={15}
+            />
             <ColorButton
               textStyle={styles.textStyle}
               title={"edit name"}

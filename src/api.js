@@ -351,7 +351,12 @@ export const CreateGroup = ({ group_name, user, members }) => {
   });
 };
 
-export const RenameGroup = (group, newName) => {};
+export const ChangeGroupName = ({ group_id, group_name }) => {
+  return new Promise((resolve, reject) => {
+    const groupRef = firestore.collection("groups").doc(group_id);
+    groupRef.set({ name: group_name }, { merge: true }).then(() => resolve(true));
+  });
+};
 
 export const LeaveGroup = group => {};
 
@@ -515,6 +520,7 @@ export default {
   LeaveMove,
   EndMove,
   CreateGroup,
+  ChangeGroupName,
   FetchGoingUsers,
   FetchGroupMembers,
   UserAuthenticated
