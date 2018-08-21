@@ -270,9 +270,51 @@ export const EndMove = ({ move_id }) => {
 /* FRIENDS */
 export const SendFriendRequest = toUser => {};
 
-export const AcceptFriend = user => {};
+export const AcceptFriend = ({ user, uid }) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .runTransaction(async transaction => {
+        console.log("user: ", user, uid);
+        const users = firestore.collection("users");
+        const receivedRef = users
+          .doc(user.uid)
+          .collection("received_friend_requests")
+          .doc(uid);
+        const sentRef = users
+          .doc(uid)
+          .collection("sent_friend_requests")
+          .doc(user.uid);
+        const newFriendRef1 = users
+          .doc(user.uid)
+          .collection("friends")
+          .doc(uid);
+        const newFriendRef2 = users
+          .doc(uid)
+          .collection("friends")
+          .doc(user.uid);
 
-export const DeleteFriend = user => {};
+        const newFriendDoc = await transaction.get(receivedRef);
+        const newFriendData = newFriendDoc.data();
+
+        let p1 = transaction.set(newFriendRef1, { ...newFriendData });
+        let p2 = transaction.set(newFriendRef2, {
+          name: user.name,
+          uid: user.uid,
+          fb_id: user.fb_id
+        });
+        let p3 = transaction.delete(receivedRef);
+        let p4 = transaction.delete(sentRef);
+
+        Promise.all([p1, p2, p3, p4]).then(() => {
+          return true;
+        });
+      })
+      .then(() => resolve(true))
+      .catch(error => console.error(error));
+  });
+};
+
+export const DeleteFriend = uid => {};
 
 /* GROUPS */
 export const CreateGroup = ({ group_name, user, members }) => {
@@ -467,6 +509,7 @@ export const FacebookLogout = async () => {
 
 export default {
   UpdateUser,
+  AcceptFriend,
   SendMove,
   JoinMove,
   LeaveMove,

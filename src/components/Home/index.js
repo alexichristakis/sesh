@@ -11,12 +11,11 @@ import Drawer from "./Drawer";
 import TopBar from "./TopBar";
 
 import { ShowMoveFocus } from "../../lib/navigation";
-import { REFRESH_OFFSET } from "../../lib/constants";
+import { IS_X, REFRESH_OFFSET } from "../../lib/constants";
 
 /* import fetch functions */
-import { FetchFriendsList, NewUser, SearchForUser, TestSearch } from "../../api";
-
-import { IS_X } from "../../lib/constants";
+import { FetchFriendsList, DownloadPhoto, NewUser, SearchForUser, TestSearch } from "../../api";
+import { GetPhotoURL } from "../../lib/functions";
 
 /* to replace with data from firestore */
 // import GROUPS from "../../mock-data/GROUPS";
@@ -48,8 +47,8 @@ class Home extends Component {
     this.state = {
       loading: true,
       refreshing: false,
+      photo: { uri: "" },
 
-      barOpen: true,
       focused: false
       // vertScrolling: false
     };
@@ -72,6 +71,9 @@ class Home extends Component {
     //   fb_id: "176387573072294",
     //   name: "Joe Kelley"
     // });
+    DownloadPhoto("profile", GetPhotoURL(userObj.fb_id, 40, 40)).then(photo =>
+      this.setState({ photo })
+    );
     FetchFriendsList({ fb_id: userObj.fb_id });
     // SearchForUser({ first: "alexi" });
 
@@ -136,7 +138,7 @@ class Home extends Component {
   };
 
   render() {
-    const { refreshing, loading } = this.state;
+    const { refreshing, loading, photo } = this.state;
     const { moves, user } = this.props;
 
     // console.log("render home");
@@ -158,6 +160,7 @@ class Home extends Component {
         )}
         <TopBar
           user={user}
+          photo={photo}
           yOffset={yOffset}
           xOffset={xOffset}
           refreshing={refreshing}

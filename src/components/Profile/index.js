@@ -15,36 +15,15 @@ import {} from "../../lib/navigation";
 import { IS_X, CARD_GUTTER, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors, FillAbsolute } from "../../lib/styles";
 
-const DATA = [
-  {
-    uid: 1,
-    name: "Alexi Christakis",
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    uid: 2,
-    name: "William Oles",
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  },
-  {
-    uid: 3,
-    name: "Michelle Li",
-    time: 1526598742850,
-    photo: "https://graph.facebook.com/1825693684117541/picture"
-  }
-];
-
 class Profile extends Component {
   constructor(props) {
     super(props);
 
     this.yOffset = new Animated.Value(0);
 
-    this.state = {
-      notifications: DATA
-    };
+    // this.state = {
+    //   notifications: DATA
+    // };
   }
 
   shouldComponentUpdate() {
@@ -70,13 +49,15 @@ class Profile extends Component {
   };
 
   handleOnPressAcceptFriend = uid => {
-    const { user } = this.props;
-    console.log(user, " accepted ", uid);
+    const { acceptFriend } = this.props;
+    acceptFriend(uid);
+    // console.log(user, " accepted ", uid);
   };
 
   handleOnPressDeleteRequest = uid => {
-    const { user } = this.props;
-    console.log(user, " deleted ", uid);
+    const { deleteRequest } = this.props;
+    deleteRequest(uid);
+    // console.log(user, " deleted ", uid);
   };
 
   handleScrollEndDrag = ({ nativeEvent }) => {
@@ -86,10 +67,10 @@ class Profile extends Component {
   };
 
   render() {
-    const { user, groups } = this.props;
+    const { user, groups, requests, friends } = this.props;
     // console.log("groups: ", groups);
     // console.log("update profile: ", this.props);
-    const { notifications } = this.state;
+    // const { notifications } = this.state;
 
     return (
       <View style={styles.container}>
@@ -108,7 +89,7 @@ class Profile extends Component {
         >
           <TopButtons />
           <Notifications
-            data={notifications}
+            data={requests}
             acceptFriend={this.handleOnPressAcceptFriend}
             deleteRequest={this.handleOnPressDeleteRequest}
           />

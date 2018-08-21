@@ -192,7 +192,9 @@ class AddFriend extends Component {
           style={[styles.scroll, animatedTranslate]}
           contentContainerStyle={styles.scrollContent}
         >
+          <Text style={TextStyles.headerWhite}>CONTACTS</Text>
           <SyncContacts />
+          <Text style={TextStyles.headerWhite}>FACEBOOK FRIENDS</Text>
           <SyncFacebook />
           <Text style={TextStyles.headerWhite}>ADD FRIENDS</Text>
           {this.state.loading && (

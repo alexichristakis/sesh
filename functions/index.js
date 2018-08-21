@@ -87,7 +87,7 @@ exports.sendAddedToGroupNotification = functions.firestore
 
 			let payload = {
 				notification: {
-					body: `${added_by} added you to the group ${groupDoc.data().name}!`
+					body: `${added_by} added you to ${groupDoc.data().name}!`
 				}
 			};
 

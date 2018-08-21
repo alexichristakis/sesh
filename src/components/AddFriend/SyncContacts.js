@@ -18,7 +18,7 @@ const GroupNameCard = () => {
   return (
     <TouchableScale style={{ marginTop: CARD_GUTTER }} onPress={sync}>
       <SuperEllipseMask style={styles.card} radius={BORDER_RADIUS}>
-        <Text style={TextStyles.header}>contacts</Text>
+        <Text style={TextStyles.header}>sync contacts</Text>
       </SuperEllipseMask>
     </TouchableScale>
   );

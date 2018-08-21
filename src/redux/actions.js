@@ -19,6 +19,7 @@ export const ActionTypes = {
 	SET_USER: "SET_USER",
 	SET_GROUPS: "SET_GROUPS",
 	SET_FRIENDS: "SET_FRIENDS",
+	SET_REQUESTS: "SET_REQUESTS",
 	SET_JOINED_MOVES: "SET_JOINED_MOVES",
 	JOIN_MOVE: "JOIN_MOVE",
 	LEAVE_MOVE: "LEAVE_MOVE",
@@ -48,8 +49,19 @@ export function attachListeners() {
 
 			fcm(uid);
 
+			// queries
 			const groupsQuery = firestore.collection("groups").where("members", "array-contains", uid);
 			const movesQuery = firestore.collection("moves").where("ended", "==", false);
+
+			// refs
+			const friendsRef = firestore
+				.collection("users")
+				.doc(uid)
+				.collection("friends");
+			const requestsRef = firestore
+				.collection("users")
+				.doc(uid)
+				.collection("received_friend_requests");
 
 			groupsQuery.onSnapshot(groupSnapshot => {
 				let groups = [];
@@ -79,6 +91,29 @@ export function attachListeners() {
 				dispatch(setGroups(groups));
 			});
 
+			friendsRef.onSnapshot(friendsSnapshot => {
+				let friends = [];
+				friendsSnapshot.docChanges.forEach(changedFriend => {
+					const { type: friendChangeType, doc: friend } = changedFriend;
+					if (friendChangeType === "added") {
+						friends.push(friend.data());
+					}
+				});
+				dispatch(setFriends(friends));
+			});
+
+			requestsRef.onSnapshot(requestsSnapshot => {
+				let requests = [];
+				requestsSnapshot.docChanges.forEach(changedRequest => {
+					const { type: requestChangeType, doc: request } = changedrequest;
+					if (requestChangeType === "added") {
+						requests.push(request.data());
+					} else if (requestChangeType === "removed") {
+						//
+					}
+				});
+				dispatch(setRequests(requests));
+			});
 			// groupsQuery.onSnapshot(groupSnapshot => {
 			// 	groupSnapshot.forEach(group => {
 			// 		let group_id = group.id;
@@ -333,6 +368,20 @@ export function setUser(user) {
 	};
 }
 
+export function setFriends(friends) {
+	return {
+		type: ActionTypes.SET_FRIENDS,
+		friends
+	};
+}
+
+export function setRequests(requests) {
+	return {
+		type: ActionTypes.SET_REQUESTS,
+		requests
+	};
+}
+
 // export function updateUser({fcmToken}) {
 
 // 	return {
@@ -340,6 +389,27 @@ export function setUser(user) {
 // 		fcmToken
 // 	}
 // }
+
+export function acceptFriend(uid) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			const { user } = getState();
+
+			ShowLoadingOverlay();
+			api.AcceptFriend({ user, uid }).then(() => {
+				HideLoadingOverlay();
+				dispatch(acceptFriendComplete(uid));
+			});
+		});
+	};
+}
+
+export function acceptFriendComplete(uid) {
+	return {
+		type: ActionTypes.ACCEPT_FRIEND_REQUEST,
+		uid
+	};
+}
 
 /* groups */
 export function setGroups(groups) {
@@ -386,12 +456,5 @@ export function createGroupComplete(name, members) {
 		type: ActionTypes.CREATE_GROUP,
 		name,
 		members
-	};
-}
-
-export function setFriends(friends) {
-	return {
-		type: ActionTypes.SET_FRIENDS,
-		friends
 	};
 }

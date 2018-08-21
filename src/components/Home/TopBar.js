@@ -7,17 +7,18 @@ import LinearGradient from "react-native-linear-gradient";
 
 import ControlledLoadingCircle from "../global/ControlledLoadingCircle";
 
+import { DownloadPhoto } from "../../api";
 import { SCREEN_WIDTH, SB_HEIGHT, IS_X, REFRESH_OFFSET } from "../../lib/constants";
 import { Colors } from "../../lib/styles";
-import { GetPhotoURL } from "../../lib/functions";
 import { ShowProfile } from "../../lib/navigation";
 
 const BAR_HEIGHT = 40;
 const ICON_DIMENSION = 50;
+const PROFILE_DIMENSION = 40;
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
-const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing }) => {
+const TopBar = ({ yOffset, xOffset, user, photo, scrollToStart, scrollToEnd, refreshing }) => {
   const initialOffset = IS_X ? -44 : -20;
   const animatedProgress = new Animated.Value(0);
 
@@ -135,7 +136,7 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       {
         translateY: yOffset.interpolate({
           inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
-          outputRange: [35, 0, IS_X ? -10 : -5],
+          outputRange: [35, 0, IS_X ? -2 : -5],
           extrapolateRight: "clamp"
         })
       }
@@ -154,7 +155,7 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
       {
         scale: yOffset.interpolate({
           inputRange: [REFRESH_OFFSET, initialOffset, BAR_HEIGHT],
-          outputRange: [1.1, 1, 0.75],
+          outputRange: [1.1, 1, 0.8],
           extrapolateRight: "clamp"
         })
       }
@@ -190,10 +191,7 @@ const TopBar = ({ yOffset, xOffset, user, scrollToStart, scrollToEnd, refreshing
             style={[animatedProfilePicture, styles.profileButton]}
             onPress={ShowProfile}
           >
-            <Animated.Image
-              source={{ uri: GetPhotoURL(user.fb_id, ICON_DIMENSION, ICON_DIMENSION) }}
-              style={[animatedScale, styles.photo]}
-            />
+            <Animated.Image source={photo} style={[animatedScale, styles.photo]} />
           </AnimatedTouchable>
         </>
       )}
@@ -219,9 +217,9 @@ const styles = StyleSheet.create({
     top: SB_HEIGHT
   },
   photo: {
-    height: ICON_DIMENSION,
-    width: ICON_DIMENSION,
-    borderRadius: ICON_DIMENSION / 2,
+    height: PROFILE_DIMENSION,
+    width: PROFILE_DIMENSION,
+    borderRadius: PROFILE_DIMENSION / 2,
     // borderWidth: 1,
     // borderColor: "white",
     backgroundColor: Colors.gray

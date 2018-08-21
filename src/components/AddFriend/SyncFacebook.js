@@ -14,7 +14,7 @@ const GroupNameCard = () => {
     <TouchableScale style={{ marginTop: CARD_GUTTER }} onPress={() => console.log("yo")}>
       <SuperEllipseMask style={styles.card} radius={BORDER_RADIUS}>
         <Text style={TextStyles.header}>
-          <Icon name="facebook" size={20} color={"black"} /> friends
+          sync <Icon name="facebook" size={20} color={"black"} />
         </Text>
       </SuperEllipseMask>
     </TouchableScale>

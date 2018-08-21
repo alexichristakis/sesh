@@ -9,7 +9,7 @@ import { BORDER_RADIUS, CARD_GUTTER } from "../../lib/constants";
 import { TextStyles, SeparatorStyles } from "../../lib/styles";
 
 const Notifications = ({ data, acceptFriend, deleteRequest }) => {
-	_renderItem = ({ item }) => (
+	renderRequest = ({ item }) => (
 		<User request user={item} onPressAccept={acceptFriend} onPressDelete={deleteRequest} />
 	);
 
@@ -26,7 +26,7 @@ const Notifications = ({ data, acceptFriend, deleteRequest }) => {
 						scrollEnabled={false}
 						style={styles.listBackground}
 						data={data}
-						renderItem={_renderItem}
+						renderItem={renderRequest}
 						ItemSeparatorComponent={_renderSeparator}
 						keyExtractor={_keyExtractor}
 					/>

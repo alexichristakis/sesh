@@ -175,12 +175,25 @@ function groups(state = [], action, rootState) {
 }
 
 //////* FRIENDS *//////
-function friends(state = [], action, rootState) {
+const initialFriendsState = {
+	friends: [],
+	requests: []
+};
+
+function friends(state = initialFriendsState, action, rootState) {
 	switch (action.type) {
 		case ActionTypes.SET_FRIENDS:
-			return action.friends;
+			return { ...state, friends: action.friends };
+		case ActionTypes.SET_REQUESTS:
+			return { ...state, requests: action.requests };
 		case ActionTypes.ACCEPT_FRIEND_REQUEST:
-			return [...state, action.friend];
+			const newFriend = state.requests.find(e => e.uid === action.uid);
+			const index = _.findIndex(state.requests, e => e.uid === action.id);
+
+			return {
+				friends: [...state.friends, newFriend],
+				requests: [...state.slice(0, index), ...state.slice(index + 1)]
+			};
 		case ActionTypes.DELETE_FRIEND_REQUEST:
 			return [...state, action.friend];
 		case ActionTypes.DELETE_FRIEND:
@@ -193,7 +206,7 @@ function friends(state = [], action, rootState) {
 //////* REQUESTS *//////
 // function requests(state = [], action, rootState) {
 // 	switch(action.type) {
-// 		case ActionTypes.
+// 		case ActionTypes.ACCEPT_FRIEND_REQUEST
 // 	}
 // }
 
