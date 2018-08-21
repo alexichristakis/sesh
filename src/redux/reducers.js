@@ -195,6 +195,7 @@ const initialFriendsState = {
 };
 
 function friends(state = initialFriendsState, action, rootState) {
+	let index;
 	switch (action.type) {
 		case ActionTypes.SET_FRIENDS:
 			return { ...state, friends: action.friends };
@@ -204,14 +205,19 @@ function friends(state = initialFriendsState, action, rootState) {
 		// return { friends: [], requests: [] };
 		case ActionTypes.ACCEPT_FRIEND_REQUEST:
 			const newFriend = state.requests.find(e => e.uid === action.uid);
-			const index = _.findIndex(state.requests, e => e.uid === action.id);
+			index = _.findIndex(state.requests, e => e.uid === action.id);
 
 			return {
 				friends: [...state.friends, newFriend],
 				requests: [...state.slice(0, index), ...state.slice(index + 1)]
 			};
 		case ActionTypes.DELETE_FRIEND_REQUEST:
-			return [...state, action.friend];
+			index = _.findIndex(state.requests, e => e.uid === action.sender_uid);
+
+			return {
+				friends: state.friends,
+				requests: [...state.slice(0, index), ...state.slice(index + 1)]
+			};
 		case ActionTypes.DELETE_FRIEND:
 			return [...state, action.friend];
 		default:
