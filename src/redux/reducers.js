@@ -199,6 +199,7 @@ function friends(state = initialFriendsState, action, rootState) {
 	switch (action.type) {
 		case ActionTypes.SET_FRIENDS:
 			return { ...state, friends: action.friends };
+		// return action.friends;
 		// return { friends: [], requests: [] };
 		case ActionTypes.SET_REQUESTS:
 			return { ...state, requests: action.requests };
@@ -209,7 +210,7 @@ function friends(state = initialFriendsState, action, rootState) {
 
 			return {
 				friends: [...state.friends, newFriend],
-				requests: [...state.slice(0, index), ...state.slice(index + 1)]
+				requests: [...state.requests.slice(0, index), ...state.requests.slice(index + 1)]
 			};
 		case ActionTypes.DELETE_FRIEND_REQUEST:
 			index = _.findIndex(state.requests, e => e.uid === action.sender_uid);

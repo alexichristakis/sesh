@@ -9,6 +9,7 @@ import TopButtons from "./TopButtons";
 import Notifications from "./Notifications";
 // import Groups from "../Groups";
 import Groups from "./Groups";
+import Friends from "./Friends";
 
 import {} from "../../lib/navigation";
 
@@ -51,13 +52,11 @@ class Profile extends Component {
   handleOnPressAcceptFriend = uid => {
     const { acceptFriend } = this.props;
     acceptFriend(uid);
-    // console.log(user, " accepted ", uid);
   };
 
   handleOnPressDeleteRequest = uid => {
     const { deleteRequest } = this.props;
     deleteRequest(uid);
-    // console.log(user, " deleted ", uid);
   };
 
   handleScrollEndDrag = ({ nativeEvent }) => {
@@ -94,6 +93,7 @@ class Profile extends Component {
             deleteRequest={this.handleOnPressDeleteRequest}
           />
           <Groups groups={groups} />
+          <Friends friends={friends} />
         </Animated.ScrollView>
         <Header offset={this.yOffset} />
       </View>

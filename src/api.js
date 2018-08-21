@@ -55,9 +55,51 @@ export const DownloadPhoto = (name, source_url) => {
 
 export const SyncContacts = () => {
   return new Promise(async (resolve, reject) => {
+    // let numbers = await getContactNumbers();
+    let numbers = ["2069409629", "8885555512"];
+    let ref = firestore.collection("users");
+
+    // ref
+    //   .where("phone_number", "==", "2069409629")
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //       console.log(doc.data());
+    //     });
+    //   });
+
     firestore
-      .runTransaction(contactTransaction)
-      .then(results => resolve(results))
+      .runTransaction(transaction => {
+        return new Promise(resolve => {
+          let promises = [];
+          numbers.forEach(number => {
+            const query = ref.where("phone_number", "==", number);
+            promises.push(transaction.get(query));
+          });
+
+          // let promises = [
+          //   transaction.get(ref.doc("1")),
+          //   transaction.get(ref.doc("2IffV1qVHxbluztcA9w9mq1xQfK2"))
+          // ];
+
+          let matches = [];
+          Promise.all(promises).then(results => {
+            console.log("results: ", results);
+            results.forEach(querySnapshot => {
+              console.log("querySnapshot: ", querySnapshot);
+              querySnapshot.forEach(doc => {
+                const { uid, fb_id, name } = doc.data();
+                matches.push({ uid, fb_id, name });
+              });
+            });
+            resolve(matches);
+          });
+        });
+      })
+      .then(results => {
+        console.log(matches);
+        resolve(results);
+      })
       .catch(error => console.error(error));
   });
 };
@@ -69,8 +111,10 @@ const contactTransaction = async transaction => {
   let promises = [];
   numbers.forEach(number => {
     console.log(number);
-    promises.push(transaction.get(ref.where("phone_number", "==", number)));
+    // promises.push(transaction.get(ref.where("phone_number", "==", number)));
+    // promises.push(transaction.get(ref.doc("1")));
   });
+  promises.push(transaction.get(ref.doc("1")));
 
   let matches = [];
   Promise.all(promises).then(results => {
