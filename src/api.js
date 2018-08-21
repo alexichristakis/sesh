@@ -5,7 +5,6 @@ import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
 
 let firestore = firebase.firestore();
-let storage = firebase.storage();
 
 //////////////* GRAPH API *//////////////
 export const FetchFriendsList = ({ fb_id }) => {
@@ -376,6 +375,16 @@ export const NewUser = userObj => {
   });
 };
 
+export const UpdateUser = ({ uid, fcmToken }) => {
+  return new Promise(resolve => {
+    firestore
+      .collection("users")
+      .doc(uid)
+      .set({ fcm_token: fcmToken }, { merge: true })
+      .then(() => resolve(true));
+  });
+};
+
 export const FacebookLogout = async () => {
   return new Promise(resolve => {
     firebase
@@ -386,6 +395,7 @@ export const FacebookLogout = async () => {
 };
 
 export default {
+  UpdateUser,
   SendMove,
   JoinMove,
   LeaveMove,

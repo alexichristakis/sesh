@@ -46,6 +46,8 @@ export function attachListeners() {
 			const state = getState();
 			const { uid } = state.user;
 
+			fcm(uid);
+
 			const groupsQuery = firestore.collection("groups").where("members", "array-contains", uid);
 			const movesQuery = firestore.collection("moves").where("ended", "==", false);
 
@@ -96,6 +98,33 @@ export function attachListeners() {
 			// });
 		});
 	};
+}
+
+export function fcm(uid) {
+	firebase
+		.messaging()
+		.getToken()
+		.then(fcmToken => {
+			if (fcmToken) {
+				// user has a device token
+				// dispatch(updateUser({ fcmToken }));
+				api.UpdateUser({ uid, fcmToken });
+			} else {
+				// user doesn't have a device token yet
+			}
+		});
+
+	firebase
+		.messaging()
+		.hasPermission()
+		.then(enabled => {
+			if (enabled) {
+				// user has permissions
+			} else {
+				// user doesn't have permission
+				firebase.messaging().requestPermission();
+			}
+		});
 }
 
 export function loadingOverlay() {
@@ -303,6 +332,14 @@ export function setUser(user) {
 		user
 	};
 }
+
+// export function updateUser({fcmToken}) {
+
+// 	return {
+// 		type: ActionTypes.UPDATE_USER,
+// 		fcmToken
+// 	}
+// }
 
 /* groups */
 export function setGroups(groups) {

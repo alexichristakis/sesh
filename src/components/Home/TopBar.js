@@ -222,8 +222,8 @@ const styles = StyleSheet.create({
     height: ICON_DIMENSION,
     width: ICON_DIMENSION,
     borderRadius: ICON_DIMENSION / 2,
-    borderWidth: 1,
-    borderColor: "white",
+    // borderWidth: 1,
+    // borderColor: "white",
     backgroundColor: Colors.gray
   },
   shadowContainer: {
