@@ -10,12 +10,7 @@ import TouchableScale from "../global/TouchableScale";
 import ProgressiveImage from "../global/ProgressiveImage";
 
 import { DownloadPhoto } from "../../api";
-import {
-  // TransparentModalTo,
-  FormatDistanceAway,
-  GetPhotoURL,
-  GetThumbnailURL
-} from "../../lib/functions";
+import { FormatDistanceAway, GetPhotoURL, GetThumbnailURL } from "../../lib/functions";
 import { ShowGroupFocus } from "../../lib/navigation";
 import { Colors, TextStyles, shadow } from "../../lib/styles";
 import { SCREEN_WIDTH, CARD_GUTTER, BORDER_RADIUS } from "../../lib/constants";
@@ -140,8 +135,6 @@ class Move extends Component {
         </View>
       </SuperEllipseMask>
     );
-
-    // return Content;
 
     if (focused) return Content;
     else

@@ -7,6 +7,7 @@ import SuperEllipseMask from "react-native-super-ellipse-mask";
 import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { BlurView } from "react-native-blur";
+import _ from "lodash";
 
 import TouchableScale from "../global/TouchableScale";
 import Move from "../global/Move";
@@ -170,6 +171,11 @@ class Focus extends Component {
     else joinMove(cardData.id).then();
   };
 
+  getGroup = group_id => {
+    const { groups } = this.props;
+    return groups[_.findIndex(groups, e => e.id === group_id)];
+  };
+
   render() {
     const {
       isGroups,
@@ -270,7 +276,7 @@ class Focus extends Component {
     ];
 
     const Card = isGroups ? (
-      <Group card data={cardData} />
+      <Group card data={this.getGroup(cardData.id)} />
     ) : (
       <Move focused active={isActive} move={cardData} userLocation={user.location} />
     );

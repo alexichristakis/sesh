@@ -47,7 +47,7 @@ class Home extends Component {
     this.state = {
       loading: true,
       refreshing: false,
-      photo: { uri: "" },
+      photo: { uri: GetPhotoURL(this.props.userObj.fb_id, 40, 40) },
 
       focused: false
       // vertScrolling: false
