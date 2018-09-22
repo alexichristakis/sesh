@@ -13,14 +13,14 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.1):
     - BoringSSL-GRPC/Interface (= 0.0.1)
   - BoringSSL-GRPC/Interface (0.0.1)
-  - BVLinearGradient (2.4.0):
+  - BVLinearGradient (2.4.2):
     - React
-  - CodePush (5.4.1):
+  - CodePush (5.4.2):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
     - SSZipArchive (~> 2.1)
-  - DoubleConversion (1.1.5)
+  - DoubleConversion (1.1.6)
   - FBSDKCoreKit (4.36.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.36.0):
@@ -93,10 +93,10 @@ PODS:
     - boost-for-react-native
     - DoubleConversion
     - glog
-  - glog (0.3.4)
-  - GoogleAppMeasurement (5.1.2):
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
-    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+  - glog (0.3.5)
+  - GoogleAppMeasurement (5.1.4):
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
+    - GoogleUtilities/MethodSwizzler (~> 5.2)
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
@@ -144,7 +144,7 @@ PODS:
     - Base64 (~> 1.1.2)
   - leveldb-library (1.20)
   - lottie-ios (2.5.0)
-  - lottie-react-native (2.5.6):
+  - lottie-react-native (2.5.8):
     - lottie-ios
     - React
   - nanopb (0.3.8):
@@ -153,63 +153,63 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.6.1)
-  - React (0.56.0):
-    - React/Core (= 0.56.0)
-  - react-native-contacts (2.2.2):
+  - React (0.57.1):
+    - React/Core (= 0.57.1)
+  - react-native-contacts (2.2.3):
     - React
   - react-native-maps (0.21.0):
     - React
   - react-native-super-ellipse-mask (1.0.7):
     - React
-  - React/Core (0.56.0):
-    - yoga (= 0.56.0.React)
-  - React/CxxBridge (0.56.0):
+  - React/Core (0.57.1):
+    - yoga (= 0.57.1.React)
+  - React/CxxBridge (0.57.1):
     - Folly (= 2016.10.31.00)
     - React/Core
     - React/cxxreact
-  - React/cxxreact (0.56.0):
+  - React/cxxreact (0.57.1):
     - boost-for-react-native (= 1.63.0)
     - Folly (= 2016.10.31.00)
     - React/jschelpers
     - React/jsinspector
-  - React/DevSupport (0.56.0):
+  - React/DevSupport (0.57.1):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.56.0)
-  - React/jschelpers (0.56.0):
+  - React/fishhook (0.57.1)
+  - React/jschelpers (0.57.1):
     - Folly (= 2016.10.31.00)
     - React/PrivateDatabase
-  - React/jsinspector (0.56.0)
-  - React/PrivateDatabase (0.56.0)
-  - React/RCTActionSheet (0.56.0):
+  - React/jsinspector (0.57.1)
+  - React/PrivateDatabase (0.57.1)
+  - React/RCTActionSheet (0.57.1):
     - React/Core
-  - React/RCTAnimation (0.56.0):
+  - React/RCTAnimation (0.57.1):
     - React/Core
-  - React/RCTBlob (0.56.0):
+  - React/RCTBlob (0.57.1):
     - React/Core
-  - React/RCTGeolocation (0.56.0):
+  - React/RCTGeolocation (0.57.1):
     - React/Core
-  - React/RCTImage (0.56.0):
+  - React/RCTImage (0.57.1):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.56.0):
+  - React/RCTLinkingIOS (0.57.1):
     - React/Core
-  - React/RCTNetwork (0.56.0):
+  - React/RCTNetwork (0.57.1):
     - React/Core
-  - React/RCTSettings (0.56.0):
+  - React/RCTSettings (0.57.1):
     - React/Core
-  - React/RCTText (0.56.0):
+  - React/RCTText (0.57.1):
     - React/Core
-  - React/RCTVibration (0.56.0):
+  - React/RCTVibration (0.57.1):
     - React/Core
-  - React/RCTWebSocket (0.56.0):
+  - React/RCTWebSocket (0.57.1):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - RNFS (2.11.15):
     - React
   - SSZipArchive (2.1.4)
-  - yoga (0.56.0.React)
+  - yoga (0.57.1.React)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -315,9 +315,9 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL-GRPC: b7941e85a30e48d3704cfdfe5fb48d3e14106714
-  BVLinearGradient: 4b3f3bdf1ac1a52a5ef5e65c9585d793a7c3f825
+  BVLinearGradient: 6d8909e3fc6b089defa4b89d967441fa6827a2ee
   CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
-  DoubleConversion: a9706f16e388b53ff12cca34473428ee29746a26
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
   FBSDKLoginKit: 8bccb6064708ab2f4251a7fc4e3b6d8d00ad91ba
   FBSDKPlacesKit: ceee4555dcff54fa3e61b9357364d88ac5956a8c
@@ -332,8 +332,8 @@ SPEC CHECKSUMS:
   FirebaseMessaging: f67b3719f520ee200da0e20ce577fe2bce0c01d0
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: b3b0330915eccea41c5cc9731a77cf564a9be5ea
-  GoogleAppMeasurement: fc4a4c3fe0144db9313cbf443ffe62e6b1d6268c
+  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
+  GoogleAppMeasurement: 7d2552cea4e12d09ce737ef0441887a746585ff3
   GoogleUtilities: 6f681e27050c5e130325e89fa0316dfca826f954
   gRPC: d30ff914108c3a4f839e5a93adf70461f3ecbce7
   gRPC-Core: 96b2b7e7dcc5ece02e2d4fed30919eb9a2800517

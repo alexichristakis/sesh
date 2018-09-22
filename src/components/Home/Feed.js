@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Animated, FlatList, Text } from "react-native";
+import { StyleSheet, Animated, Text } from "react-native";
 
 import SuperEllipseMask from "react-native-super-ellipse-mask";
 
@@ -10,8 +10,6 @@ import TouchableScale from "../global/TouchableScale";
 import { TextStyles } from "../../lib/styles";
 import { ShowCreateActiveMove, ShowCreateLaterMove } from "../../lib/navigation";
 import { IS_X, BORDER_RADIUS, CARD_GUTTER, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../lib/constants";
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const Feed = ({
 	user,
@@ -93,7 +91,7 @@ const Feed = ({
 			onScroll={onHoScroll}
 			style={styles.horizontalScroll}
 		>
-			<AnimatedFlatList
+			<Animated.FlatList
 				style={styles.list}
 				contentContainerStyle={styles.content}
 				data={activeData}
@@ -105,7 +103,7 @@ const Feed = ({
 				showsVerticalScrollIndicator={false}
 				ListEmptyComponent={() => renderEmptyListComponent({ isActive: true })}
 			/>
-			<AnimatedFlatList
+			<Animated.FlatList
 				style={styles.list}
 				contentContainerStyle={styles.content}
 				data={laterData}
