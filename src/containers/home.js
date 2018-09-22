@@ -12,9 +12,10 @@ import {
 } from "../redux/actions";
 
 const mapStateToProps = state => {
+	console.log("state: ", state);
 	return {
-		...state
-		// todos: getVisibleTodos(state.todos, state.visibilityFilter)
+		...state,
+		moves: state.moves.moves
 	};
 };
 

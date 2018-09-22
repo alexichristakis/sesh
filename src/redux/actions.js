@@ -12,6 +12,9 @@ import api from "../api";
 import { DismissMoveFocus, ShowLoadingOverlay, HideLoadingOverlay } from "../lib/navigation";
 
 let firestore = firebase.firestore();
+const USERS = firestore.collection("users");
+const GROUPS = firestore.collection("groups");
+const MOVES = firestore.collection("moves");
 
 export const ActionTypes = {
 	SET_MOVES: "SET_MOVES",
@@ -43,52 +46,73 @@ export const ActionTypes = {
 export function attachListeners() {
 	return (dispatch, getState) => {
 		// dispatch(setMoves([]));
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			const state = getState();
 			const { uid } = state.user;
 
 			fcm(uid);
 
 			// queries
-			const groupsQuery = firestore.collection("groups").where("members", "array-contains", uid);
-			const movesQuery = firestore.collection("moves").where("ended", "==", false);
+			// const groupsQuery = firestore.collection("groups").where("members", "array-contains", uid);
+			// let groups = await firestore
+			// 	.collection("users")
+			// 	.doc(uid)
+			// 	.collection("groups")
+			// 	.get();
+
+			// let group_ids = [];
+			// groups.forEach(snapshot => group_ids.push(snapshot.id));
+
+			// console.log("GROUPS: ", group_ids);
+
+			const groupsQuery = USERS.doc(uid).collection("groups");
+			const movesQuery = MOVES.where("ended", "==", false);
 
 			// refs
-			const friendsRef = firestore
-				.collection("users")
-				.doc(uid)
-				.collection("friends");
-			const requestsRef = firestore
-				.collection("users")
-				.doc(uid)
-				.collection("received_friend_requests");
+			const friendsRef = USERS.doc(uid).collection("friends");
+			const requestsRef = USERS.doc(uid).collection("received_friend_requests");
 
 			groupsQuery.onSnapshot(groupSnapshot => {
 				let groups = [];
-				groupSnapshot.docChanges.forEach(changedGroup => {
+				groupSnapshot.docChanges.forEach(async changedGroup => {
+					console.log("***** CHANGED GROUP *****");
 					const { type: groupChangeType, doc: group } = changedGroup;
-					// console.log("group: ", group);
+					console.log("group: ", group);
 					let group_id = group.id;
 					if (groupChangeType === "added") {
 						movesQuery.where("group_id", "==", group_id).onSnapshot(moveSnapshot => {
+							console.log("MOVE FOUND");
 							let moves = [];
 							moveSnapshot.docChanges.forEach(changedMove => {
 								const { type: moveChangeType, doc: move } = changedMove;
-								let move_id = move.id;
-								if (moveChangeType === "added") {
-									// console.log("pushing move: ", move_id, move.data());
-									moves.push({ id: move_id, ...move.data() });
-								}
+								console.log(changedMove, move);
+								if (moveChangeType === "added") moves.push({ id: move.id, ...move.data() });
 							});
+							console.log("MOVES: ", moves);
+
+							/* set the moves in redux */
 							dispatch(setMoves(moves));
 						});
 						// console.log("pushing group: ", group_id, group.data());
-						groups.push({ id: group_id, ...group.data() });
+
+						// let group_data = await GROUPS.doc(group_id).get();
+						// groups.push({ id: group_id, ...group_data.data() });
+						// groups.push({ id: group_id });
+						groups.push(GROUPS.doc(group_id).get());
 					} else if (groupChangeType === "removed") {
 						// remove
 					}
 				});
-				dispatch(setGroups(groups));
+
+				Promise.all(groups).then(data => {
+					data = data.map(snapshot => {
+						return { id: snapshot.id, ...snapshot.data() };
+					});
+					dispatch(setGroups(data));
+				});
+
+				/* set the groups in redux */
+				// dispatch(setGroups(groups));
 			});
 
 			friendsRef.onSnapshot(friendsSnapshot => {
@@ -228,8 +252,7 @@ export function endMoveComplete(id) {
 export function joinMove(id) {
 	return (dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			const state = getState();
-			const { user } = state;
+			const { user } = getState();
 			const ts = Date.now();
 
 			ShowLoadingOverlay();
@@ -449,16 +472,17 @@ export function changeGroupNameComplete(id, name) {
 	};
 }
 
-export function createGroup(name, selectedUIDs) {
+export function createGroup(group_name, selectedUIDs) {
 	return (dispatch, getState) => {
 		return new Promise(resolve => {
 			const state = getState();
 			const { user, friends } = state;
+			ShowLoadingOverlay();
 
 			/* generate members array */
 			let members = [];
 			selectedUIDs.forEach(uid => {
-				const { name, fb_id } = friends.find(e => e.uid === uid);
+				const { name, fb_id } = friends.friends.find(e => e.uid === uid);
 				members.push({ uid, name, fb_id });
 			});
 
@@ -466,8 +490,9 @@ export function createGroup(name, selectedUIDs) {
 			members.push({ uid, name, fb_id });
 			// console.log("members: ", members);
 
-			api.CreateGroup({ group_name: name, user, members }).then(() => {
-				dispatch(createGroupComplete(name, members));
+			api.CreateGroup({ group_name, user, members }).then(() => {
+				HideLoadingOverlay();
+				dispatch(createGroupComplete(group_name, members));
 				resolve(true);
 			});
 		});

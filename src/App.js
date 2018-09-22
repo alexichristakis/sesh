@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 import { Navigation } from "react-native-navigation";
-import { persistStore } from "redux-persist";
+import { persistStore, purgeStoredState } from "redux-persist";
 
 import store from "./redux/store";
 import { registerScreens, SCREENS } from "./screens";

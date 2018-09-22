@@ -10,6 +10,7 @@ import { BlurView } from "react-native-blur";
 import _ from "lodash";
 
 import TouchableScale from "../global/TouchableScale";
+import JoinButton from "./JoinButton";
 import Move from "../global/Move";
 import Group from "../Groups/Group";
 import MoveFocus from "./MoveFocus";
@@ -22,7 +23,7 @@ import {
   BORDER_RADIUS,
   CARD_GUTTER
 } from "../../lib/constants";
-import { Colors, shadow, FillAbsolute } from "../../lib/styles";
+import { Colors, shadow, TextStyles, FillAbsolute } from "../../lib/styles";
 
 class Focus extends Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Focus extends Component {
 
     this.state = {
       open: false,
+      loading: true,
       transitioning: true,
       focusContentHeight: 0,
       sourceDimension: {
@@ -54,17 +56,30 @@ class Focus extends Component {
   }
 
   componentDidMount() {
+    const { isGroups, user, fetchGoingUsers, cardData } = this.props;
+    const { uid, fb_id, name } = user;
+
+    if (!isGroups) {
+      fetchGoingUsers(cardData.id).then(() => {
+        this.setState({ loading: false });
+        // const { moves } = this.props;
+        // const goingUsers = moves.find(move => move.id === cardData.id).going;
+        // const joined = _.find(goingUsers, { uid, fb_id, name });
+        // this.setState({ joined: joined != undefined ? true : false, loading: false });
+      });
+    }
+
     this.beginTransition();
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
-  //   // const { loading, open, sourceDimension } = this.state;
+  //   const { loading, open, sourceDimension } = this.state;
 
-  //   // // if (loading !== nextState.loading) return true;
-  //   // // else if (open !== nextState.open) return true;
-  //   // if (sourceDimension.height !== nextState.sourceDimension.height)
-  //   //   return true;
-  //   // else return false;
+  //    if (loading !== nextState.loading) return true;
+  //   else if (open !== nextState.open) return true;
+  //    if (sourceDimension.height !== nextState.sourceDimension.height)
+  //      return true;
+  //    else return false;
   //   return true;
   // }
 
@@ -100,8 +115,6 @@ class Focus extends Component {
 
   handleClose = () => {
     this.setState({ transitioning: true }, () => {
-      if (!this.props.isGroups)
-        this.horizScrollView.getNode().scrollTo({ x: 0, y: 0, animated: true });
       this.interactable.snapTo({ index: 0 });
     });
   };
@@ -116,7 +129,7 @@ class Focus extends Component {
     const { index } = event.nativeEvent;
     const { onReturn, returnScreen } = this.props;
     if (index === 0) {
-      this.setState({ open: false, transitioning: false }, () => {
+      this.setState({ open: false }, () => {
         if (onReturn) {
           onReturn().then(() => {
             if (returnScreen) returnScreen();
@@ -149,7 +162,7 @@ class Focus extends Component {
   };
 
   dismissFocus = () => {
-    this.interactable.snapTo({ index: 2 });
+    this.setState({ transitioning: true }, () => this.interactable.snapTo({ index: 2 }));
   };
 
   vertOnScroll = () =>
@@ -157,18 +170,19 @@ class Focus extends Component {
       useNativeDriver: true
     });
 
-  horizOnScroll = () =>
-    Animated.event([{ nativeEvent: { contentOffset: { x: this.xOffset } } }], {
-      useNativeDriver: true
-    });
-
   handleOnPressJoin = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    const { joinMove, leaveMove, cardData, moves, user } = this.props;
+    const { cardData, joinMove, leaveMove } = this.props;
+    const { joined } = this.state;
 
-    const goingUsers = moves.find(({ id }) => id === cardData.id).going;
-    if (goingUsers.find(({ uid }) => uid === user.uid)) leaveMove(cardData.id).then();
-    else joinMove(cardData.id).then();
+    this.setState({ joined: !joined, loading: true }, () => {
+      if (joined) leaveMove(cardData.id).then(() => this.setState({ loading: false }));
+      else joinMove(cardData.id).then(() => this.setState({ loading: false }));
+    });
+  };
+
+  handleOnPressEnd = () => {
+    const { cardData, endMove } = this.props;
+    endMove(cardData.id).then(() => this.dismissFocus());
   };
 
   getGroup = group_id => {
@@ -190,6 +204,7 @@ class Focus extends Component {
       fetchGoingUsers,
       fetchGroupMembers
     } = this.props;
+    const { uid, fb_id, name } = user;
     const { open, transitioning, focusContentHeight, sourceDimension } = this.state;
     const { height, width, x, y, pageX, pageY } = sourceDimension;
 
@@ -216,6 +231,7 @@ class Focus extends Component {
       height: height / 2 + 15,
       opacity: this.yOffset.interpolate({
         inputRange: [0, 30],
+        // inputRange: [0, 60, 90],
         outputRange: [0, 1],
         extrapolate: "clamp"
       })
@@ -254,27 +270,6 @@ class Focus extends Component {
       ]
     };
 
-    let buttonAnimatedStyle = {
-      transform: [
-        {
-          scale: this.xOffset.interpolate({
-            inputRange: [0, SCREEN_WIDTH / 2],
-            outputRange: [0, 1],
-            extrapolate: "clamp"
-          })
-        }
-      ]
-    };
-
-    let endMoveComputedStyle = [
-      styles.endMoveButton,
-      {
-        width: SCREEN_WIDTH / 2,
-        height: height,
-        paddingRight: CARD_GUTTER
-      }
-    ];
-
     const Card = isGroups ? (
       <Group card data={this.getGroup(cardData.id)} />
     ) : (
@@ -285,20 +280,20 @@ class Focus extends Component {
       <GroupFocus groups={groups} cardData={cardData} fetchGroupMembers={fetchGroupMembers} />
     ) : (
       <MoveFocus
+        transitioning={transitioning}
+        dimensions={{ openOffset, closedOffset, pageY, height }}
+        deltaY={this.deltaY}
         active={isActive}
         open={open}
         cardData={cardData}
-        moves={moves}
+        moves={moves.moves}
         user={user}
         fetchGoingUsers={fetchGoingUsers}
-        joinMove={joinMove}
-        leaveMove={leaveMove}
-        endMove={endMove}
-        dismissFocus={this.dismissFocus}
       />
     );
 
     console.log("rendered focus");
+    console.log("transitioning: ", transitioning);
     return (
       <View style={styles.flex}>
         <Animated.View style={[FillAbsolute, opacity]}>
@@ -306,6 +301,7 @@ class Focus extends Component {
         </Animated.View>
 
         <Animated.ScrollView
+          // pointerEvents={"none"}
           ref={ScrollView => (this.vertScrollView = ScrollView)}
           onScrollEndDrag={this.handleScrollEndDrag}
           style={focusContainerStyle}
@@ -314,22 +310,33 @@ class Focus extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: height + SB_HEIGHT + CARD_GUTTER }}
         >
-          <View onLayout={this.measureFocusContent}>{FocusContent}</View>
+          <View style={{ paddingTop: !isGroups ? 75 : 0 }} onLayout={this.measureFocusContent}>
+            {FocusContent}
+          </View>
 
           <TouchableOpacity
             style={{
-              // backgroundColor: "red",
-              // position: "absolute",
-              // top: 0,
-              // bottom: 0,
-              // left: 0,
-              // right: 0
               height: SCREEN_HEIGHT - 2 * SB_HEIGHT - height - focusContentHeight
-              // width: "100%"
             }}
             onPress={this.handleClose}
           />
         </Animated.ScrollView>
+
+        {!isGroups && (
+          <JoinButton
+            active={isActive}
+            transitioning={transitioning}
+            dimensions={{ openOffset, closedOffset, pageY, height }}
+            onPress={{ joinMove, leaveMove, endMove: this.handleOnPressEnd }}
+            moves={moves}
+            user={user}
+            // joined={}
+            id={cardData.id}
+            shouldEnd={cardData.uid === uid}
+            yOffset={this.yOffset}
+            deltaY={this.deltaY}
+          />
+        )}
 
         <Interactable.View
           animatedNativeDriver
@@ -349,26 +356,9 @@ class Focus extends Component {
               colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0)"]}
             />
           </Animated.View>
-          <Animated.ScrollView
-            horizontal
-            pagingEnabled
-            ref={ScrollView => (this.horizScrollView = ScrollView)}
-            showsHorizontalScrollIndicator={false}
-            onScroll={this.horizOnScroll()}
-            scrollEventThrottle={16}
-            style={styles.scroll}
-          >
-            <View shouldRasterizeIOS style={styles.cardContainer} onLayout={this.measureCard}>
-              {Card}
-            </View>
-            <Animated.View style={buttonAnimatedStyle}>
-              <SuperEllipseMask radius={BORDER_RADIUS}>
-                <TouchableScale style={endMoveComputedStyle} onPress={() => console.log("yo")}>
-                  <Text style={styles.text}>End Move</Text>
-                </TouchableScale>
-              </SuperEllipseMask>
-            </Animated.View>
-          </Animated.ScrollView>
+          <View shouldRasterizeIOS style={styles.cardContainer} onLayout={this.measureCard}>
+            {Card}
+          </View>
         </Interactable.View>
       </View>
     );

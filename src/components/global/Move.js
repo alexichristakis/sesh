@@ -112,7 +112,7 @@ class Move extends Component {
         <View style={styles.contentContainer}>
           <TouchableOpacity style={styles.groupButton} onPress={this.handleGroupOnPress}>
             <Text allowFontScaling={false} style={TextStyles.bold}>
-              {sender_name}
+              {sender_name.split(" ")[0]}
             </Text>
             <Icon
               style={{ paddingTop: 3 }}

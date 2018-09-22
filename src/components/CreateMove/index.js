@@ -55,13 +55,13 @@ class CreateMove extends Component {
     }, 5);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.open !== nextState.open) return true;
-    else if (this.state.chosenDate !== nextState.chosenDate) return true;
-    else if (this.state.selectedIndex !== nextState.selectedIndex) return true;
-    else if (this.state.buttonVisible !== nextState.buttonVisible) return true;
-    else return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.open !== nextState.open) return true;
+  //   else if (this.state.chosenDate !== nextState.chosenDate) return true;
+  //   else if (this.state.selectedIndex !== nextState.selectedIndex) return true;
+  //   else if (this.state.buttonVisible !== nextState.buttonVisible) return true;
+  //   else return false;
+  // }
 
   handleOnScroll = Animated.event([{ nativeEvent: { contentOffset: { y: yOffset } } }], {
     useNativeDriver: true

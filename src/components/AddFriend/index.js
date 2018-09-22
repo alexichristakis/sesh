@@ -25,8 +25,6 @@ class AddFriend extends Component {
 
     this.state = {
       open: false,
-      buttonVisible: false,
-      groupName: "",
       selectedUsers: []
     };
   }

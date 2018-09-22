@@ -34,6 +34,7 @@ target 'sesh' do
   pod 'Firebase/Auth', '~> 5.6.0'
   pod 'Firebase/Firestore', '~> 5.6.0'
   pod 'Firebase/Messaging', '~> 5.6.0'
+  pod 'Firebase/Storage', '~> 5.6.0'
 
   # Facebook
   pod 'FBSDKCoreKit'

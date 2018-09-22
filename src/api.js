@@ -174,7 +174,9 @@ const getContactNumbers = () => {
 export const SearchForUser = ({ first, last = "" }) => {
   return new Promise((resolve, reject) => {
     console.log(first, last);
-    let query = firestore.collection("indices").where("first", "array-contains", first);
+    let query = firestore
+      .collection("indices")
+      .where("first", "array-contains", first.toLowerCase());
     //.where("last", "array_contains", last);
 
     query.get().then(results => {
@@ -220,7 +222,7 @@ export const FetchGroupMembers = ({ group_id }) => {
       .doc(group_id)
       .collection("members");
 
-    console.log(group_id);
+    // console.log(group_id);
 
     let users = [];
     ref.get().then(snapshot => {
@@ -393,8 +395,8 @@ export const CreateGroup = ({ group_name, user, members }) => {
     const group = {
       name: group_name,
       created_by: uid,
-      created_at: Date.now(),
-      size: members.length
+      created_at: Date.now()
+      // size: members.length
     };
 
     firestore
@@ -402,10 +404,22 @@ export const CreateGroup = ({ group_name, user, members }) => {
       .add(group)
       .then(docRef => {
         let ref = docRef.collection("members");
+        let users_ref = firestore.collection("users");
 
         let batch = firestore.batch();
         members.forEach(member => {
+          batch.set(
+            users_ref
+              .doc(member.uid)
+              .collection("groups")
+              .doc(docRef.id),
+            {
+              id: docRef.id
+            }
+          );
+
           // console.log("member: ", member);
+
           batch.set(ref.doc(member.uid), {
             uid: member.uid,
             fb_id: member.fb_id,

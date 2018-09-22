@@ -110,7 +110,9 @@ class CreateGroup extends Component {
     const { groupName, selectedUsers } = this.state;
     console.log(groupName, selectedUsers);
 
-    createGroup(groupName, selectedUsers).then(() => interactable.snapTo({ index: 0 }));
+    this.setState({ buttonVisible: false }, () =>
+      createGroup(groupName, selectedUsers).then(() => this.interactable.snapTo({ index: 0 }))
+    );
 
     // ShowLoadingOverlay();
     // setTimeout(() => {

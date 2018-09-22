@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, FlatList, View, Text } from "react-native";
+import { StyleSheet, FlatList, Animated, View, Text } from "react-native";
 
 import _ from "lodash";
 import SuperEllipseMask from "react-native-super-ellipse-mask";
@@ -71,10 +71,12 @@ class MoveFocus extends Component {
 	_keyExtractor = item => item.uid;
 
 	render() {
-		const { active, cardData, moves, user, open } = this.props;
+		const { active, cardData, moves, user, open, transitioning, deltaY, dimensions } = this.props;
 		const { joined, loading } = this.state;
 		const color = active ? Colors.active : Colors.later;
 		const isMyMove = cardData.uid === user.uid;
+
+		const { openOffset, closedOffset, height, pageY } = dimensions;
 
 		let joinButtonStyle = [
 			styles.button,
@@ -109,6 +111,41 @@ class MoveFocus extends Component {
 			</SuperEllipseMask>
 		);
 
+		let animatedJoinButton = {
+			// position: "absolute",
+			// left: 0,
+			// right: 0,
+			top: -200,
+			// opacity: deltaY.interpolate({
+			// 	inputRange: [openOffset, openOffset + 10, pageY],
+			// 	outputRange: openOffset < pageY ? [1, 0, 0] : [0, 0, 1]
+			// }),
+			transform: [
+				{
+					translateY: deltaY.interpolate({
+						inputRange: [openOffset, openOffset + 10, pageY],
+						outputRange: [height + 25, height, 0]
+					})
+				}
+			]
+		};
+
+		// let openJoinButtonStyle = {
+		// 	position: "absolute",
+		// 	left: 0,
+		// 	right: 0,
+		// 	top: 0,
+		// 	transform: [
+		// 		{
+		// 			translateY: yOffset.interpolate({
+		// 				inputRange: [-closedOffset / 2, 0, 25, 50],
+		// 				outputRange: [pageY / 1.5, height + 25, height, height - 30],
+		// 				extrapolateRight: "clamp"
+		// 			})
+		// 		}
+		// 	]
+		// };
+
 		const JoinMoveButton = (
 			<TouchableScale disabled={loading} onPress={this.handleOnPressJoin}>
 				<SuperEllipseMask style={styles.buttonMask} radius={BORDER_RADIUS}>
@@ -131,7 +168,9 @@ class MoveFocus extends Component {
 
 		return (
 			<>
-				{isMyMove ? EndMoveButton : JoinMoveButton}
+				{/*<Animated.View style={animatedJoinButton}>
+									{isMyMove ? EndMoveButton : JoinMoveButton}
+								</Animated.View>*/}
 				<Text style={TextStyles.headerWhite}>LOCATION</Text>
 				<MapCard
 					active={active}

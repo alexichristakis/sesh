@@ -74,7 +74,7 @@ class Home extends Component {
     DownloadPhoto("profile", GetPhotoURL(userObj.fb_id, 40, 40)).then(photo =>
       this.setState({ photo })
     );
-    FetchFriendsList({ fb_id: userObj.fb_id });
+    // FetchFriendsList({ fb_id: userObj.fb_id });
     // SearchForUser({ first: "alexi" });
 
     navigator.geolocation.getCurrentPosition(

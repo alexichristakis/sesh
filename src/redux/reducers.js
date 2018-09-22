@@ -82,7 +82,8 @@ function user(state = initialUserState, action, rootState) {
 
 //////* MOVES *//////
 const initialMoveState = {
-	moves: new Map()
+	moves: [],
+	joinedMoves: []
 };
 
 function mergeMoves(prevState, newState) {
@@ -94,45 +95,72 @@ function mergeMoves(prevState, newState) {
 	return merged;
 }
 
-function moves(state = [], action, rootState) {
+function moves(state = initialMoveState, action, rootState) {
+	console.log("ACTION: ", action);
+
 	// console.log("state: ", state1, "action: ", action);
 	const { uid, name, fb_id } = rootState.user;
-	let index;
+	const { moves, joinedMoves } = state;
+	console.log(moves);
+	let movesIndex;
+	let joinedMovesIndex;
 	let updatedMove;
 
 	// console.log("action.moves: ", action.moves);
 	switch (action.type) {
 		case ActionTypes.SET_MOVES:
-			return mergeMoves(state, action.moves);
+			return { joinedMoves: [], moves: mergeMoves(moves, action.moves) };
 		// return [];
 		// return action.moves;
 
 		case ActionTypes.ADD_MOVE:
-			return mergeMoves(state, [{ ...action.move, going: [{ uid, name, fb_id }] }]);
+			return {
+				joinedMoves: [...joinedMoves, action.move.id],
+				moves: mergeMoves(moves, [{ ...action.move, going: [{ uid, name, fb_id }] }])
+			};
 		case ActionTypes.END_MOVE:
 			console.log("end move");
-			index = _.findIndex(state, o => o.id === action.id);
-			updatedMove = { ...state[index], ended: true };
+			movesIndex = _.findIndex(moves, o => o.id === action.id);
+			updatedMove = { ...moves[movesIndex], ended: true };
 
-			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
+			return {
+				joinedMoves,
+				moves: [...moves.slice(0, movesIndex), updatedMove, ...moves.slice(movesIndex + 1)]
+			};
 		case ActionTypes.SET_GOING_USERS:
-			index = _.findIndex(state, o => o.id === action.id);
-			updatedMove = { ...state[index], going: action.users };
+			movesIndex = _.findIndex(moves, o => o.id === action.id);
+			updatedMove = { ...moves[movesIndex], going: action.users };
 
-			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
+			return {
+				joinedMoves,
+				moves: [...moves.slice(0, movesIndex), updatedMove, ...moves.slice(movesIndex + 1)]
+			};
 		case ActionTypes.JOIN_MOVE:
-			index = _.findIndex(state, o => o.id === action.id);
+			movesIndex = _.findIndex(moves, o => o.id === action.id);
 			updatedMove = {
-				...state[index],
-				going: [...state[index].going, { uid, fb_id, name, ts: action.ts }]
+				...moves[movesIndex],
+				going: [...moves[movesIndex].going, { uid, fb_id, name, ts: action.ts }]
 			};
 
-			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
+			return {
+				joinedMoves: [...joinedMoves, action.id],
+				moves: [...moves.slice(0, movesIndex), updatedMove, ...moves.slice(movesIndex + 1)]
+			};
 		case ActionTypes.LEAVE_MOVE:
-			index = _.findIndex(state, o => o.id === action.id);
-			updatedMove = { ...state[index], going: state[index].going.filter(o => o.uid !== uid) };
+			movesIndex = _.findIndex(moves, o => o.id === action.id);
+			joinedMovesIndex = _.findIndex(joinedMoves, o => o.id === action.id);
+			updatedMove = {
+				...moves[movesIndex],
+				going: moves[movesIndex].going.filter(o => o.uid !== uid)
+			};
 
-			return [...state.slice(0, index), updatedMove, ...state.slice(index + 1)];
+			return {
+				joinedMoves: [
+					...joinedMoves.slice(0, joinedMovesIndex),
+					...joinedMoves.slice(joinedMovesIndex + 1)
+				],
+				moves: [...moves.slice(0, movesIndex), updatedMove, ...moves.slice(movesIndex + 1)]
+			};
 		default:
 			return state;
 	}
