@@ -341,6 +341,7 @@ class Focus extends Component {
         <Interactable.View
           animatedNativeDriver
           verticalOnly
+          dragEnabled={false}
           ref={Interactable => (this.interactable = Interactable)}
           style={[styles.card, animatedScroll]}
           snapPoints={interactableSnapPoints}

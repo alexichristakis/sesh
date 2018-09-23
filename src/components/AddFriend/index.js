@@ -174,6 +174,14 @@ class AddFriend extends Component {
       ]
     };
 
+    let results = (
+      <Results
+        sendFriendRequest={this.props.sendFriendRequest}
+        data={this.state.results}
+        // onSelect={users => this.setState({ selectedUsers: users }, this.checkButtonOpen)}
+      />
+    );
+
     return (
       <View style={styles.container}>
         <Animated.View style={[FillAbsolute, opacity]}>
@@ -190,23 +198,13 @@ class AddFriend extends Component {
           style={[styles.scroll, animatedTranslate]}
           contentContainerStyle={styles.scrollContent}
         >
-          <Text style={TextStyles.headerWhite}>CONTACTS</Text>
-          <SyncContacts />
-          <Text style={TextStyles.headerWhite}>FACEBOOK FRIENDS</Text>
-          <SyncFacebook />
+          {/*<Text style={TextStyles.headerWhite}>CONTACTS</Text>
+                    <SyncContacts />
+                    <Text style={TextStyles.headerWhite}>FACEBOOK FRIENDS</Text>
+                    <SyncFacebook />*/}
           <Text style={TextStyles.headerWhite}>ADD FRIENDS</Text>
-          {this.state.loading && (
-            <Results
-              friends={this.state.results}
-              onSelect={users => this.setState({ selectedUsers: users }, this.checkButtonOpen)}
-            />
-          )}
-          {!this.state.loading && (
-            <Results
-              friends={this.state.results}
-              onSelect={users => this.setState({ selectedUsers: users }, this.checkButtonOpen)}
-            />
-          )}
+          {this.state.loading && results}
+          {!this.state.loading && results}
         </Animated.ScrollView>
         <Interactable.View
           animatedNativeDriver

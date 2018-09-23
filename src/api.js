@@ -314,7 +314,33 @@ export const EndMove = ({ move_id }) => {
 };
 
 /* FRIENDS */
-export const SendFriendRequest = toUser => {};
+export const SendFriendRequest = ({ user, uid }) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .runTransaction(transaction => {
+        const users = firestore.collection("users");
+        const receivedRef = users
+          .doc(uid)
+          .collection("received_friend_requests")
+          .doc(user.uid);
+        const sentRef = users
+          .doc(user.uid)
+          .collection("sent_friend_requests")
+          .doc(uid);
+
+        let p1 = transaction.set(receivedRef, {
+          name: user.name,
+          fb_id: user.fb_id,
+          uid: user.uid
+        });
+        let p2 = transaction.set(sentRef, { uid });
+
+        return Promise.all([p1, p2]);
+      })
+      .then(() => resolve(true))
+      .catch(error => console.error(error));
+  });
+};
 
 export const AcceptFriend = ({ user, uid }) => {
   return new Promise((resolve, reject) => {
@@ -598,6 +624,7 @@ export const FacebookLogout = async () => {
 
 export default {
   UpdateUser,
+  SendFriendRequest,
   AcceptFriend,
   DeleteRequest,
   SendMove,

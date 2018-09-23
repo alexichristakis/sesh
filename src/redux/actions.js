@@ -1,11 +1,3 @@
-// export const NAVIGATE_TO_PROFILE = "NAVIGATE_TO_PROFILE";
-// export const NAVIGATE_TO_CREATE_MOVE = "NAVIGATE_TO_CREATE_MOVE";
-// export const NAVIGATE_TO_ADD_TO_GROUP = "NAVIGATE_TO_ADD_TO_GROUP";
-// export const NAVIGATE_TO_EDIT_NAME = "NAVIGATE_TO_EDIT_NAME";
-
-// export const REQUEST_FRIENDS = "REQUEST_FRIENDS";
-// export const REQUEST_GROUPS = "REQUEST_GROUPS";
-// export const REQUEST_MOVES = "REQUEST_MOVES";
 import firebase from "react-native-firebase";
 
 import api from "../api";
@@ -87,6 +79,7 @@ export function attachListeners() {
 								const { type: moveChangeType, doc: move } = changedMove;
 								console.log(changedMove, move);
 								if (moveChangeType === "added") moves.push({ id: move.id, ...move.data() });
+								// else if (moveChangeType === "modified")
 							});
 							console.log("MOVES: ", moves);
 
@@ -395,6 +388,19 @@ export function setRequests(requests) {
 // 		fcmToken
 // 	}
 // }
+
+export function sendFriendRequest(uid) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			const { user } = getState();
+
+			ShowLoadingOverlay();
+			api.SendFriendRequest({ user, uid }).then(() => {
+				HideLoadingOverlay();
+			});
+		});
+	};
+}
 
 export function acceptFriend(uid) {
 	return (dispatch, getState) => {

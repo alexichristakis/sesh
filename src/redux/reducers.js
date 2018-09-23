@@ -245,7 +245,7 @@ function friends(state = initialFriendsState, action, rootState) {
 
 			return {
 				friends: state.friends,
-				requests: [...state.slice(0, index), ...state.slice(index + 1)]
+				requests: [...state.requests.slice(0, index), ...state.requests.slice(index + 1)]
 			};
 		case ActionTypes.DELETE_FRIEND:
 			return [...state, action.friend];

@@ -25,13 +25,7 @@ const User = ({ user, selectable, selected, request, onPressAccept, onPressDelet
       <Text style={styles.name}>{user.name}</Text>
       {selectable && <View style={indicatorStyle} />}
       {request && (
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-around"
-          }}
-        >
+        <View style={styles.buttonContainer}>
           <ColorButton
             title="Confirm"
             textStyle={TextStyles.bold}
@@ -93,6 +87,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     borderWidth: 1
     // marginHorizontal: 2.5
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around"
   },
   indicator: {
     width: 22,

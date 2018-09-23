@@ -25,7 +25,7 @@ class Results extends Component {
 				underlayColor={Colors.mediumGray}
 				onPress={() => this.handleOnPressUser(item)}
 			>
-				<User selectable selected={this.isSelected(item)} user={item} />
+				<User selectable selected={this.isSelected({ uid: item.uid })} user={item} />
 			</TouchableHighlight>
 		);
 	};
@@ -41,28 +41,21 @@ class Results extends Component {
 	};
 
 	handleOnPressUser = ({ uid }) => {
-		const { selected } = this.state;
-		if (selected.includes(uid)) {
-			this.setState(
-				{
-					selected: selected.filter(i => i != uid)
-				},
-				() => this.props.onSelect(this.state.selected)
-			);
-		} else {
-			this.setState(
-				{
-					selected: [...selected, uid]
-				},
-				() => this.props.onSelect(this.state.selected)
-			);
-		}
+		const { sendFriendRequest } = this.props;
+		this.setState(
+			{
+				selected: [...this.state.selected, uid]
+			},
+			() => sendFriendRequest(uid)
+		);
 	};
 
-	renderEmptyListComponent = () => <Text style={[TextStyles.body, styles.empty]}>results!</Text>;
+	renderEmptyListComponent = () => (
+		<Text style={[TextStyles.body, styles.empty]}>Begin typing to search</Text>
+	);
 
 	render() {
-		const { friends } = this.props;
+		const { data } = this.props;
 		console.log(this.state.selected);
 		return (
 			<SuperEllipseMask
@@ -72,7 +65,7 @@ class Results extends Component {
 				<FlatList
 					scrollEnabled={false}
 					style={{ flex: 1 }}
-					data={friends}
+					data={data}
 					keyExtractor={this._keyExtractor}
 					ItemSeparatorComponent={this.renderSeparator}
 					ListEmptyComponent={this.renderEmptyListComponent}

@@ -1,5 +1,7 @@
 import { connect } from "react-redux";
 
+import { sendFriendRequest } from "../redux/actions";
+
 // import AddFriend from "../components/Profile/AddFriend";
 import AddFriend from "../components/AddFriend";
 
@@ -11,7 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		dispatch
+		sendFriendRequest: uid => dispatch(sendFriendRequest(uid))
 	};
 };
 
