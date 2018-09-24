@@ -118,7 +118,6 @@ class AddFriend extends Component {
   handleOnPressAddFriend = () => {
     const { AddFriend } = this.props;
     const { groupName, selectedUsers } = this.state;
-    console.log(groupName, selectedUsers);
 
     AddFriend(groupName, selectedUsers).then(() => interactable.snapTo({ index: 0 }));
 

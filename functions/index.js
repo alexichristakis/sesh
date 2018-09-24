@@ -35,7 +35,6 @@ exports.sendNewMoveNotification = functions.firestore
 				);
 			});
 			return Promise.all(tokenPromises).then(results => {
-				// console.log(results[0].data().fcm_token);
 				const tokens = results.map(doc => doc.data().fcm_token);
 				return admin.messaging().sendToDevice(tokens, payload);
 			});
@@ -43,7 +42,7 @@ exports.sendNewMoveNotification = functions.firestore
 	});
 
 exports.sendFriendRequestNotification = functions.firestore
-	.document("users/{recipient_uid}/received_requests/{sender_uid}")
+	.document("users/{recipient_uid}/received_friend_requests/{sender_uid}")
 	.onCreate((snap, context) => {
 		const data = snap.data();
 		const { name } = data;

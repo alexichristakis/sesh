@@ -58,10 +58,10 @@ class PhoneAuth extends Component {
 
 	_verifyCode = () => {
 		this.setState({ spinner: true });
-		const { confirmResult, verifcationCode } = this.state;
+		const { confirmResult, verificationCode } = this.state;
 		console.log(verificationCode);
 
-		confirmResult.confirm(verifcationCode).then(user => console.log("we're logged in"));
+		confirmResult.confirm(verificationCode).then(user => console.log("we're logged in"));
 
 		// this.state
 		// 	.confirmResult(this.state.verifcationCode)
@@ -77,8 +77,8 @@ class PhoneAuth extends Component {
 	_onChangeText = val => {
 		if (!this.state.enterCode) this.setState({ phoneNumber: val });
 		else {
-			this.setState({ verifcationCode: val });
-			if (val.length === MAX_LENGTH_CODE) this._verifyCode();
+			this.setState({ verificationCode: val });
+			// if (val.length === MAX_LENGTH_CODE) this._verifyCode();
 		}
 	};
 

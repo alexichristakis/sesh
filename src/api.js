@@ -5,6 +5,7 @@ import Contacts from "react-native-contacts";
 import { formatNumber, parseNumber } from "libphonenumber-js";
 import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
+import { purgeStoredState } from "redux-persist";
 
 let firestore = firebase.firestore();
 
@@ -84,9 +85,7 @@ export const SyncContacts = () => {
 
           let matches = [];
           Promise.all(promises).then(results => {
-            console.log("results: ", results);
             results.forEach(querySnapshot => {
-              console.log("querySnapshot: ", querySnapshot);
               querySnapshot.forEach(doc => {
                 const { uid, fb_id, name } = doc.data();
                 matches.push({ uid, fb_id, name });
@@ -97,7 +96,6 @@ export const SyncContacts = () => {
         });
       })
       .then(results => {
-        console.log(matches);
         resolve(results);
       })
       .catch(error => console.error(error));
@@ -110,7 +108,6 @@ const contactTransaction = async transaction => {
   let ref = firestore.collection("users");
   let promises = [];
   numbers.forEach(number => {
-    console.log(number);
     // promises.push(transaction.get(ref.where("phone_number", "==", number)));
     // promises.push(transaction.get(ref.doc("1")));
   });
@@ -122,7 +119,6 @@ const contactTransaction = async transaction => {
       const { uid, fb_id, name } = doc.data();
       matches.push({ uid, fb_id, name });
     });
-    console.log(matches);
     return matches;
   });
 };
@@ -173,7 +169,6 @@ const getContactNumbers = () => {
 ///* GET *///
 export const SearchForUser = ({ first, last = "" }) => {
   return new Promise((resolve, reject) => {
-    console.log(first, last);
     let query = firestore
       .collection("indices")
       .where("first", "array-contains", first.toLowerCase());
@@ -186,7 +181,6 @@ export const SearchForUser = ({ first, last = "" }) => {
         const { name, fb_id } = data;
         users.push({ uid: doc.id, name, fb_id });
       });
-      console.log(users);
       resolve(users);
     });
   });
@@ -241,7 +235,6 @@ export const FetchGroupMembers = ({ group_id }) => {
 export const SendMove = ({ move, user }) => {
   return new Promise(resolve => {
     const { id, group_id } = move;
-    console.log("id for the move: ", id);
     const { name, uid, fb_id } = user;
 
     const moveRef = firestore.collection("moves").doc(id);
@@ -346,7 +339,6 @@ export const AcceptFriend = ({ user, uid }) => {
   return new Promise((resolve, reject) => {
     firestore
       .runTransaction(async transaction => {
-        console.log("user: ", user, uid);
         const users = firestore.collection("users");
         const receivedRef = users
           .doc(user.uid)
@@ -377,9 +369,7 @@ export const AcceptFriend = ({ user, uid }) => {
         let p3 = transaction.delete(receivedRef);
         let p4 = transaction.delete(sentRef);
 
-        Promise.all([p1, p2, p3, p4]).then(() => {
-          return true;
-        });
+        return Promise.all([p1, p2, p3, p4]);
       })
       .then(() => resolve(true))
       .catch(error => console.error(error));
@@ -403,9 +393,7 @@ export const DeleteRequest = ({ user, uid }) => {
         let p1 = transaction.delete(receivedRef);
         let p2 = transaction.delete(sentRef);
 
-        Promise.all([p1, p2]).then(() => {
-          return true;
-        });
+        return Promise.all([p1, p2]);
       })
       .then(() => resolve(true))
       .catch(error => console.error(error));
@@ -610,6 +598,11 @@ export const UpdateUser = ({ uid, fcmToken }) => {
 };
 
 export const FacebookLogout = async () => {
+  purgeStoredState({
+    key: "root",
+    storage
+  });
+
   return new Promise(resolve => {
     firebase
       .auth()

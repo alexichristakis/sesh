@@ -29,13 +29,14 @@ export default class App extends Component<Props> {
   onPressFacebook = () => {
     this.setState({ loading: true });
     FacebookLogin(this.cancelLogin).then(user => {
+      console.log(user);
       if (user) {
         this.setState({ loading: false }, () =>
           Navigation.push(this.props.componentId, {
             component: {
-              name: SCREENS.PHONE_AUTH,
+              name: SCREENS.HOME,
               passProps: {
-                user
+                userObj: user
               }
             }
           })

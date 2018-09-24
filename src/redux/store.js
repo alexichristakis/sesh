@@ -11,7 +11,7 @@ const persistConfig = {
 	storage
 };
 
-purgeStoredState(persistConfig);
+// purgeStoredState(persistConfig);
 
 /* root reducer */
 import seshApp from "./reducers";

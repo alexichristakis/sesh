@@ -108,7 +108,6 @@ class CreateGroup extends Component {
   handleOnPressCreateGroup = () => {
     const { createGroup } = this.props;
     const { groupName, selectedUsers } = this.state;
-    console.log(groupName, selectedUsers);
 
     this.setState({ buttonVisible: false }, () =>
       createGroup(groupName, selectedUsers).then(() => this.interactable.snapTo({ index: 0 }))

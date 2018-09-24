@@ -292,8 +292,8 @@ class Focus extends Component {
       />
     );
 
-    console.log("rendered focus");
-    console.log("transitioning: ", transitioning);
+    // console.log("rendered focus");
+    // console.log("transitioning: ", transitioning);
     return (
       <View style={styles.flex}>
         <Animated.View style={[FillAbsolute, opacity]}>

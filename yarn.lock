@@ -4757,9 +4757,9 @@ react-native-maps@^0.21.0:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
 
-react-native-navigation@^2.0.2488:
-  version "2.0.2555"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2555.tgz#7f0f5ccc11805df6b298230b083dac4f500b15a7"
+react-native-navigation@^2.0.2556:
+  version "2.0.2556"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2556.tgz#7aa832d1c6b79b0b8e605656bacbb979d4605bb1"
   dependencies:
     hoist-non-react-statics "3.x.x"
     lodash "4.x.x"
