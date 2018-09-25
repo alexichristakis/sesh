@@ -6,6 +6,7 @@ import { formatNumber, parseNumber } from "libphonenumber-js";
 import firebase from "react-native-firebase";
 import RNFS from "react-native-fs";
 import { purgeStoredState } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 let firestore = firebase.firestore();
 
@@ -458,6 +459,27 @@ export const ChangeGroupName = ({ group_id, group_name }) => {
 
 export const LeaveGroup = group => {};
 
+export const AddToGroup = ({ group_id, user }) => {
+  return new Promise((resolve, reject) => {
+    const { uid, name, fb_id } = user;
+
+    let p1 = firestore
+      .collection("groups")
+      .doc(group_id)
+      .collection("members")
+      .doc(uid)
+      .set(user);
+    let p2 = firestore
+      .collection("users")
+      .doc(uid)
+      .collection("groups")
+      .doc(group_id)
+      .set({ id: group_id });
+
+    Promise.all([p1, p2]).then(() => resolve(true));
+  });
+};
+
 //////////////* AUTH *//////////////
 // export const AuthWithPhone = phoneNumber => {
 //   firebase
@@ -510,8 +532,8 @@ export const FacebookLogin = async cancelLogin => {
   try {
     const result = await LoginManager.logInWithReadPermissions([
       "public_profile",
-      "email",
-      "user_friends"
+      "email"
+      // "user_friends"
     ]);
 
     if (result.isCancelled) {
@@ -625,6 +647,7 @@ export default {
   LeaveMove,
   EndMove,
   CreateGroup,
+  AddToGroup,
   ChangeGroupName,
   FetchGoingUsers,
   FetchGroupMembers,

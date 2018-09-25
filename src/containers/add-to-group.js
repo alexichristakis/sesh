@@ -1,16 +1,18 @@
 import { connect } from "react-redux";
 
-import AddToGroup from "../components/Groups/AddToGroup";
+import { addToGroup } from "../redux/actions";
+
+import AddToGroup from "../components/AddToGroup";
 
 const mapStateToProps = state => {
 	return {
-		...state
+		friends: state.friends
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		dispatch
+		addToGroup: (user, group_id) => dispatch(addToGroup(user, group_id))
 	};
 };
 

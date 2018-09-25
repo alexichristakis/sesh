@@ -143,12 +143,7 @@ export const ShowGroupSettings = ({ group }) => {
 
 export const ShowAddToGroup = ({ group }) => {
 	ReactNativeHapticFeedback.trigger("impactLight");
-	Navigation.showModal({
-		component: {
-			name: SCREENS.ADD_TO_GROUP,
-			passProps: { group }
-		}
-	});
+	TransparentModalTo({ name: SCREENS.ADD_TO_GROUP, props: { group } });
 };
 
 export default {

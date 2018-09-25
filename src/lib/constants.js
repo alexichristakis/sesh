@@ -2,7 +2,9 @@ import { Dimensions, Platform } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
-const SB_HEIGHT = Platform.OS === "ios" && height === 812 ? 40 : 20;
+console.log(width, height);
+
+const SB_HEIGHT = Platform.OS === "ios" && (height === 812 || height === 896) ? 40 : 20;
 const IS_X = SB_HEIGHT === 40;
 
 const DRAWER_HEIGHT = IS_X ? 130 : 110;

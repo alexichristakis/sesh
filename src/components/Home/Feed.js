@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "transparent"
 	},
 	content: {
-		paddingBottom: 125
+		paddingBottom: 150
 	},
 	emptyCardContainer: {
 		marginHorizontal: CARD_GUTTER,

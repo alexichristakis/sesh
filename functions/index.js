@@ -23,6 +23,18 @@ exports.sendNewMoveNotification = functions.firestore
 			.doc(group_id)
 			.collection("members");
 
+		// let groupMembers = groupMembersRef.get();
+		// groupMembers.forEach(doc => {
+		// 	const uid = doc.data().uid;
+		// 	tokenPromises.push(
+		// 		admin
+		// 			.firestore()
+		// 			.collection("users")
+		// 			.doc(uid)
+		// 			.get()
+		// 	);
+		// });
+
 		return groupMembersRef.get().then(snapshot => {
 			snapshot.forEach(doc => {
 				const uid = doc.data().uid;
@@ -34,6 +46,7 @@ exports.sendNewMoveNotification = functions.firestore
 						.get()
 				);
 			});
+
 			return Promise.all(tokenPromises).then(results => {
 				const tokens = results.map(doc => doc.data().fcm_token);
 				return admin.messaging().sendToDevice(tokens, payload);
@@ -56,7 +69,8 @@ exports.sendFriendRequestNotification = functions.firestore
 		const userRef = admin
 			.firestore()
 			.collection("users")
-			.doc(recipient_uid);
+			.doc(context.params.recipient_uid);
+
 		return userRef.get().then(doc => {
 			const { fcm_token } = doc.data();
 			return admin.messaging().sendToDevice(fcm_token, payload);
@@ -67,17 +81,17 @@ exports.sendAddedToGroupNotification = functions.firestore
 	.document("groups/{group_id}/members/{new_user_uid}")
 	.onCreate((snap, context) => {
 		const data = snap.data();
-		const { added_by } = data;
+		const { added_by } = data; // TODO: currently undefined value
 
 		let userPromise = admin
 			.firestore()
 			.collection("users")
-			.doc(new_user_uid)
+			.doc(context.params.new_user_uid)
 			.get();
 		let groupPromise = admin
 			.firestore()
 			.collection("groups")
-			.doc(group_id)
+			.doc(context.params.group_id)
 			.get();
 
 		return Promise.all([userPromise, groupPromise]).then(results => {

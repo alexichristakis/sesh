@@ -58,7 +58,7 @@ export function attachListeners() {
 			// console.log("GROUPS: ", group_ids);
 
 			const groupsQuery = USERS.doc(uid).collection("groups");
-			const movesQuery = MOVES.where("ended", "==", false);
+			const movesQuery = MOVES; //.where("ended", "==", false);
 
 			// refs
 			const friendsRef = USERS.doc(uid).collection("friends");
@@ -349,6 +349,25 @@ export function setGroupMembers(id, users) {
 		type: ActionTypes.SET_GROUP_MEMBERS,
 		id,
 		users
+	};
+}
+
+export function addToGroup(user, group_id) {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			api.AddToGroup({ group_id, user }).then(() => {
+				dispatch(addToGroupComplete(user, group_id));
+				resolve(true);
+			});
+		});
+	};
+}
+
+export function addToGroupComplete(user, id) {
+	return {
+		type: ActionTypes.ADD_FRIEND_TO_GROUP,
+		user,
+		id
 	};
 }
 

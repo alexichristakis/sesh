@@ -121,7 +121,7 @@ class Focus extends Component {
 
   handleScrollEndDrag = ({ nativeEvent }) => {
     const { y } = nativeEvent.contentOffset;
-    if (y < -75) this.handleClose();
+    if (y < -40) this.handleClose();
     // console.log(event.nativeEvent);
   };
 
@@ -330,7 +330,6 @@ class Focus extends Component {
             onPress={{ joinMove, leaveMove, endMove: this.handleOnPressEnd }}
             moves={moves}
             user={user}
-            // joined={}
             id={cardData.id}
             shouldEnd={cardData.uid === uid}
             yOffset={this.yOffset}
